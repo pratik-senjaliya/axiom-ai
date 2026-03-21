@@ -48,7 +48,7 @@ export default function HomePage() {
                 </svg>
               </Button>
             </Link>
-            <Link href="/services" className="w-full sm:w-auto">
+            <Link href="#services" className="w-full sm:w-auto">
               <Button variant="outline" size="lg" className="bg-white border text-neutral-800 border-neutral-200 rounded-full hover:bg-neutral-50 shadow-sm w-full sm:w-auto px-8 h-12 text-lg font-medium">
                 Explore Solutions
               </Button>
@@ -139,7 +139,7 @@ export default function HomePage() {
       </section>
 
       {/* 3. Enterprise-grade AI solutions */}
-      <section className="py-24 relative bg-[#FDFDFC]">
+      <section id="services" className="py-24 relative bg-[#FDFDFC]">
         <div className="container-custom">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 text-primary-500 font-medium mb-4">
@@ -155,53 +155,59 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 hover:bg-white hover:border-primary-500/30 hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col group cursor-pointer">
-              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
-                <SparkleIcon />
-                <span>01</span>
+            <Link href="/ai-implementation" className="group block focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-[32px]">
+              <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 group-hover:bg-white group-hover:border-primary-500/30 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col cursor-pointer">
+                <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
+                  <SparkleIcon />
+                  <span>01</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">GenAI & Agentic AI</h3>
+                <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
+                  From LLM experiments to production-grade AI systems with governance built-in.
+                </p>
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  {['LLM Strategy', 'AI Copilots', 'RAG Systems'].map(tag => (
+                    <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
+                  ))}
+                </div>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">GenAI & Agentic AI</h3>
-              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
-                From LLM experiments to production-grade AI systems with governance built-in.
-              </p>
-              <div className="flex flex-wrap gap-2 mt-auto">
-                {['LLM Strategy', 'AI Copilots', 'RAG Systems'].map(tag => (
-                  <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
-                ))}
-              </div>
-            </div>
+            </Link>
 
-            <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 hover:bg-white hover:border-primary-500/30 hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col group cursor-pointer">
-              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
-                <SparkleIcon />
-                <span>02</span>
+            <Link href="/data-analytics" className="group block focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-[32px]">
+              <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 group-hover:bg-white group-hover:border-primary-500/30 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col cursor-pointer">
+                <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
+                  <SparkleIcon />
+                  <span>02</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">Data & Analytics</h3>
+                <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
+                  Build AI-ready data foundations with modern architectures.
+                </p>
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  {['Data Fabric', 'ML Ops', 'Decision Intelligence'].map(tag => (
+                    <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
+                  ))}
+                </div>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">Data & Analytics</h3>
-              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
-                Build AI-ready data foundations with modern architectures.
-              </p>
-              <div className="flex flex-wrap gap-2 mt-auto">
-                {['Data Fabric', 'ML Ops', 'Decision Intelligence'].map(tag => (
-                  <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
-                ))}
-              </div>
-            </div>
+            </Link>
 
-            <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 hover:bg-white hover:border-primary-500/30 hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col group cursor-pointer">
-              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
-                <SparkleIcon />
-                <span>03</span>
+            <Link href="/erp-transformation" className="group block focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-[32px]">
+              <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 group-hover:bg-white group-hover:border-primary-500/30 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col cursor-pointer">
+                <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
+                  <SparkleIcon />
+                  <span>03</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">ERP Modernization</h3>
+                <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
+                  S/4HANA and cloud ERP transformations designed for AI enablement.
+                </p>
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  {['S/4HANA', 'SAP AI', 'Cloud ERP'].map(tag => (
+                    <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
+                  ))}
+                </div>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">ERP Modernization</h3>
-              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
-                S/4HANA and cloud ERP transformations designed for AI enablement.
-              </p>
-              <div className="flex flex-wrap gap-2 mt-auto">
-                {['S/4HANA', 'SAP AI', 'Cloud ERP'].map(tag => (
-                  <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
-                ))}
-              </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>

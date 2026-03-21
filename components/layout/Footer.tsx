@@ -40,10 +40,11 @@ export function Footer() {
           <div className="md:col-start-7 lg:col-start-7 md:col-span-3">
             <h3 className="text-[#968E85] font-semibold mb-6 text-[13px] uppercase tracking-wider">Services</h3>
             <ul className="space-y-4">
-              <li><Link href="/services" className="text-sm hover:text-white transition-colors text-[#D9D0C5]">AI Implementation</Link></li>
-              <li><Link href="/services/erp-transformation" className="text-sm hover:text-white transition-colors text-[#D9D0C5]">ERP Transformation</Link></li>
-              <li><Link href="/services/data-analytics" className="text-sm hover:text-white transition-colors text-[#D9D0C5]">Data & Analytics</Link></li>
-              <li><Link href="/services/managed-delivery" className="text-sm hover:text-white transition-colors text-[#D9D0C5]">Managed Delivery</Link></li>
+              <li><Link href="/ai-implementation" className="text-sm hover:text-white transition-colors text-[#D9D0C5]">AI Implementation</Link></li>
+              <li><Link href="/erp-transformation" className="text-sm hover:text-white transition-colors text-[#D9D0C5]">ERP Transformation</Link></li>
+              <li><Link href="/data-analytics" className="text-sm hover:text-white transition-colors text-[#D9D0C5]">Data & Analytics</Link></li>
+              <li><Link href="/managed-delivery" className="text-sm hover:text-white transition-colors text-[#D9D0C5]">Managed Delivery</Link></li>
+              <li><Link href="/sustainability" className="text-sm hover:text-white transition-colors text-[#D9D0C5]">AI for Sustainable Operations</Link></li>
             </ul>
           </div>
 

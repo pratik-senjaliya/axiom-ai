@@ -1,171 +1,162 @@
 import type { Metadata } from "next";
+import { DarkCTA } from "@/components/services/DarkCTA";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
-  title: "Services | AxiomAI",
-  description: "Comprehensive advisory services for modern enterprise.",
+  title: "Enterprise Solutions & Services | AxiomAI",
+  description: "Comprehensive GenAI, Data, and ERP transformation capabilities.",
 };
 
-const SparkleIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" className="text-primary-500">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/>
-  </svg>
-);
+export default function ServicesHubPage() {
+  const serviceCategories = [
+    {
+      title: "AI Implementation",
+      href: "/ai-implementation",
+      description: "Strategy-to-production AI delivery for the enterprise.",
+      tags: ["AI Strategy", "GenAI & LLM Integration", "Agentic Systems", "Automation", "AI Governance"],
+      icon: (
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.5 2C7.51088 2 5.60322 2.79018 4.1967C2.79018 5.60322 2 7.51088 2 9.5C2 11.23 2.61 12.82 3.63 14.1C4.34 14.99 4.63 16.14 4.45 17.27C4.33 18.06 4.45 18.87 4.79 19.59C5.13 20.31 5.67 20.91 6.34 21.29C7.01 21.67 7.78 21.82 8.54 21.72C9.3 21.62 10.01 21.27 10.58 20.72L11 20.31V12H3.1C3.03 11.19 3 10.36 3 9.5C3 5.91 5.91 3 9.5 3V2ZM14.5 2C16.4891 2 18.3968 2.79018 19.8033 4.1967C21.2098 5.60322 22 7.51088 22 9.5C22 11.23 21.39 12.82 20.37 14.1C19.66 14.99 19.37 16.14 19.55 17.27C19.67 18.06 19.55 18.87 19.21 19.59C18.87 20.31 18.33 20.91 17.66 21.29C16.99 21.67 16.22 21.82 15.46 21.72C14.7 21.62 13.99 21.27 13.42 20.72L13 20.31V12H20.9C20.97 11.19 21 10.36 21 9.5C21 5.91 18.09 3 14.5 3V2Z" fill="currentColor"/>
+        </svg>
+      )
+    },
+    {
+      title: "ERP Transformation",
+      href: "/erp-transformation",
+      description: "Microsoft Dynamics 365 implementations and ERP modernization.",
+      tags: ["Dynamics 365 BC", "Dynamics 365 F&O", "ERP Migration", "Process Advisory", "Optimization & Support"],
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 1.105 3.582 2 8 2s8-.895 8-2V7m0 0c0 1.105-3.582 2-8 2s-8-.895-8-2m16 0c0-1.105-3.582-2-8-2s-8 .895-8 2m16 5c0 1.105-3.582 2-8 2s-8-.895-8-2" />
+        </svg>
+      )
+    },
+    {
+      title: "Data & Analytics",
+      href: "/data-analytics",
+      description: "Turn data into decisions with modern analytics foundations.",
+      tags: ["Power BI", "Data Warehousing", "Data Architecture", "Predictive Analytics", "KPI Reporting"],
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      )
+    },
+    {
+      title: "Managed Delivery",
+      href: "/managed-delivery",
+      description: "Pre-vetted specialists and managed teams for enterprise projects.",
+      tags: ["ERP Consultants", "BI Developers", "AI Engineers", "Offshore Teams", "Project Execution"],
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      )
+    },
+    {
+      title: "AI for Sustainable Operations",
+      href: "/sustainability",
+      description: "AI-enabled sustainability improvements for carbon visibility, reporting, and operational efficiency.",
+      tags: ["Carbon Dashboard", "ESG Reporting", "Emission Forecasting", "Green Supply Chain"],
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      )
+    }
+  ];
 
-export default function ServicesPage() {
   return (
-    <div className="pt-24 pb-0">
-      {/* Hero Section */}
-      <section className="py-24 relative overflow-hidden flex flex-col items-center text-center">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-orange-50/40 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply"></div>
+    <div className="pt-0 pb-0 bg-white">
+      {/* Custom Hero Section for Hub */}
+      <section className="relative pt-32 pb-20 overflow-hidden bg-[#FAF8F5]">
+        {/* Blueprint Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none"></div>
+        
         <div className="container-custom relative z-10 px-4">
-          <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-200 bg-white/50 backdrop-blur-sm text-sm font-medium text-neutral-800 shadow-sm">
-            <SparkleIcon />
-            <span>Services</span>
-          </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
-            AI, Data & ERP — <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF821C] to-[#AD58D9]">Done Right</span>
-          </h1>
-          <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto">
-            Advisory-led. Outcome-driven. Enterprise-grade.
-          </p>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="py-24 relative z-10">
-        <div className="container-custom px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+          <div className="max-w-4xl">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 mb-6 text-[#FF821C] font-semibold text-xs tracking-wide uppercase">
+              <span className="text-xl leading-none font-light block -mt-1">+</span>
+              <span>Services</span>
+            </div>
             
-            {/* Service 1 */}
-            <Link href="/services" className="block focus:outline-none">
-              <div className="card h-full flex flex-col bg-white border border-neutral-100 rounded-[2rem] p-10 hover:border-primary-200 transition-all shadow-sm hover:shadow-md group">
-                <div className="w-16 h-16 bg-[#FFF2E5] text-[#FF821C] rounded-2xl flex items-center justify-center mb-8">
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-[#26201D] mb-4">AI Implementation</h3>
-                <p className="text-neutral-500 leading-relaxed mb-8 flex-grow">
-                  Practical artificial intelligence strategies that drive real business value and operational efficiency.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  <span className="px-3 py-1 bg-neutral-100 text-neutral-600 text-sm font-medium rounded-full">AI Strategy</span>
-                  <span className="px-3 py-1 bg-neutral-100 text-neutral-600 text-sm font-medium rounded-full">GenAI & LLM Integration</span>
-                </div>
-                <div className="flex items-center text-[#FF821C] font-semibold mt-auto group-hover:gap-2 transition-all">
-                  Learn more
-                  <svg className="w-5 h-5 ml-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
-
-            {/* Service 2 */}
-            <Link href="/services/erp-transformation" className="block focus:outline-none">
-              <div className="card h-full flex flex-col bg-white border border-neutral-100 rounded-[2rem] p-10 hover:border-primary-200 transition-all shadow-sm hover:shadow-md group">
-                <div className="w-16 h-16 bg-[#FFF2E5] text-[#FF821C] rounded-2xl flex items-center justify-center mb-8">
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-[#26201D] mb-4">ERP Transformation</h3>
-                <p className="text-neutral-500 leading-relaxed mb-8 flex-grow">
-                  Strategic guidance for complex enterprise resource planning implementations and migrations.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                   <span className="px-3 py-1 bg-neutral-100 text-neutral-600 text-sm font-medium rounded-full">System Selection</span>
-                   <span className="px-3 py-1 bg-neutral-100 text-neutral-600 text-sm font-medium rounded-full">Architecture Design</span>
-                </div>
-                <div className="flex items-center text-[#FF821C] font-semibold mt-auto group-hover:gap-2 transition-all">
-                  Learn more
-                  <svg className="w-5 h-5 ml-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
-
-            {/* Service 3 */}
-            <Link href="/services/data-analytics" className="block focus:outline-none">
-              <div className="card h-full flex flex-col bg-white border border-neutral-100 rounded-[2rem] p-10 hover:border-primary-200 transition-all shadow-sm hover:shadow-md group">
-                <div className="w-16 h-16 bg-[#FFF2E5] text-[#FF821C] rounded-2xl flex items-center justify-center mb-8">
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-[#26201D] mb-4">Data & Analytics</h3>
-                <p className="text-neutral-500 leading-relaxed mb-8 flex-grow">
-                  Unlocking insights from your enterprise data to drive informed decision-making.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  <span className="px-3 py-1 bg-neutral-100 text-neutral-600 text-sm font-medium rounded-full">Data Strategy</span>
-                  <span className="px-3 py-1 bg-neutral-100 text-neutral-600 text-sm font-medium rounded-full">Predictive Modeling</span>
-                </div>
-                <div className="flex items-center text-[#FF821C] font-semibold mt-auto group-hover:gap-2 transition-all">
-                  Learn more
-                  <svg className="w-5 h-5 ml-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
-
-            {/* Service 4 */}
-            <Link href="/services/managed-delivery" className="block focus:outline-none">
-              <div className="card h-full flex flex-col bg-white border border-neutral-100 rounded-[2rem] p-10 hover:border-primary-200 transition-all shadow-sm hover:shadow-md group">
-                <div className="w-16 h-16 bg-[#FFF2E5] text-[#FF821C] rounded-2xl flex items-center justify-center mb-8">
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-[#26201D] mb-4">Managed Delivery</h3>
-                <p className="text-neutral-500 leading-relaxed mb-8 flex-grow">
-                  Expert technical program management to ensure your initiatives are delivered on time and within budget.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  <span className="px-3 py-1 bg-neutral-100 text-neutral-600 text-sm font-medium rounded-full">Program Rescue</span>
-                  <span className="px-3 py-1 bg-neutral-100 text-neutral-600 text-sm font-medium rounded-full">Vendor Management</span>
-                </div>
-                <div className="flex items-center text-[#FF821C] font-semibold mt-auto group-hover:gap-2 transition-all">
-                  Learn more
-                  <svg className="w-5 h-5 ml-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
-
+            {/* Title - Decreased to 6xl from 7xl */}
+            <h1 className="text-5xl md:text-6xl font-black text-[#26201D] tracking-tight leading-[1.1] mb-2">
+              AI, Data & ERP —
+            </h1>
+            <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-[1.1] mb-6">
+              <span className="bg-gradient-to-r from-[#FF821C] to-[#DE2297] bg-clip-text text-transparent">
+                Done Right
+              </span>
+            </h1>
+            
+            {/* Description - Decreased to lg from xl/2xl */}
+            <p className="text-lg md:text-xl text-neutral-500 font-light mt-8">
+              Advisory-led. Outcome-driven. Enterprise-grade.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Bottom CTA Section */}
-      <section className="py-24 relative overflow-hidden bg-[#26201D] mt-12">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none"></div>
-        <div className="container-custom relative z-10 text-center flex flex-col items-center">
-          <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-neutral-300">
-            <SparkleIcon />
-            <span>Get Started</span>
+      {/* Grid of Cards */}
+      <section className="py-20 relative bg-[#FAF8F5] -mt-1">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none -mt-4"></div>
+
+        <div className="container-custom px-4 relative z-10">
+          <div className="grid md:grid-cols-2 gap-8">
+            {serviceCategories.map((service, idx) => (
+              <Link 
+                key={idx} 
+                href={service.href} 
+                className="group block focus:outline-none focus:ring-2 focus:ring-[#FF821C] rounded-[2rem] h-full"
+              >
+                <div className="bg-white rounded-[2rem] p-8 sm:p-9 shadow-sm flex flex-col h-full border border-neutral-100 group-hover:border-orange-200 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.06)] transition-all duration-300">
+                  {/* Icon */}
+                  <div className="w-12 h-12 rounded-2xl bg-[#FF821C] flex items-center justify-center text-white mb-6 shadow-sm">
+                    {service.icon}
+                  </div>
+                  
+                  {/* Title & Description - Decreased font sizes */}
+                  <h3 className="text-2xl font-bold text-[#26201D] group-hover:text-[#FF821C] transition-colors mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-neutral-500 text-base leading-relaxed mb-6 flex-grow">
+                    {service.description}
+                  </p>
+
+                  {/* Tags - Decreased to text-xs */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {service.tags.map(tag => (
+                      <span 
+                        key={tag} 
+                        className="px-3 py-1 bg-[#F4F4F4] group-hover:bg-[#FFF5ED] text-neutral-500 group-hover:text-[#FF821C] rounded-full text-[12px] font-medium transition-colors"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Learn More */}
+                  <div className="flex items-center text-[#FF821C] font-semibold text-sm mt-auto w-fit">
+                    Learn more
+                    <svg className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
-          <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
-            Not sure where to start?
-          </h2>
-          <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
-            Book a free strategy call. We'll identify the highest-impact opportunities.
-          </p>
-          <Link href="/contact" className="w-full sm:w-auto">
-            <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 transition-opacity shadow-md border-none">
-              Book Free Strategy Call
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Button>
-          </Link>
         </div>
       </section>
+
+      <DarkCTA 
+        badgeText="Get Started"
+        title="Not sure where to start?"
+        description="Book a free strategy call. We'll identify the highest-impact opportunities."
+        buttonText="Book Free Strategy Call"
+      />
     </div>
   );
 }

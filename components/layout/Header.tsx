@@ -2,21 +2,31 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Services", href: "#", hasDropdown: true },
+  { name: "Services", href: "/services", hasDropdown: true },
   { name: "Use Cases", href: "/use-cases" },
   { name: "Insights", href: "/insights" },
   { name: "About", href: "/about" },
 ];
 
+const servicePaths = [
+  "/ai-implementation",
+  "/erp-transformation",
+  "/data-analytics",
+  "/managed-delivery",
+  "/sustainability",
+  "/services"
+];
+
 const serviceCategories = [
   {
     title: "AI Implementation",
-    href: "/services",
+    href: "/ai-implementation",
     icon: (
       <div className="w-10 h-10 rounded-full bg-[#FF821C] flex items-center justify-center text-white shrink-0 shadow-sm">
         <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +38,7 @@ const serviceCategories = [
   },
   {
     title: "ERP Transformation",
-    href: "/services/erp-transformation",
+    href: "/erp-transformation",
     icon: (
       <div className="w-10 h-10 rounded-full bg-[#F97316] flex items-center justify-center text-white shrink-0 shadow-sm">
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,7 +50,7 @@ const serviceCategories = [
   },
   {
     title: "Data & Analytics",
-    href: "/services/data-analytics",
+    href: "/data-analytics",
     icon: (
       <div className="w-10 h-10 rounded-full bg-[#F97316] flex items-center justify-center text-white shrink-0 shadow-sm">
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -52,7 +62,7 @@ const serviceCategories = [
   },
   {
     title: "Managed Delivery",
-    href: "/services/managed-delivery",
+    href: "/managed-delivery",
     icon: (
       <div className="w-10 h-10 rounded-full bg-[#F97316] flex items-center justify-center text-white shrink-0 shadow-sm">
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -61,10 +71,23 @@ const serviceCategories = [
       </div>
     ),
     tags: ["ERP Consultants", "BI Developers", "AI Engineers", "Offshore Teams", "Project Execution"]
+  },
+  {
+    title: "Sustainability",
+    href: "/sustainability",
+    icon: (
+      <div className="w-10 h-10 rounded-full bg-[#10B981] flex items-center justify-center text-white shrink-0 shadow-sm">
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      </div>
+    ),
+    tags: ["Carbon Dashboard", "ESG Reporting", "Emission Forecasting", "Green Supply Chain"]
   }
 ];
 
 export const Header: React.FC = () => {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -87,6 +110,13 @@ export const Header: React.FC = () => {
     timeoutRef.current = setTimeout(() => {
       setIsServicesOpen(false);
     }, 150);
+  };
+
+  const isActive = (item: { name: string; href: string }) => {
+    if (item.name === "Services") {
+      return servicePaths.some(path => pathname.startsWith(path));
+    }
+    return pathname === item.href;
   };
 
   return (
@@ -125,7 +155,7 @@ export const Header: React.FC = () => {
                     href={item.href}
                     className={cn(
                       "px-6 py-2.5 text-base font-medium rounded-full transition-all flex items-center gap-1.5 tracking-tight",
-                      item.name === "Home" 
+                      isActive(item) 
                         ? "text-[#FF821C] bg-[#FFF2E5]" 
                         : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50"
                     )}
@@ -140,12 +170,12 @@ export const Header: React.FC = () => {
 
                   {/* Mega Menu */}
                   {item.hasDropdown && isServicesOpen && (
-                    <div 
-                      className="absolute top-full left-0 pt-4 w-[740px] animate-scale-in"
+                      <div 
+                        className="absolute top-full left-0 pt-4 w-max animate-scale-in"
                       onMouseEnter={handleMouseEnter}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className="bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-neutral-100 p-10 grid grid-cols-2 gap-x-10 gap-y-10 relative z-[60]">
+                      <div className="bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-neutral-100 p-10 grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 relative z-[60] w-[900px]">
                         {serviceCategories.map((category) => (
                           <Link 
                             key={category.title} 
@@ -213,7 +243,7 @@ export const Header: React.FC = () => {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={cn(
                     "border-b border-neutral-100 pb-4 flex justify-between items-center",
-                    item.name === "Home" ? "text-[#FF821C]" : "text-neutral-900"
+                    isActive(item) ? "text-[#FF821C]" : "text-neutral-900"
                   )}
                 >
                   {item.name}
