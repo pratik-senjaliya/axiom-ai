@@ -362,3 +362,207 @@ Sanity fetch error: Error: Dataset not found - Dataset "production" not found fo
   details: undefined
 }
  GET /contact 200 in 503ms (compile: 105ms, render: 398ms)
+ GET / 200 in 124ms (compile: 68ms, render: 56ms)
+✓ Compiled in 704ms
+✓ Compiled in 517ms
+✓ Compiled in 450ms
+ GET / 200 in 513ms (compile: 91ms, render: 422ms)
+ GET / 200 in 228ms (compile: 12ms, render: 215ms)
+ GET / 200 in 152ms (compile: 8ms, render: 144ms)
+ GET / 200 in 167ms (compile: 5ms, render: 162ms)
+✓ Compiled in 376ms
+ GET / 200 in 503ms (compile: 96ms, render: 407ms)
+ GET / 200 in 338ms (compile: 7ms, render: 331ms)
+ GET / 200 in 380ms (compile: 3ms, render: 377ms)
+ GET / 200 in 388ms (compile: 5ms, render: 383ms)
+ GET / 200 in 344ms (compile: 2ms, render: 342ms)
+ GET / 200 in 485ms (compile: 2ms, render: 483ms)
+ GET / 200 in 492ms (compile: 8ms, render: 484ms)
+ GET / 200 in 423ms (compile: 7ms, render: 416ms)
+ GET / 200 in 362ms (compile: 8ms, render: 354ms)
+ GET / 200 in 299ms (compile: 14ms, render: 284ms)
+ GET / 200 in 215ms (compile: 7ms, render: 208ms)
+ GET / 200 in 93ms (compile: 5ms, render: 88ms)
+✓ Compiled in 374ms
+ GET / 200 in 283ms (compile: 119ms, render: 165ms)
+ GET / 200 in 75ms (compile: 4ms, render: 71ms)
+✓ Compiled in 200ms
+ GET / 200 in 97ms (compile: 4ms, render: 93ms)
+ GET / 200 in 58ms (compile: 1844µs, render: 56ms)
+✓ Compiled in 224ms
+ GET / 200 in 125ms (compile: 5ms, render: 119ms)
+ GET / 200 in 67ms (compile: 3ms, render: 63ms)
+✓ Compiled in 148ms
+ GET / 200 in 80ms (compile: 4ms, render: 76ms)
+ GET / 200 in 42ms (compile: 2ms, render: 40ms)
+✓ Compiled in 371ms
+ GET / 200 in 247ms (compile: 3ms, render: 244ms)
+ GET / 200 in 159ms (compile: 6ms, render: 153ms)
+ GET / 200 in 108ms (compile: 4ms, render: 104ms)
+ GET / 200 in 101ms (compile: 1698µs, render: 100ms)
+✓ Compiled in 478ms
+✓ Compiled in 377ms
+✓ Compiled in 452ms
+ GET / 200 in 171ms (compile: 94ms, render: 77ms)
+✓ Compiled in 372ms
+✓ Compiled in 179ms
+ GET / 200 in 424ms (compile: 112ms, render: 311ms)
+ GET / 200 in 124ms (compile: 3ms, render: 121ms)
+✓ Compiled in 495ms
+ GET / 200 in 394ms (compile: 7ms, render: 386ms)
+✓ Compiled in 1750ms
+✓ Compiled in 926ms
+ GET / 200 in 1088ms (compile: 356ms, render: 732ms)
+ GET / 200 in 664ms (compile: 15ms, render: 649ms)
+✓ Compiled in 2s
+✓ Compiled in 1343ms
+✓ Compiled in 1368ms
+ GET / 200 in 2.3s (compile: 361ms, render: 1987ms)
+ GET / 200 in 1610ms (compile: 31ms, render: 1580ms)
+ GET / 200 in 1186ms (compile: 48ms, render: 1138ms)
+ GET / 200 in 687ms (compile: 16ms, render: 672ms)
+ GET / 200 in 441ms (compile: 20ms, render: 421ms)
+ GET / 200 in 243ms (compile: 11ms, render: 232ms)
+ GET / 200 in 616ms (compile: 7ms, render: 609ms)
+ GET / 200 in 321ms (compile: 22ms, render: 298ms)
+✓ Compiled in 5s
+✓ Compiled in 3.3s
+ GET / 200 in 973ms (compile: 24ms, render: 949ms)
+ GET / 200 in 765ms (compile: 14ms, render: 751ms)
+ GET / 200 in 583ms (compile: 12ms, render: 570ms)
+ GET / 200 in 475ms (compile: 7ms, render: 469ms)
+ GET / 200 in 396ms (compile: 6ms, render: 390ms)
+ GET / 200 in 334ms (compile: 5ms, render: 328ms)
+✓ Compiled in 779ms
+✓ Compiled in 251ms
+⨯ ./app/globals.css:2580:8
+Parsing CSS source code failed
+[0m [90m 2578 |[39m   }
+ [90m 2579 |[39m
+[31m[1m>[22m[39m[90m 2580 |[39m [33m@[39m[36mimport[39m url([32m'https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap'[39m)[33m;[39m
+ [90m      |[39m        [31m[1m^[22m[39m
+ [90m 2581 |[39m
+ [90m 2582 |[39m [90m/* Custom CSS Variables for Theme */[39m
+ [90m 2583 |[39m [33m:[39mroot {[0m
+
+@import rules must precede all rules aside from @charset and @layer statements
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/(website)/layout.tsx [Server Component]
+
+
+ GET / 500 in 1034ms (compile: 904ms, render: 131ms)
+✓ Compiled in 936ms
+ GET / 200 in 698ms (compile: 601ms, render: 98ms)
+ GET / 200 in 211ms (compile: 6ms, render: 205ms)
+ GET / 200 in 229ms (compile: 9ms, render: 220ms)
+✓ Compiled in 371ms
+ GET / 200 in 507ms (compile: 127ms, render: 381ms)
+ GET / 200 in 244ms (compile: 7ms, render: 237ms)
+✓ Compiled in 297ms
+✓ Compiled in 288ms
+ GET / 200 in 1333ms (compile: 366ms, render: 967ms)
+✓ Compiled in 323ms
+ GET / 200 in 787ms (compile: 183ms, render: 603ms)
+ GET / 200 in 171ms (compile: 10ms, render: 161ms)
+ GET / 200 in 170ms (compile: 5ms, render: 165ms)
+ GET / 200 in 161ms (compile: 6ms, render: 155ms)
+ GET /use-cases 200 in 123ms (compile: 76ms, render: 47ms)
+ GET / 200 in 71ms (compile: 4ms, render: 67ms)
+ GET /insights 200 in 169ms (compile: 85ms, render: 84ms)
+ GET /about 200 in 106ms (compile: 70ms, render: 36ms)
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "statusCode": 404,\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\"",\n' +
+    '  "error": "Dataset not found"\n' +
+    '}',
+  details: undefined
+}
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "statusCode": 404,\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\"",\n' +
+    '  "error": "Dataset not found"\n' +
+    '}',
+  details: undefined
+}
+ GET /contact 200 in 385ms (compile: 91ms, render: 294ms)
+ GET / 200 in 37ms (compile: 4ms, render: 33ms)
+✓ Compiled in 1834ms
+✓ Compiled in 362ms
+✓ Compiled in 161ms
+ GET / 200 in 199ms (compile: 77ms, render: 122ms)
+ GET / 200 in 54ms (compile: 3ms, render: 51ms)
+✓ Compiled in 160ms
+ GET / 200 in 426ms (compile: 211ms, render: 215ms)
+ GET / 200 in 309ms (compile: 3ms, render: 305ms)
+✓ Compiled in 1577ms
+ GET / 200 in 124ms (compile: 5ms, render: 119ms)
+✓ Compiled in 435ms
+ GET / 200 in 111ms (compile: 6ms, render: 105ms)
+ GET / 200 in 38ms (compile: 4ms, render: 35ms)
+✓ Compiled in 211ms
+ GET / 200 in 386ms (compile: 111ms, render: 274ms)
+✓ Compiled in 241ms
+ GET / 200 in 418ms (compile: 243ms, render: 176ms)
+✓ Compiled in 192ms
+ GET / 200 in 456ms (compile: 138ms, render: 318ms)
+ GET / 200 in 156ms (compile: 10ms, render: 146ms)
+ GET / 200 in 121ms (compile: 7ms, render: 114ms)
+ GET / 200 in 132ms (compile: 14ms, render: 118ms)
+✓ Compiled in 213ms
+ GET / 200 in 316ms (compile: 80ms, render: 236ms)
+ GET / 200 in 185ms (compile: 8ms, render: 176ms)
+✓ Compiled in 307ms
+ GET / 200 in 495ms (compile: 299ms, render: 196ms)
+ GET / 200 in 172ms (compile: 10ms, render: 162ms)
+ GET / 200 in 218ms (compile: 34ms, render: 185ms)
+ GET / 200 in 202ms (compile: 15ms, render: 187ms)
+ GET / 200 in 293ms (compile: 14ms, render: 279ms)
+ GET / 200 in 192ms (compile: 6ms, render: 186ms)
+ GET / 200 in 176ms (compile: 15ms, render: 161ms)
+ GET /use-cases 200 in 190ms (compile: 119ms, render: 72ms)
+ GET /use-cases 200 in 73ms (compile: 3ms, render: 70ms)
+ GET /insights 200 in 157ms (compile: 97ms, render: 60ms)
+ GET /insights 200 in 28ms (compile: 3ms, render: 26ms)
+✓ Compiled in 809ms
+✓ Compiled in 2s
+ GET /insights 200 in 548ms (compile: 133ms, render: 415ms)
+ GET / 200 in 560ms (compile: 13ms, render: 547ms)
+ GET /insights 200 in 504ms (compile: 68ms, render: 436ms)
+ GET / 200 in 510ms (compile: 3ms, render: 507ms)
+ GET / 200 in 590ms (compile: 6ms, render: 585ms)
+ GET /insights 200 in 581ms (compile: 5ms, render: 576ms)
+ GET / 200 in 528ms (compile: 8ms, render: 519ms)
+ GET /insights 200 in 396ms (compile: 17ms, render: 379ms)
+ GET /insights 200 in 310ms (compile: 71ms, render: 240ms)
+ GET / 200 in 319ms (compile: 11ms, render: 308ms)
+ GET / 200 in 186ms (compile: 4ms, render: 181ms)
+ GET /insights 200 in 112ms (compile: 4ms, render: 108ms)
+✓ Compiled in 255ms
+✓ Compiled in 2.4s
+✓ Compiled in 281ms
+ GET / 200 in 543ms (compile: 191ms, render: 352ms)
+ GET / 200 in 131ms (compile: 4ms, render: 127ms)
+✓ Compiled in 484ms
+ GET / 200 in 715ms (compile: 120ms, render: 595ms)
+✓ Compiled in 329ms
+ GET / 200 in 539ms (compile: 193ms, render: 346ms)
+ GET / 200 in 166ms (compile: 6ms, render: 159ms)
+ GET / 200 in 189ms (compile: 15ms, render: 173ms)
+✓ Compiled in 310ms
+ GET / 200 in 416ms (compile: 149ms, render: 267ms)
+ GET / 200 in 124ms (compile: 4ms, render: 120ms)
+ GET / 200 in 159ms (compile: 7ms, render: 152ms)
+✓ Compiled in 189ms
+ GET / 200 in 669ms (compile: 152ms, render: 517ms)
+ GET / 200 in 209ms (compile: 10ms, render: 199ms)

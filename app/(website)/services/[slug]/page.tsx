@@ -89,6 +89,7 @@ export default async function ServicePage({ params }: PageProps) {
         spacing="xl"
         className="relative bg-gradient-to-b from-primary-900 via-primary-800 to-primary-900 text-white overflow-hidden"
       >
+        <div className="bg-grid-white opacity-20"></div>
         <div className="absolute inset-0 opacity-10">
           <Image
             src={service.heroBackgroundImage || service.heroImage || 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&h=1080&fit=crop'}

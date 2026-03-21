@@ -5,14 +5,16 @@
 /* Custom CSS Variables for Theme */
 :root {
   /* Colors */
-  --color-primary-50: #fff7ed;
-  --color-primary-500: #f97316;
-  --color-primary-600: #ea580c;
-  --color-primary-700: #c2410c;
-  --color-primary-900: #7c2d12;
+  --color-primary-50: #FFF2E5; /* Light orange for backgrounds */
+  --color-primary-500: #FF821C; /* Main orange brand color */
+  --color-primary-600: #EA580C;
+  --color-primary-700: #C2410C;
+  --color-primary-900: #26201D; /* Dark heading color */
 
-  --color-secondary-500: #ec4899;
-  --color-secondary-600: #db2777;
+  --color-secondary-500: #AD58D9; /* Purple brand color */
+  --color-secondary-600: #9333EA;
+
+  --accent-pink: #FF2E93; /* Logo/Button accent */
 
   --color-neutral-50: #fafafa;
   --color-neutral-100: #f4f4f5;
@@ -62,14 +64,26 @@
   }
   
   .bg-grid {
-    position: fixed;
+    position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     pointer-events: none;
-    z-index: 1;
+    z-index: -1;
     background-image: 
-      linear-gradient(to right, rgba(0,0,0,0.015) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0,0,0,0.015) 1px, transparent 1px);
-    background-size: 100px 100px;
+      linear-gradient(to right, rgba(0,0,0,0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,0,0,0.12) 1px, transparent 1px);
+    background-size: 80px 80px;
+    background-position: center top;
+  }
+
+  .bg-grid-white {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: 
+      linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
     background-position: center top;
   }
 
@@ -216,7 +230,7 @@
 
   /* Gradient Text */
   .gradient-text {
-    background: linear-gradient(135deg, #FF821C, #AD58D9);
+    background: linear-gradient(to right, #FF821C, #FF2E93, #AD58D9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

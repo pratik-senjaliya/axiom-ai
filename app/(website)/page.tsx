@@ -17,7 +17,8 @@ export default function HomePage() {
   return (
     <>
       {/* 1. Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-24 overflow-hidden text-center">
+      <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-24 overflow-hidden text-center">
+        <div className="bg-grid opacity-40"></div>
         {/* Soft radial glows to emulate the background in Lovable */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] bg-orange-100/40 rounded-full blur-[100px] pointer-events-none -z-10"></div>
         <div className="absolute top-[40%] right-[10%] w-[40rem] h-[40rem] bg-violet-100/30 rounded-full blur-[100px] pointer-events-none -z-10"></div>
@@ -29,9 +30,9 @@ export default function HomePage() {
             <span className="text-sm font-medium text-neutral-800">Enterprise AI & Data Advisory</span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-bold text-[#26201D] tracking-tight mb-8 leading-[1.1]">
+          <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-bold text-[#26201D] tracking-tight mb-8 leading-[1.05]">
             Building the future of
-            <span className="block gradient-text mt-2">enterprise intelligence</span>
+            <span className="block gradient-text mt-1">enterprise intelligence</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-neutral-500 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
@@ -40,15 +41,15 @@ export default function HomePage() {
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
             <Link href="/contact" className="w-full sm:w-auto">
-              <Button size="lg" className="btn-primary w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2">
+              <Button size="lg" className="btn-primary w-full sm:w-auto px-8 h-12 text-lg rounded-full flex items-center justify-center gap-2 font-medium">
                 Start Your Journey
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <svg className="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Button>
             </Link>
             <Link href="/services" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="bg-white border text-neutral-800 border-neutral-200 rounded-full hover:bg-neutral-50 shadow-sm w-full sm:w-auto px-8 h-14 text-base">
+              <Button variant="outline" size="lg" className="bg-white border text-neutral-800 border-neutral-200 rounded-full hover:bg-neutral-50 shadow-sm w-full sm:w-auto px-8 h-12 text-lg font-medium">
                 Explore Solutions
               </Button>
             </Link>
@@ -138,7 +139,7 @@ export default function HomePage() {
       </section>
 
       {/* 3. Enterprise-grade AI solutions */}
-      <section className="py-24 relative">
+      <section className="py-24 relative bg-[#FDFDFC]">
         <div className="container-custom">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 text-primary-500 font-medium mb-4">
@@ -154,50 +155,50 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white border border-neutral-200 rounded-3xl p-10 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
-              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold">
+            <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 hover:bg-white hover:border-primary-500/30 hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col group cursor-pointer">
+              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
                 <SparkleIcon />
                 <span>01</span>
               </div>
-              <h3 className="text-2xl font-bold text-[#26201D] mb-4">GenAI & Agentic AI</h3>
-              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow">
+              <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">GenAI & Agentic AI</h3>
+              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
                 From LLM experiments to production-grade AI systems with governance built-in.
               </p>
               <div className="flex flex-wrap gap-2 mt-auto">
                 {['LLM Strategy', 'AI Copilots', 'RAG Systems'].map(tag => (
-                  <span key={tag} className="px-4 py-2 bg-neutral-50 text-neutral-600 rounded-full text-xs font-medium border border-neutral-100">{tag}</span>
+                  <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
                 ))}
               </div>
             </div>
 
-            <div className="bg-white border border-neutral-200 rounded-3xl p-10 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
-              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold">
+            <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 hover:bg-white hover:border-primary-500/30 hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col group cursor-pointer">
+              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
                 <SparkleIcon />
                 <span>02</span>
               </div>
-              <h3 className="text-2xl font-bold text-[#26201D] mb-4">Data & Analytics</h3>
-              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow">
+              <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">Data & Analytics</h3>
+              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
                 Build AI-ready data foundations with modern architectures.
               </p>
               <div className="flex flex-wrap gap-2 mt-auto">
                 {['Data Fabric', 'ML Ops', 'Decision Intelligence'].map(tag => (
-                  <span key={tag} className="px-4 py-2 bg-neutral-50 text-neutral-600 rounded-full text-xs font-medium border border-neutral-100">{tag}</span>
+                  <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
                 ))}
               </div>
             </div>
 
-            <div className="bg-white border border-neutral-200 rounded-3xl p-10 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
-              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold">
+            <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 hover:bg-white hover:border-primary-500/30 hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col group cursor-pointer">
+              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
                 <SparkleIcon />
                 <span>03</span>
               </div>
-              <h3 className="text-2xl font-bold text-[#26201D] mb-4">ERP Modernization</h3>
-              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow">
+              <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">ERP Modernization</h3>
+              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
                 S/4HANA and cloud ERP transformations designed for AI enablement.
               </p>
               <div className="flex flex-wrap gap-2 mt-auto">
                 {['S/4HANA', 'SAP AI', 'Cloud ERP'].map(tag => (
-                  <span key={tag} className="px-4 py-2 bg-neutral-50 text-neutral-600 rounded-full text-xs font-medium border border-neutral-100">{tag}</span>
+                  <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
                 ))}
               </div>
             </div>
@@ -207,6 +208,7 @@ export default function HomePage() {
 
       {/* 4. Three phases to transformation */}
       <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid opacity-40 pointer-events-none"></div>
         <div className="container-custom relative z-10">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 text-primary-500 font-medium mb-4">
@@ -223,28 +225,28 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-3 gap-6 relative max-w-5xl mx-auto">
             {/* Dotted connecting line behind cards */}
-            <div className="hidden md:block absolute top-[40%] left-10 right-10 h-0 border-t-2 border-dashed border-neutral-200 -z-10"></div>
+            <div className="hidden md:block absolute top-[50%] left-10 right-10 h-0 border-t border-dashed border-neutral-300 -z-10"></div>
             
-            <div className="bg-gradient-to-br from-[#FFF4E5] to-[#FFE6CC] rounded-3xl p-10 shadow-sm border border-[#FFCD99]/30">
-              <div className="text-[#FF9933]/40 text-6xl font-black mb-6 leading-none">01</div>
-              <h3 className="text-2xl font-bold text-[#26201D] mb-4">Discovery</h3>
-              <p className="text-[#6D5A4C] leading-relaxed">
+            <div className="bg-gradient-to-br from-primary-500/20 to-primary-500/5 rounded-[24px] w-full max-w-[340px] h-[230px] p-7 shadow-sm mx-auto flex flex-col justify-center">
+              <div className="text-primary-500/40 text-[4.25rem] font-black mb-3 leading-none">01</div>
+              <h3 className="text-xl font-bold text-[#26201D] mb-2">Discovery</h3>
+              <p className="text-neutral-500 leading-relaxed text-sm">
                 Align stakeholders, assess readiness, and identify quick wins.
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-[#F5EEFE] to-[#F1E0FA] rounded-3xl p-10 shadow-sm border border-[#E4BFFF]/30">
-              <div className="text-[#D69EF5]/50 text-6xl font-black mb-6 leading-none">02</div>
-              <h3 className="text-2xl font-bold text-[#26201D] mb-4">Blueprint</h3>
-              <p className="text-[#63536D] leading-relaxed">
+            <div className="bg-gradient-to-br from-purple-500/20 to-purple-500/5 rounded-[24px] w-full max-w-[340px] h-[230px] p-7 shadow-sm mx-auto flex flex-col justify-center">
+              <div className="text-purple-500/40 text-[4.25rem] font-black mb-3 leading-none">02</div>
+              <h3 className="text-xl font-bold text-[#26201D] mb-2">Blueprint</h3>
+              <p className="text-neutral-500 leading-relaxed text-sm">
                 Design roadmap with governance, metrics, and clear milestones.
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-[#FFF0ED] to-[#FFE4DF] rounded-3xl p-10 shadow-sm border border-[#FFD0C7]/30">
-              <div className="text-[#FFA18F]/40 text-6xl font-black mb-6 leading-none">03</div>
-              <h3 className="text-2xl font-bold text-[#26201D] mb-4">Execution</h3>
-              <p className="text-[#6D5450] leading-relaxed">
+            <div className="bg-gradient-to-br from-rose-500/20 to-rose-500/5 rounded-[24px] w-full max-w-[340px] h-[230px] p-7 shadow-sm mx-auto flex flex-col justify-center">
+              <div className="text-rose-500/40 text-[4.25rem] font-black mb-3 leading-none">03</div>
+              <h3 className="text-xl font-bold text-[#26201D] mb-2">Execution</h3>
+              <p className="text-neutral-500 leading-relaxed text-sm">
                 Deliver with continuous value tracking and course correction.
               </p>
             </div>
@@ -326,26 +328,25 @@ export default function HomePage() {
       </section>
 
       {/* 6. Contact CTA */}
-      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-transparent to-pink-50/50">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] bg-orange-100/40 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+      <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(255, 130, 28, 0.08), rgba(173, 88, 217, 0.08))' }}>
         <div className="container-custom text-center relative z-10">
           <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-6">
             Get Clarity Before You Commit
           </h2>
-          <p className="text-lg text-neutral-500 max-w-2xl mx-auto mb-10">
+          <p className="text-lg text-[#6D5A4C] max-w-2xl mx-auto mb-10">
             45-minute strategy call. No sales pitch — just actionable insights on your GenAI, ERP, or data challenges.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/contact" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 transition-opacity shadow-md border-none">
+              <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-base rounded-2xl flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#D122E3] text-white hover:opacity-90 transition-colors shadow-sm border-none font-medium">
                 Book Free Strategy Call
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Button>
             </Link>
             <Link href="/contact" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="bg-white border-none text-[#26201D] rounded-full hover:bg-neutral-50 shadow-sm w-full sm:w-auto px-10 h-14 text-base font-medium">
+              <Button variant="outline" size="lg" className="bg-white border hover:bg-neutral-50 shadow-sm w-full sm:w-auto px-8 h-12 text-base font-medium text-[#26201D] rounded-2xl border-neutral-200">
                 Contact Us
               </Button>
             </Link>

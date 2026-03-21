@@ -57,6 +57,7 @@ export default function AboutPage() {
     <div className="pt-24 pb-0">
       {/* Hero Section */}
       <section className="py-24 relative overflow-hidden flex flex-col items-center text-center">
+        <div className="bg-grid opacity-20"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-orange-50/40 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply"></div>
         <div className="container-custom relative z-10 px-4">
           <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-200 bg-white/50 backdrop-blur-sm text-sm font-medium text-neutral-800 shadow-sm">
