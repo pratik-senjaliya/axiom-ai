@@ -1,0 +1,19 @@
+# Robots.txt for Next.js Website
+# Allow all crawlers by default
+
+User-agent: *
+Allow: /
+
+# Disallow admin and API routes
+Disallow: /studio/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://xconcile.com/sitemap.xml
+
+# Optional: Common bot configurations
+# User-agent: Googlebot
+# Allow: /
+
+# User-agent: Bingbot
+# Allow: /
