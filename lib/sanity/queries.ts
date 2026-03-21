@@ -1,6 +1,16 @@
 import { client } from './client'
 import type { BlogPost } from '../blog'
 
+async function safeFetch<T>(query: string, params: Record<string, any> = {}, defaultValue: T): Promise<T> {
+  try {
+    const result = await client.fetch(query, params);
+    return result || defaultValue;
+  } catch (error) {
+    console.error("Sanity fetch error:", error);
+    return defaultValue;
+  }
+}
+
 // GROQ query to get all posts
 export async function getAllPosts(): Promise<BlogPost[]> {
   const query = `*[_type == "post"] | order(publishedAt desc) {
@@ -17,11 +27,11 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     "content": ""
   }`
 
-  return client.fetch(query)
+  return safeFetch<BlogPost[]>(query, {}, [])
 }
 
 // GROQ query to get a single post by slug
-export async function getPostBySlug(slug: string) {
+export async function getPostBySlug(slug: string): Promise<any> {
   const query = `*[_type == "post" && slug.current == $slug][0] {
     "id": _id,
     title,
@@ -44,31 +54,29 @@ export async function getPostBySlug(slug: string) {
     }
   }`
 
-  return client.fetch(query, { slug })
+  return safeFetch<any>(query, { slug }, null)
 }
 
 // Get all slugs for generateStaticParams
 export async function getAllPostSlugs(): Promise<string[]> {
   const query = `*[_type == "post"].slug.current`
-  return client.fetch(query)
+  return safeFetch<string[]>(query, {}, [])
 }
 
 // Get unique categories
 export async function getAllCategories(): Promise<string[]> {
   const query = `array::unique(*[_type == "post"].category)`
-  return client.fetch(query)
+  return safeFetch<string[]>(query, {}, [])
 }
 
 // ==================== SERVICES ====================
 
 // GROQ query to get all services
-export async function getAllServices() {
+export async function getAllServices(): Promise<any[]> {
   const query = `*[_type == "service"] | order(title asc) {
     "id": _id,
     title,
     "slug": slug.current,
-    description,
-    longDescription,
     description,
     longDescription,
     icon,
@@ -91,17 +99,15 @@ export async function getAllServices() {
     faqs
   }`
 
-  return client.fetch(query)
+  return safeFetch<any[]>(query, {}, [])
 }
 
 // GROQ query to get a single service by slug
-export async function getServiceBySlug(slug: string) {
+export async function getServiceBySlug(slug: string): Promise<any> {
   const query = `*[_type == "service" && slug.current == $slug][0] {
     "id": _id,
     title,
     "slug": slug.current,
-    description,
-    longDescription,
     description,
     longDescription,
     icon,
@@ -149,227 +155,19 @@ export async function getServiceBySlug(slug: string) {
     }
   }`
 
-  return client.fetch(query, { slug })
+  return safeFetch<any>(query, { slug }, null)
 }
 
 // Get all service slugs for generateStaticParams
 export async function getAllServiceSlugs(): Promise<string[]> {
   const query = `*[_type == "service"].slug.current`
-  return client.fetch(query)
-}
-
-// ==================== INDUSTRIES ====================
-
-// GROQ query to get all industries
-export async function getAllIndustries() {
-  const query = `*[_type == "industry"] | order(title asc) {
-    "id": _id,
-    title,
-    "slug": slug.current,
-    description,
-    longDescription,
-    description,
-    longDescription,
-    icon,
-    "heroBackgroundImage": heroBackgroundImage.asset->url,
-    "heroBackgroundImageAlt": heroBackgroundImage.alt,
-    "heroImage": heroImage.asset->url,
-    "heroImageAlt": heroImage.alt,
-    "image": image.asset->url,
-    "imageAlt": image.alt,
-    "intro": {
-      "title": introTitle,
-      "content": introContent,
-      "stats": introStats
-    },
-    subIndustries,
-    industryBenefits,
-    gettingStarted,
-    features,
-    process,
-    whyChooseUs,
-    testimonials,
-    faqs
-  }`
-
-  return client.fetch(query)
-}
-
-// GROQ query to get a single industry by slug
-export async function getIndustryBySlug(slug: string) {
-  const query = `*[_type == "industry" && slug.current == $slug][0] {
-    "id": _id,
-    title,
-    "slug": slug.current,
-    description,
-    longDescription,
-    description,
-    longDescription,
-    icon,
-    "heroBackgroundImage": heroBackgroundImage.asset->url,
-    "heroBackgroundImageAlt": heroBackgroundImage.alt,
-    "heroImage": heroImage.asset->url,
-    "heroImageAlt": heroImage.alt,
-    "image": image.asset->url,
-    "imageAlt": image.alt,
-    "intro": {
-      "title": introTitle,
-      "content": introContent,
-      "stats": introStats
-    },
-    subIndustries,
-    industryBenefits,
-    gettingStarted,
-    features,
-    process,
-    whyChooseUs,
-    "whyPartnerImage": whyPartnerImage.asset->url,
-    "whyPartnerImageAlt": whyPartnerImage.alt,
-    whyPartnerImageLabel,
-    whyPartnerImageTagline,
-    testimonialsTitle,
-    testimonialsDescription,
-    testimonials,
-    faqs,
-    heroCTA,
-    introCTA {\n      title,\n      description,\n      cta\n    },
-    whyChooseCTA,
-    finalCTA {
-      title,
-      description,
-      cta
-    },
-    seo {
-      metaTitle,
-      metaDescription,
-      metaKeywords,
-      "openGraphImage": openGraphImage.asset->url,
-      "openGraphImageAlt": openGraphImage.alt
-    }
-  }`
-
-  return client.fetch(query, { slug })
-}
-
-// Get all industry slugs for generateStaticParams
-export async function getAllIndustrySlugs(): Promise<string[]> {
-  const query = `*[_type == "industry"].slug.current`
-  return client.fetch(query)
-}
-
-// ==================== HIRE STAFF ====================
-
-// GROQ query to get all hire staff positions
-export async function getAllHireStaff() {
-  const query = `*[_type == "hireStaff"] | order(title asc) {
-    "id": _id,
-    title,
-    "slug": slug.current,
-    description,
-    longDescription,
-    description,
-    longDescription,
-    icon,
-    "heroBackgroundImage": heroBackgroundImage.asset->url,
-    "heroBackgroundImageAlt": heroBackgroundImage.alt,
-    "heroImage": heroImage.asset->url,
-    "heroImageAlt": heroImage.alt,
-    "image": image.asset->url,
-    "imageAlt": image.alt,
-    "intro": {
-      "title": introTitle,
-      "content": introContent,
-      "stats": introStats
-    },
-    experienceLevels,
-    softwareCategories,
-    trial,
-    features,
-    gettingStarted,
-    whyChooseUs,
-    testimonial,
-    faqs,
-    process
-  }`
-
-  return client.fetch(query)
-}
-
-// GROQ query to get a single hire staff position by slug
-export async function getHireStaffBySlug(slug: string) {
-  const query = `*[_type == "hireStaff" && slug.current == $slug][0] {
-    "id": _id,
-    title,
-    "slug": slug.current,
-    description,
-    longDescription,
-    description,
-    longDescription,
-    icon,
-    "heroBackgroundImage": heroBackgroundImage.asset->url,
-    "heroBackgroundImageAlt": heroBackgroundImage.alt,
-    "heroImage": heroImage.asset->url,
-    "heroImageAlt": heroImage.alt,
-    "image": image.asset->url,
-    "imageAlt": image.alt,
-    "intro": {
-      "title": introTitle,
-      "content": introContent,
-      "stats": introStats
-    },
-    experienceLevels,
-    softwareCategories[] {
-      category,
-      platforms[] {
-        name,
-        "logo": logo.asset->url,
-        "logoAlt": logo.alt
-      }
-    },
-    trial,
-    features,
-    gettingStarted,
-    whyChooseUs,
-    "whyPartnerImage": whyPartnerImage.asset->url,
-    "whyPartnerImageAlt": whyPartnerImage.alt,
-    whyPartnerImageLabel,
-    whyPartnerImageTagline,
-    testimonialsTitle,
-    testimonialsDescription,
-    testimonials,
-    faqs,
-    process,
-    heroCTA,
-    introCTA {\n      title,\n      description,\n      cta\n    },
-    whyChooseCTA,
-    finalCTA {
-      title,
-      description,
-      cta
-    },
-    seo {
-      metaTitle,
-      metaDescription,
-      metaKeywords,
-      "openGraphImage": openGraphImage.asset->url,
-      "openGraphImageAlt": openGraphImage.alt
-    }
-  }`
-
-  return client.fetch(query, { slug })
-}
-
-// Get all hire staff slugs for generateStaticParams
-// Get all hire staff slugs for generateStaticParams
-export async function getAllHireStaffSlugs(): Promise<string[]> {
-  const query = `*[_type == "hireStaff"].slug.current`
-  return client.fetch(query)
+  return safeFetch<string[]>(query, {}, [])
 }
 
 // ==================== HOME PAGE ====================
 
 // GROQ query to get home page data
-export async function getHomePage() {
+export async function getHomePage(): Promise<any> {
   const query = `*[_type == "homePage"][0] {
     seo {
       metaTitle,
@@ -378,8 +176,6 @@ export async function getHomePage() {
       "openGraphImage": openGraphImage.asset->url,
       "openGraphImageAlt": openGraphImage.alt
     },
-    heroTitle,
-    heroTitleHighlight,
     heroTitle,
     heroTitleHighlight,
     heroDescription,
@@ -430,12 +226,12 @@ export async function getHomePage() {
     }
   }`
 
-  return client.fetch(query)
+  return safeFetch<any>(query, {}, null)
 }
 
 // ==================== ABOUT PAGE ====================
 
-export async function getAboutPage() {
+export async function getAboutPage(): Promise<any> {
   const query = `*[_type == "aboutPage"][0] {
     seo {
       metaTitle,
@@ -444,8 +240,6 @@ export async function getAboutPage() {
       "openGraphImage": openGraphImage.asset->url,
       "openGraphImageAlt": openGraphImage.alt
     },
-    heroTitle,
-    heroTitleHighlight,
     heroTitle,
     heroTitleHighlight,
     heroDescription,
@@ -471,12 +265,12 @@ export async function getAboutPage() {
       cta
     }
   }`
-  return client.fetch(query)
+  return safeFetch<any>(query, {}, null)
 }
 
 // ==================== CONTACT PAGE ====================
 
-export async function getContactPage() {
+export async function getContactPage(): Promise<any> {
   const query = `*[_type == "contactPage"][0] {
       seo {
         metaTitle,
@@ -491,10 +285,10 @@ export async function getContactPage() {
       address,
       businessHours
     }`
-  return client.fetch(query)
+  return safeFetch<any>(query, {}, null)
 }
 
-export async function getServicesPage() {
+export async function getServicesPage(): Promise<any> {
   const query = `*[_type == "servicesPage"][0] {
       seo {
         metaTitle,
@@ -505,38 +299,11 @@ export async function getServicesPage() {
       title,
       description
     }`
-  return client.fetch(query)
+  return safeFetch<any>(query, {}, null)
 }
 
-export async function getIndustriesPage() {
-  const query = `*[_type == "industriesPage"][0] {
-      seo {
-        metaTitle,
-        metaDescription,
-        metaKeywords,
-        "openGraphImage": openGraphImage.asset->url
-      },
-      title,
-      description
-    }`
-  return client.fetch(query)
-}
 
-export async function getHireStaffPage() {
-  const query = `*[_type == "hireStaffPage"][0] {
-      seo {
-        metaTitle,
-        metaDescription,
-        metaKeywords,
-        "openGraphImage": openGraphImage.asset->url
-      },
-      title,
-      description
-    }`
-  return client.fetch(query)
-}
-
-export async function getBlogPage() {
+export async function getBlogPage(): Promise<any> {
   const query = `*[_type == "blogPage"][0] {
       seo {
         metaTitle,
@@ -549,12 +316,12 @@ export async function getBlogPage() {
       newsletterTitle,
       newsletterDescription
     }`
-  return client.fetch(query)
+  return safeFetch<any>(query, {}, null)
 }
 
 // ==================== SETTINGS ====================
 
-export async function getSettings() {
+export async function getSettings(): Promise<any> {
   const query = `*[_type == "settings"][0] {
     companyName,
     footerDescription,
@@ -563,5 +330,5 @@ export async function getSettings() {
       url
     }
   }`
-  return client.fetch(query)
+  return safeFetch<any>(query, {}, null)
 }

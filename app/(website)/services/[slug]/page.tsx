@@ -34,29 +34,35 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
     title,
     description
   }`;
-  const service = await client.fetch(query, { slug: params.slug });
+  
+  try {
+    const service = await client.fetch(query, { slug: params.slug });
 
-  if (service?.seo) {
-    return genMeta({
-      title: service.seo.metaTitle || service.title,
-      description: service.seo.metaDescription || service.description,
-      keywords: service.seo.metaKeywords,
-      ogImage: service.seo.openGraphImage,
-      slug: `/${params.slug}`
-    });
-  }
+    if (service?.seo) {
+      return genMeta({
+        title: service.seo.metaTitle || service.title,
+        description: service.seo.metaDescription || service.description,
+        keywords: service.seo.metaKeywords,
+        ogImage: service.seo.openGraphImage,
+        slug: `/${params.slug}`
+      });
+    }
 
-  if (service) {
-    return genMeta({
-      title: service.title,
-      description: service.description,
-      slug: `/${params.slug}`
-    });
+    if (service) {
+      return genMeta({
+        title: service.title,
+        description: service.description,
+        slug: `/${params.slug}`
+      });
+    }
+  } catch (e) {
+    console.error("Error fetching service metadata:", e);
   }
 
   return genMeta({
-    title: "Service Not Found",
-    description: "The requested service could not be found.",
+    title: "Service | AxiomAI",
+    description: "Detailed information about our professional advisory services.",
+    slug: `/${params.slug}`
   });
 }
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Sora } from "next/font/google";
 import Script from "next/script";
 import "../globals.css";
 import { getOrganizationSchema } from "@/lib/seo";
@@ -7,9 +7,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const inter = Inter({
+const sora = Sora({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-sora",
   display: "swap",
   preload: true,
 });
@@ -87,7 +87,7 @@ export default function RootLayout({
   const organizationSchema = getOrganizationSchema();
 
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={sora.variable}>
       <head>
         <meta name="google-site-verification" content="zzIyWkg7jUhAgdRPn1TfTvBUkaG3cB5dIuXgsK4Dv9A" />
         {/* Google Tag Manager - Placed directly in head for verification */}
@@ -119,6 +119,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </noscript>
         {/* End Google Tag Manager (noscript) */}
+        <div className="bg-grid"></div>
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

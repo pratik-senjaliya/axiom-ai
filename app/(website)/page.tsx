@@ -1,529 +1,357 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { generateMetadata as genMeta } from "@/lib/seo";
-import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/layout/Container";
-import { Section } from "@/components/layout/Section";
-import { TestimonialSlider } from "@/components/ui/TestimonialSlider";
-import { StatCard } from "@/components/ui/StatCard";
-import { FeatureCard } from "@/components/ui/FeatureCard";
-import { FAQ } from "@/components/ui/FAQ";
-import { Card } from "@/components/ui/Card";
 import Link from "next/link";
-import { getHomePage, getAllPosts } from "@/lib/sanity/queries";
-import { client } from "@/lib/sanity/client";
-import { BlogPost, getAllBlogPosts as getStaticPosts, blogPosts } from "@/lib/blog";
+import { Button } from "@/components/ui/Button";
 
-// Enable ISR
-export const revalidate = 60;
+export const metadata: Metadata = {
+  title: "AxiomAI | Enterprise AI, ERP & Data Advisory",
+  description: "Building the future of intelligent enterprise. Strategic guidance for digital transformation.",
+};
 
-export async function generateMetadata(): Promise<Metadata> {
-  const sanityData = await getHomePage().catch(() => null);
+const SparkleIcon = () => (
+  <svg className="w-4 h-4 text-primary-500" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
+  </svg>
+);
 
-  if (sanityData?.seo) {
-    return genMeta({
-      title: sanityData.seo.metaTitle,
-      description: sanityData.seo.metaDescription,
-      keywords: sanityData.seo.metaKeywords,
-      ogImage: sanityData.seo.openGraphImage
-    });
-  }
-
-  return genMeta({
-    title: "Home",
-    description:
-      "We help entrepreneurs master their business with professional support, comprehensive solutions, and real-time insights.",
-    keywords: ["business", "consulting", "growth", "entrepreneur", "support"],
-  });
-}
-
-export default async function HomePage() {
-  const [sanityData, sanityPosts] = await Promise.all([
-    getHomePage().catch(() => null),
-    getAllPosts().catch(() => []),
-  ]);
-
-  const staticData = {
-    heroTitle: "Professional Services",
-    heroTitleHighlight: "Done Right",
-    heroDescription:
-      "Your business deserves expert attention. We provide dedicated professionals and powerful solutions that work together to help your business succeed and grow.",
-    heroImage:
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1920&h=1080&fit=crop",
-    heroStats: [
-      { label: "Active Clients", value: "10,000+" },
-      { label: "In Savings Delivered", value: "$50M+" },
-      { label: "Uptime Guarantee", value: "99.9%" },
-    ],
-    trustTitle: "Trusted by thousands of businesses",
-    trustDescription: "Join companies that rely on our expertise",
-    trustStats: [
-      { label: "Active Clients", value: "10,000+" },
-      { label: "Industry Experience", value: "15+ Years" },
-      { label: "Support Available", value: "24/7" },
-    ],
-    testimonialsTitle: "What Our Clients Say",
-    testimonialsDescription:
-      "Don't just take our word for it—hear from businesses that have transformed their operations with our help.",
-    testimonials: [
-      {
-        quote:
-          "The service has transformed how we manage our business operations. The team is professional, responsive, and truly understands our needs.",
-        author: "Sarah Johnson",
-        role: "CEO",
-        company: "Tech Innovations Inc.",
-      },
-      {
-        quote:
-          "Outstanding support and expertise. They've helped us streamline our processes and achieve significant cost savings while maintaining quality.",
-        author: "Michael Chen",
-        role: "Operations Director",
-        company: "Global Solutions",
-      },
-      {
-        quote:
-          "Working with this team has been a game-changer. Their attention to detail and commitment to excellence is unmatched in the industry.",
-        author: "Emily Rodriguez",
-        role: "Founder",
-        company: "Creative Ventures",
-      },
-    ],
-    featuresTitle: "Everything You Need to Succeed",
-    featuresDescription:
-      "Comprehensive solutions designed to streamline your operations and drive growth.",
-    features: [
-      {
-        title: "Expert Support",
-        description:
-          "Get dedicated support from experienced professionals who understand your business needs. Our team is available when you need them, providing personalized guidance and solutions tailored to your specific challenges.",
-        linkText: "Learn More",
-        linkHref: "/contact",
-        image:
-          "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop",
-      },
-      {
-        title: "Comprehensive Solutions",
-        description:
-          "Access a full suite of tools and services designed to streamline your operations. From initial setup to ongoing management, we provide everything you need in one integrated platform.",
-        linkText: "Learn More",
-        linkHref: "/solutions",
-        image:
-          "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop",
-      },
-      {
-        title: "Real-Time Insights",
-        description:
-          "Stay informed with up-to-date data and analytics. Make confident decisions based on accurate, real-time information that helps you understand your business performance at a glance.",
-        linkText: "Learn More",
-        linkHref: "/insights",
-        image:
-          "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
-      },
-      {
-        title: "Streamlined Processes",
-        description:
-          "Simplify complex workflows with our intuitive platform. Reduce manual work, eliminate errors, and focus on what matters most—growing your business and serving your customers.",
-        linkText: "Learn More",
-        linkHref: "/processes",
-        image:
-          "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-      },
-    ],
-    partnersTitle: "Trusted Partners",
-    partnersDescription: "We work with industry-leading platforms",
-    partners: [
-      { name: "Shopify", logo: "https://cdn.worldvectorlogo.com/logos/shopify.svg" },
-      { name: "Square", logo: "https://cdn.worldvectorlogo.com/logos/square-1.svg" },
-      { name: "QuickBooks", logo: "https://cdn.worldvectorlogo.com/logos/quickbooks.svg" },
-      { name: "Salesforce", logo: "https://cdn.worldvectorlogo.com/logos/salesforce-2.svg" },
-      { name: "Microsoft", logo: "https://cdn.worldvectorlogo.com/logos/microsoft.svg" },
-      { name: "Google", logo: "https://cdn.worldvectorlogo.com/logos/google-1-1.svg" },
-    ],
-    blogTitle: "Explore Our Latest Resources",
-    blogDescription: "From the Blog",
-    faqTitle: "Frequently Asked Questions",
-    faqs: [
-      {
-        question: "What services do you provide?",
-        answer:
-          "We offer a comprehensive range of professional services tailored to your business needs. Our solutions include expert consultation, process optimization, ongoing support, and access to advanced tools and resources designed to help your business succeed.",
-      },
-      {
-        question: "How quickly can I get started?",
-        answer:
-          "Getting started is quick and straightforward. After an initial consultation to understand your specific requirements, we can typically have you set up and running within a few business days. Our team will guide you through every step of the process.",
-      },
-      {
-        question: "What kind of support can I expect?",
-        answer:
-          "You'll have access to our dedicated support team who are available to assist with any questions or issues. We provide multiple channels for support including email, phone, and our online platform, ensuring you can reach us when you need help.",
-      },
-      {
-        question: "Is my data secure?",
-        answer:
-          "Security is our top priority. We use industry-standard encryption and security measures to protect your data. Our systems are regularly audited and comply with the latest security standards to ensure your information remains safe and confidential.",
-      },
-    ],
-  };
-
-  const data = sanityData || staticData;
-  const recentPosts =
-    sanityPosts && sanityPosts.length > 0
-      ? sanityPosts.slice(0, 3)
-      : blogPosts.slice(0, 3);
-
+export default function HomePage() {
   return (
     <>
-      {/* Hero Section - Dark Background with Image */}
-      <Section
-        background="white"
-        spacing="xl"
-        className="relative bg-gradient-to-b from-primary-900 via-primary-800 to-primary-900 text-white overflow-hidden"
-      >
-        {/* Background Image Overlay */}
-        <div className="absolute inset-0 opacity-10">
-          <Image
-            src={data.heroBackgroundImage || data.heroImage} // Fallback to heroImage if background not set
-            alt={data.heroBackgroundImageAlt || "Background"}
-            fill
-            className="object-cover"
-            priority
-          />
+      {/* 1. Hero Section */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-24 overflow-hidden text-center">
+        {/* Soft radial glows to emulate the background in Lovable */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] bg-orange-100/40 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+        <div className="absolute top-[40%] right-[10%] w-[40rem] h-[40rem] bg-violet-100/30 rounded-full blur-[100px] pointer-events-none -z-10"></div>
 
-        </div>
-
-        <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white leading-tight">
-                {data.heroTitle}
-                <br />
-                {data.heroTitleHighlight && (
-                  <span className="text-secondary-400">
-                    {data.heroTitleHighlight}
-                  </span>
-                )}
-              </h1>
-              <p className="text-lg md:text-xl text-primary-100 mb-10 max-w-2xl leading-relaxed">
-                {data.heroDescription}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                <Link href="/contact">
-                  <Button
-                    variant="secondary"
-                    size="lg"
-                    className="bg-secondary-500 hover:bg-secondary-600 text-white w-full sm:w-auto border-2 border-transparent"
-                  >
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
-              <div className="flex flex-wrap items-center gap-8 text-sm md:text-base text-primary-200">
-                {data.heroStats?.map((stat: any, index: number) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <span className="font-bold text-white text-lg">
-                      {stat.value}
-                    </span>
-                    <span>{stat.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div
-              className="hidden lg:block relative h-[31.25rem] rounded-2xl overflow-hidden shadow-2xl animate-fade-in-up"
-              style={{ animationDelay: "0.2s" }}
-            >
-              <Image
-                src={data.heroImage || "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop"} // Fallback to static if main image not set
-                alt={data.heroImageAlt || "Business professionals working together"}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
+        <div className="container-custom relative z-10 flex flex-col items-center">
+          
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-neutral-200 shadow-sm mb-8">
+            <SparkleIcon />
+            <span className="text-sm font-medium text-neutral-800">Enterprise AI & Data Advisory</span>
           </div>
-        </Container>
-      </Section>
-
-      {/* Trust Indicators */}
-      <Section background="white" spacing="md">
-        <Container>
-          <div className="text-center mb-10 animate-fade-in-up">
-            <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 mb-2">
-              {data.trustTitle}
-            </h2>
-            <p className="text-neutral-600">{data.trustDescription}</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {data.trustStats?.map((stat: any, index: number) => (
-              <div
-                key={index}
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${(index + 1) * 0.1}s` }}
-              >
-                <StatCard value={stat.value} label={stat.label} />
-              </div>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* Introduction Section */}
-      {data.introductionTitle && (
-        <Section background="white" spacing="lg">
-          <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Image - Left Side */}
-              <div className="relative h-[25rem] lg:h-[31.25rem] rounded-2xl overflow-hidden animate-fade-in-left">
-                {data.introductionImage ? (
-                  <Image
-                    src={data.introductionImage}
-                    alt={data.introductionTitle || "Introduction"}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                    <div className="text-primary-400 text-6xl">
-                      <svg className="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Content - Right Side */}
-              <div className="animate-fade-in-right">
-                <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-6 leading-tight">
-                  {data.introductionTitle}
-                </h2>
-                <p className="text-lg text-neutral-600 leading-relaxed whitespace-pre-line mb-8">
-                  {data.introductionBody}
-                </p>
-                <Link href={data.introductionCta?.link || "/contact"}>
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    className="bg-secondary-500 hover:bg-secondary-600 text-white"
-                  >
-                    {data.introductionCta?.text || "Learn More"}
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </Container>
-        </Section>
-      )}
-
-      {/* Features Section */}
-      <Section background="white" spacing="lg">
-        <Container>
-          <div className="text-center mb-14 animate-fade-in-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
-              {data.featuresTitle}
-            </h2>
-            <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-              {data.featuresDescription}
-            </p>
-          </div>
-
-          <div className="space-y-20 md:space-y-28">
-            {data.features?.map((feature: any, index: number) => (
-              <div
-                key={index}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center animate-fade-in-up"
-              >
-                {/* Text Side */}
-                <div className={index % 2 === 1 ? "lg:order-last" : ""}>
-                  <FeatureCard title={feature.title} description={feature.description} />
-                </div>
-
-                {/* Image Side */}
-                <div className={`relative h-72 md:h-96 rounded-2xl overflow-hidden shadow-lg ${index % 2 === 1 ? "lg:order-first" : ""}`}>
-                  <Image
-                    src={feature.image}
-                    alt={feature.imageAlt || feature.title}
-                    fill
-                    className="object-cover hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* CTA Button */}
-          <div className="text-center mt-16">
-            <Link href="/contact">
-              <Button
-                variant="primary"
-                size="lg"
-                className="bg-secondary-500 hover:bg-secondary-600 text-white"
-              >
-                Get Started Today
+          
+          <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-bold text-[#26201D] tracking-tight mb-8 leading-[1.1]">
+            Building the future of
+            <span className="block gradient-text mt-2">enterprise intelligence</span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-neutral-500 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+            We architect GenAI, Data, and ERP transformations that scale — with governance, clarity, and measurable outcomes.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+            <Link href="/contact" className="w-full sm:w-auto">
+              <Button size="lg" className="btn-primary w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2">
+                Start Your Journey
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Button>
+            </Link>
+            <Link href="/services" className="w-full sm:w-auto">
+              <Button variant="outline" size="lg" className="bg-white border text-neutral-800 border-neutral-200 rounded-full hover:bg-neutral-50 shadow-sm w-full sm:w-auto px-8 h-14 text-base">
+                Explore Solutions
               </Button>
             </Link>
           </div>
-        </Container>
-      </Section>
 
-      {/* Testimonials */}
-      <Section background="gray" spacing="lg">
-        <Container>
-          <div className="text-center mb-12 animate-fade-in-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
-              {data.testimonialsTitle}
-            </h2>
-            <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-              {data.testimonialsDescription}
-            </p>
-          </div>
-          <TestimonialSlider testimonials={data.testimonials || []} />
-        </Container>
-      </Section>
-
-      {/* Partner Logos */}
-      <Section background="white" spacing="md">
-        <Container>
-          <div className="text-center mb-10 animate-fade-in-up">
-            <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 mb-2">
-              {data.partnersTitle}
-            </h2>
-            <p className="text-neutral-600">
-              {data.partnersDescription}
-            </p>
-          </div>
-          <div className="relative w-full overflow-hidden">
-            <div className="flex w-max animate-scroll gap-16 items-center py-4">
-              {[...(data.partners || []), ...(data.partners || []), ...(data.partners || [])].map((partner: any, i: number) => (
-                <div
-                  key={i}
-                  className="relative w-48 h-16 opacity-100 hover:scale-110 transition-all duration-300 flex-shrink-0 flex items-center justify-center"
-                >
-                  {partner && partner.logo ? (
-                    <Image
-                      src={partner.logo}
-                      alt={partner.logoAlt || partner.name || "Partner Logo"}
-                      fill
-                      className="object-contain"
-                    />
-                  ) : (
-                    <span className="text-sm font-semibold text-neutral-500 border border-neutral-300 rounded px-3 py-2 whitespace-nowrap">
-                      {partner?.name || (typeof partner === 'string' ? partner : "Partner")}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Blog Section */}
-      <Section background="white" spacing="lg">
-        <Container>
-          <div className="flex items-center justify-between mb-12 animate-fade-in-up">
-            <div>
-              <p className="text-sm text-primary-600 font-semibold mb-2 uppercase tracking-wide">
-                {data.blogDescription}
-              </p>
-              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900">
-                {data.blogTitle}
-              </h2>
-            </div>
-            <Link
-              href="/resources"
-              className="hidden md:block text-primary-600 font-semibold hover:text-primary-700 transition-colors"
-            >
-              View All →
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {recentPosts.map((post: any, index: number) => (
-              <Link
-                key={index}
-                href={`/blog/${post.slug}`}
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <Card hover className="h-full overflow-hidden">
-                  <div className="relative aspect-video mb-4 -m-6">
-                    <Image
-                      src={post.image}
-                      alt={post.imageAlt || post.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6 pt-0">
-                    <div className="flex items-center gap-3 mb-3 text-sm text-neutral-500">
-                      <span className="px-2 py-1 bg-primary-100 text-primary-700 rounded text-xs font-medium">
-                        {post.category}
-                      </span>
-                      <span>{post.date}</span>
-                    </div>
-                    <h3 className="text-xl font-semibold text-neutral-900 mb-2 line-clamp-2">
-                      {post.title}
-                    </h3>
-                    <p className="text-neutral-600 mb-4 line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                    <span className="text-primary-600 font-medium text-sm inline-flex items-center gap-1 hover:gap-2 transition-all">
-                      Learn more →
-                    </span>
-                  </div>
-                </Card>
-              </Link>
+          <div className="flex flex-wrap items-center justify-center gap-3 max-w-4xl mx-auto">
+            {["GenAI & LLMs", "Agentic AI", "S/4HANA", "Data Fabric", "ML Ops", "AI Governance"].map((tag) => (
+              <span key={tag} className="px-5 py-2.5 bg-white border border-neutral-200 text-neutral-500 rounded-full text-sm font-medium shadow-sm">
+                {tag}
+              </span>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center mt-8 md:hidden">
-            <Link
-              href="/resources"
-              className="text-primary-600 font-semibold hover:text-primary-700 transition-colors"
-            >
-              View All Resources →
-            </Link>
-          </div>
-        </Container>
-      </Section>
-
-      {/* FAQ Section */}
-      <Section background="white" spacing="lg">
-        <Container>
-          <FAQ items={data.faqs} title={data.faqTitle} showMoreLink={false} />
-        </Container>
-      </Section>
-
-      {/* CTA Section */}
-      <Section
-        background="primary"
-        spacing="lg"
-        className="bg-gradient-to-r from-primary-700 to-primary-800"
-      >
-        <Container>
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-              {data.finalCTA?.title || "Ready to Get Started?"}
+      {/* 2. Why Digital Transformations Fail */}
+      <section className="py-24 relative">
+        <div className="container-custom">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
+              Why Digital Transformations Fail
             </h2>
-            <p className="text-xl mb-8 text-primary-100 leading-relaxed">
-              {data.finalCTA?.description || "Join thousands of businesses that trust us with their operations. Schedule a consultation today and see how we can help your business grow."}
+            <p className="text-lg text-neutral-500">
+              We've seen the patterns. Here's what we help you avoid.
             </p>
-            <div className="flex justify-center">
-              <Link href={data.finalCTA?.cta?.link || "/contact"}>
-                <Button
-                  variant={data.finalCTA?.cta?.variant || "secondary"}
-                  size="lg"
-                  className="bg-white text-primary-700 hover:bg-primary-50 border-2 border-transparent"
-                >
-                  {data.finalCTA?.cta?.text || "Schedule a Call"}
-                </Button>
-              </Link>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Card 1 */}
+            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between h-full">
+              <div className="flex justify-between items-start mb-12">
+                <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-red-600 mb-1">85%</div>
+                  <div className="text-xs font-medium text-neutral-400 uppercase tracking-wide">of AI projects fail</div>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[#26201D] mb-3">GenAI Pilots That Don't Scale</h3>
+                <p className="text-neutral-500 leading-relaxed text-sm">LLM experiments without governance or production roadmaps.</p>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between h-full">
+              <div className="flex justify-between items-start mb-12">
+                <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                  </svg>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-red-600 mb-1">75%</div>
+                  <div className="text-xs font-medium text-neutral-400 uppercase tracking-wide">exceed timeline</div>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[#26201D] mb-3">ERP Projects Over Budget</h3>
+                <p className="text-neutral-500 leading-relaxed text-sm">S/4HANA migrations driven by vendors, not value.</p>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between h-full">
+              <div className="flex justify-between items-start mb-12">
+                <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-red-600 mb-1">70%</div>
+                  <div className="text-xs font-medium text-neutral-400 uppercase tracking-wide">lack data strategy</div>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[#26201D] mb-3">Data Silos Block AI</h3>
+                <p className="text-neutral-500 leading-relaxed text-sm">Analytics disconnected from decision-making.</p>
+              </div>
             </div>
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
+
+      {/* 3. Enterprise-grade AI solutions */}
+      <section className="py-24 relative">
+        <div className="container-custom">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 text-primary-500 font-medium mb-4">
+              <SparkleIcon />
+              <span className="text-sm font-medium">What We Do</span>
+            </div>
+            <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
+              Enterprise-grade AI solutions
+            </h2>
+            <p className="text-lg text-neutral-500">
+              We help organizations move from experiments to outcomes.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white border border-neutral-200 rounded-3xl p-10 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
+              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold">
+                <SparkleIcon />
+                <span>01</span>
+              </div>
+              <h3 className="text-2xl font-bold text-[#26201D] mb-4">GenAI & Agentic AI</h3>
+              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow">
+                From LLM experiments to production-grade AI systems with governance built-in.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-auto">
+                {['LLM Strategy', 'AI Copilots', 'RAG Systems'].map(tag => (
+                  <span key={tag} className="px-4 py-2 bg-neutral-50 text-neutral-600 rounded-full text-xs font-medium border border-neutral-100">{tag}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white border border-neutral-200 rounded-3xl p-10 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
+              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold">
+                <SparkleIcon />
+                <span>02</span>
+              </div>
+              <h3 className="text-2xl font-bold text-[#26201D] mb-4">Data & Analytics</h3>
+              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow">
+                Build AI-ready data foundations with modern architectures.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-auto">
+                {['Data Fabric', 'ML Ops', 'Decision Intelligence'].map(tag => (
+                  <span key={tag} className="px-4 py-2 bg-neutral-50 text-neutral-600 rounded-full text-xs font-medium border border-neutral-100">{tag}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white border border-neutral-200 rounded-3xl p-10 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
+              <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold">
+                <SparkleIcon />
+                <span>03</span>
+              </div>
+              <h3 className="text-2xl font-bold text-[#26201D] mb-4">ERP Modernization</h3>
+              <p className="text-neutral-500 leading-relaxed mb-10 flex-grow">
+                S/4HANA and cloud ERP transformations designed for AI enablement.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-auto">
+                {['S/4HANA', 'SAP AI', 'Cloud ERP'].map(tag => (
+                  <span key={tag} className="px-4 py-2 bg-neutral-50 text-neutral-600 rounded-full text-xs font-medium border border-neutral-100">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Three phases to transformation */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="container-custom relative z-10">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 text-primary-500 font-medium mb-4">
+              <SparkleIcon />
+              <span className="text-sm font-medium">Our Approach</span>
+            </div>
+            <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
+              Three phases to transformation
+            </h2>
+            <p className="text-lg text-neutral-500">
+              A structured methodology for GenAI, ERP, and Data initiatives.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 relative max-w-5xl mx-auto">
+            {/* Dotted connecting line behind cards */}
+            <div className="hidden md:block absolute top-[40%] left-10 right-10 h-0 border-t-2 border-dashed border-neutral-200 -z-10"></div>
+            
+            <div className="bg-gradient-to-br from-[#FFF4E5] to-[#FFE6CC] rounded-3xl p-10 shadow-sm border border-[#FFCD99]/30">
+              <div className="text-[#FF9933]/40 text-6xl font-black mb-6 leading-none">01</div>
+              <h3 className="text-2xl font-bold text-[#26201D] mb-4">Discovery</h3>
+              <p className="text-[#6D5A4C] leading-relaxed">
+                Align stakeholders, assess readiness, and identify quick wins.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-[#F5EEFE] to-[#F1E0FA] rounded-3xl p-10 shadow-sm border border-[#E4BFFF]/30">
+              <div className="text-[#D69EF5]/50 text-6xl font-black mb-6 leading-none">02</div>
+              <h3 className="text-2xl font-bold text-[#26201D] mb-4">Blueprint</h3>
+              <p className="text-[#63536D] leading-relaxed">
+                Design roadmap with governance, metrics, and clear milestones.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-[#FFF0ED] to-[#FFE4DF] rounded-3xl p-10 shadow-sm border border-[#FFD0C7]/30">
+              <div className="text-[#FFA18F]/40 text-6xl font-black mb-6 leading-none">03</div>
+              <h3 className="text-2xl font-bold text-[#26201D] mb-4">Execution</h3>
+              <p className="text-[#6D5450] leading-relaxed">
+                Deliver with continuous value tracking and course correction.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/use-cases" className="inline-flex items-center gap-2 text-primary-500 font-semibold hover:text-primary-600 transition-colors">
+              Explore use cases
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Built for Enterprise Leaders */}
+      <section className="py-24 relative">
+        <div className="container-custom">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
+              Built for Enterprise Leaders
+            </h2>
+            <p className="text-lg text-neutral-500 max-w-2xl mx-auto">
+              We work with decision-makers who understand transformation requires more than technology.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-bl from-orange-400 to-pink-500 flex items-center justify-center mb-6 text-white shadow-inner">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-[#26201D] mb-3">CXOs & Board</h3>
+              <p className="text-neutral-500 text-sm leading-relaxed">
+                Strategic clarity on GenAI, ERP, and data investments.
+              </p>
+            </div>
+
+            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-bl from-pink-500 to-rose-500 flex items-center justify-center mb-6 text-white shadow-inner">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-[#26201D] mb-3">CDOs & CTOs</h3>
+              <p className="text-neutral-500 text-sm leading-relaxed">
+                Execution frameworks and governance models.
+              </p>
+            </div>
+
+            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-bl from-rose-500 to-primary-500 flex items-center justify-center mb-6 text-white shadow-inner">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-[#26201D] mb-3">Enterprise Architects</h3>
+              <p className="text-neutral-500 text-sm leading-relaxed">
+                Integration blueprints for AI-ready architecture.
+              </p>
+            </div>
+
+            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-bl from-primary-500 to-orange-400 flex items-center justify-center mb-6 text-white shadow-inner">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-[#26201D] mb-3">Data Leaders</h3>
+              <p className="text-neutral-500 text-sm leading-relaxed">
+                Data strategy alignment with AI ambitions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Contact CTA */}
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-transparent to-pink-50/50">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] bg-orange-100/40 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+        <div className="container-custom text-center relative z-10">
+          <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-6">
+            Get Clarity Before You Commit
+          </h2>
+          <p className="text-lg text-neutral-500 max-w-2xl mx-auto mb-10">
+            45-minute strategy call. No sales pitch — just actionable insights on your GenAI, ERP, or data challenges.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/contact" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 transition-opacity shadow-md border-none">
+                Book Free Strategy Call
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Button>
+            </Link>
+            <Link href="/contact" className="w-full sm:w-auto">
+              <Button variant="outline" size="lg" className="bg-white border-none text-[#26201D] rounded-full hover:bg-neutral-50 shadow-sm w-full sm:w-auto px-10 h-14 text-base font-medium">
+                Contact Us
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

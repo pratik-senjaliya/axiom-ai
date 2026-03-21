@@ -1,0 +1,364 @@
+
+> axiom-ai-website@1.0.0 dev
+> next dev
+
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.5:3000
+
+✓ Starting...
+✓ Ready in 594ms
+ HEAD / 200 in 2.6s (compile: 2.3s, render: 296ms)
+ GET /dashboard 404 in 530ms (compile: 458ms, render: 72ms)
+ GET / 200 in 164ms (compile: 10ms, render: 154ms)
+ GET /services 200 in 1280ms (compile: 1175ms, render: 105ms)
+ GET /use-cases 200 in 1195ms (compile: 1119ms, render: 76ms)
+ GET / 200 in 53ms (compile: 11ms, render: 41ms)
+✓ Compiled in 1266ms
+✓ Compiled in 524ms
+✓ Compiled in 7ms
+⨯ ./app/globals.css
+Error evaluating Node.js code
+CssSyntaxError: /home/silent-infotech/Desktop/Workspace/next-website/Personal Projects/xconcile-website-master/app/globals.css:1:1: The `text-primary-700` class does not exist. If `text-primary-700` is a custom class, make sure it is defined within a `@layer` directive.
+    [at Input.error (turbopack:///[project]/node_modules/postcss/lib/input.js:135:16)]
+    [at AtRule.error (turbopack:///[project]/node_modules/postcss/lib/node.js:146:32)]
+    [at processApply (/home/silent-infotech/Desktop/Workspace/next-website/Personal Projects/xconcile-website-master/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)]
+    [at /home/silent-infotech/Desktop/Workspace/next-website/Personal Projects/xconcile-website-master/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:551:9]
+    [at /home/silent-infotech/Desktop/Workspace/next-website/Personal Projects/xconcile-website-master/node_modules/tailwindcss/lib/processTailwindFeatures.js:55:50]
+    [at async plugins (/home/silent-infotech/Desktop/Workspace/next-website/Personal Projects/xconcile-website-master/node_modules/tailwindcss/lib/plugin.js:38:17)]
+    [at async LazyResult.runAsync (turbopack:///[project]/node_modules/postcss/lib/lazy-result.js:293:11)]
+    [at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34)]
+    [at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23)]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/(website)/layout.tsx [Server Component]
+
+
+ GET / 500 in 2.3s (compile: 1920ms, render: 330ms)
+ GET / 200 in 280ms (compile: 83ms, render: 197ms)
+ GET / 200 in 125ms (compile: 7ms, render: 118ms)
+ GET / 200 in 59ms (compile: 4ms, render: 55ms)
+ HEAD / 200 in 254ms (compile: 4ms, render: 250ms)
+ GET / 200 in 165ms (compile: 4ms, render: 161ms)
+ GET /services 200 in 184ms (compile: 124ms, render: 60ms)
+✓ Compiled in 484ms
+ GET / 200 in 145ms (compile: 75ms, render: 70ms)
+✓ Compiled in 269ms
+ GET / 200 in 312ms (compile: 82ms, render: 230ms)
+ GET / 200 in 130ms (compile: 4ms, render: 126ms)
+ GET /services 200 in 104ms (compile: 62ms, render: 42ms)
+ GET /services 200 in 47ms (compile: 3ms, render: 45ms)
+ GET /services 200 in 31ms (compile: 3ms, render: 28ms)
+ GET /services 200 in 26ms (compile: 3ms, render: 23ms)
+ GET /services 200 in 22ms (compile: 3ms, render: 20ms)
+ GET /data-analytics 404 in 18ms (compile: 3ms, render: 15ms)
+ GET /data-analytics 404 in 33ms (compile: 2ms, render: 31ms)
+ GET /services 200 in 221ms (compile: 2ms, render: 218ms)
+ GET /use-cases 200 in 113ms (compile: 74ms, render: 39ms)
+ GET / 200 in 45ms (compile: 5ms, render: 40ms)
+✓ Compiled in 478ms
+ GET / 200 in 304ms (compile: 116ms, render: 189ms)
+ GET / 200 in 121ms (compile: 2ms, render: 119ms)
+ GET / 200 in 85ms (compile: 1951µs, render: 83ms)
+ GET / 200 in 314ms (compile: 137ms, render: 177ms)
+ GET / 200 in 94ms (compile: 3ms, render: 92ms)
+ GET / 200 in 57ms (compile: 4ms, render: 53ms)
+ GET / 200 in 234ms (compile: 57ms, render: 177ms)
+ GET / 200 in 122ms (compile: 3ms, render: 119ms)
+ GET / 200 in 47ms (compile: 4ms, render: 44ms)
+ GET / 200 in 175ms (compile: 91ms, render: 84ms)
+ GET / 200 in 246ms (compile: 2ms, render: 244ms)
+ GET /services 200 in 98ms (compile: 57ms, render: 41ms)
+ GET / 200 in 35ms (compile: 2ms, render: 33ms)
+✓ Compiled in 207ms
+ GET / 200 in 97ms (compile: 7ms, render: 90ms)
+✓ Compiled in 203ms
+ GET / 200 in 69ms (compile: 3ms, render: 66ms)
+✓ Compiled in 200ms
+✓ Compiled in 178ms
+✓ Compiled in 185ms
+ GET /services 200 in 95ms (compile: 60ms, render: 35ms)
+ GET / 200 in 28ms (compile: 2ms, render: 26ms)
+ GET /services 200 in 23ms (compile: 1872µs, render: 21ms)
+ GET /use-cases 200 in 156ms (compile: 86ms, render: 71ms)
+ GET /use-cases 200 in 36ms (compile: 4ms, render: 32ms)
+ GET /insights 200 in 297ms (compile: 260ms, render: 37ms)
+✓ Compiled in 300ms
+ GET /insights 200 in 388ms (compile: 109ms, render: 279ms)
+ GET /insights 200 in 237ms (compile: 4ms, render: 233ms)
+ GET /insights 200 in 186ms (compile: 5ms, render: 181ms)
+ GET /insights 200 in 132ms (compile: 9ms, render: 123ms)
+✓ Compiled in 300ms
+ GET /services 200 in 122ms (compile: 69ms, render: 52ms)
+ GET /use-cases 200 in 122ms (compile: 68ms, render: 54ms)
+ GET /insights 200 in 29ms (compile: 5ms, render: 25ms)
+ GET /about 200 in 365ms (compile: 321ms, render: 44ms)
+ GET /services 200 in 35ms (compile: 2ms, render: 33ms)
+ GET /logo-icon-refined.png 404 in 51ms (compile: 5ms, render: 46ms)
+ GET /services 200 in 25ms (compile: 1854µs, render: 23ms)
+ GET /services 200 in 31ms (compile: 1960µs, render: 29ms)
+ GET /erp-transformation 404 in 14ms (compile: 2ms, render: 12ms)
+ GET /erp-transformation 404 in 38ms (compile: 5ms, render: 33ms)
+ GET /services 200 in 256ms (compile: 3ms, render: 253ms)
+ GET /use-cases 200 in 27ms (compile: 3ms, render: 24ms)
+ GET /insights 200 in 29ms (compile: 3ms, render: 26ms)
+⨯ Error: Configuration must contain `projectId`
+    at module evaluation (lib/sanity/client.ts:5:35)
+    at module evaluation (lib/sanity/queries.ts:1:1)
+    at module evaluation (app/(website)/contact/page.tsx:3:1)
+    at module evaluation (.next/dev/server/chunks/ssr/[root-of-the-server]__adb04a23._.js:490:47)
+  3 | import { apiVersion, dataset, projectId } from './env'
+  4 |
+> 5 | export const client = createClient({
+    |                                   ^
+  6 |     projectId,
+  7 |     dataset,
+  8 |     apiVersion,
+⨯ Error: Configuration must contain `projectId`
+    at module evaluation (lib/sanity/client.ts:5:35)
+    at module evaluation (lib/sanity/queries.ts:1:1)
+    at module evaluation (app/(website)/contact/page.tsx:3:1)
+    at module evaluation (.next/dev/server/chunks/ssr/[root-of-the-server]__adb04a23._.js:490:47)
+  3 | import { apiVersion, dataset, projectId } from './env'
+  4 |
+> 5 | export const client = createClient({
+    |                                   ^
+  6 |     projectId,
+  7 |     dataset,
+  8 |     apiVersion, {
+  page: '/contact'
+}
+ GET /contact 500 in 2.0s (compile: 1982ms, render: 34ms)
+⨯ Error: Configuration must contain `projectId`
+    at module evaluation (lib/sanity/client.ts:5:35)
+    at module evaluation (lib/sanity/queries.ts:1:1)
+    at module evaluation (app/(website)/contact/page.tsx:3:1)
+    at module evaluation (.next/dev/server/chunks/ssr/[root-of-the-server]__adb04a23._.js:490:47)
+  3 | import { apiVersion, dataset, projectId } from './env'
+  4 |
+> 5 | export const client = createClient({
+    |                                   ^
+  6 |     projectId,
+  7 |     dataset,
+  8 |     apiVersion, {
+  page: '/contact'
+}
+⨯ Error: Configuration must contain `projectId`
+    at module evaluation (lib/sanity/client.ts:5:35)
+    at module evaluation (lib/sanity/queries.ts:1:1)
+    at module evaluation (app/(website)/contact/page.tsx:3:1)
+    at module evaluation (.next/dev/server/chunks/ssr/[root-of-the-server]__adb04a23._.js:490:47)
+  3 | import { apiVersion, dataset, projectId } from './env'
+  4 |
+> 5 | export const client = createClient({
+    |                                   ^
+  6 |     projectId,
+  7 |     dataset,
+  8 |     apiVersion, {
+  page: '/contact'
+}
+ GET /contact 500 in 808ms (compile: 796ms, render: 12ms)
+✓ Compiled in 259ms
+⨯ Error: Configuration must contain `projectId`
+    at module evaluation (lib/sanity/client.ts:5:35)
+    at module evaluation (lib/sanity/queries.ts:1:1)
+    at module evaluation (app/(website)/contact/page.tsx:3:1)
+    at module evaluation (.next/dev/server/chunks/ssr/[root-of-the-server]__adb04a23._.js:490:47)
+  3 | import { apiVersion, dataset, projectId } from './env'
+  4 |
+> 5 | export const client = createClient({
+    |                                   ^
+  6 |     projectId,
+  7 |     dataset,
+  8 |     apiVersion,
+⨯ Error: Configuration must contain `projectId`
+    at module evaluation (lib/sanity/client.ts:5:35)
+    at module evaluation (lib/sanity/queries.ts:1:1)
+    at module evaluation (app/(website)/contact/page.tsx:3:1)
+    at module evaluation (.next/dev/server/chunks/ssr/[root-of-the-server]__adb04a23._.js:490:47)
+  3 | import { apiVersion, dataset, projectId } from './env'
+  4 |
+> 5 | export const client = createClient({
+    |                                   ^
+  6 |     projectId,
+  7 |     dataset,
+  8 |     apiVersion, {
+  page: '/contact'
+}
+ GET /contact 500 in 1298ms (compile: 1291ms, render: 8ms)
+⨯ Error: Configuration must contain `projectId`
+    at module evaluation (lib/sanity/client.ts:5:35)
+    at module evaluation (lib/sanity/queries.ts:1:1)
+    at module evaluation (app/(website)/contact/page.tsx:3:1)
+    at module evaluation (.next/dev/server/chunks/ssr/[root-of-the-server]__adb04a23._.js:490:47)
+  3 | import { apiVersion, dataset, projectId } from './env'
+  4 |
+> 5 | export const client = createClient({
+    |                                   ^
+  6 |     projectId,
+  7 |     dataset,
+  8 |     apiVersion, {
+  page: '/contact'
+}
+⨯ Error: Configuration must contain `projectId`
+    at module evaluation (lib/sanity/client.ts:5:35)
+    at module evaluation (lib/sanity/queries.ts:1:1)
+    at module evaluation (app/(website)/contact/page.tsx:3:1)
+    at module evaluation (.next/dev/server/chunks/ssr/[root-of-the-server]__adb04a23._.js:490:47)
+  3 | import { apiVersion, dataset, projectId } from './env'
+  4 |
+> 5 | export const client = createClient({
+    |                                   ^
+  6 |     projectId,
+  7 |     dataset,
+  8 |     apiVersion, {
+  page: '/contact'
+}
+ GET /contact 500 in 2.2s (compile: 2.2s, render: 17ms)
+⨯ Error: Configuration must contain `projectId`
+    at module evaluation (lib/sanity/client.ts:5:35)
+    at module evaluation (lib/sanity/queries.ts:1:1)
+    at module evaluation (app/(website)/contact/page.tsx:3:1)
+    at module evaluation (.next/dev/server/chunks/ssr/[root-of-the-server]__adb04a23._.js:490:47)
+  3 | import { apiVersion, dataset, projectId } from './env'
+  4 |
+> 5 | export const client = createClient({
+    |                                   ^
+  6 |     projectId,
+  7 |     dataset,
+  8 |     apiVersion, {
+  page: '/contact'
+}
+⨯ Error: Configuration must contain `projectId`
+    at module evaluation (lib/sanity/client.ts:5:35)
+    at module evaluation (lib/sanity/queries.ts:1:1)
+    at module evaluation (app/(website)/contact/page.tsx:3:1)
+    at module evaluation (.next/dev/server/chunks/ssr/[root-of-the-server]__adb04a23._.js:490:47)
+  3 | import { apiVersion, dataset, projectId } from './env'
+  4 |
+> 5 | export const client = createClient({
+    |                                   ^
+  6 |     projectId,
+  7 |     dataset,
+  8 |     apiVersion, {
+  page: '/contact'
+}
+ GET /contact 500 in 804ms (compile: 796ms, render: 8ms)
+ GET /contact 200 in 536ms (compile: 114ms, render: 422ms)
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "statusCode": 404,\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\"",\n' +
+    '  "error": "Dataset not found"\n' +
+    '}',
+  details: undefined
+}
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "statusCode": 404,\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\"",\n' +
+    '  "error": "Dataset not found"\n' +
+    '}',
+  details: undefined
+}
+ GET /contact 200 in 486ms (compile: 140ms, render: 346ms)
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\"",\n' +
+    '  "error": "Dataset not found",\n' +
+    '  "statusCode": 404\n' +
+    '}',
+  details: undefined
+}
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\"",\n' +
+    '  "error": "Dataset not found",\n' +
+    '  "statusCode": 404\n' +
+    '}',
+  details: undefined
+}
+ GET /contact 200 in 308ms (compile: 3ms, render: 305ms)
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "statusCode": 404,\n' +
+    '  "error": "Dataset not found",\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\""\n' +
+    '}',
+  details: undefined
+}
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "statusCode": 404,\n' +
+    '  "error": "Dataset not found",\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\""\n' +
+    '}',
+  details: undefined
+}
+ GET /contact 200 in 116ms (compile: 2ms, render: 114ms)
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "statusCode": 404,\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\"",\n' +
+    '  "error": "Dataset not found"\n' +
+    '}',
+  details: undefined
+}
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "statusCode": 404,\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\"",\n' +
+    '  "error": "Dataset not found"\n' +
+    '}',
+  details: undefined
+}
+ GET /contact 200 in 411ms (compile: 94ms, render: 316ms)
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "error": "Dataset not found",\n' +
+    '  "statusCode": 404,\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\""\n' +
+    '}',
+  details: undefined
+}
+Sanity fetch error: Error: Dataset not found - Dataset "production" not found for project ID "unconfigured"
+    at ignore-listed frames {
+  response: [Object],
+  statusCode: 404,
+  responseBody: '{\n' +
+    '  "error": "Dataset not found",\n' +
+    '  "statusCode": 404,\n' +
+    '  "message": "Dataset \\"production\\" not found for project ID \\"unconfigured\\""\n' +
+    '}',
+  details: undefined
+}
+ GET /contact 200 in 503ms (compile: 105ms, render: 398ms)

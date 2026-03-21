@@ -1,256 +1,158 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { generateMetadata as genMeta } from "@/lib/seo";
-import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/layout/Container";
-import { Section } from "@/components/layout/Section";
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import Link from "next/link";
-import { getAboutPage } from "@/lib/sanity/queries";
-import * as LucideIcons from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
-// Enable ISR
-export const revalidate = 60;
+export const metadata: Metadata = {
+  title: "About Us | AxiomAI",
+  description: "Who we are and our mission of engineering business success.",
+};
 
-export async function generateMetadata(): Promise<Metadata> {
-  const sanityData = await getAboutPage().catch(() => null);
+const SparkleIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" className="text-primary-500">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/>
+  </svg>
+);
 
-  if (sanityData?.seo) {
-    return genMeta({
-      title: sanityData.seo.metaTitle || "About Us",
-      description: sanityData.seo.metaDescription,
-      keywords: sanityData.seo.metaKeywords,
-      ogImage: sanityData.seo.openGraphImage,
-      slug: "/about"
-    });
-  }
-
-  return genMeta({
-    title: "About Us - Your Strategic Partner for Finance and Accounting",
-    description:
-      "Xconcile was built to solve the #1 problem facing US accounting firms: the talent gap. We provide the infrastructure you need to say yes to more clients.",
-    keywords: ["about", "company", "mission", "values", "team", "CPA services"],
-    slug: "/about"
-  });
-}
-
-export default async function AboutPage() {
-  const sanityData = await getAboutPage().catch(() => null);
-
-  const staticData = {
-    heroTitle: "Your Strategic Partner",
-    heroTitleHighlight: "for Finance and Accounting Services",
-    heroDescription:
-      "Xconcile was built to solve the #1 problem facing US accounting firms: the talent gap. We provide the infrastructure you need to say \"yes\" to more clients.",
-    heroImage:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&h=1080&fit=crop",
-    whyWeExistTitle: "Redefining Outsourcing for the Modern CPA",
-    whyWeExistBody:
-      "Most outsourcing firms focus on volume; we focus on velocity and veracity. We understand that for a US CPA, \"done\" isn't enough, it has to be \"review-ready.\"\n\nWe've spent years refining a model that combines top-tier global accounting talent with deep knowledge of the US tax and financial landscape.",
-    whyWeExistImage:
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&h=600&fit=crop",
-    valuesTitle: "Our Core Values",
-    values: [
-      {
-        title: "CPA-First Mentality",
-        description: "We prepare every workpaper with the final reviewer in mind.",
-        icon: "user-check",
-      },
-      {
-        title: "Data Fort Knox",
-        description: "We utilize enterprise-grade security and SOC-compliant protocols to keep your client data safe.",
-        icon: "shield-check",
-      },
-      {
-        title: "Radical Transparency",
-        description: "No black holes. You have direct access to your team and clear visibility into every task.",
-        icon: "eye",
-      },
-      {
-        title: "Continuous Evolution",
-        description: "We stay updated on IRS changes and software updates so you don't have to train us.",
-        icon: "trending-up",
-      },
-    ],
-    teamTitle: "Accountants Who Speak Your Language",
-    teamBody:
-      "Our team consists of seasoned professionals who specialize in US-specific niches—from complex 1065 partnerships to Virtual CFO support. We don't just process data; we understand the \"why\" behind the numbers.",
-  };
-
-  const data = sanityData || staticData;
+export default function AboutPage() {
+  const values = [
+    {
+      title: "Radical Honesty",
+      desc: "We tell the truth, even when it's uncomfortable. We evaluate platforms and vendors based purely on their merits and your needs.",
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        </svg>
+      )
+    },
+    {
+      title: "Pragmatic Execution",
+      desc: "We favor working software and tangible business value over elaborate slide decks and perfectionism.",
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      )
+    },
+    {
+      title: "Shared Stewardship",
+      desc: "We treat your capital as our own. We look for the most efficient path to value and actively work to reduce waste.",
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      )
+    },
+    {
+      title: "Continuous Learning",
+      desc: "In a rapidly evolving technological landscape, past expertise expires quickly. We remain humble students of the industry.",
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      )
+    }
+  ];
 
   return (
-    <>
+    <div className="pt-24 pb-0">
       {/* Hero Section */}
-      <Section
-        background="primary"
-        spacing="xl"
-        className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700"
-      >
-        <div className="absolute inset-0 opacity-10">
-          {/* Background Image */}
-          <Image
-            src={data.heroBackgroundImage || "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1920&h=1080&fit=crop"}
-            alt={data.heroBackgroundImageAlt || "Background"}
-            fill
-            className="object-cover"
-          />
+      <section className="py-24 relative overflow-hidden flex flex-col items-center text-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-orange-50/40 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply"></div>
+        <div className="container-custom relative z-10 px-4">
+          <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-200 bg-white/50 backdrop-blur-sm text-sm font-medium text-neutral-800 shadow-sm">
+            <SparkleIcon />
+            <span>About Us</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
+            The Architects of Enterprise
+          </h1>
+          <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto">
+            A partner, not just a provider. We build the future.
+          </p>
         </div>
+      </section>
 
-        <Container className="relative z-10">
-          <Breadcrumb
-            items={[
-              { label: "Home", href: "/" },
-              { label: "About Us" },
-            ]}
-            className="mb-8 text-primary-200"
-          />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white leading-tight">
-                {data.heroTitle}
-                <br />
-                {data.heroTitleHighlight && (
-                  <span className="text-secondary-400">
-                    {data.heroTitleHighlight}
-                  </span>
-                )}
-              </h1>
-              <p className="text-lg md:text-xl text-primary-100 mb-10 max-w-2xl leading-relaxed">
-                {data.heroDescription}
-              </p>
+      {/* Story Section */}
+      <section className="py-24 relative z-10">
+        <div className="container-custom px-4">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <div>
+              <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-8">Our Story</h2>
+              <div className="space-y-6 text-lg text-neutral-500 leading-relaxed">
+                <p>
+                  AxiomAI was founded on a simple observation: the gap between technology strategy and execution is where most enterprise value is lost.
+                </p>
+                <p>
+                  We saw too many organizations commit millions to new platforms—ERP systems, AI capabilities, data infrastructures—only to realize a fraction of the intended benefits. The problem wasn't the technology; it was the structural disconnect between business intent and technical delivery.
+                </p>
+                <p className="font-medium text-neutral-800">
+                  Our mission is to bridge that gap. We act as independent, objective advisors who sit on your side of the table, ensuring that technology investments translate into measurable business outcomes.
+                </p>
+              </div>
             </div>
-            <div
-              className="relative h-96 rounded-2xl overflow-hidden shadow-2xl animate-fade-in-up hidden lg:block"
-              style={{ animationDelay: "0.2s" }}
-            >
-              <Image
-                src={data.heroImage || staticData.heroImage}
-                alt={data.heroImageAlt || "About Us"}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Why We Exist Section */}
-      <Section background="white" spacing="lg">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Image - Left Side */}
-            <div className="relative h-[25rem] lg:h-[31.25rem] rounded-2xl overflow-hidden shadow-lg animate-fade-in-left">
-              <Image
-                src={data.whyWeExistImage || staticData.whyWeExistImage}
-                alt={data.whyWeExistImageAlt || data.whyWeExistTitle || staticData.whyWeExistTitle}
-                fill
-                className="object-cover"
-              />
-            </div>
-
-            {/* Content - Right Side */}
-            <div className="animate-fade-in-right">
-              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-6 leading-tight">
-                {data.whyWeExistTitle || staticData.whyWeExistTitle}
-              </h2>
-              <p className="text-lg text-neutral-600 leading-relaxed whitespace-pre-line">
-                {data.whyWeExistBody || staticData.whyWeExistBody}
+            <div className="bg-white rounded-[2rem] p-10 md:p-14 border border-neutral-100 text-center flex flex-col items-center justify-center min-h-[400px] shadow-sm">
+              <div className="bg-[#E6F3FF] text-[#0066CC] w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-sm">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-[#26201D] mb-4">Independent & Objective</h3>
+              <p className="text-neutral-500 leading-relaxed">
+                We take no commission from software vendors or systems integrators. Our only loyalty is to our clients' success.
               </p>
             </div>
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
-      {/* Core Values */}
-      <Section background="gray" spacing="lg">
-        <Container>
-          <div className="text-center mb-12 animate-fade-in-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
-              {data.valuesTitle || staticData.valuesTitle}
-            </h2>
+      {/* Values Grid */}
+      <section className="py-24 relative z-10 bg-white">
+        <div className="container-custom px-4">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-[2.5rem] font-bold tracking-tight text-[#26201D] mb-6">Our Values</h2>
+            <p className="text-lg text-neutral-500">
+              What drives us forward
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {(data.values || staticData.values).map((value: any, index: number) => {
-              const iconName = value.icon || 'check-circle';
-              const Icon = (LucideIcons as any)[
-                iconName.split('-').map((word: string) =>
-                  word.charAt(0).toUpperCase() + word.slice(1)
-                ).join('')
-              ] || LucideIcons.CheckCircle;
-
-              return (
-                <div
-                  key={index}
-                  className="p-8 bg-white rounded-xl shadow-soft hover:shadow-medium transition-shadow animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-primary-600" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-neutral-900 mb-3">
-                        {value.title}
-                      </h3>
-                      <p className="text-neutral-600 leading-relaxed">
-                        {value.description}
-                      </p>
-                    </div>
-                  </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            {values.map((v, i) => (
+              <div key={i} className="card p-10 bg-white border border-neutral-100 rounded-[2rem] flex flex-col hover:border-primary-200 transition-all shadow-sm hover:shadow-md">
+                <div className="w-12 h-12 bg-[#FFF2E5] text-[#FF821C] rounded-xl flex items-center justify-center mb-6 shadow-sm">
+                  {v.icon}
                 </div>
-              );
-            })}
+                <h3 className="text-xl font-bold text-[#26201D] mb-4">{v.title}</h3>
+                <p className="text-neutral-500 leading-relaxed">{v.desc}</p>
+              </div>
+            ))}
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
-      {/* Team Section */}
-      <Section background="white" spacing="md">
-        <Container>
-          <div className="max-w-3xl mx-auto text-center animate-fade-in-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-6">
-              {data.teamTitle || staticData.teamTitle}
-            </h2>
-            <p className="text-lg text-neutral-600 leading-relaxed">
-              {data.teamBody || staticData.teamBody}
-            </p>
+      {/* Bottom CTA Layer */}
+      <section className="py-24 relative overflow-hidden bg-[#26201D] mt-12">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none"></div>
+        <div className="container-custom relative z-10 text-center flex flex-col items-center">
+          <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-neutral-300">
+            <SparkleIcon />
+            <span>Connect</span>
           </div>
-        </Container>
-      </Section>
-
-      {/* CTA Section */}
-      <Section
-        background="primary"
-        spacing="lg"
-        className="bg-gradient-to-r from-primary-700 to-primary-800"
-      >
-        <Container>
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-              {data.finalCTA?.title || "Ready to Work With Us?"}
-            </h2>
-            <p className="text-xl mb-8 text-primary-100 leading-relaxed">
-              {data.finalCTA?.description || "Get in touch today and discover how we can help your business succeed."}
-            </p>
-            <div className="flex justify-center">
-              <Link href={data.finalCTA?.cta?.link || "/contact"}>
-                <Button
-                  variant={data.finalCTA?.cta?.variant || "secondary"}
-                  size="lg"
-                  className="bg-white text-primary-700 hover:bg-primary-50"
-                >
-                  {data.finalCTA?.cta?.text || "Contact Us"}
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </Container>
-      </Section>
-    </>
+          <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
+            Ready to evolve?
+          </h2>
+          <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
+            Speak with an architect today.
+          </p>
+          <Link href="/contact" className="w-full sm:w-auto">
+            <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 transition-opacity shadow-md border-none">
+              Get in touch
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Button>
+          </Link>
+        </div>
+      </section>
+    </div>
   );
 }

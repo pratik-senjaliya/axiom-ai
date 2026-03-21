@@ -31,8 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ContactPage() {
   const sanityData = await getContactPage().catch(() => null);
   const data = sanityData || {
-    title: "Get in Touch",
-    description: "Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+    title: "Let's Talk Transformation",
+    description: "Ready to discuss your GenAI, ERP, or data challenges? We'd love to hear from you."
   };
 
   return (

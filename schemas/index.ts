@@ -13,8 +13,6 @@ import finalCtaSection from './objects/finalCtaSection'
 // Documents
 import post from './post'
 import service from './service'
-import industry from './industry'
-import hireStaff from './hireStaff'
 import homePage from './homePage'
 import aboutPage from './aboutPage'
 import contactSubmission from './contactSubmission'
@@ -43,8 +41,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         homePage,
         aboutPage,
         service,
-        hireStaff,
-        industry,
         blogPage,
         post,
         contactPage,

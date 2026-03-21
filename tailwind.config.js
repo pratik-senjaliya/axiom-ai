@@ -1,88 +1,51 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sora)", "system-ui", "sans-serif"],
+        serif: ["Playfair Display", "serif"],
+      },
       colors: {
-        // Primary brand colors - Deep Teal (derived from logo)
+        // Lovable exact colors
         primary: {
-          50: "#e8f0f2",
-          100: "#d1e2e6",
-          200: "#a4c6ce",
-          300: "#76a9b5",
-          400: "#498d9d",
-          500: "#1c7185", // Main brand color
-          600: "#165a6a",
-          700: "#10434f",
-          800: "#0b2d35",
-          900: "#05161a",
-          950: "#020b0d",
+          50: '#FFF4E5',
+          100: '#FFE6CC',
+          200: '#FFCD99',
+          300: '#FFB366',
+          400: '#FF9933',
+          500: '#FF821C', 
+          600: '#E66A00',
+          700: '#B35300',
+          800: '#803B00',
+          900: '#4D2400',
+          950: '#2B1300'
         },
-        // Secondary accent colors - Vibrant Green (derived from logo accents)
         secondary: {
-          50: "#f0f7ed",
-          100: "#e2f0dc",
-          200: "#c6e2b9",
-          300: "#a9d396",
-          400: "#8dc573",
-          500: "#71b751", // Main accent
-          600: "#5a9240",
-          700: "#436d30",
-          800: "#2d4920",
-          900: "#162410",
-          950: "#0b1208",
+          50: '#F9F1FD',
+          100: '#F1E0FA',
+          200: '#E4BFFF',
+          300: '#D69EF5',
+          400: '#C785EB',
+          500: '#AD58D9',
+          600: '#8F3DB8',
+          700: '#6F2A93',
+          800: '#4D1A6A',
+          900: '#2E0D41',
+          950: '#1A0625'
         },
-        // Neutral grays for text and backgrounds
         neutral: {
-          50: "#fafafa",
-          100: "#f5f5f5",
-          200: "#e5e5e5",
-          300: "#d4d4d4",
-          400: "#a3a3a3",
-          500: "#737373",
-          600: "#525252",
-          700: "#404040",
-          800: "#262626",
-          900: "#171717",
-          950: "#0a0a0a",
-        },
-        // Semantic colors
-        success: {
-          50: "#f0fdf4",
-          100: "#dcfce7",
-          200: "#bbf7d0",
-          300: "#86efac",
-          400: "#4ade80",
-          500: "#22c55e",
-          600: "#16a34a",
-          700: "#15803d",
-          800: "#166534",
-          900: "#14532d",
-        },
-        warning: {
-          50: "#fffbeb",
-          100: "#fef3c7",
-          200: "#fde68a",
-          300: "#fcd34d",
-          400: "#fbbf24",
-          500: "#f59e0b",
-          600: "#d97706",
-          700: "#b45309",
-          800: "#92400e",
-          900: "#78350f",
-        },
-        error: {
-          50: "#fef2f2",
-          100: "#fee2e2",
-          200: "#fecaca",
-          300: "#fca5a5",
-          400: "#f87171",
-          500: "#ef4444",
-          600: "#dc2626",
           700: "#b91c1c",
           800: "#991b1b",
           900: "#7f1d1d",
