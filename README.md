@@ -1,4 +1,4 @@
-# Next.js Company Website
+# AxiomAI - Enterprise AI & Data Services
 
 A modern, fully responsive, and SEO-friendly Next.js website boilerplate with a comprehensive theme system.
 
@@ -93,7 +93,7 @@ export const metadata = generateMetadata({
 Create a `.env.local` file:
 
 ```env
-NEXT_PUBLIC_SITE_URL=https://xconcile.com
+NEXT_PUBLIC_SITE_URL=https://axiomai.com
 ```
 
 ## Learn More

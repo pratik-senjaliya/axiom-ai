@@ -16,17 +16,17 @@ const sora = Sora({
 
 export const metadata: Metadata = {
   title: {
-    default: "Xconcile | Professional Accounting & Financial Services",
-    template: "%s | Xconcile",
+    default: "AxiomAI | Professional AI, ERP & Data Services",
+    template: "%s | AxiomAI",
   },
   description:
     "Strategic B2B partnerships and professional solutions for your business. We deliver expert guidance, global expertise, and innovative strategies for growth.",
   keywords: ["business", "consulting", "professional services", "solutions", "strategy", "growth", "B2B"],
-  authors: [{ name: "Xconcile" }],
-  creator: "Xconcile",
-  publisher: "Xconcile",
+  authors: [{ name: "AxiomAI" }],
+  creator: "AxiomAI",
+  publisher: "AxiomAI",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://xconcile.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://axiomai.com"
   ),
   formatDetection: {
     email: false,
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://xconcile.com",
-    siteName: "Xconcile",
-    title: "Xconcile | Professional Accounting & Financial Services",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://axiomai.com",
+    siteName: "AxiomAI",
+    title: "AxiomAI | Professional AI, ERP & Data Services",
     description:
       "Strategic B2B partnerships and professional solutions for your business. We deliver expert guidance, global expertise, and innovative strategies for growth.",
     images: [
@@ -46,17 +46,17 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Xconcile - Professional Services",
+        alt: "AxiomAI - Professional Services",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Xconcile | Professional Accounting & Financial Services",
+    title: "AxiomAI | Professional AI, ERP & Data Services",
     description:
       "Strategic B2B partnerships and professional solutions for your business. We deliver expert guidance, global expertise, and innovative strategies for growth.",
     images: ["/og-image.png"],
-    creator: "@xconcile",
+    creator: "@axiomai",
   },
   robots: {
     index: true,
@@ -70,9 +70,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: ["/favicon.ico", "/logo-icon-refined.png"],
-    shortcut: "/logo-icon-refined.png",
-    apple: "/logo-icon-refined.png",
+    icon: "/favicon.ico",
   },
   verification: {
     google: "zzIyWkg7jUhAgdRPn1TfTvBUkaG3cB5dIuXgsK4Dv9A",

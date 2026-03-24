@@ -20,7 +20,7 @@ export interface SEOConfig {
 }
 
 const defaultSEO: Partial<SEOConfig> = {
-  author: "Xconcile",
+  author: "AxiomAI",
   ogType: "website",
   twitterCard: "summary_large_image",
   keywords: ["accounting", "financial services", "bookkeeping", "payroll", "tax preparation"],
@@ -41,7 +41,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
     nofollow = false,
   } = { ...defaultSEO, ...config };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://xconcile.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://axiomai.com";
   // Don't add site name suffix here - Next.js will handle it via title template
   const fullTitle = title;
 
@@ -78,7 +78,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
       title: fullTitle,
       description,
       url: currentUrl,
-      siteName: defaultSEO.author || "Xconcile",
+      siteName: defaultSEO.author || "AxiomAI",
       images: [
         {
           url: imageUrl,
@@ -158,10 +158,10 @@ export function generateArticleSchema(post: {
     },
     publisher: {
       "@type": "Organization",
-      name: "Xconcile",
+      name: "AxiomAI",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://xconcile.com"}/favicon.ico`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://axiomai.com"}/favicon.ico`,
       },
     },
     mainEntityOfPage: {
@@ -175,15 +175,15 @@ export function generateArticleSchema(post: {
  * Common organization structured data
  */
 export function getOrganizationSchema() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://xconcile.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://axiomai.com";
   return generateStructuredData("Organization", {
-    name: "Xconcile",
+    name: "AxiomAI",
     url: siteUrl,
     logo: `${siteUrl}/favicon.ico`,
     sameAs: [
-      "https://www.linkedin.com/company/xconcile",
-      "https://twitter.com/xconcile",
-      "https://www.facebook.com/xconcile",
+      "https://www.linkedin.com/company/axiomai",
+      "https://twitter.com/axiomai",
+      "https://www.facebook.com/axiomai",
     ],
     contactPoint: {
       "@type": "ContactPoint",
