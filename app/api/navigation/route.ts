@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
-import { getAllServices, getAllIndustries, getAllHireStaff } from '@/lib/sanity/queries';
+import { getAllServices } from '@/lib/sanity/queries';
+import { getAllIndustries } from '@/lib/industries';
+import { getAllHireStaffPositions as getAllHireStaff } from '@/lib/hire-staff';
 
 export const revalidate = 0; // Disable caching to always get fresh data
 
