@@ -18,6 +18,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     title,
     "slug": slug.current,
     excerpt,
+    category,
     "date": publishedAt,
     author,
     authorRole,

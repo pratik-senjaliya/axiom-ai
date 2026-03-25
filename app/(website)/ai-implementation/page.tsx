@@ -5,6 +5,7 @@ import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
 import { FAQ } from "@/components/ui/FAQ";
+import { ObstacleSection } from "@/components/services/ObstacleSection";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(`*[_type == "aiImplementationPage"][0]{ seo }`);
@@ -18,20 +19,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const PitfallItem = ({ title, description }: { title: string; description: string }) => (
-  <div className="flex items-start gap-5 p-6 bg-white border border-neutral-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-    <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-500 shrink-0 mt-1">
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-      </svg>
-    </div>
-    <div>
-      <h3 className="text-[#26201D] font-bold mb-1">{title}</h3>
-      <p className="text-neutral-500 text-sm leading-relaxed">{description}</p>
-    </div>
-  </div>
-);
-
 const BrainIcon = () => (
   <svg className="w-4 h-4 text-[#FF821C]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M9.5 2A1.5 1.5 0 0 0 8 3.5V6a2 2 0 0 1-2 2h-2.5A1.5 1.5 0 0 0 2 9.5v5A1.5 1.5 0 0 0 3.5 16H6a2 2 0 0 1 2 2v2.5A1.5 1.5 0 0 0 9.5 22h5a1.5 1.5 0 0 0 1.5-1.5V18a2 2 0 0 1 2-2h2.5a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 20.5 8H18a2 2 0 0 1-2-2V3.5A1.5 1.5 0 0 0 14.5 2h-5z" />
@@ -43,7 +30,10 @@ const BrainIcon = () => (
 export default async function AIImplementationPage() {
   const data = await client.fetch(`*[_type == "aiImplementationPage"][0]`);
 
-  const pitfallItems = data?.whyChooseUs || [];
+  const pitfallItems = (data?.whyChooseUs || []).map((p: any) => ({
+    title: p.title,
+    description: p.description
+  }));
 
   const aiLayers: FeatureItem[] = (data?.serviceAreas || []).map((layer: any) => ({
     title: layer.name,
@@ -63,7 +53,6 @@ export default async function AIImplementationPage() {
   }));
 
   const engagementModels = (data?.deploymentModels || []).map((model: any, index: number) => {
-    // Keep matching the hardcoded icons by index since Sanity doesn't store SVGs directly here
     const hardcodedIcons = [
       (
         <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
@@ -106,27 +95,19 @@ export default async function AIImplementationPage() {
       <ServiceHero 
         badgeText={data?.hero?.badge || "Enterprise AI Platform"}
         badgeIcon={<BrainIcon />}
-        title={data?.title?.replace("a Measurable Business Asset", "").trim() || "Turn AI into"}
+        title={data?.title?.split("a Measurable Business Asset")[0] || "Turn AI into"}
         gradientTitlePart="a Measurable Business Asset"
         description={data?.description || data?.hero?.subHeadline || "From Generative AI to Agentic and Autonomous Systems — we design production-ready AI platforms that integrate with enterprise systems and deliver real operational impact."}
         primaryButtonText={data?.hero?.primaryButtonText || "Start AI Pilot"}
         secondaryButtonText={data?.hero?.secondaryButtonText || "Book Strategy Call"}
       />
 
-      {/* Why AI Initiatives Stall Section */}
-      <section className="pb-24 bg-[#FAF8F5]">
-        <div className="container-custom px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-[#26201D] mb-4 tracking-tight">{data?.intro?.headline || "Why AI Initiatives Stall"}</h2>
-            <p className="text-neutral-500 mb-12 italic">{data?.intro?.subHeadline || "Recognise the pattern. Then break it."}</p>
-            <div className="grid gap-4 text-left max-w-2xl mx-auto">
-              {pitfallItems.map((pitfall: any, idx: number) => (
-                <PitfallItem key={idx} title={pitfall.title} description={pitfall.description} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Why AI Initiatives Stall Section (Standardized Grid) */}
+      <ObstacleSection 
+        title={data?.intro?.headline || "Why AI Initiatives Stall"}
+        subtitle={data?.intro?.subHeadline || "Recognise the pattern. Then break it."}
+        items={pitfallItems}
+      />
 
       <FeatureGrid 
         title={data?.layers?.headline || "Our Enterprise AI Stack"}

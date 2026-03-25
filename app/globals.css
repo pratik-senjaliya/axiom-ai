@@ -479,6 +479,40 @@
   @apply font-semibold text-neutral-900;
 }
 
+/* Premium Blog Typography */
+.prose-luxury {
+  @apply text-neutral-700;
+  max-width: 100%;
+}
+
+.prose-luxury p {
+  @apply mb-5 leading-relaxed text-[15px] text-neutral-600;
+}
+
+.prose-luxury h2 {
+  @apply text-xl font-extrabold text-[#26201D] mt-10 mb-4 leading-tight scroll-mt-32;
+}
+
+.prose-luxury h3 {
+  @apply text-lg font-bold text-[#26201D] mt-8 mb-3 leading-tight scroll-mt-32;
+}
+
+.prose-luxury ul, .prose-luxury ol {
+  @apply mb-5 ml-6 space-y-1.5;
+}
+
+.prose-luxury li {
+  @apply text-[15px] leading-relaxed text-neutral-600;
+}
+
+.prose-luxury strong {
+  @apply font-extrabold text-[#26201D];
+}
+
+.prose-luxury blockquote {
+  @apply border-l-4 border-[#FF821C] pl-6 py-2 my-8 bg-[#FAF8F5] italic text-base text-neutral-600 rounded-r-2xl;
+}
+
 /* Print Styles */
 @media print {
   * {

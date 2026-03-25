@@ -5,6 +5,7 @@ import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
+import { ObstacleSection } from "@/components/services/ObstacleSection";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(`*[_type == "sustainabilityPage"][0]{ seo }`);
@@ -18,40 +19,28 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const ObstacleItem = ({ title, text }: { title: string; text: string }) => (
-  <div className="bg-[#FFF5F5] p-8 rounded-[2rem] border border-[#FEE2E2] shadow-sm hover:shadow-md transition-all group">
-    <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 mb-6 group-hover:scale-110 transition-transform">
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </div>
-    <h3 className="text-xl font-bold text-[#26201D] mb-3">{title}</h3>
-    <p className="text-neutral-600 text-sm leading-relaxed">{text}</p>
-  </div>
-);
-
 export default async function SustainabilityPage() {
   const data = await client.fetch(`*[_type == "sustainabilityPage"][0]`);
 
-  const obstacleItems = data?.whyChooseUs?.length > 0 ? data.whyChooseUs.map((obs: any) => ({
+  const obstacleItems = (data?.whyChooseUs || []).length > 0 ? data.whyChooseUs.map((obs: any) => ({
     title: obs.title,
-    text: obs.description
+    description: obs.description
   })) : [
     {
       title: "Manual ESG & Carbon Reporting",
-      text: "Heavy reliance on spreadsheets and disconnected workflows leads to errors, delays, and audit risks."
+      description: "Heavy reliance on spreadsheets and disconnected workflows leads to errors, delays, and audit risks."
     },
     {
       title: "Fragmented Emissions Data",
-      text: "Carbon data is scattered across ERP systems, vendors, utilities, and manual inputs."
+      description: "Carbon data is scattered across ERP systems, vendors, utilities, and manual inputs."
     },
     {
       title: "Limited Operational Visibility",
-      text: "Lack of real-time tracking makes it difficult to act on emissions, inefficiencies, or waste."
+      description: "Lack of real-time tracking makes it difficult to act on emissions, inefficiencies, or waste."
     },
     {
       title: "No Measurable ROI Tracking",
-      text: "Sustainability is often treated as a compliance cost rather than a performance driver."
+      description: "Sustainability is often treated as a compliance cost rather than a performance driver."
     }
   ];
 
@@ -86,11 +75,43 @@ export default async function SustainabilityPage() {
     icon: hardcodedIcons[index % hardcodedIcons.length]
   }));
 
-  const methodologySteps: FeatureItem[] = (data?.process || []).map((step: any, index: number) => ({
-    stepNumber: index + 1,
-    title: step.title,
-    description: step.description
-  }));
+  const methodologySteps: FeatureItem[] = (data?.process || []).map((step: any, index: number) => {
+    const pillarIcons = [
+      (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.364-6.364l-.707-.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M12 11a1 1 0 100-2 1 1 0 000 2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 21V11m0 0a5 5 0 10-5-5" />
+        </svg>
+      ),
+      (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M11 12H3" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m8.66-8.66h-1m-15.32 0h-1m7.66-7.66l-.707.707m7.071 7.071l-.707.707M5.636 5.636l-.707.707m7.071 7.071l-.707.707" />
+        </svg>
+      ),
+      (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      ),
+      (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      ),
+      (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      )
+    ];
+
+    return {
+      title: step.title,
+      description: step.description,
+      icon: pillarIcons[index % pillarIcons.length]
+    };
+  });
 
   const engagementModels = (data?.engagement?.models || []).map((model: any, index: number) => {
     const hardcodedEngIcons = [
@@ -132,7 +153,7 @@ export default async function SustainabilityPage() {
     <div className="pt-0 pb-0">
       <ServiceHero 
         badgeText={data?.hero?.badge || "AI for Sustainable Operations"}
-        title={data?.title?.replace("Operational and Measurable", "").trim() || "Make Sustainability"}
+        title={data?.title?.split("Optimal and Measurable")[0] || "Make Sustainability"}
         gradientTitlePart="Operational and Measurable"
         description={data?.description || data?.hero?.subHeadline || "Use AI and enterprise data to improve carbon visibility, reporting accuracy, and operational efficiency."}
         primaryButtonText={data?.heroCTA?.text || "Explore Sustainability Pilot"}
@@ -142,23 +163,11 @@ export default async function SustainabilityPage() {
       />
 
       {/* Obstacles Section */}
-      <section className="py-24 bg-[#FAF8F5]">
-        <div className="container-custom px-4">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="type-section-title text-[#26201D] mb-6">{data?.introTitle || "Why Sustainability Efforts Struggle"}</h2>
-            <p className="text-lg text-neutral-500">{"Traditional reporting can't keep up with the demands of modern enterprise green targets."}</p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {obstacleItems.map((obs: any, index: number) => (
-              <ObstacleItem 
-                key={index}
-                title={obs.title} 
-                text={obs.text} 
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <ObstacleSection 
+        title={data?.introTitle || "Why Sustainability Efforts Struggle"}
+        subtitle="Traditional reporting can't keep up with the demands of modern enterprise green targets."
+        items={obstacleItems}
+      />
 
       <FeatureGrid 
         title="Sustainable AI Modules"
@@ -170,10 +179,11 @@ export default async function SustainabilityPage() {
       />
 
       <FeatureGrid 
-        title="Start Small, Measure Impact"
-        description="Our proven 4-step approach to moving from fragmented data to autonomous optimization."
+        title="Core Sustainability Pillars"
+        description="Our comprehensive framework for integrating AI and data strategy to achieve measurable ESG outcomes."
         items={methodologySteps.length > 0 ? methodologySteps : []}
-        isRoadmap={true}
+        columns={3}
+        isRoadmap={false}
         bgWhite={false}
         small={true}
       />

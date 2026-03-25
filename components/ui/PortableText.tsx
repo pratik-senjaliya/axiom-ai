@@ -5,17 +5,26 @@ interface PortableTextProps {
     className?: string
 }
 
+const slugify = (text: string) =>
+    text
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
 const components = {
     block: {
         h1: ({ children }: any) => (
             <h1 className="text-4xl font-bold mb-4 text-neutral-900">{children}</h1>
         ),
-        h2: ({ children }: any) => (
-            <h2 className="text-3xl font-bold mb-3 mt-8 text-neutral-900">{children}</h2>
-        ),
-        h3: ({ children }: any) => (
-            <h3 className="text-2xl font-bold mb-3 mt-6 text-neutral-900">{children}</h3>
-        ),
+        h2: ({ children, value }: any) => {
+            const id = slugify(value.children[0].text);
+            return <h2 id={id} className="text-3xl font-bold mb-3 mt-12 text-[#26201D] scroll-mt-24">{children}</h2>
+        },
+        h3: ({ children, value }: any) => {
+            const id = slugify(value.children[0].text);
+            return <h3 id={id} className="text-2xl font-bold mb-3 mt-8 text-[#26201D] scroll-mt-24">{children}</h3>
+        },
         h4: ({ children }: any) => (
             <h4 className="text-xl font-bold mb-2 mt-4 text-neutral-900">{children}</h4>
         ),
