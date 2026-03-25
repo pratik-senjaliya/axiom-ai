@@ -7,13 +7,17 @@ interface LightCTAProps {
   description: string;
   primaryButtonText: string;
   secondaryButtonText?: string;
+  primaryButtonLink?: string;
+  secondaryButtonLink?: string;
 }
 
 export function LightCTA({ 
   title, 
   description, 
   primaryButtonText,
-  secondaryButtonText = "Schedule Executive Discussion"
+  secondaryButtonText,
+  primaryButtonLink = "/contact",
+  secondaryButtonLink = "/contact"
 }: LightCTAProps) {
   return (
     <section className="py-24 relative overflow-hidden bg-gradient-to-br from-[#FFF5F1] via-white to-[#F5F3FF]">
@@ -27,7 +31,7 @@ export function LightCTA({
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 items-center">
-          <Link href="/contact" className="w-full sm:w-auto">
+          <Link href={primaryButtonLink} className="w-full sm:w-auto">
             <Button size="lg" className="w-full sm:w-auto px-10 h-14 text-[15px] rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#FFAA4C] text-white hover:opacity-90 transition-opacity shadow-[0_8px_20px_rgba(255,130,28,0.25)] border-none font-bold">
               {primaryButtonText}
               <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -37,7 +41,7 @@ export function LightCTA({
           </Link>
 
           {secondaryButtonText && (
-            <Link href="/contact" className="w-full sm:w-auto">
+            <Link href={secondaryButtonLink} className="w-full sm:w-auto">
               <Button variant="outline" size="lg" className="w-full sm:w-auto px-10 h-14 text-[15px] rounded-full border-neutral-200 text-[#26201D] hover:bg-neutral-50 font-bold">
                 {secondaryButtonText}
               </Button>

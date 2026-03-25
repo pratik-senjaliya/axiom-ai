@@ -215,6 +215,12 @@ export async function getHomePage(): Promise<any> {
       "logo": logo.asset->url,
       "logoAlt": logo.alt
     },
+    processTitle,
+    processDescription,
+    process,
+    personasTitle,
+    personasDescription,
+    personas,
     blogTitle,
     blogDescription,
     faqTitle,

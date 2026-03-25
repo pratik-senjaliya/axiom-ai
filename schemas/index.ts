@@ -24,6 +24,15 @@ import blogPage from './blogPage'
 import settings from './settings'
 import newsletterSubscription from './newsletterSubscription'
 
+// New Singleton Pages
+import aiImplementationPage from './aiImplementationPage'
+import erpTransformationPage from './erpTransformationPage'
+import dataAnalyticsPage from './dataAnalyticsPage'
+import managedDeliveryPage from './managedDeliveryPage'
+import sustainabilityPage from './sustainabilityPage'
+import termsOfUsage from './termsOfUsage'
+import useCasesPage from './useCasesPage'
+
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [
         // Objects
@@ -49,5 +58,16 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 
         contactSubmission,
         newsletterSubscription,
+
+        // Specific Service Singletons
+        aiImplementationPage,
+        erpTransformationPage,
+        dataAnalyticsPage,
+        managedDeliveryPage,
+        sustainabilityPage,
+        
+        // Other Pages
+        termsOfUsage,
+        useCasesPage,
     ],
 }

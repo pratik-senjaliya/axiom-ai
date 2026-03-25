@@ -64,8 +64,8 @@ export function Footer() {
             © 2026 AxiomAI. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-sm text-[#7D766E] hover:text-[#D9D0C5] transition-colors">Privacy Policy</a>
-            <a href="#" className="text-sm text-[#7D766E] hover:text-[#D9D0C5] transition-colors">Terms of Service</a>
+            <Link href="/privacy-policy" className="text-sm text-[#7D766E] hover:text-[#D9D0C5] transition-colors">Privacy Policy</Link>
+            <Link href="/terms-of-usage" className="text-sm text-[#7D766E] hover:text-[#D9D0C5] transition-colors">Terms of Service</Link>
           </div>
         </div>
       </Container>

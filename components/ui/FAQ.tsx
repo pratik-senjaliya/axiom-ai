@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 interface FAQItem {
   question: string;
-  answer: string;
+  answer: React.ReactNode;
 }
 
 interface FAQProps {

@@ -12,6 +12,8 @@ interface ServiceHeroProps {
   description: string;
   primaryButtonText?: string;
   secondaryButtonText?: string;
+  primaryButtonLink?: string;
+  secondaryButtonLink?: string;
   align?: "center" | "left";
   backLink?: { href: string; label: string };
 }
@@ -31,6 +33,8 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
   description,
   primaryButtonText,
   secondaryButtonText,
+  primaryButtonLink = "/contact",
+  secondaryButtonLink = "/contact",
   align = "center",
   backLink
 }) => {
@@ -109,28 +113,30 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
         </p>
 
         {/* Buttons */}
-        <div className={cn(
-          "flex flex-col sm:flex-row items-center gap-4",
-          isLeft ? "justify-start" : "justify-center"
-        )}>
-          {primaryButtonText && (
-            <Link href="/contact" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-[#FF821C] to-[#FF2E93] text-white border-none rounded-full h-14 px-8 text-[15px] font-bold shadow-lg shadow-orange-500/20 hover:scale-[1.02] transition-transform">
-                {primaryButtonText}
-                <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Button>
-            </Link>
-          )}
-          {secondaryButtonText && (
-            <Link href="/contact" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white/80 backdrop-blur-sm border-neutral-200 text-neutral-800 rounded-full hover:bg-white h-14 px-8 text-[15px] font-bold">
-                {secondaryButtonText}
-              </Button>
-            </Link>
-          )}
-        </div>
+        {(primaryButtonText || secondaryButtonText) && (
+          <div className={cn(
+            "flex flex-col sm:flex-row gap-4 mt-10 md:mt-12",
+            !isLeft && "justify-center"
+          )}>
+            {primaryButtonText && (
+              <Link href={primaryButtonLink} className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#FFAA4C] text-white hover:opacity-90 transition-opacity shadow-lg shadow-orange-500/20 border-none font-bold group">
+                  {primaryButtonText}
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Button>
+              </Link>
+            )}
+            {secondaryButtonText && (
+              <Link href={secondaryButtonLink} className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full border-neutral-200 text-[#26201D] hover:bg-neutral-50 font-bold">
+                  {secondaryButtonText}
+                </Button>
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

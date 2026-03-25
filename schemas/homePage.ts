@@ -7,6 +7,8 @@ export default defineType({
     groups: [
         { name: 'hero', title: 'Hero Section' },
         { name: 'trust', title: 'Trust Indicators' },
+        { name: 'process', title: 'Process / Phases' },
+        { name: 'personas', title: 'Target Personas' },
         { name: 'testimonials', title: 'Testimonials' },
         { name: 'features', title: 'Features' },
         { name: 'partners', title: 'Partners' },
@@ -143,6 +145,70 @@ export default defineType({
             type: 'array',
             of: [{ type: 'stat' }],
             group: 'trust',
+        }),
+
+        // Process / Phases
+        defineField({
+            name: 'processTitle',
+            title: 'Process Title',
+            type: 'string',
+            group: 'process',
+        }),
+        defineField({
+            name: 'processDescription',
+            title: 'Process Description',
+            type: 'text',
+            group: 'process',
+        }),
+        defineField({
+            name: 'process',
+            title: 'Process Steps',
+            type: 'array',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        defineField({ name: 'step', type: 'string', title: 'Step Number' }),
+                        defineField({ name: 'title', type: 'string', title: 'Step Title' }),
+                        defineField({ name: 'description', type: 'text', title: 'Description' }),
+                    ],
+                },
+            ],
+            group: 'process',
+        }),
+
+        // Personas
+        defineField({
+            name: 'personasTitle',
+            title: 'Personas Title',
+            type: 'string',
+            group: 'personas',
+        }),
+        defineField({
+            name: 'personasDescription',
+            title: 'Personas Description',
+            type: 'text',
+            group: 'personas',
+        }),
+        defineField({
+            name: 'personas',
+            title: 'Personas List',
+            type: 'array',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        defineField({ name: 'title', type: 'string', title: 'Persona Title' }),
+                        defineField({
+                            name: 'description',
+                            type: 'array',
+                            title: 'Description',
+                            of: [{ type: 'block' }]
+                        }),
+                    ],
+                },
+            ],
+            group: 'personas',
         }),
 
         // Testimonials

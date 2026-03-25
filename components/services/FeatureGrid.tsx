@@ -4,19 +4,19 @@ import { cn } from "@/lib/utils";
 export interface FeatureItem {
   /* Common */
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   badge?: string;
   icon?: React.ReactNode;
   
   /* Layer Cards (Checkmarks + Outcome Footer) */
   bullets?: string[];
   outcomeTitle?: string;
-  outcomeDescription?: string;
+  outcomeDescription?: React.ReactNode;
 
   /* Industry Use Case Cards */
   useCaseLabel?: string;
-  pocText?: string;
-  impactText?: string;
+  pocText?: React.ReactNode;
+  impactText?: React.ReactNode;
   
   /* Roadmap Items (numbered circle on the left) */
   stepNumber?: number;

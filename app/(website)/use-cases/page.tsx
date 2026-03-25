@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { LightCTA } from "@/components/services/LightCTA";
+import { client } from "@/lib/sanity/client";
 
-export const metadata: Metadata = {
-  title: "Use Cases | AxiomAI",
-  description: "Real-world examples of our enterprise advisory impact.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await client.fetch(`*[_type == "useCasesPage"][0]`);
+  if (!data) return {
+    title: "Use Cases | AxiomAI",
+    description: "Real-world examples of our enterprise advisory impact.",
+  };
+  return {
+    title: `${data.title} | AxiomAI`,
+    description: data.description,
+  };
+}
 
 const SparkleIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" className="text-primary-500">
@@ -13,10 +22,12 @@ const SparkleIcon = () => (
   </svg>
 );
 
-export default function UseCasesPage() {
+export default async function UseCasesPage() {
+  const data = await client.fetch(`*[_type == "useCasesPage"][0]`);
   const cases = [
     {
       title: "Demand Forecasting Engine",
+      problem: "High inventory carrying costs and stockouts.",
       tools: "Azure ML, Power BI, Dynamics 365",
       approach: "Region-level predictive models with real-time data feeds.",
       impact: "25% improvement in forecast accuracy."
@@ -53,17 +64,18 @@ export default function UseCasesPage() {
             <span>Use Cases</span>
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
-            Success stories from the frontier
+            {data?.title || "Success stories from the frontier"}
           </h1>
           <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto mb-10">
-            Real-world results for enterprise leaders.
+            {data?.description || "Real-world results for enterprise leaders."}
           </p>
 
           {/* Filters */}
           <div className="flex flex-wrap justify-center gap-3">
              <button className="px-5 py-2 rounded-full bg-neutral-900 border border-neutral-900 text-white text-sm font-medium shadow-sm">All Cases</button>
-             <button className="px-5 py-2 rounded-full bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50 text-sm font-medium shadow-sm transition-colors">Improve Operational Efficiency</button>
-             <button className="px-5 py-2 rounded-full bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50 text-sm font-medium shadow-sm transition-colors">Reduce Manual Work</button>
+             {data?.tabs?.map((tab: string, idx: number) => (
+                <button key={idx} className="px-5 py-2 rounded-full bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50 text-sm font-medium shadow-sm transition-colors">{tab}</button>
+             ))}
           </div>
         </div>
       </section>
@@ -72,7 +84,7 @@ export default function UseCasesPage() {
       <section className="py-24 relative z-10">
         <div className="container-custom px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {cases.map((item, idx) => (
+            {(data?.useCases || cases).map((item: any, idx: number) => (
               <div key={idx} className="card p-10 bg-white border border-neutral-100 rounded-[2rem] hover:border-primary-200 transition-all shadow-sm hover:shadow-md flex flex-col items-start group">
                 <div className="w-14 h-14 bg-[#FF821C] text-white rounded-xl flex items-center justify-center mb-6 shadow-sm">
                   <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,6 +95,10 @@ export default function UseCasesPage() {
                 <h3 className="text-2xl font-bold text-[#26201D] mb-8">{item.title}</h3>
                 
                 <div className="space-y-6 flex-grow mb-8 w-full">
+                  <div>
+                    <h4 className="text-xs font-bold text-[#FF821C] tracking-wider mb-2">THE PROBLEM</h4>
+                    <p className="text-neutral-500 text-sm leading-relaxed">{item.problem}</p>
+                  </div>
                   <div>
                     <h4 className="text-xs font-bold text-[#FF821C] tracking-wider mb-2">TOOLS & TECH</h4>
                     <p className="text-neutral-500 text-sm leading-relaxed">{item.tools}</p>
@@ -118,14 +134,14 @@ export default function UseCasesPage() {
             <span>Partner With Us</span>
           </div>
           <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
-            Face similar challenges?
+            {data?.howWePartnerCTA?.title || "Face similar challenges?"}
           </h2>
           <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
-            Let's talk about your strategic goals and how we can partner to achieve them.
+            {data?.howWePartnerCTA?.description || "Let's talk about your strategic goals and how we can partner to achieve them."}
           </p>
-          <Link href="/contact" className="w-full sm:w-auto">
+          <Link href={data?.howWePartnerCTA?.cta?.link || "/contact"} className="w-full sm:w-auto">
             <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 transition-opacity shadow-md border-none">
-              Book a Discovery Call
+              {data?.howWePartnerCTA?.cta?.text || "Book a Discovery Call"}
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -133,6 +149,13 @@ export default function UseCasesPage() {
           </Link>
         </div>
       </section>
+
+      <LightCTA 
+        title={data?.pocGuaranteeCTA?.title || "The 6-8 Week Pilot Guarantee"}
+        description={data?.pocGuaranteeCTA?.description || "Don't commit to a year-long roadmap. Pick one high-impact use case above, and we will build a working POC in your environment in 6 weeks to prove the ROI."}
+        primaryButtonText={data?.pocGuaranteeCTA?.cta?.text || "Start Your Pilot"}
+        primaryButtonLink={data?.pocGuaranteeCTA?.cta?.link || "/contact"}
+      />
     </div>
   );
 }

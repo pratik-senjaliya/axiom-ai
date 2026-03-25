@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { client } from "@/lib/sanity/client";
+import { PortableText } from "@portabletext/react";
 
-export const metadata: Metadata = {
-  title: "AxiomAI | Enterprise AI, ERP & Data Advisory",
-  description: "Building the future of intelligent enterprise. Strategic guidance for digital transformation.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await client.fetch(`*[_type == "homePage"][0]{ seo }`);
+  if (!data?.seo) return {
+    title: "AxiomAI | Enterprise AI, ERP & Data Advisory",
+    description: "Building the future of intelligent enterprise. Strategic guidance for digital transformation.",
+  };
+  return {
+    title: data.seo.metaTitle || "AxiomAI | Enterprise AI, ERP & Data Advisory",
+    description: data.seo.metaDescription || "Building the future of intelligent enterprise. Strategic guidance for digital transformation.",
+  };
+}
 
 const SparkleIcon = () => (
   <svg className="w-4 h-4 text-primary-500" viewBox="0 0 24 24" fill="currentColor">
@@ -13,7 +22,36 @@ const SparkleIcon = () => (
   </svg>
 );
 
-export default function HomePage() {
+export default async function HomePage() {
+  const data = await client.fetch(`*[_type == "homePage"][0]`);
+  const ai = await client.fetch(`*[_type == "aiImplementationPage"][0]`);
+  const dataPage = await client.fetch(`*[_type == "dataAnalyticsPage"][0]`);
+  const erp = await client.fetch(`*[_type == "erpTransformationPage"][0]`);
+  
+  const featureStats = [
+    { value: "85%", label: "of AI projects fail", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+    { value: "75%", label: "exceed timeline", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" /></svg> },
+    { value: "70%", label: "lack data strategy", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> }
+  ];
+
+  const serviceCards = [
+    { num: "01", page: ai, link: "/ai-implementation", tags: ['LLM Strategy', 'AI Copilots', 'RAG Systems'] },
+    { num: "02", page: dataPage, link: "/data-analytics", tags: ['Data Fabric', 'ML Ops', 'Decision Intelligence'] },
+    { num: "03", page: erp, link: "/erp-transformation", tags: ['S/4HANA', 'SAP AI', 'Cloud ERP'] }
+  ];
+
+  const processStyles = [
+    { bg: "from-primary-500/20 to-primary-500/5", text: "text-primary-500/40" },
+    { bg: "from-purple-500/20 to-purple-500/5", text: "text-purple-500/40" },
+    { bg: "from-rose-500/20 to-rose-500/5", text: "text-rose-500/40" }
+  ];
+
+  const personaIcons = [
+    { bg: "from-orange-400 to-pink-500", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg> },
+    { bg: "from-pink-500 to-rose-500", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> },
+    { bg: "from-rose-500 to-primary-500", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg> },
+    { bg: "from-primary-500 to-orange-400", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg> }
+  ];
   return (
     <>
       {/* 1. Hero Section */}
@@ -31,18 +69,18 @@ export default function HomePage() {
           </div>
           
           <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-bold text-[#26201D] tracking-tight mb-8 leading-[1.05]">
-            Building the future of
-            <span className="block gradient-text mt-1">enterprise intelligence</span>
+            {data?.heroTitle || "Building the future of"}
+            {data?.heroTitleHighlight && <span className="block gradient-text mt-1">{data.heroTitleHighlight}</span>}
           </h1>
           
           <p className="text-xl md:text-2xl text-neutral-500 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
-            We architect GenAI, Data, and ERP transformations that scale — with governance, clarity, and measurable outcomes.
+            {data?.heroDescription || "We architect GenAI, Data, and ERP transformations that scale — with governance, clarity, and measurable outcomes."}
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            <Link href="/contact" className="w-full sm:w-auto">
+            <Link href={data?.introductionCta?.link || "/contact"} className="w-full sm:w-auto">
               <Button size="lg" className="btn-primary w-full sm:w-auto px-8 h-12 text-lg rounded-full flex items-center justify-center gap-2 font-medium">
-                Start Your Journey
+                {data?.introductionCta?.text || "Start Your Journey"}
                 <svg className="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -56,7 +94,7 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3 max-w-4xl mx-auto">
-            {["GenAI & LLMs", "Agentic AI", "S/4HANA", "Data Fabric", "ML Ops", "AI Governance"].map((tag) => (
+            {(data?.heroStats && data.heroStats.length > 0 ? data.heroStats.map((stat: any) => stat.label) : ["GenAI & LLMs", "Agentic AI", "S/4HANA", "Data Fabric", "ML Ops", "AI Governance"]).map((tag: string) => (
               <span key={tag} className="px-5 py-2.5 bg-white border border-neutral-200 text-neutral-500 rounded-full text-sm font-medium shadow-sm">
                 {tag}
               </span>
@@ -70,70 +108,36 @@ export default function HomePage() {
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
-              Why Digital Transformations Fail
+              {data?.featuresTitle || "Why Digital Transformations Fail"}
             </h2>
             <p className="text-lg text-neutral-500">
-              We've seen the patterns. Here's what we help you avoid.
+              {data?.featuresDescription || "We've seen the patterns. Here's what we help you avoid."}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between h-full">
-              <div className="flex justify-between items-start mb-12">
-                <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+            {data?.features?.map((feature: any, index: number) => {
+              const statInfo = featureStats[index % featureStats.length];
+              return (
+                <div key={index} className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between h-full">
+                  <div className="flex justify-between items-start mb-12">
+                    <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center">
+                      {statInfo.icon}
+                    </div>
+                    <div className="text-right">
+                      <div className="text-3xl font-bold text-red-600 mb-1">{statInfo.value}</div>
+                      <div className="text-xs font-medium text-neutral-400 uppercase tracking-wide">{statInfo.label}</div>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-[#26201D] mb-3">{feature.title}</h3>
+                    <div className="text-neutral-500 leading-relaxed text-sm prose">
+                      <PortableText value={feature.description} />
+                    </div>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <div className="text-3xl font-bold text-red-600 mb-1">85%</div>
-                  <div className="text-xs font-medium text-neutral-400 uppercase tracking-wide">of AI projects fail</div>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-[#26201D] mb-3">GenAI Pilots That Don't Scale</h3>
-                <p className="text-neutral-500 leading-relaxed text-sm">LLM experiments without governance or production roadmaps.</p>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between h-full">
-              <div className="flex justify-between items-start mb-12">
-                <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
-                  </svg>
-                </div>
-                <div className="text-right">
-                  <div className="text-3xl font-bold text-red-600 mb-1">75%</div>
-                  <div className="text-xs font-medium text-neutral-400 uppercase tracking-wide">exceed timeline</div>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-[#26201D] mb-3">ERP Projects Over Budget</h3>
-                <p className="text-neutral-500 leading-relaxed text-sm">S/4HANA migrations driven by vendors, not value.</p>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between h-full">
-              <div className="flex justify-between items-start mb-12">
-                <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                </div>
-                <div className="text-right">
-                  <div className="text-3xl font-bold text-red-600 mb-1">70%</div>
-                  <div className="text-xs font-medium text-neutral-400 uppercase tracking-wide">lack data strategy</div>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-[#26201D] mb-3">Data Silos Block AI</h3>
-                <p className="text-neutral-500 leading-relaxed text-sm">Analytics disconnected from decision-making.</p>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -147,67 +151,33 @@ export default function HomePage() {
               <span className="text-sm font-medium">What We Do</span>
             </div>
             <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
-              Enterprise-grade AI solutions
+              {data?.trustTitle || "Enterprise-grade AI solutions"}
             </h2>
             <p className="text-lg text-neutral-500">
-              We help organizations move from experiments to outcomes.
+              {data?.trustDescription || "We help organizations move from experiments to outcomes."}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Link href="/ai-implementation" className="group block focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-[32px]">
-              <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 group-hover:bg-white group-hover:border-primary-500/30 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col cursor-pointer">
-                <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
-                  <SparkleIcon />
-                  <span>01</span>
+            {serviceCards.map((card, idx) => (
+              <Link key={idx} href={card.link} className="group block focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-[32px]">
+                <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 group-hover:bg-white group-hover:border-primary-500/30 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col cursor-pointer">
+                  <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
+                    <SparkleIcon />
+                    <span>{card.num}</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">{card.page?.title || "Solution"}</h3>
+                  <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
+                    {card.page?.description || "Solution description goes here."}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {card.tags.map(tag => (
+                      <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">GenAI & Agentic AI</h3>
-                <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
-                  From LLM experiments to production-grade AI systems with governance built-in.
-                </p>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {['LLM Strategy', 'AI Copilots', 'RAG Systems'].map(tag => (
-                    <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </Link>
-
-            <Link href="/data-analytics" className="group block focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-[32px]">
-              <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 group-hover:bg-white group-hover:border-primary-500/30 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col cursor-pointer">
-                <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
-                  <SparkleIcon />
-                  <span>02</span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">Data & Analytics</h3>
-                <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
-                  Build AI-ready data foundations with modern architectures.
-                </p>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {['Data Fabric', 'ML Ops', 'Decision Intelligence'].map(tag => (
-                    <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </Link>
-
-            <Link href="/erp-transformation" className="group block focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-[32px]">
-              <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 group-hover:bg-white group-hover:border-primary-500/30 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col cursor-pointer">
-                <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
-                  <SparkleIcon />
-                  <span>03</span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">ERP Modernization</h3>
-                <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
-                  S/4HANA and cloud ERP transformations designed for AI enablement.
-                </p>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {['S/4HANA', 'SAP AI', 'Cloud ERP'].map(tag => (
-                    <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -222,41 +192,32 @@ export default function HomePage() {
               <span className="text-sm font-medium">Our Approach</span>
             </div>
             <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
-              Three phases to transformation
+              {data?.processTitle || "Three phases to transformation"}
             </h2>
             <p className="text-lg text-neutral-500">
-              A structured methodology for GenAI, ERP, and Data initiatives.
+              {data?.processDescription || "A structured methodology for GenAI, ERP, and Data initiatives."}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 relative max-w-5xl mx-auto">
-            {/* Dotted connecting line behind cards */}
-            <div className="hidden md:block absolute top-[50%] left-10 right-10 h-0 border-t border-dashed border-neutral-300 -z-10"></div>
-            
-            <div className="bg-gradient-to-br from-primary-500/20 to-primary-500/5 rounded-[24px] w-full max-w-[340px] h-[230px] p-7 shadow-sm mx-auto flex flex-col justify-center">
-              <div className="text-primary-500/40 text-[4.25rem] font-black mb-3 leading-none">01</div>
-              <h3 className="text-xl font-bold text-[#26201D] mb-2">Discovery</h3>
-              <p className="text-neutral-500 leading-relaxed text-sm">
-                Align stakeholders, assess readiness, and identify quick wins.
-              </p>
+          {data?.process && data.process.length > 0 && (
+            <div className={`grid md:grid-cols-${data.process.length} gap-6 relative max-w-5xl mx-auto`}>
+              {/* Dotted connecting line behind cards */}
+              <div className="hidden md:block absolute top-[50%] left-10 right-10 h-0 border-t border-dashed border-neutral-300 -z-10"></div>
+              
+              {data.process.map((step: any, index: number) => {
+                const style = processStyles[index % processStyles.length];
+                return (
+                  <div key={index} className={`bg-gradient-to-br ${style.bg} rounded-[24px] w-full max-w-[340px] h-[230px] p-7 shadow-sm mx-auto flex flex-col justify-center`}>
+                    <div className={`${style.text} text-[4.25rem] font-black mb-3 leading-none`}>{step.step || `0${index + 1}`}</div>
+                    <h3 className="text-xl font-bold text-[#26201D] mb-2">{step.title}</h3>
+                    <p className="text-neutral-500 leading-relaxed text-sm">
+                      {step.description}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
-
-            <div className="bg-gradient-to-br from-purple-500/20 to-purple-500/5 rounded-[24px] w-full max-w-[340px] h-[230px] p-7 shadow-sm mx-auto flex flex-col justify-center">
-              <div className="text-purple-500/40 text-[4.25rem] font-black mb-3 leading-none">02</div>
-              <h3 className="text-xl font-bold text-[#26201D] mb-2">Blueprint</h3>
-              <p className="text-neutral-500 leading-relaxed text-sm">
-                Design roadmap with governance, metrics, and clear milestones.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-rose-500/20 to-rose-500/5 rounded-[24px] w-full max-w-[340px] h-[230px] p-7 shadow-sm mx-auto flex flex-col justify-center">
-              <div className="text-rose-500/40 text-[4.25rem] font-black mb-3 leading-none">03</div>
-              <h3 className="text-xl font-bold text-[#26201D] mb-2">Execution</h3>
-              <p className="text-neutral-500 leading-relaxed text-sm">
-                Deliver with continuous value tracking and course correction.
-              </p>
-            </div>
-          </div>
+          )}
 
           <div className="text-center mt-12">
             <Link href="/use-cases" className="inline-flex items-center gap-2 text-primary-500 font-semibold hover:text-primary-600 transition-colors">
@@ -274,61 +235,28 @@ export default function HomePage() {
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
-              Built for Enterprise Leaders
+              {data?.personasTitle || "Built for Enterprise Leaders"}
             </h2>
             <p className="text-lg text-neutral-500 max-w-2xl mx-auto">
-              We work with decision-makers who understand transformation requires more than technology.
+              {data?.personasDescription || "We work with decision-makers who understand transformation requires more than technology."}
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-bl from-orange-400 to-pink-500 flex items-center justify-center mb-6 text-white shadow-inner">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-[#26201D] mb-3">CXOs & Board</h3>
-              <p className="text-neutral-500 text-sm leading-relaxed">
-                Strategic clarity on GenAI, ERP, and data investments.
-              </p>
-            </div>
-
-            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-bl from-pink-500 to-rose-500 flex items-center justify-center mb-6 text-white shadow-inner">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-[#26201D] mb-3">CDOs & CTOs</h3>
-              <p className="text-neutral-500 text-sm leading-relaxed">
-                Execution frameworks and governance models.
-              </p>
-            </div>
-
-            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-bl from-rose-500 to-primary-500 flex items-center justify-center mb-6 text-white shadow-inner">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-[#26201D] mb-3">Enterprise Architects</h3>
-              <p className="text-neutral-500 text-sm leading-relaxed">
-                Integration blueprints for AI-ready architecture.
-              </p>
-            </div>
-
-            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-bl from-primary-500 to-orange-400 flex items-center justify-center mb-6 text-white shadow-inner">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-[#26201D] mb-3">Data Leaders</h3>
-              <p className="text-neutral-500 text-sm leading-relaxed">
-                Data strategy alignment with AI ambitions.
-              </p>
-            </div>
+            {data?.personas?.map((persona: any, index: number) => {
+              const style = personaIcons[index % personaIcons.length];
+              return (
+                <div key={index} className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-bl ${style.bg} flex items-center justify-center mb-6 text-white shadow-inner`}>
+                    {style.icon}
+                  </div>
+                  <h3 className="text-lg font-bold text-[#26201D] mb-3">{persona.title}</h3>
+                  <div className="text-neutral-500 text-sm leading-relaxed prose prose-sm">
+                    <PortableText value={persona.description} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -337,15 +265,15 @@ export default function HomePage() {
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(255, 130, 28, 0.08), rgba(173, 88, 217, 0.08))' }}>
         <div className="container-custom text-center relative z-10">
           <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-6">
-            Get Clarity Before You Commit
+            {data?.finalCTA?.title || "Get Clarity Before You Commit"}
           </h2>
           <p className="text-lg text-[#6D5A4C] max-w-2xl mx-auto mb-10">
-            45-minute strategy call. No sales pitch — just actionable insights on your GenAI, ERP, or data challenges.
+            {data?.finalCTA?.description || "45-minute strategy call. No sales pitch — just actionable insights on your GenAI, ERP, or data challenges."}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className="w-full sm:w-auto">
+            <Link href={data?.finalCTA?.cta?.link || "/contact"} className="w-full sm:w-auto">
               <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-base rounded-2xl flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#D122E3] text-white hover:opacity-90 transition-colors shadow-sm border-none font-medium">
-                Book Free Strategy Call
+                {data?.finalCTA?.cta?.text || "Book Free Strategy Call"}
                 <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
