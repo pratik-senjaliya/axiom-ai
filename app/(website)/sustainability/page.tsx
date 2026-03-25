@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { FAQ } from "@/components/ui/FAQ";
-import { LightCTA } from "@/components/services/LightCTA";
+import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
 
@@ -129,11 +129,11 @@ export default async function SustainabilityPage() {
   }));
 
   return (
-    <div className="pt-0 pb-0 bg-white">
+    <div className="pt-0 pb-0">
       <ServiceHero 
         badgeText={data?.hero?.badge || "AI for Sustainable Operations"}
-        title={data?.title || data?.hero?.headline?.replace("Operational and Measurable", "").trim() || "Make Sustainability"}
-        gradientTitlePart={data?.hero?.headline?.includes("Operational and Measurable") ? "Operational and Measurable" : ""}
+        title={data?.title?.replace("Operational and Measurable", "").trim() || "Make Sustainability"}
+        gradientTitlePart="Operational and Measurable"
         description={data?.description || data?.hero?.subHeadline || "Use AI and enterprise data to improve carbon visibility, reporting accuracy, and operational efficiency."}
         primaryButtonText={data?.heroCTA?.text || "Explore Sustainability Pilot"}
         primaryButtonLink={data?.heroCTA?.link || "/contact"}
@@ -145,7 +145,7 @@ export default async function SustainabilityPage() {
       <section className="py-24 bg-[#FAF8F5]">
         <div className="container-custom px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#26201D] mb-6">{data?.introTitle || "Why Sustainability Efforts Struggle"}</h2>
+            <h2 className="type-section-title text-[#26201D] mb-6">{data?.introTitle || "Why Sustainability Efforts Struggle"}</h2>
             <p className="text-lg text-neutral-500">{"Traditional reporting can't keep up with the demands of modern enterprise green targets."}</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -185,7 +185,7 @@ export default async function SustainabilityPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#26201D]">
               {data?.engagement?.headline || "Deployment Approach"}
             </h2>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 max-w-5xl mx-auto">
               {engagementModels.map((item: any, index: number) => (
                 <div key={index} className="flex flex-col items-center text-center gap-6 group">
                   <div className="w-16 h-16 rounded-2xl bg-[#FF821C] flex items-center justify-center text-white shadow-[0_8px_16px_rgba(255,130,28,0.2)] transition-transform group-hover:scale-110 duration-300">
@@ -209,11 +209,11 @@ export default async function SustainabilityPage() {
         </section>
       )}
 
-      <LightCTA 
+      <DarkCTA 
         title={data?.finalCTA?.title || "Turn Sustainability Into a Business Advantage"}
         description={data?.finalCTA?.description || "Start with a focused pilot. Measure real impact. Scale sustainability across your enterprise with confidence."}
-        primaryButtonText={data?.finalCTA?.cta?.text || "Schedule Sustainability Discussion"}
-        primaryButtonLink={data?.finalCTA?.cta?.link || "/contact"}
+        buttonText={data?.finalCTA?.cta?.text || "Schedule Sustainability Discussion"}
+        buttonHref={data?.finalCTA?.cta?.link || "/contact"}
       />
     </div>
   );

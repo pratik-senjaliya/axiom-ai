@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
-import { LightCTA } from "@/components/services/LightCTA";
+import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
 import { FAQ } from "@/components/ui/FAQ";
@@ -62,7 +62,7 @@ export default async function AIImplementationPage() {
     description: step.description,
   }));
 
-  const engagementModels = (data?.engagement?.models || []).map((model: any, index: number) => {
+  const engagementModels = (data?.deploymentModels || []).map((model: any, index: number) => {
     // Keep matching the hardcoded icons by index since Sanity doesn't store SVGs directly here
     const hardcodedIcons = [
       (
@@ -102,12 +102,12 @@ export default async function AIImplementationPage() {
   }));
 
   return (
-    <div className="pt-0 pb-0 bg-white">
+    <div className="pt-0 pb-0">
       <ServiceHero 
         badgeText={data?.hero?.badge || "Enterprise AI Platform"}
         badgeIcon={<BrainIcon />}
-        title={data?.title || data?.hero?.headline?.replace("Measurable Business Value", "").trim() || "Turn AI Into"}
-        gradientTitlePart={data?.hero?.headline?.includes("Measurable Business Value") ? "Measurable Business Value" : ""}
+        title={data?.title?.replace("a Measurable Business Asset", "").trim() || "Turn AI into"}
+        gradientTitlePart="a Measurable Business Asset"
         description={data?.description || data?.hero?.subHeadline || "From Generative AI to Agentic and Autonomous Systems — we design production-ready AI platforms that integrate with enterprise systems and deliver real operational impact."}
         primaryButtonText={data?.hero?.primaryButtonText || "Start AI Pilot"}
         secondaryButtonText={data?.hero?.secondaryButtonText || "Book Strategy Call"}
@@ -161,7 +161,7 @@ export default async function AIImplementationPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#26201D]">
             {data?.engagement?.headline || "Deployment Models"}
           </h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 max-w-5xl mx-auto">
             {engagementModels.map((item: any, index: number) => (
               <div key={index} className="flex flex-col items-center text-center gap-6 group">
                 <div className="w-16 h-16 rounded-2xl bg-[#FF821C] flex items-center justify-center text-white shadow-[0_8px_16px_rgba(255,130,28,0.2)] transition-transform group-hover:scale-110 duration-300">
@@ -188,11 +188,11 @@ export default async function AIImplementationPage() {
         </section>
       )}
 
-      <LightCTA 
+      <DarkCTA 
         title={data?.finalCTA?.title || "Stop Experimenting. Start Implementing."}
         description={data?.finalCTA?.description || "Book a strategy session to see how we can turn your data into an autonomous competitive advantage."}
-        primaryButtonText={data?.finalCTA?.cta?.text || "Schedule Executive Discussion"}
-        primaryButtonLink={data?.finalCTA?.cta?.link || "/contact"}
+        buttonText={data?.finalCTA?.cta?.text || "Schedule Executive Discussion"}
+        buttonHref={data?.finalCTA?.cta?.link || "/contact"}
       />
     </div>
   );

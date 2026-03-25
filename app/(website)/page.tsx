@@ -68,12 +68,11 @@ export default async function HomePage() {
             <span className="text-sm font-medium text-neutral-800">Enterprise AI & Data Advisory</span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-bold text-[#26201D] tracking-tight mb-8 leading-[1.05]">
-            {data?.heroTitle || "Building the future of"}
-            {data?.heroTitleHighlight && <span className="block gradient-text mt-1">{data.heroTitleHighlight}</span>}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#26201D] tracking-tight mb-8 leading-[1.05]">
+            Architecting the <span className="gradient-text">Intelligent Enterprise</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-neutral-500 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+          <p className="text-lg md:text-xl text-neutral-500 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
             {data?.heroDescription || "We architect GenAI, Data, and ERP transformations that scale — with governance, clarity, and measurable outcomes."}
           </p>
           
@@ -150,7 +149,7 @@ export default async function HomePage() {
               <SparkleIcon />
               <span className="text-sm font-medium">What We Do</span>
             </div>
-            <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
+            <h2 className="type-section-title text-[#26201D] mb-4">
               {data?.trustTitle || "Enterprise-grade AI solutions"}
             </h2>
             <p className="text-lg text-neutral-500">
@@ -191,7 +190,7 @@ export default async function HomePage() {
               <SparkleIcon />
               <span className="text-sm font-medium">Our Approach</span>
             </div>
-            <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
+            <h2 className="type-section-title text-[#26201D] mb-4">
               {data?.processTitle || "Three phases to transformation"}
             </h2>
             <p className="text-lg text-neutral-500">
@@ -264,7 +263,7 @@ export default async function HomePage() {
       {/* 6. Contact CTA */}
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(255, 130, 28, 0.08), rgba(173, 88, 217, 0.08))' }}>
         <div className="container-custom text-center relative z-10">
-          <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-6">
+          <h2 className="type-section-title text-[#26201D] mb-6">
             {data?.finalCTA?.title || "Get Clarity Before You Commit"}
           </h2>
           <p className="text-lg text-[#6D5A4C] max-w-2xl mx-auto mb-10">

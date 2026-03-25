@@ -14,7 +14,6 @@ interface ServiceHeroProps {
   secondaryButtonText?: string;
   primaryButtonLink?: string;
   secondaryButtonLink?: string;
-  align?: "center" | "left";
   backLink?: { href: string; label: string };
 }
 
@@ -35,29 +34,18 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
   secondaryButtonText,
   primaryButtonLink = "/contact",
   secondaryButtonLink = "/contact",
-  align = "center",
   backLink
 }) => {
-  const isLeft = align === "left";
-
   return (
-    <section className={cn(
-      "relative pt-32 pb-24 overflow-hidden bg-[#FAF8F5]",
-      isLeft ? "text-left" : "text-center"
-    )}>
+    <section className="relative min-h-[70vh] pt-32 pb-28 flex flex-col items-center justify-center overflow-hidden bg-transparent text-center">
       {/* Grid Background Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+      <div className="bg-grid opacity-40"></div>
       
       {/* Radial Glow */}
-      <div className={cn(
-        "absolute w-[40rem] h-[40rem] bg-gradient-to-tr from-orange-400/10 to-purple-400/10 rounded-full blur-[80px] pointer-events-none",
-        isLeft ? "top-0 -left-20" : "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-      )}></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] bg-orange-100/40 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+      <div className="absolute top-[40%] right-[10%] w-[40rem] h-[40rem] bg-violet-100/30 rounded-full blur-[100px] pointer-events-none -z-10"></div>
       
-      <div className={cn(
-        "container-custom relative z-10 px-4",
-        isLeft ? "max-w-6xl mx-auto" : "max-w-4xl mx-auto"
-      )}>
+      <div className="container-custom relative z-10 px-4 max-w-4xl mx-auto flex flex-col items-center">
         {/* Back Link */}
         {backLink && (
           <Link href={backLink.href} className="inline-flex items-center text-sm font-medium text-neutral-400 hover:text-[#FF821C] transition-colors mb-8">
@@ -69,10 +57,7 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
         )}
 
         {/* Badge or Pills */}
-        <div className={cn(
-          "flex flex-wrap gap-3 mb-8",
-          isLeft ? "justify-start" : "justify-center"
-        )}>
+        <div className="flex flex-wrap gap-3 mb-8 justify-center">
           {badgeText && (
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-50 border border-orange-100 rounded-full shadow-sm">
               {badgeIcon || <SparkleIcon className="w-4 h-4 text-[#FF821C]" />}
@@ -87,37 +72,23 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
         </div>
         
         {/* Title */}
-        <h1 className={cn(
-          "text-5xl md:text-6xl lg:text-[4.5rem] font-black text-[#26201D] tracking-tight leading-[1.05] mb-6",
-          isLeft ? "max-w-3xl" : "mx-auto"
-        )}>
+        <h1 className="type-hero text-[#26201D] mb-6 mx-auto">
           {title}{" "}
           {gradientTitlePart && (
-            <span className={cn(
-              "bg-clip-text text-transparent bg-gradient-to-r",
-              title === "Turn AI Into" 
-                ? "from-[#F97316] via-[#F97316] to-[#9333EA]" 
-                : "from-[#FF821C] to-[#9333EA]"
-            )}>
+            <span className="gradient-text">
               {gradientTitlePart}
             </span>
           )}
         </h1>
         
         {/* Description */}
-        <p className={cn(
-          "text-xl text-neutral-500 leading-relaxed mb-10",
-          isLeft ? "max-w-2xl" : "max-w-2xl mx-auto"
-        )}>
+        <p className="type-lead mb-10 max-w-2xl mx-auto">
           {description}
         </p>
 
         {/* Buttons */}
         {(primaryButtonText || secondaryButtonText) && (
-          <div className={cn(
-            "flex flex-col sm:flex-row gap-4 mt-10 md:mt-12",
-            !isLeft && "justify-center"
-          )}>
+          <div className="flex flex-col sm:flex-row gap-4 mt-10 md:mt-12 justify-center">
             {primaryButtonText && (
               <Link href={primaryButtonLink} className="w-full sm:w-auto">
                 <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#FFAA4C] text-white hover:opacity-90 transition-opacity shadow-lg shadow-orange-500/20 border-none font-bold group">

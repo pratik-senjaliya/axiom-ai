@@ -64,8 +64,8 @@ export default function InsightsPage() {
             <SparkleIcon />
             <span>Insights</span>
           </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
-            Articles & Perspective
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
+            <span className="gradient-text">Articles & Perspective</span>
           </h1>
           <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto mb-10">
             Thought leadership on the future of enterprise intelligence.
@@ -92,7 +92,7 @@ export default function InsightsPage() {
                   <span className="text-sm font-medium text-neutral-400">{item.date}</span>
                 </div>
                 
-                <h3 className="text-2xl font-bold text-[#26201D] mb-4 group-hover:text-[#FF821C] transition-colors line-clamp-2">{item.title}</h3>
+                <h3 className="type-card-title text-[#26201D] mb-4 group-hover:text-[#FF821C] transition-colors line-clamp-2">{item.title}</h3>
                 
                 <p className="text-neutral-500 leading-relaxed mb-8 flex-grow line-clamp-3">{item.excerpt}</p>
 
@@ -115,7 +115,7 @@ export default function InsightsPage() {
             <SparkleIcon />
             <span>Apply Findings</span>
           </div>
-          <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-6 max-w-2xl mx-auto">
+          <h2 className="type-section-title text-[#26201D] mb-6 max-w-2xl mx-auto">
             Want These Insights Applied to Your Business?
           </h2>
           <p className="text-lg text-neutral-500 max-w-2xl mx-auto mb-10">

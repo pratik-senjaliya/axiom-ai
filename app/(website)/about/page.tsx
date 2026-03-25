@@ -64,8 +64,8 @@ export default function AboutPage() {
             <SparkleIcon />
             <span>About Us</span>
           </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
-            The Architects of Enterprise
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
+            The Architects of <span className="gradient-text">Enterprise Success</span>
           </h1>
           <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto">
             A partner, not just a provider. We build the future.
@@ -78,7 +78,7 @@ export default function AboutPage() {
         <div className="container-custom px-4">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <div>
-              <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-8">Our Story</h2>
+              <h2 className="type-section-title text-[#26201D] mb-8">Our Story</h2>
               <div className="space-y-6 text-lg text-neutral-500 leading-relaxed">
                 <p>
                   AxiomAI was founded on a simple observation: the gap between technology strategy and execution is where most enterprise value is lost.
@@ -110,7 +110,7 @@ export default function AboutPage() {
       <section className="py-24 relative z-10 bg-white">
         <div className="container-custom px-4">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-[2.5rem] font-bold tracking-tight text-[#26201D] mb-6">Our Values</h2>
+            <h2 className="type-section-title tracking-tight text-[#26201D] mb-6">Our Values</h2>
             <p className="text-lg text-neutral-500">
               What drives us forward
             </p>
@@ -138,7 +138,7 @@ export default function AboutPage() {
             <SparkleIcon />
             <span>Connect</span>
           </div>
-          <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
+          <h2 className="type-section-title text-white mb-6">
             Ready to evolve?
           </h2>
           <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">

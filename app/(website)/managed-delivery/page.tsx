@@ -64,17 +64,17 @@ export default async function ManagedDeliveryPage() {
   }));
 
   return (
-    <div className="pt-0 pb-0 bg-white">
+    <div className="pt-0 pb-0">
       <ServiceHero 
-        align="left"
         backLink={{ href: "/services", label: "Back to Services" }}
         pills={["Staff Augmentation", "Managed Teams", "Offshore Delivery", "Project Execution"]}
-        title={data?.introTitle || data?.title || "Managed Delivery"}
-        description={data?.description || data?.hero?.subHeadline || "Pre-vetted specialists and managed teams for your AI, ERP & Data projects. Fast, flexible, outcome-driven delivery that scales with your roadmap."}
+        title={data?.introTitle?.replace("Delivery", "").trim() || data?.title?.replace("Delivery", "").trim() || "Managed"}
+        gradientTitlePart="Delivery"
+        description={data?.description || data?.hero?.subHeadline || "We build, manage, and scale high-performance teams across AI, ERP, and Data."}
         primaryButtonText={data?.heroCTA?.text || "Build Your Team"}
         primaryButtonLink={data?.heroCTA?.link || "/contact"}
-        secondaryButtonText={data?.secondaryCTA?.text || "Talk to a Delivery Expert"}
-        secondaryButtonLink={data?.secondaryCTA?.link || "/contact"}
+        secondaryButtonText={data?.secondaryCTA?.text || "Talk to an Expert"}
+        secondaryButtonLink={"/services"}
       />
 
       {/* Built for Enterprise Speed - Metric Section */}

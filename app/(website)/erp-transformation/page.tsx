@@ -70,17 +70,17 @@ export default async function ERPTransformationPage() {
   }));
 
   return (
-    <div className="pt-0 pb-0 bg-white">
+    <div className="pt-0 pb-0">
       <ServiceHero 
-        align="left"
         backLink={{ href: "/services", label: "Back to Services" }}
         pills={["Dynamics 365 BC", "Dynamics 365 F&O", "ERP Migration", "Process Advisory"]}
-        title={data?.introTitle || data?.title || "ERP Transformation"}
-        description={data?.description || "Microsoft Dynamics 365 implementations designed for business value, not just go-live."}
+        title={data?.title?.replace("Transformation", "").trim() || "ERP"}
+        gradientTitlePart="Transformation"
+        description={data?.description || "We design and deploy high-performance ERP ecosystems across Microsoft Dynamics 365, SAP S/4HANA, and Oracle NetSuite/Cloud."}
         primaryButtonText={data?.heroCTA?.text || "Get ERP Assessment"}
         primaryButtonLink={data?.heroCTA?.link || "/contact"}
         secondaryButtonText={data?.secondaryCTA?.text || "Talk to an Architect"}
-        secondaryButtonLink={data?.secondaryCTA?.link || "/contact"}
+        secondaryButtonLink="/services"
       />
 
       {erpServices.length > 0 && (

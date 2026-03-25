@@ -67,7 +67,7 @@ export default function ServicesHubPage() {
   ];
 
   return (
-    <div className="pt-0 pb-0 bg-white">
+    <div className="pt-0 pb-0">
       {/* Custom Hero Section for Hub */}
       <section className="relative pt-32 pb-20 overflow-hidden bg-[#FAF8F5]">
         {/* Blueprint Grid Pattern */}
@@ -82,10 +82,10 @@ export default function ServicesHubPage() {
             </div>
             
             {/* Title - Decreased to 6xl from 7xl */}
-            <h1 className="text-5xl md:text-6xl font-black text-[#26201D] tracking-tight leading-[1.1] mb-2">
+            <h1 className="type-hero text-[#26201D] mb-2">
               AI, Data & ERP —
             </h1>
-            <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-[1.1] mb-6">
+            <h1 className="type-hero gradient-text tracking-tight leading-[1.1] mb-6">
               <span className="bg-gradient-to-r from-[#FF821C] to-[#DE2297] bg-clip-text text-transparent">
                 Done Right
               </span>
@@ -118,7 +118,7 @@ export default function ServicesHubPage() {
                   </div>
                   
                   {/* Title & Description - Decreased font sizes */}
-                  <h3 className="text-2xl font-bold text-[#26201D] group-hover:text-[#FF821C] transition-colors mb-3">
+                  <h3 className="type-card-title text-[#26201D] group-hover:text-[#FF821C] transition-colors mb-3">
                     {service.title}
                   </h3>
                   <p className="text-neutral-500 text-base leading-relaxed mb-6 flex-grow">

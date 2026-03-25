@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { LightCTA } from "@/components/services/LightCTA";
+import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -63,8 +63,8 @@ export default async function UseCasesPage() {
             <SparkleIcon />
             <span>Use Cases</span>
           </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
-            {data?.title || "Success stories from the frontier"}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
+            Success stories from the <span className="gradient-text">Frontier of AI</span>
           </h1>
           <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto mb-10">
             {data?.description || "Real-world results for enterprise leaders."}
@@ -92,7 +92,7 @@ export default async function UseCasesPage() {
                   </svg>
                 </div>
                 
-                <h3 className="text-2xl font-bold text-[#26201D] mb-8">{item.title}</h3>
+                <h3 className="type-card-title text-[#26201D] mb-8">{item.title}</h3>
                 
                 <div className="space-y-6 flex-grow mb-8 w-full">
                   <div>
@@ -133,7 +133,7 @@ export default async function UseCasesPage() {
             <SparkleIcon />
             <span>Partner With Us</span>
           </div>
-          <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
+          <h2 className="type-section-title text-white mb-6">
             {data?.howWePartnerCTA?.title || "Face similar challenges?"}
           </h2>
           <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
@@ -150,11 +150,11 @@ export default async function UseCasesPage() {
         </div>
       </section>
 
-      <LightCTA 
+      <DarkCTA 
         title={data?.pocGuaranteeCTA?.title || "The 6-8 Week Pilot Guarantee"}
         description={data?.pocGuaranteeCTA?.description || "Don't commit to a year-long roadmap. Pick one high-impact use case above, and we will build a working POC in your environment in 6 weeks to prove the ROI."}
-        primaryButtonText={data?.pocGuaranteeCTA?.cta?.text || "Start Your Pilot"}
-        primaryButtonLink={data?.pocGuaranteeCTA?.cta?.link || "/contact"}
+        buttonText={data?.pocGuaranteeCTA?.cta?.text || "Start Your Pilot"}
+        buttonHref={data?.pocGuaranteeCTA?.cta?.link || "/contact"}
       />
     </div>
   );

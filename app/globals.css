@@ -100,12 +100,12 @@
   }
 
   h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl xl:text-7xl;
+    @apply text-4xl md:text-5xl lg:text-6xl;
     @apply font-bold;
   }
 
   h2 {
-    @apply text-3xl md:text-4xl lg:text-5xl;
+    @apply text-2xl md:text-3xl lg:text-4xl;
     @apply font-bold;
   }
 
@@ -235,6 +235,43 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
+  }
+
+  /* ===================================================
+   * CANONICAL TYPOGRAPHY SYSTEM
+   * Use these classes everywhere for consistent sizing.
+   * Never hardcode font sizes on individual elements.
+   * ===================================================
+   */
+
+  /* Page Hero H1: used in ServiceHero and all page hero sections */
+  .type-hero {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05];
+  }
+
+  /* Section H2: used for all major content section headings */
+  .type-section-title {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight leading-snug;
+  }
+
+  /* Card H3: used inside feature grids, cards, etc. */
+  .type-card-title {
+    @apply text-xl md:text-2xl font-bold leading-snug;
+  }
+
+  /* Lead paragraph: used directly under hero / section titles */
+  .type-lead {
+    @apply text-lg md:text-xl text-neutral-500 leading-relaxed;
+  }
+
+  /* Body paragraph: default body text */
+  .type-body {
+    @apply text-base text-neutral-500 leading-relaxed;
+  }
+
+  /* Small / caption text: meta, labels, tags */
+  .type-caption {
+    @apply text-sm text-neutral-400 leading-snug;
   }
 }
 

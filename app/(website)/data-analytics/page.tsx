@@ -59,17 +59,17 @@ export default async function DataAnalyticsPage() {
   }));
 
   return (
-    <div className="pt-0 pb-0 bg-white">
+    <div className="pt-0 pb-0">
       <ServiceHero 
-        align="left"
         backLink={{ href: "/services", label: "Back to Services" }}
         pills={["Power BI", "Data Warehousing", "Predictive Analytics", "KPI Reporting"]}
-        title={data?.introTitle || data?.title || "Data & Analytics"}
-        description={data?.description || data?.hero?.subHeadline || "Turn data into decisions. From Power BI dashboards to predictive intelligence, we build the foundations for an AI-driven business."}
-        primaryButtonText={data?.heroCTA?.text || "Get Data Assessment"}
+        title={data?.title?.replace("& Analytics", "").trim() || "Data"}
+        gradientTitlePart="& Analytics"
+        description={data?.description || "Transform raw data into a strategic asset. We build robust data warehousing, governance, and analytics platforms that empower decision-makers and fuel AI."}
+        primaryButtonText={data?.heroCTA?.text || "Audit Your Data Stack"}
         primaryButtonLink={data?.heroCTA?.link || "/contact"}
-        secondaryButtonText={data?.secondaryCTA?.text || "Talk to a Specialist"}
-        secondaryButtonLink={data?.secondaryCTA?.link || "/contact"}
+        secondaryButtonText={data?.secondaryCTA?.text || "Explore Solutions"}
+        secondaryButtonLink="/services"
       />
 
       {dataServices.length > 0 && (
