@@ -3,6 +3,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
+import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(`*[_type == "useCasesPage"][0]`);
@@ -24,33 +27,7 @@ const SparkleIcon = () => (
 
 export default async function UseCasesPage() {
   const data = await client.fetch(`*[_type == "useCasesPage"][0]`);
-  const cases = [
-    {
-      title: "Demand Forecasting Engine",
-      problem: "High inventory carrying costs and stockouts.",
-      tools: "Azure ML, Power BI, Dynamics 365",
-      approach: "Region-level predictive models with real-time data feeds.",
-      impact: "25% improvement in forecast accuracy."
-    },
-    {
-      title: "Executive Decision Dashboards",
-      tools: "Power BI Premium, Azure Synapse, DAX",
-      approach: "KPI-driven dashboards with AI-generated insights.",
-      impact: "Real-time visibility into business performance."
-    },
-    {
-      title: "Customer Analytics & Segmentation",
-      tools: "Azure AI, Dynamics 365 Customer Insights, Power BI",
-      approach: "ML-driven segmentation with predictive lifetime value models.",
-      impact: "Improved targeting and personalization at scale."
-    },
-    {
-      title: "Supply Chain Optimization",
-      tools: "Azure Databricks, Dynamics 365 Supply Chain Management",
-      approach: "End-to-end visibility models identifying bottlenecks and predicting delays.",
-      impact: "18% reduction in inventory holding costs."
-    }
-  ];
+  if (!data) notFound();
 
   return (
     <div className="pt-24 pb-0">
@@ -61,13 +38,13 @@ export default async function UseCasesPage() {
         <div className="container-custom relative z-10 px-4">
           <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-200 bg-white/50 backdrop-blur-sm text-sm font-medium text-neutral-800 shadow-sm">
             <SparkleIcon />
-            <span>Use Cases</span>
+            <span>{data?.badgeText}</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
-            Success stories from the <span className="gradient-text">Frontier of AI</span>
+            {data?.title} <span className="gradient-text">{data?.titleHighlight}</span>
           </h1>
           <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto mb-10">
-            {data?.description || "Real-world results for enterprise leaders."}
+            {data?.description}
           </p>
 
           {/* Filters */}
@@ -84,7 +61,7 @@ export default async function UseCasesPage() {
       <section className="py-24 relative z-10">
         <div className="container-custom px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {(data?.useCases || cases).map((item: any, idx: number) => (
+            {(data?.useCases || []).map((item: any, idx: number) => (
               <div key={idx} className="card p-10 bg-white border border-neutral-100 rounded-[2rem] hover:border-primary-200 transition-all shadow-sm hover:shadow-md flex flex-col items-start group">
                 <div className="w-14 h-14 bg-[#FF821C] text-white rounded-xl flex items-center justify-center mb-6 shadow-sm">
                   <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -113,12 +90,6 @@ export default async function UseCasesPage() {
                   </div>
                 </div>
 
-                <Link href="/contact" className="flex items-center text-[#FF821C] font-semibold mt-auto group-hover:gap-2 transition-all">
-                  Discuss This Use Case
-                  <svg className="w-5 h-5 ml-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
               </div>
             ))}
           </div>
@@ -131,30 +102,32 @@ export default async function UseCasesPage() {
         <div className="container-custom relative z-10 text-center flex flex-col items-center">
           <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-neutral-300">
             <SparkleIcon />
-            <span>Partner With Us</span>
+            <span>{data?.howWePartnerBadgeText}</span>
           </div>
           <h2 className="type-section-title text-white mb-6">
-            {data?.howWePartnerCTA?.title || "Face similar challenges?"}
+            {data?.howWePartnerCTA?.title}
           </h2>
           <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
-            {data?.howWePartnerCTA?.description || "Let's talk about your strategic goals and how we can partner to achieve them."}
+            {data?.howWePartnerCTA?.description}
           </p>
-          <Link href={data?.howWePartnerCTA?.cta?.link || "/contact"} className="w-full sm:w-auto">
+          {data?.howWePartnerCTA?.cta?.text && data?.howWePartnerCTA?.cta?.link && (
+          <Link href={data.howWePartnerCTA.cta.link} className="w-full sm:w-auto">
             <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 transition-opacity shadow-md border-none">
-              {data?.howWePartnerCTA?.cta?.text || "Book a Discovery Call"}
+              {data.howWePartnerCTA.cta.text}
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Button>
           </Link>
+          )}
         </div>
       </section>
 
       <DarkCTA 
-        title={data?.pocGuaranteeCTA?.title || "The 6-8 Week Pilot Guarantee"}
-        description={data?.pocGuaranteeCTA?.description || "Don't commit to a year-long roadmap. Pick one high-impact use case above, and we will build a working POC in your environment in 6 weeks to prove the ROI."}
-        buttonText={data?.pocGuaranteeCTA?.cta?.text || "Start Your Pilot"}
-        buttonHref={data?.pocGuaranteeCTA?.cta?.link || "/contact"}
+        title={data?.pocGuaranteeCTA?.title}
+        description={data?.pocGuaranteeCTA?.description}
+        buttonText={data?.pocGuaranteeCTA?.cta?.text}
+        buttonHref={data?.pocGuaranteeCTA?.cta?.link}
       />
     </div>
   );

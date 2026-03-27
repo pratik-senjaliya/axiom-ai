@@ -14,11 +14,14 @@ export function createServiceSchema(name: string, title: string) {
         ],
         fields: [
             defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
+            defineField({ name: 'badgeText', title: 'Hero Badge Text', type: 'string', group: 'hero' }),
             defineField({ name: 'title', title: 'Title', type: 'string', group: 'hero', validation: (Rule) => Rule.required() }),
             defineField({ name: 'description', title: 'Short Description', type: 'text', rows: 3, group: 'hero' }),
             defineField({ name: 'heroImage', title: 'Hero Image', type: 'image', options: { hotspot: true }, group: 'hero' }),
+            defineField({ name: 'heroGradientTitlePart', title: 'Hero Gradient Title Part', type: 'string', group: 'hero' }),
             defineField({ name: 'introTitle', title: 'Intro Title', type: 'string', group: 'intro' }),
             defineField({ name: 'introContent', title: 'Intro Content', type: 'text', group: 'intro' }),
+            defineField({ name: 'introSubtitle', title: 'Intro Subtitle', type: 'text', rows: 2, group: 'intro' }),
             defineField({
                 name: 'serviceAreas', title: 'Service Areas / Layers / The Stack', type: 'array', group: 'content',
                 of: [
@@ -40,6 +43,13 @@ export function createServiceSchema(name: string, title: string) {
             defineField({ name: 'deploymentModels', title: 'Deployment Models', type: 'array', of: [{ type: 'feature' }], group: 'content' }),
             defineField({ name: 'industryUseCases', title: 'Industry Use Cases', type: 'array', of: [{ type: 'feature' }], group: 'content' }),
             defineField({ name: 'faqs', title: 'FAQs', type: 'array', of: [{ type: 'faq' }], group: 'content' }),
+            defineField({ name: 'serviceAreasTitle', title: 'Service Areas Section Title', type: 'string', group: 'content' }),
+            defineField({ name: 'serviceAreasDescription', title: 'Service Areas Section Description', type: 'text', rows: 2, group: 'content' }),
+            defineField({ name: 'processSectionTitle', title: 'Process Section Title', type: 'string', group: 'content' }),
+            defineField({ name: 'processSectionDescription', title: 'Process Section Description', type: 'text', rows: 2, group: 'content' }),
+            defineField({ name: 'whyChooseSectionTitle', title: 'Why Choose Section Title', type: 'string', group: 'content' }),
+            defineField({ name: 'faqSectionTitle', title: 'FAQ Section Title', type: 'string', group: 'content' }),
+            defineField({ name: 'engagementSectionTitle', title: 'Engagement Section Title', type: 'string', group: 'content' }),
             defineField({ name: 'heroCTA', title: 'Hero CTA', type: 'cta', group: 'hero' }),
             defineField({ name: 'secondaryCTA', title: 'Secondary CTA', type: 'cta', group: 'hero' }),
             defineField({ name: 'finalCTA', title: 'Final CTA Section', type: 'finalCtaSection', group: 'content' }),

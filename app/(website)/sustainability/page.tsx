@@ -6,6 +6,9 @@ import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
+import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(`*[_type == "sustainabilityPage"][0]{ seo }`);
@@ -21,6 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function SustainabilityPage() {
   const data = await client.fetch(`*[_type == "sustainabilityPage"][0]`);
+  if (!data) notFound();
 
   const obstacleItems = (data?.whyChooseUs || []).length > 0 ? data.whyChooseUs.map((obs: any) => ({
     title: obs.title,
@@ -152,26 +156,26 @@ export default async function SustainabilityPage() {
   return (
     <div className="pt-0 pb-0">
       <ServiceHero 
-        badgeText={data?.hero?.badge || "AI for Sustainable Operations"}
-        title={data?.title?.split("Optimal and Measurable")[0] || "Make Sustainability"}
-        gradientTitlePart="Operational and Measurable"
-        description={data?.description || data?.hero?.subHeadline || "Use AI and enterprise data to improve carbon visibility, reporting accuracy, and operational efficiency."}
-        primaryButtonText={data?.heroCTA?.text || "Explore Sustainability Pilot"}
-        primaryButtonLink={data?.heroCTA?.link || "/contact"}
-        secondaryButtonText={data?.secondaryCTA?.text || "Talk to a Sustainability Expert"}
-        secondaryButtonLink={data?.secondaryCTA?.link || "/services"}
+        badgeText={data?.hero?.badge}
+        title={data?.title?.split("Business Impact")[0]}
+        gradientTitlePart="Business Impact"
+        description={data?.description || data?.hero?.subHeadline}
+        primaryButtonText={data?.heroCTA?.text}
+        primaryButtonLink={data?.heroCTA?.link}
+        secondaryButtonText={data?.secondaryCTA?.text}
+        secondaryButtonLink={data?.secondaryCTA?.link}
       />
 
       {/* Obstacles Section */}
       <ObstacleSection 
-        title={data?.introTitle || "Why Sustainability Efforts Struggle"}
-        subtitle="Traditional reporting can't keep up with the demands of modern enterprise green targets."
+        title={data?.introTitle}
+        subtitle={data?.introSubtitle}
         items={obstacleItems}
       />
 
       <FeatureGrid 
-        title="Sustainable AI Modules"
-        description="Combining deep data engineering with specialized AI agents to accelerate your journey to Net Zero."
+        title={data?.serviceAreasTitle}
+        description={data?.serviceAreasDescription}
         columns={2}
         items={serviceItems.length > 0 ? serviceItems : []}
         bgWhite={true}
@@ -179,8 +183,8 @@ export default async function SustainabilityPage() {
       />
 
       <FeatureGrid 
-        title="Core Sustainability Pillars"
-        description="Our comprehensive framework for integrating AI and data strategy to achieve measurable ESG outcomes."
+        title={data?.processSectionTitle}
+        description={data?.processSectionDescription}
         items={methodologySteps.length > 0 ? methodologySteps : []}
         columns={3}
         isRoadmap={false}
@@ -193,7 +197,7 @@ export default async function SustainabilityPage() {
         <section className="py-24 bg-[#FAF8F5]">
           <div className="container-custom px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#26201D]">
-              {data?.engagement?.headline || "Deployment Approach"}
+              {data?.engagementSectionTitle}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 max-w-5xl mx-auto">
               {engagementModels.map((item: any, index: number) => (
@@ -214,16 +218,16 @@ export default async function SustainabilityPage() {
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title="Frequently Asked Questions" />
+            <FAQ items={faqs} title={data?.faqSectionTitle} />
           </div>
         </section>
       )}
 
       <DarkCTA 
-        title={data?.finalCTA?.title || "Turn Sustainability Into a Business Advantage"}
-        description={data?.finalCTA?.description || "Start with a focused pilot. Measure real impact. Scale sustainability across your enterprise with confidence."}
-        buttonText={data?.finalCTA?.cta?.text || "Schedule Sustainability Discussion"}
-        buttonHref={data?.finalCTA?.cta?.link || "/contact"}
+        title={data?.finalCTA?.title}
+        description={data?.finalCTA?.description}
+        buttonText={data?.finalCTA?.cta?.text}
+        buttonHref={data?.finalCTA?.cta?.link}
       />
     </div>
   );

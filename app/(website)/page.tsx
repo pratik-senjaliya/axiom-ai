@@ -3,6 +3,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
+import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(`*[_type == "homePage"][0]{ seo }`);
@@ -24,9 +27,7 @@ const SparkleIcon = () => (
 
 export default async function HomePage() {
   const data = await client.fetch(`*[_type == "homePage"][0]`);
-  const ai = await client.fetch(`*[_type == "aiImplementationPage"][0]`);
-  const dataPage = await client.fetch(`*[_type == "dataAnalyticsPage"][0]`);
-  const erp = await client.fetch(`*[_type == "erpTransformationPage"][0]`);
+  if (!data) notFound();
   
   const featureStats = [
     { value: "85%", label: "of AI projects fail", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
@@ -34,11 +35,15 @@ export default async function HomePage() {
     { value: "70%", label: "lack data strategy", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> }
   ];
 
-  const serviceCards = [
-    { num: "01", page: ai, link: "/ai-implementation", tags: ['LLM Strategy', 'AI Copilots', 'RAG Systems'] },
-    { num: "02", page: dataPage, link: "/data-analytics", tags: ['Data Fabric', 'ML Ops', 'Decision Intelligence'] },
-    { num: "03", page: erp, link: "/erp-transformation", tags: ['S/4HANA', 'SAP AI', 'Cloud ERP'] }
-  ];
+  const serviceCards: { num: string; title: string; description: string; link: string; tags: string[] }[] = (data?.trustCards || [])
+    .filter((card: any) => card?.link)
+    .map((card: any, index: number) => ({
+    num: String(index + 1).padStart(2, "0"),
+    title: card.title,
+    description: card.description,
+    link: card.link,
+    tags: card.tags || [],
+  }));
 
   const processStyles = [
     { bg: "from-primary-500/20 to-primary-500/5", text: "text-primary-500/40" },
@@ -73,18 +78,20 @@ export default async function HomePage() {
           </h1>
           
           <p className="text-lg md:text-xl text-neutral-500 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
-            {data?.heroDescription || "We architect GenAI, Data, and ERP transformations that scale — with governance, clarity, and measurable outcomes."}
+            {data?.heroDescription}
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            <Link href={data?.introductionCta?.link || "/contact"} className="w-full sm:w-auto">
+            {data?.introductionCta?.text && data?.introductionCta?.link && (
+            <Link href={data.introductionCta.link} className="w-full sm:w-auto">
               <Button size="lg" className="btn-primary w-full sm:w-auto px-8 h-12 text-lg rounded-full flex items-center justify-center gap-2 font-medium">
-                {data?.introductionCta?.text || "Start Your Journey"}
+                {data.introductionCta.text}
                 <svg className="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Button>
             </Link>
+            )}
             <Link href="#services" className="w-full sm:w-auto">
               <Button variant="outline" size="lg" className="bg-white border text-neutral-800 border-neutral-200 rounded-full hover:bg-neutral-50 shadow-sm w-full sm:w-auto px-8 h-12 text-lg font-medium">
                 Explore Solutions
@@ -107,10 +114,10 @@ export default async function HomePage() {
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
-              {data?.featuresTitle || "Why Digital Transformations Fail"}
+              {data?.featuresTitle}
             </h2>
             <p className="text-lg text-neutral-500">
-              {data?.featuresDescription || "We've seen the patterns. Here's what we help you avoid."}
+              {data?.featuresDescription}
             </p>
           </div>
 
@@ -150,30 +157,32 @@ export default async function HomePage() {
               <span className="text-sm font-medium">What We Do</span>
             </div>
             <h2 className="type-section-title text-[#26201D] mb-4">
-              {data?.trustTitle || "Enterprise-grade AI solutions"}
+              {data?.trustTitle}
             </h2>
             <p className="text-lg text-neutral-500">
-              {data?.trustDescription || "We help organizations move from experiments to outcomes."}
+              {data?.trustDescription}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {serviceCards.map((card, idx) => (
+            {serviceCards.map((card: { num: string; title: string; description: string; link: string; tags: string[] }, idx: number) => (
               <Link key={idx} href={card.link} className="group block focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-[32px]">
                 <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 group-hover:bg-white group-hover:border-primary-500/30 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col cursor-pointer">
                   <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
                     <SparkleIcon />
                     <span>{card.num}</span>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4">{card.page?.title || "Solution"}</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4 leading-tight">{card.title}</h3>
                   <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
-                    {card.page?.description || "Solution description goes here."}
+                    {card.description}
                   </p>
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {card.tags.map(tag => (
-                      <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
-                    ))}
-                  </div>
+                  {card.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-auto">
+                      {card.tags.map((tag: string) => (
+                        <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </Link>
             ))}
@@ -191,10 +200,10 @@ export default async function HomePage() {
               <span className="text-sm font-medium">Our Approach</span>
             </div>
             <h2 className="type-section-title text-[#26201D] mb-4">
-              {data?.processTitle || "Three phases to transformation"}
+              {data?.processTitle}
             </h2>
             <p className="text-lg text-neutral-500">
-              {data?.processDescription || "A structured methodology for GenAI, ERP, and Data initiatives."}
+              {data?.processDescription}
             </p>
           </div>
 
@@ -234,10 +243,10 @@ export default async function HomePage() {
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
-              {data?.personasTitle || "Built for Enterprise Leaders"}
+              {data?.personasTitle}
             </h2>
             <p className="text-lg text-neutral-500 max-w-2xl mx-auto">
-              {data?.personasDescription || "We work with decision-makers who understand transformation requires more than technology."}
+              {data?.personasDescription}
             </p>
           </div>
 
@@ -264,25 +273,22 @@ export default async function HomePage() {
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(255, 130, 28, 0.08), rgba(173, 88, 217, 0.08))' }}>
         <div className="container-custom text-center relative z-10">
           <h2 className="type-section-title text-[#26201D] mb-6">
-            {data?.finalCTA?.title || "Get Clarity Before You Commit"}
+            {data?.finalCTA?.title}
           </h2>
           <p className="text-lg text-[#6D5A4C] max-w-2xl mx-auto mb-10">
-            {data?.finalCTA?.description || "45-minute strategy call. No sales pitch — just actionable insights on your GenAI, ERP, or data challenges."}
+            {data?.finalCTA?.description}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href={data?.finalCTA?.cta?.link || "/contact"} className="w-full sm:w-auto">
+            {data?.finalCTA?.cta?.text && data?.finalCTA?.cta?.link && (
+            <Link href={data.finalCTA.cta.link} className="w-full sm:w-auto">
               <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-base rounded-2xl flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#D122E3] text-white hover:opacity-90 transition-colors shadow-sm border-none font-medium">
-                {data?.finalCTA?.cta?.text || "Book Free Strategy Call"}
+                {data.finalCTA.cta.text}
                 <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Button>
             </Link>
-            <Link href="/contact" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="bg-white border hover:bg-neutral-50 shadow-sm w-full sm:w-auto px-8 h-12 text-base font-medium text-[#26201D] rounded-2xl border-neutral-200">
-                Contact Us
-              </Button>
-            </Link>
+            )}
           </div>
         </div>
       </section>

@@ -33,6 +33,16 @@ export default defineType({
             type: 'text',
             rows: 3,
         }),
+        defineField({
+            name: 'newsletterButtonText',
+            title: 'Newsletter Button Text',
+            type: 'string',
+        }),
+        defineField({
+            name: 'newsletterButtonLink',
+            title: 'Newsletter Button Link',
+            type: 'string',
+        }),
     ],
     preview: {
         select: {

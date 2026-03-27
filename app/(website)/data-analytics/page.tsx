@@ -5,6 +5,9 @@ import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
+import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(`*[_type == "dataAnalyticsPage"][0]{ seo }`);
@@ -20,6 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function DataAnalyticsPage() {
   const data = await client.fetch(`*[_type == "dataAnalyticsPage"][0]`);
+  if (!data) notFound();
 
   const hardcodedIcons = [
     (
@@ -63,13 +67,13 @@ export default async function DataAnalyticsPage() {
       <ServiceHero 
         backLink={{ href: "/services", label: "Back to Services" }}
         pills={["Power BI", "Data Warehousing", "Predictive Analytics", "KPI Reporting"]}
-        title={data?.title?.replace("& Analytics", "").trim() || "Data"}
+        title={data?.title?.replace("& Analytics", "").trim()}
         gradientTitlePart="& Analytics"
-        description={data?.description || "Transform raw data into a strategic asset. We build robust data warehousing, governance, and analytics platforms that empower decision-makers and fuel AI."}
-        primaryButtonText={data?.heroCTA?.text || "Audit Your Data Stack"}
-        primaryButtonLink={data?.heroCTA?.link || "/contact"}
-        secondaryButtonText={data?.secondaryCTA?.text || "Explore Solutions"}
-        secondaryButtonLink="/services"
+        description={data?.description}
+        primaryButtonText={data?.heroCTA?.text}
+        primaryButtonLink={data?.heroCTA?.link}
+        secondaryButtonText={data?.secondaryCTA?.text}
+        secondaryButtonLink={data?.secondaryCTA?.link}
       />
 
       {dataServices.length > 0 && (
@@ -81,8 +85,8 @@ export default async function DataAnalyticsPage() {
 
       {roadmapSteps.length > 0 && (
         <FeatureGrid 
-          title="From Audit to Intelligence"
-          description="Our structured 4-phase rollout ensures safe and measurable value at every stage."
+          title={data?.processSectionTitle}
+          description={data?.processSectionDescription}
           items={roadmapSteps}
           isRoadmap={true}
           bgWhite={false}
@@ -91,10 +95,10 @@ export default async function DataAnalyticsPage() {
       )}
 
       <DarkCTA 
-        title={data?.finalCTA?.title || "Build Data That Powers Decisions"}
-        description={data?.finalCTA?.description || "Book a free strategy call. Understand your analytics maturity and path forward."}
-        buttonText={data?.finalCTA?.cta?.text || "Book Free Strategy Call"}
-        buttonHref={data?.finalCTA?.cta?.link || "/contact"}
+        title={data?.finalCTA?.title}
+        description={data?.finalCTA?.description}
+        buttonText={data?.finalCTA?.cta?.text}
+        buttonHref={data?.finalCTA?.cta?.link}
         useWhiteButton={true}
       />
     </div>

@@ -21,6 +21,7 @@ import privacyPolicy from './privacyPolicy'
 import teamMember from './teamMember'
 
 import blogPage from './blogPage'
+import servicesPage from './servicesPage'
 import settings from './settings'
 import newsletterSubscription from './newsletterSubscription'
 
@@ -51,6 +52,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         aboutPage,
         service,
         blogPage,
+        servicesPage,
         post,
         contactPage,
         privacyPolicy,

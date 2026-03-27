@@ -15,8 +15,7 @@ import { ServiceSectionsAccordion } from "@/components/ui/ServiceSectionsAccordi
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-// Enable ISR - revalidate every 60 seconds
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -117,15 +116,17 @@ export default async function ServicePage({ params }: PageProps) {
               <p className="text-lg md:text-xl text-primary-100 mb-10 max-w-2xl leading-relaxed">
                 {service.longDescription}
               </p>
-              <Link href={service.heroCTA?.link || "/contact"}>
+              {service.heroCTA?.text && service.heroCTA?.link && (
+              <Link href={service.heroCTA.link}>
                 <Button
                   variant={service.heroCTA?.variant || "secondary"}
                   size="lg"
                   className="bg-secondary-500 hover:bg-secondary-600 text-white px-12 py-5 text-lg font-bold shadow-xl border-2 border-transparent"
                 >
-                  {service.heroCTA?.text || "Schedule Free Consultation"}
+                  {service.heroCTA.text}
                 </Button>
               </Link>
+              )}
             </div>
             <div className="hidden lg:block relative h-[31.25rem] rounded-2xl overflow-hidden shadow-2xl animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
               <Image
@@ -201,15 +202,17 @@ export default async function ServicePage({ params }: PageProps) {
               <p className="text-base md:text-lg text-neutral-300">{service.introCTA?.description || "Get a customized quote for your business needs"}</p>
             </div>
             <div className="flex-shrink-0">
-              <Link href={service.introCTA?.cta?.link || "/contact"}>
+              {service.introCTA?.cta?.text && service.introCTA?.cta?.link && (
+              <Link href={service.introCTA.cta.link}>
                 <Button
                   variant={service.introCTA?.cta?.variant || "secondary"}
                   size="lg"
                   className="bg-secondary-500 hover:bg-secondary-600 text-white px-10 py-4 text-base md:text-lg font-bold shadow-xl whitespace-nowrap"
                 >
-                  {service.introCTA?.cta?.text || "Request a Quote"}
+                  {service.introCTA.cta.text}
                 </Button>
               </Link>
+              )}
             </div>
           </div>
         </Container>
@@ -265,15 +268,17 @@ export default async function ServicePage({ params }: PageProps) {
                 ))}
               </div>
               <div className="mt-8 text-center mr-[8rem]">
-                <Link href={service.whyChooseCTA?.link || "/contact"} className="inline-block">
+                {service.whyChooseCTA?.text && service.whyChooseCTA?.link && (
+                <Link href={service.whyChooseCTA.link} className="inline-block">
                   <Button
                     variant={service.whyChooseCTA?.variant || "secondary"}
                     size="lg"
                     className="bg-secondary-500 hover:bg-secondary-600 text-white px-12 py-4 text-base font-bold shadow-xl"
                   >
-                    {service.whyChooseCTA?.text || "Talk to an Expert"}
+                    {service.whyChooseCTA.text}
                   </Button>
                 </Link>
+                )}
               </div>
             </div>
             <div className="relative h-[32rem] lg:h-[38rem] animate-fade-in-right lg:order-2 lg:col-span-5">
@@ -359,15 +364,17 @@ export default async function ServicePage({ params }: PageProps) {
               {service.finalCTA?.description || "Join elite businesses that trust our experts with their growth. Schedule your strategy session today."}
             </p>
             <div className="flex justify-center">
-              <Link href={service.finalCTA?.cta?.link || "/contact"}>
+              {service.finalCTA?.cta?.text && service.finalCTA?.cta?.link && (
+              <Link href={service.finalCTA.cta.link}>
                 <Button
                   variant={service.finalCTA?.cta?.variant || "secondary"}
                   size="lg"
                   className="bg-white text-secondary-600 hover:bg-neutral-100 px-10 py-4 text-lg font-bold shadow-2xl rounded-2xl transform hover:scale-105 transition-all border-2 border-transparent"
                 >
-                  {service.finalCTA?.cta?.text || "Get Started Today"}
+                  {service.finalCTA.cta.text}
                 </Button>
               </Link>
+              )}
             </div>
           </div>
         </Container>

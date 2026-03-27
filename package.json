@@ -7,7 +7,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed:sanity": "tsx scripts/seed-sanity.ts",
+    "seed:blogs": "tsx scripts/seed-blogs.ts",
+    "seed:content": "npm run seed:sanity && npm run seed:blogs"
   },
   "keywords": [],
   "author": "",

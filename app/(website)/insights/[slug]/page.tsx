@@ -5,9 +5,10 @@ import { notFound } from "next/navigation";
 import { getPostBySlug, getAllPosts } from "@/lib/sanity/queries";
 import { PortableText } from "@/components/ui/PortableText";
 import { FAQ } from "@/components/ui/FAQ";
-import { DarkCTA } from "@/components/services/DarkCTA";
 import { Button } from "@/components/ui/Button";
 import { User, Calendar, Clock, ChevronRight } from "lucide-react";
+
+export const dynamic = "force-dynamic";
 
 interface BlogPageProps {
   params: Promise<{ slug: string }>;
@@ -167,16 +168,6 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                 </nav>
               </div>
 
-              {/* Sidebar Promo */}
-              <div className="mt-8 p-6 rounded-[2rem] bg-gradient-to-br from-[#26201D] to-neutral-800 text-white relative overflow-hidden group">
-                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF821C]/20 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-[#FF821C]/40 transition-colors duration-500" />
-                 <h4 className="text-xl font-bold mb-3 relative z-10">Scale Faster with AI</h4>
-                 <p className="text-white/60 text-sm mb-6 relative z-10 font-medium leading-relaxed">Let us handle the technical complexity while you lead the business transformation.</p>
-                 <Link href="/contact" className="btn-secondary w-full rounded-2xl py-4 flex items-center justify-center gap-2 group/btn relative z-10">
-                   Get Your Free Proposal
-                   <ChevronRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" />
-                 </Link>
-              </div>
             </div>
           </aside>
 
@@ -197,7 +188,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                    <div>
                      <h4 className="text-2xl font-extrabold text-[#26201D] mb-1">{post.author}</h4>
-                     <span className="text-[#FF821C] font-bold uppercase tracking-wider text-xs">{post.authorRole || "Digital Strategist"}</span>
+                     <span className="text-[#FF821C] font-bold uppercase tracking-wider text-xs">{post.authorRole}</span>
                    </div>
                    <Button variant="outline" className="rounded-2xl border-neutral-300 text-neutral-600 font-bold hover:bg-white text-sm">
                      Browse All Articles ({allPosts.length})
@@ -270,12 +261,6 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         </div>
       </section>
 
-      <DarkCTA 
-        title="Ready to Transform Your Business?"
-        description="Connect with our experts today for a personalized strategy session."
-        buttonText="Get Started Now"
-        buttonHref="/contact"
-      />
     </div>
   );
 }

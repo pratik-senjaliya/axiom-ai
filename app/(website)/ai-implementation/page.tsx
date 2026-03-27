@@ -4,6 +4,9 @@ import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
+import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 import { FAQ } from "@/components/ui/FAQ";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 
@@ -29,6 +32,7 @@ const BrainIcon = () => (
 
 export default async function AIImplementationPage() {
   const data = await client.fetch(`*[_type == "aiImplementationPage"][0]`);
+  if (!data) notFound();
 
   const pitfallItems = (data?.whyChooseUs || []).map((p: any) => ({
     title: p.title,
@@ -93,25 +97,27 @@ export default async function AIImplementationPage() {
   return (
     <div className="pt-0 pb-0">
       <ServiceHero 
-        badgeText={data?.hero?.badge || "Enterprise AI Platform"}
+        badgeText={data?.hero?.badge}
         badgeIcon={<BrainIcon />}
-        title={data?.title?.split("a Measurable Business Asset")[0] || "Turn AI into"}
+        title={data?.title?.split("a Measurable Business Asset")[0]}
         gradientTitlePart="a Measurable Business Asset"
-        description={data?.description || data?.hero?.subHeadline || "From Generative AI to Agentic and Autonomous Systems — we design production-ready AI platforms that integrate with enterprise systems and deliver real operational impact."}
-        primaryButtonText={data?.hero?.primaryButtonText || "Start AI Pilot"}
-        secondaryButtonText={data?.hero?.secondaryButtonText || "Book Strategy Call"}
+        description={data?.description || data?.hero?.subHeadline}
+        primaryButtonText={data?.hero?.primaryButtonText}
+        primaryButtonLink={data?.heroCTA?.link}
+        secondaryButtonText={data?.hero?.secondaryButtonText}
+        secondaryButtonLink={data?.secondaryCTA?.link}
       />
 
       {/* Why AI Initiatives Stall Section (Standardized Grid) */}
       <ObstacleSection 
-        title={data?.intro?.headline || "Why AI Initiatives Stall"}
-        subtitle={data?.intro?.subHeadline || "Recognise the pattern. Then break it."}
+        title={data?.intro?.headline}
+        subtitle={data?.intro?.subHeadline}
         items={pitfallItems}
       />
 
       <FeatureGrid 
-        title={data?.layers?.headline || "Our Enterprise AI Stack"}
-        description={data?.layers?.subHeadline || "Four integrated layers — from generative intelligence to autonomous decision-making."}
+        title={data?.layers?.headline}
+        description={data?.layers?.subHeadline}
         columns={2}
         items={aiLayers.length > 0 ? aiLayers : []}
         small={true}
@@ -119,8 +125,8 @@ export default async function AIImplementationPage() {
       />
 
       <FeatureGrid 
-        title={data?.useCases?.headline || "Industry Use Cases with POC Model"}
-        description={data?.useCases?.subHeadline || "Proven starting points. Each scoped for a 6–8 week proof of concept."}
+        title={data?.useCases?.headline}
+        description={data?.useCases?.subHeadline}
         columns={2}
         items={useCases.length > 0 ? useCases : []}
         bgWhite={false}
@@ -128,8 +134,8 @@ export default async function AIImplementationPage() {
       />
 
       <FeatureGrid 
-        title={data?.roadmap?.headline || "From Pilot to Platform"}
-        description={data?.roadmap?.subHeadline || "A structured path from proof-of-concept to enterprise-wide deployment."}
+        title={data?.roadmap?.headline}
+        description={data?.roadmap?.subHeadline}
         items={roadmapSteps.length > 0 ? roadmapSteps : []}
         isRoadmap={true}
         bgWhite={true}
@@ -140,7 +146,7 @@ export default async function AIImplementationPage() {
       <section className="py-24 bg-[#FAF8F5]">
         <div className="container-custom px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#26201D]">
-            {data?.engagement?.headline || "Deployment Models"}
+            {data?.engagement?.headline}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 max-w-5xl mx-auto">
             {engagementModels.map((item: any, index: number) => (
@@ -164,16 +170,16 @@ export default async function AIImplementationPage() {
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title="Frequently Asked Questions" />
+            <FAQ items={faqs} title={data?.faqSectionTitle} />
           </div>
         </section>
       )}
 
       <DarkCTA 
-        title={data?.finalCTA?.title || "Stop Experimenting. Start Implementing."}
-        description={data?.finalCTA?.description || "Book a strategy session to see how we can turn your data into an autonomous competitive advantage."}
-        buttonText={data?.finalCTA?.cta?.text || "Schedule Executive Discussion"}
-        buttonHref={data?.finalCTA?.cta?.link || "/contact"}
+        title={data?.finalCTA?.title}
+        description={data?.finalCTA?.description}
+        buttonText={data?.finalCTA?.cta?.text}
+        buttonHref={data?.finalCTA?.cta?.link}
       />
     </div>
   );

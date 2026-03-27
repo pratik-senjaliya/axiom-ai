@@ -18,13 +18,13 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     title,
     "slug": slug.current,
     excerpt,
-    category,
+    "category": coalesce(category, "Insights"),
     "date": publishedAt,
-    author,
-    authorRole,
+    "author": coalesce(author, "AxiomAI Team"),
+    "authorRole": coalesce(authorRole, "Contributor"),
     "image": mainImage.asset->url,
     "imageAlt": mainImage.alt,
-    readTime,
+    "readTime": coalesce(readTime, "5 min read"),
     "content": ""
   }`
 
@@ -40,17 +40,24 @@ export async function getPostBySlug(slug: string): Promise<any> {
     excerpt,
     content,
     "date": publishedAt,
-    author,
-    authorRole,
-    "image": mainImage.asset->url + "?updated=" + mainImage.asset->_updatedAt,
+    "author": coalesce(author, "AxiomAI Team"),
+    "authorRole": coalesce(authorRole, "Contributor"),
+    "image": select(
+      defined(mainImage.asset->url) => mainImage.asset->url + "?updated=" + mainImage.asset->_updatedAt,
+      null
+    ),
     "imageAlt": mainImage.alt,
-    readTime,
+    "readTime": coalesce(readTime, "5 min read"),
+    "category": coalesce(category, "Insights"),
     faqs,
     seo {
       metaTitle,
       metaDescription,
       metaKeywords,
-      "openGraphImage": openGraphImage.asset->url + "?updated=" + openGraphImage.asset->_updatedAt,
+      "openGraphImage": select(
+        defined(openGraphImage.asset->url) => openGraphImage.asset->url + "?updated=" + openGraphImage.asset->_updatedAt,
+        null
+      ),
       "openGraphImageAlt": openGraphImage.alt
     }
   }`
@@ -303,8 +310,15 @@ export async function getServicesPage(): Promise<any> {
         metaKeywords,
         "openGraphImage": openGraphImage.asset->url
       },
+      badgeText,
       title,
-      description
+      titleHighlight,
+      description,
+      finalCTA {
+        title,
+        description,
+        cta
+      }
     }`
   return safeFetch<any>(query, {}, null)
 }
@@ -321,7 +335,9 @@ export async function getBlogPage(): Promise<any> {
       title,
       description,
       newsletterTitle,
-      newsletterDescription
+      newsletterDescription,
+      newsletterButtonText,
+      newsletterButtonLink
     }`
   return safeFetch<any>(query, {}, null)
 }

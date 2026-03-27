@@ -6,6 +6,9 @@ import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
+import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(`*[_type == "erpTransformationPage"][0]{ seo }`);
@@ -21,6 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ERPTransformationPage() {
   const data = await client.fetch(`*[_type == "erpTransformationPage"][0]`);
+  if (!data) notFound();
 
   const hardcodedIcons = [
     (
@@ -74,13 +78,13 @@ export default async function ERPTransformationPage() {
       <ServiceHero 
         backLink={{ href: "/services", label: "Back to Services" }}
         pills={["Dynamics 365 BC", "Dynamics 365 F&O", "ERP Migration", "Process Advisory"]}
-        title={data?.title?.replace("Transformation", "").trim() || "ERP"}
+        title={data?.title?.replace("Transformation", "").trim()}
         gradientTitlePart="Transformation"
-        description={data?.description || "We design and deploy high-performance ERP ecosystems across Microsoft Dynamics 365, SAP S/4HANA, and Oracle NetSuite/Cloud."}
-        primaryButtonText={data?.heroCTA?.text || "Get ERP Assessment"}
-        primaryButtonLink={data?.heroCTA?.link || "/contact"}
-        secondaryButtonText={data?.secondaryCTA?.text || "Talk to an Architect"}
-        secondaryButtonLink="/services"
+        description={data?.description}
+        primaryButtonText={data?.heroCTA?.text}
+        primaryButtonLink={data?.heroCTA?.link}
+        secondaryButtonText={data?.secondaryCTA?.text}
+        secondaryButtonLink={data?.secondaryCTA?.link}
       />
 
       {erpServices.length > 0 && (
@@ -92,7 +96,7 @@ export default async function ERPTransformationPage() {
 
       {whyChooseUsItems.length > 0 && (
         <FeatureGrid 
-          title="The AxiomAI Advantage"
+          title={data?.whyChooseSectionTitle}
           columns={3}
           items={whyChooseUsItems}
           bgWhite={false}
@@ -103,15 +107,16 @@ export default async function ERPTransformationPage() {
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title="Frequently Asked Questions" />
+            <FAQ items={faqs} title={data?.faqSectionTitle} />
           </div>
         </section>
       )}
 
       <DarkCTA 
-        title={data?.finalCTA?.title || "Stop Leaving ERP Value on the Table"}
-        description={data?.finalCTA?.description || "Book a free strategy call. Get clarity on your Dynamics 365 or ERP modernization path."}
-        buttonText={data?.finalCTA?.cta?.text || "Book Free Strategy Call"}
+        title={data?.finalCTA?.title}
+        description={data?.finalCTA?.description}
+        buttonText={data?.finalCTA?.cta?.text}
+        buttonHref={data?.finalCTA?.cta?.link}
         useWhiteButton={true}
       />
     </div>

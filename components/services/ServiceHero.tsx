@@ -32,8 +32,8 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
   description,
   primaryButtonText,
   secondaryButtonText,
-  primaryButtonLink = "/contact",
-  secondaryButtonLink = "/contact",
+  primaryButtonLink,
+  secondaryButtonLink,
   backLink
 }) => {
   return (
@@ -89,7 +89,7 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
         {/* Buttons */}
         {(primaryButtonText || secondaryButtonText) && (
           <div className="flex flex-col sm:flex-row gap-4 mt-10 md:mt-12 justify-center">
-            {primaryButtonText && (
+            {primaryButtonText && primaryButtonLink && (
               <Link href={primaryButtonLink} className="w-full sm:w-auto">
                 <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#FFAA4C] text-white hover:opacity-90 transition-opacity shadow-lg shadow-orange-500/20 border-none font-bold group">
                   {primaryButtonText}
@@ -99,7 +99,7 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
                 </Button>
               </Link>
             )}
-            {secondaryButtonText && (
+            {secondaryButtonText && secondaryButtonLink && (
               <Link href={secondaryButtonLink} className="w-full sm:w-auto">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full border-neutral-200 text-[#26201D] hover:bg-neutral-50 font-bold">
                   {secondaryButtonText}

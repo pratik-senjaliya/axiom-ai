@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { getBlogPage, getAllPosts } from "@/lib/sanity/queries";
 import { BlogList } from "@/components/blog/BlogList";
 import { DarkCTA } from "@/components/services/DarkCTA";
+import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getBlogPage();
@@ -26,6 +29,7 @@ export default async function InsightsPage() {
     getBlogPage(),
     getAllPosts()
   ]);
+  if (!pageData) notFound();
 
   return (
     <div className="pt-24 pb-0 bg-white">
@@ -36,13 +40,13 @@ export default async function InsightsPage() {
         <div className="container-custom relative z-10 px-4">
           <div className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-neutral-200 bg-white/50 backdrop-blur-sm text-xs font-medium text-neutral-800 shadow-sm animate-fade-up">
             <SparkleIcon />
-            <span>{pageData?.seo?.metaTitle?.split("|")[0] || "Insights"}</span>
+            <span>{pageData?.seo?.metaTitle?.split("|")[0] || pageData?.title}</span>
           </div>
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-5 text-[#26201D] max-w-4xl mx-auto animate-fade-up">
-            <span className="gradient-text">{pageData?.title || "Articles & Perspectives"}</span>
+            <span className="gradient-text">{pageData?.title}</span>
           </h1>
           <p className="text-sm md:text-base text-neutral-500 max-w-2xl mx-auto mb-6 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            {pageData?.description || "Strategic thought leadership on the future of enterprise intelligence, AI implementation, and business transformation."}
+            {pageData?.description}
           </p>
         </div>
       </section>
@@ -54,10 +58,10 @@ export default async function InsightsPage() {
 
       {/* Newsletter / Bottom CTA Layer */}
       <DarkCTA 
-        title={pageData?.newsletterTitle || "Stay Ahead of the Curve"}
-        description={pageData?.newsletterDescription || "Join 5,000+ executives receiving monthly insights on autonomous systems and ERP strategies."}
-        buttonText="Subscribe to Insights"
-        buttonHref="/contact" // Assuming newsletter is part of contact/form for now
+        title={pageData?.newsletterTitle}
+        description={pageData?.newsletterDescription}
+        buttonText={pageData?.newsletterButtonText}
+        buttonHref={pageData?.newsletterButtonLink}
       />
     </div>
   );

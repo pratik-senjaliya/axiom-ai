@@ -120,6 +120,26 @@ async function seed() {
     ]),
     trustTitle: 'Enterprise-grade AI Solutions (What We Do)',
     trustDescription: 'We build autonomous agents and RAG systems that integrate directly into your core business workflows.',
+    trustCards: addKeys([
+        {
+          title: 'GenAI & Agentic AI',
+          description: 'Beyond chatbots. We build autonomous agents and RAG systems that integrate directly into your core business workflows.',
+          link: '/ai-implementation',
+          tags: ['Generative AI & RAG', 'Agentic AI', 'Autonomous AI Systems']
+        },
+        {
+          title: 'Data & Analytics',
+          description: 'From fragmented data to a "Single Source of Truth." Modern data warehousing and predictive intelligence for real-time decisioning.',
+          link: '/data-analytics',
+          tags: ['Enterprise Data Lakehouse & Warehousing', 'Predictive & Advanced Analytics', 'Data Governance & Quality']
+        },
+        {
+          title: 'ERP & Tech Modernization',
+          description: 'Aligning your core systems (SAP, Oracle, Microsoft Dynamics) with modern AI capabilities to eliminate manual overhead.',
+          link: '/erp-transformation',
+          tags: ['Microsoft Dynamics 365 (BC & F&O)', 'SAP S/4HANA Strategy', 'Oracle Cloud & NetSuite']
+        }
+    ]),
     processTitle: 'The 3 Phases Path to Production',
     processDescription: 'A structured methodology for GenAI, ERP, and Data initiatives.',
     process: addKeys([
@@ -150,12 +170,36 @@ async function seed() {
   });
 
   await client.createOrReplace({
+    _id: 'servicesPageSingleton',
+    _type: 'servicesPage',
+    title: 'AI, Data & ERP',
+    titleHighlight: 'Done Right',
+    badgeText: 'Services',
+    description: 'Advisory-led. Outcome-driven. Enterprise-grade.',
+    finalCTA: {
+      title: 'Not sure where to start?',
+      description: "Book a free strategy call. We'll identify the highest-impact opportunities.",
+      cta: { text: 'Book Free Strategy Call', link: '/contact' }
+    }
+  });
+
+  await client.createOrReplace({
     _id: 'aiImplementationPageSingleton',
     _type: 'aiImplementationPage',
+    badgeText: 'Enterprise AI Platform',
     title: 'Turn AI into a Measurable Business Asset',
     description: 'Beyond the hype. We build production-grade AI platforms that integrate with your ERP and core data systems to drive operational ROI.',
     heroCTA: { text: 'Start 6-Week AI Pilot', link: '/contact' },
     secondaryCTA: { text: 'View AI Roadmap Services', link: '/services' },
+    introTitle: 'Why AI Initiatives Stall',
+    introSubtitle: 'Recognise the pattern. Then break it.',
+    serviceAreasTitle: 'Our Enterprise AI Stack',
+    serviceAreasDescription: 'Four integrated layers - from generative intelligence to autonomous decision-making.',
+    whyChooseSectionTitle: 'Industry Use Cases with POC Model',
+    processSectionTitle: 'From Pilot to Platform',
+    processSectionDescription: 'A structured path from proof-of-concept to enterprise-wide deployment.',
+    engagementSectionTitle: 'Deployment Models',
+    faqSectionTitle: 'Frequently Asked Questions',
     whyChooseUs: addKeys([
         { title: 'The "Chat" Trap', description: 'LLM experiments that lack a production roadmap or business logic.' },
         { title: 'Disconnected RAG', description: 'Knowledge systems that lack access to live enterprise data silos.' },
@@ -206,11 +250,14 @@ async function seed() {
   await client.createOrReplace({
     _id: 'erpTransformationPageSingleton',
     _type: 'erpTransformationPage',
+    badgeText: 'ERP Transformation',
     title: 'ERP Transformation',
     description: 'We design and deploy high-performance ERP ecosystems across Microsoft Dynamics 365, SAP S/4HANA, and Oracle NetSuite/Cloud. We don\'t just go live; we ensure your core systems are AI-ready and business-aligned.',
     introTitle: 'ERP Transformation: From Legacy Systems to Intelligent Operations',
     heroCTA: { text: 'Get ERP Maturity Assessment', link: '/contact' },
     secondaryCTA: { text: 'Talk to an ERP Architect', link: '/services' },
+    whyChooseSectionTitle: 'The AxiomAI Advantage',
+    faqSectionTitle: 'Frequently Asked Questions',
     serviceAreas: addKeys([
         { name: 'Microsoft Dynamics 365 (BC & F&O)', focus: 'End-to-end implementation and optimization for agile mid-market and global enterprises.', sections: [{title: 'Business Impact', tasks: ['Seamless integration with the Microsoft Power Platform and AI Copilots.']}] },
         { name: 'SAP S/4HANA Strategy', focus: 'Guiding complex migrations from ECC to S/4HANA. We focus on "Clean Core" principles to reduce technical debt.', sections: [{title: 'Business Impact', tasks: ['Standardized global processes with robust, scalable reporting.']}] },
@@ -242,11 +289,14 @@ async function seed() {
   await client.createOrReplace({
     _id: 'managedDeliveryPageSingleton',
     _type: 'managedDeliveryPage',
+    badgeText: 'Managed Delivery',
     title: 'Managed Delivery',
     description: 'We build, manage, and scale high-performance teams across AI, ERP, and Data. From individual specialists to fully managed delivery pods, we ensure execution speed, quality, and alignment with your business goals.',
     introTitle: 'Managed Delivery: From Hiring Chaos to Outcome-Driven Execution',
     heroCTA: { text: 'Build Your Team', link: '/contact' },
     secondaryCTA: { text: 'Talk to a Delivery Expert', link: '/services' },
+    whyChooseSectionTitle: 'The AxiomAI Advantage',
+    faqSectionTitle: 'Frequently Asked Questions',
     serviceAreas: addKeys([
         { name: 'Specialist Talent Augmentation', focus: 'On-demand access to senior AI engineers, ERP consultants, and data specialists to fill critical capability gaps instantly.', sections: [{title: 'Business Impact', tasks: ['Reduce hiring time from months to days while maintaining top-tier quality.']}] },
         { name: 'Managed Project Teams', focus: 'Dedicated cross-functional teams (PM, developers, QA, DevOps) fully accountable for delivery outcomes.', sections: [{title: 'Business Impact', tasks: ['Faster execution with 40–60% lower internal management overhead.']}] },
@@ -280,11 +330,14 @@ async function seed() {
   await client.createOrReplace({
     _id: 'dataAnalyticsPageSingleton',
     _type: 'dataAnalyticsPage',
+    badgeText: 'Data & Analytics',
     title: 'Data & Analytics',
     description: 'Transform raw data into a strategic asset. We build robust data warehousing, governance, and analytics platforms that empower decision-makers and fuel AI.',
     introTitle: 'Data Engineering: The Foundation of Intelligence',
     heroCTA: { text: 'Audit Your Data Stack', link: '/contact' },
     secondaryCTA: { text: 'Explore Analytics Solutions', link: '/services' },
+    processSectionTitle: 'From Audit to Intelligence',
+    processSectionDescription: 'Our structured 4-phase rollout ensures safe and measurable value at every stage.',
     serviceAreas: addKeys([
       { name: 'Enterprise Data Lakehouse & Warehousing', focus: 'Centralizing siloed data into high-performance cloud architectures (Databricks, Snowflake, Azure Synapse).', sections: [{ title: 'Business Impact', tasks: ['Eliminate disjointed reporting and establish a single source of truth.'] }] },
       { name: 'Predictive & Advanced Analytics', focus: 'Going beyond historical reporting with ML models that forecast demand, churn, and operational bottlenecks.', sections: [{ title: 'Business Impact', tasks: ['Shift from reactive reporting to proactive decision-making.'] }] },
@@ -307,11 +360,19 @@ async function seed() {
   await client.createOrReplace({
     _id: 'sustainabilityPageSingleton',
     _type: 'sustainabilityPage',
-    title: 'Sustainability',
+    badgeText: 'AI for Sustainable Operations',
+    title: 'Make Sustainability Operational for Business Impact',
     description: 'Leverage AI and enterprise data to transform carbon tracking, ESG reporting, and sustainability initiatives into measurable, business-driven outcomes. Move beyond compliance—build operational efficiency and real ROI.',
     introTitle: 'Make Sustainability Operational and Measurable',
+    introSubtitle: 'Traditional reporting can\'t keep up with the demands of modern enterprise green targets.',
     heroCTA: { text: 'Start Sustainability Pilot', link: '/contact' },
     secondaryCTA: { text: 'Talk to a Sustainability Expert', link: '/services' },
+    serviceAreasTitle: 'Sustainable AI Modules',
+    serviceAreasDescription: 'Combining deep data engineering with specialized AI agents to accelerate your journey to Net Zero.',
+    processSectionTitle: 'Core Sustainability Pillars',
+    processSectionDescription: 'Our comprehensive framework for integrating AI and data strategy to achieve measurable ESG outcomes.',
+    engagementSectionTitle: 'Deployment Approach',
+    faqSectionTitle: 'Frequently Asked Questions',
     whyChooseUs: addKeys([
         { title: 'Manual ESG & Carbon Reporting', description: 'Heavy reliance on spreadsheets and disconnected workflows leads to errors, delays, and audit risks. Business Impact: High operational overhead with low data reliability.' },
         { title: 'Fragmented Emissions Data', description: 'Carbon data is scattered across ERP systems, vendors, utilities, and manual inputs. Business Impact: No single source of truth for decision-making.' },
@@ -349,7 +410,9 @@ async function seed() {
   await client.createOrReplace({
     _id: 'useCasesPageSingleton',
     _type: 'useCasesPage',
+    badgeText: 'Use Cases',
     title: 'Proven Impact: Enterprise AI & Data in Production',
+    titleHighlight: 'Frontier of AI',
     description: 'Real-world results from the intersection of GenAI, ERP, and Predictive Analytics. See how we turn complex data into operational advantages.',
     tabs: ['Cost Optimization', 'Growth & Revenue', 'Operational Excellence'],
     useCases: addKeys([
@@ -365,6 +428,7 @@ async function seed() {
         description: 'These aren\'t just one-off projects; they are blueprints for your transformation. We can adapt any of these models to your specific ERP and data landscape in 6–8 weeks.',
         cta: { text: 'Discuss a Use Case', link: '/contact' }
     },
+    howWePartnerBadgeText: 'Partner With Us',
     pocGuaranteeCTA: {
         title: 'The 6-8 Week Pilot Guarantee',
         description: 'Don\'t commit to a year-long roadmap. Pick one high-impact use case above, and we will build a working POC in your environment in 6 weeks to prove the ROI.',

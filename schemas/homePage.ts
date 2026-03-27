@@ -146,6 +146,34 @@ export default defineType({
             of: [{ type: 'stat' }],
             group: 'trust',
         }),
+        defineField({
+            name: 'trustCards',
+            title: 'What We Do Cards',
+            type: 'array',
+            group: 'trust',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        defineField({ name: 'title', type: 'string', title: 'Card Title', validation: (Rule) => Rule.required() }),
+                        defineField({ name: 'description', type: 'text', title: 'Card Description', rows: 4, validation: (Rule) => Rule.required() }),
+                        defineField({ name: 'link', type: 'string', title: 'Card Link', initialValue: '/services' }),
+                        defineField({
+                            name: 'tags',
+                            title: 'Tags',
+                            type: 'array',
+                            of: [{ type: 'string' }],
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            title: 'title',
+                            subtitle: 'description',
+                        },
+                    },
+                },
+            ],
+        }),
 
         // Process / Phases
         defineField({

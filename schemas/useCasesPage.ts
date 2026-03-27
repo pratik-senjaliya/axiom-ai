@@ -12,7 +12,9 @@ export default defineType({
     ],
     fields: [
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
+        defineField({ name: 'badgeText', title: 'Hero Badge Text', type: 'string', group: 'hero' }),
         defineField({ name: 'title', title: 'Title', type: 'string', group: 'hero', validation: (Rule) => Rule.required() }),
+        defineField({ name: 'titleHighlight', title: 'Title Highlight', type: 'string', group: 'hero' }),
         defineField({ name: 'description', title: 'Short Description', type: 'text', rows: 3, group: 'hero' }),
         defineField({ name: 'heroImage', title: 'Hero Image', type: 'image', options: { hotspot: true }, group: 'hero' }),
         defineField({
@@ -35,6 +37,7 @@ export default defineType({
         defineField({
             name: 'howWePartnerCTA', title: 'How We Partner CTA', type: 'finalCtaSection', group: 'ctas' // Using finalCtaSection for headline, subtext, button
         }),
+        defineField({ name: 'howWePartnerBadgeText', title: 'How We Partner Badge Text', type: 'string', group: 'ctas' }),
         defineField({
             name: 'pocGuaranteeCTA', title: 'POC Guarantee Section', type: 'finalCtaSection', group: 'ctas'
         })

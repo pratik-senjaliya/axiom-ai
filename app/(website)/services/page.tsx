@@ -1,70 +1,51 @@
 import type { Metadata } from "next";
-import { DarkCTA } from "@/components/services/DarkCTA";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { DarkCTA } from "@/components/services/DarkCTA";
+import { client } from "@/lib/sanity/client";
 
-export const metadata: Metadata = {
-  title: "Enterprise Solutions & Services | AxiomAI",
-  description: "Comprehensive GenAI, Data, and ERP transformation capabilities.",
-};
+export const dynamic = "force-dynamic";
 
-export default function ServicesHubPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await client.fetch(`*[_type == "servicesPage"][0]{ seo }`);
+  if (!data?.seo) {
+    return {
+      title: "Enterprise Solutions & Services | AxiomAI",
+      description: "Comprehensive GenAI, Data, and ERP transformation capabilities.",
+    };
+  }
+  return {
+    title: data.seo.metaTitle || "Enterprise Solutions & Services | AxiomAI",
+    description: data.seo.metaDescription || "Comprehensive GenAI, Data, and ERP transformation capabilities.",
+  };
+}
+
+export default async function ServicesHubPage() {
+  const [pageData, ai, erp, analytics, managed, sustainability] = await Promise.all([
+    client.fetch(`*[_type == "servicesPage"][0]`),
+    client.fetch(`*[_type == "aiImplementationPage"][0]{ title, description, serviceAreas }`),
+    client.fetch(`*[_type == "erpTransformationPage"][0]{ title, description, serviceAreas }`),
+    client.fetch(`*[_type == "dataAnalyticsPage"][0]{ title, description, serviceAreas }`),
+    client.fetch(`*[_type == "managedDeliveryPage"][0]{ title, description, serviceAreas }`),
+    client.fetch(`*[_type == "sustainabilityPage"][0]{ title, description, serviceAreas }`),
+  ]);
+
+  if (!pageData) notFound();
+
   const serviceCategories = [
-    {
-      title: "AI Implementation",
-      href: "/ai-implementation",
-      description: "Strategy-to-production AI delivery for the enterprise.",
-      tags: ["AI Strategy", "GenAI & LLM Integration", "Agentic Systems", "Automation", "AI Governance"],
-      icon: (
-        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9.5 2C7.51088 2 5.60322 2.79018 4.1967C2.79018 5.60322 2 7.51088 2 9.5C2 11.23 2.61 12.82 3.63 14.1C4.34 14.99 4.63 16.14 4.45 17.27C4.33 18.06 4.45 18.87 4.79 19.59C5.13 20.31 5.67 20.91 6.34 21.29C7.01 21.67 7.78 21.82 8.54 21.72C9.3 21.62 10.01 21.27 10.58 20.72L11 20.31V12H3.1C3.03 11.19 3 10.36 3 9.5C3 5.91 5.91 3 9.5 3V2ZM14.5 2C16.4891 2 18.3968 2.79018 19.8033 4.1967C21.2098 5.60322 22 7.51088 22 9.5C22 11.23 21.39 12.82 20.37 14.1C19.66 14.99 19.37 16.14 19.55 17.27C19.67 18.06 19.55 18.87 19.21 19.59C18.87 20.31 18.33 20.91 17.66 21.29C16.99 21.67 16.22 21.82 15.46 21.72C14.7 21.62 13.99 21.27 13.42 20.72L13 20.31V12H20.9C20.97 11.19 21 10.36 21 9.5C21 5.91 18.09 3 14.5 3V2Z" fill="currentColor"/>
-        </svg>
-      )
-    },
-    {
-      title: "ERP Transformation",
-      href: "/erp-transformation",
-      description: "Microsoft Dynamics 365 implementations and ERP modernization.",
-      tags: ["Dynamics 365 BC", "Dynamics 365 F&O", "ERP Migration", "Process Advisory", "Optimization & Support"],
-      icon: (
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 1.105 3.582 2 8 2s8-.895 8-2V7m0 0c0 1.105-3.582 2-8 2s-8-.895-8-2m16 0c0-1.105-3.582-2-8-2s-8 .895-8 2m16 5c0 1.105-3.582 2-8 2s-8-.895-8-2" />
-        </svg>
-      )
-    },
-    {
-      title: "Data & Analytics",
-      href: "/data-analytics",
-      description: "Turn data into decisions with modern analytics foundations.",
-      tags: ["Power BI", "Data Warehousing", "Data Architecture", "Predictive Analytics", "KPI Reporting"],
-      icon: (
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-        </svg>
-      )
-    },
-    {
-      title: "Managed Delivery",
-      href: "/managed-delivery",
-      description: "Pre-vetted specialists and managed teams for enterprise projects.",
-      tags: ["ERP Consultants", "BI Developers", "AI Engineers", "Offshore Teams", "Project Execution"],
-      icon: (
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-      )
-    },
-    {
-      title: "AI for Sustainable Operations",
-      href: "/sustainability",
-      description: "AI-enabled sustainability improvements for carbon visibility, reporting, and operational efficiency.",
-      tags: ["Carbon Dashboard", "ESG Reporting", "Emission Forecasting", "Green Supply Chain"],
-      icon: (
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg>
-      )
-    }
-  ];
+    { page: ai, href: "/ai-implementation" },
+    { page: erp, href: "/erp-transformation" },
+    { page: analytics, href: "/data-analytics" },
+    { page: managed, href: "/managed-delivery" },
+    { page: sustainability, href: "/sustainability" },
+  ]
+    .filter((item) => item.page?.title && item.page?.description)
+    .map((item) => ({
+      title: item.page.title as string,
+      href: item.href,
+      description: item.page.description as string,
+      tags: (item.page.serviceAreas || []).slice(0, 5).map((s: any) => s.name).filter(Boolean) as string[],
+    }));
 
   return (
     <div className="pt-0 pb-0">
@@ -78,23 +59,19 @@ export default function ServicesHubPage() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 mb-6 text-[#FF821C] font-semibold text-xs tracking-wide uppercase">
               <span className="text-xl leading-none font-light block -mt-1">+</span>
-              <span>Services</span>
+              <span>{pageData.badgeText}</span>
             </div>
             
             {/* Title - Decreased to 6xl from 7xl */}
-            <h1 className="type-hero text-[#26201D] mb-2">
-              AI, Data & ERP —
-            </h1>
+            <h1 className="type-hero text-[#26201D] mb-2">{pageData.title}</h1>
             <h1 className="type-hero gradient-text tracking-tight leading-[1.1] mb-6">
               <span className="bg-gradient-to-r from-[#FF821C] to-[#DE2297] bg-clip-text text-transparent">
-                Done Right
+                {pageData.titleHighlight}
               </span>
             </h1>
             
             {/* Description - Decreased to lg from xl/2xl */}
-            <p className="text-lg md:text-xl text-neutral-500 font-light mt-8">
-              Advisory-led. Outcome-driven. Enterprise-grade.
-            </p>
+            <p className="text-lg md:text-xl text-neutral-500 font-light mt-8">{pageData.description}</p>
           </div>
         </div>
       </section>
@@ -114,7 +91,7 @@ export default function ServicesHubPage() {
                 <div className="bg-white rounded-[2rem] p-8 sm:p-9 shadow-sm flex flex-col h-full border border-neutral-100 group-hover:border-orange-200 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.06)] transition-all duration-300">
                   {/* Icon */}
                   <div className="w-12 h-12 rounded-2xl bg-[#FF821C] flex items-center justify-center text-white mb-6 shadow-sm">
-                    {service.icon}
+                    <span className="font-bold text-sm">{String(idx + 1).padStart(2, "0")}</span>
                   </div>
                   
                   {/* Title & Description - Decreased font sizes */}
@@ -152,10 +129,10 @@ export default function ServicesHubPage() {
       </section>
 
       <DarkCTA 
-        badgeText="Get Started"
-        title="Not sure where to start?"
-        description="Book a free strategy call. We'll identify the highest-impact opportunities."
-        buttonText="Book Free Strategy Call"
+        title={pageData?.finalCTA?.title}
+        description={pageData?.finalCTA?.description}
+        buttonText={pageData?.finalCTA?.cta?.text}
+        buttonHref={pageData?.finalCTA?.cta?.link}
       />
     </div>
   );

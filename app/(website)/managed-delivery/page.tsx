@@ -6,6 +6,9 @@ import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
+import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(`*[_type == "managedDeliveryPage"][0]{ seo }`);
@@ -21,6 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ManagedDeliveryPage() {
   const data = await client.fetch(`*[_type == "managedDeliveryPage"][0]`);
+  if (!data) notFound();
 
   const hardcodedIcons = [
     (
@@ -68,41 +72,14 @@ export default async function ManagedDeliveryPage() {
       <ServiceHero 
         backLink={{ href: "/services", label: "Back to Services" }}
         pills={["Staff Augmentation", "Managed Teams", "Offshore Delivery", "Project Execution"]}
-        title={data?.introTitle?.replace("Delivery", "").trim() || data?.title?.replace("Delivery", "").trim() || "Managed"}
+        title={data?.introTitle?.replace("Delivery", "").trim() || data?.title?.replace("Delivery", "").trim()}
         gradientTitlePart="Delivery"
-        description={data?.description || data?.hero?.subHeadline || "We build, manage, and scale high-performance teams across AI, ERP, and Data."}
-        primaryButtonText={data?.heroCTA?.text || "Build Your Team"}
-        primaryButtonLink={data?.heroCTA?.link || "/contact"}
-        secondaryButtonText={data?.secondaryCTA?.text || "Talk to an Expert"}
-        secondaryButtonLink={"/services"}
+        description={data?.description || data?.hero?.subHeadline}
+        primaryButtonText={data?.heroCTA?.text}
+        primaryButtonLink={data?.heroCTA?.link}
+        secondaryButtonText={data?.secondaryCTA?.text}
+        secondaryButtonLink={data?.secondaryCTA?.link}
       />
-
-      {/* Built for Enterprise Speed - Metric Section */}
-      <section className="py-24 bg-[#FAF8F5]">
-        <div className="container-custom px-4">
-          <div className="max-w-3xl mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#26201D] mb-6">Built for Enterprise Speed</h2>
-            <p className="text-lg text-neutral-500 leading-relaxed">We eliminate the friction of scaling technical teams, allowing you to focus on the roadmap.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-12">
-            <div>
-              <div className="text-5xl font-black text-[#FF821C] mb-4 tracking-tight">48-72h</div>
-              <h3 className="text-xl font-bold text-[#26201D] mb-2 text-neutral-400">Shortlist Speed</h3>
-              <p className="text-neutral-500">Average time to present pre-vetted specialists for technical interview.</p>
-            </div>
-            <div>
-              <div className="text-5xl font-black text-[#FF821C] mb-4 tracking-tight">95%</div>
-              <h3 className="text-xl font-bold text-[#26201D] mb-2 text-neutral-400">Pod Retention</h3>
-              <p className="text-neutral-500">Long-term consistency across our managed delivery hub engagements.</p>
-            </div>
-            <div>
-              <div className="text-5xl font-black text-[#FF821C] mb-4 tracking-tight">100%</div>
-              <h3 className="text-xl font-bold text-[#26201D] mb-2 text-neutral-400">Sync Rate</h3>
-              <p className="text-neutral-500">Timezone alignment and cultural integration for seamless collaboration.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {deliveryServices.length > 0 && (
         <HorizontalFeature 
@@ -113,7 +90,7 @@ export default async function ManagedDeliveryPage() {
 
       {whyChooseUsItems.length > 0 && (
         <FeatureGrid 
-          title="The AxiomAI Advantage"
+          title={data?.whyChooseSectionTitle}
           columns={3}
           items={whyChooseUsItems}
           bgWhite={false}
@@ -124,16 +101,16 @@ export default async function ManagedDeliveryPage() {
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title="Frequently Asked Questions" />
+            <FAQ items={faqs} title={data?.faqSectionTitle} />
           </div>
         </section>
       )}
 
       <DarkCTA 
-        title={data?.finalCTA?.title || "Need the Right Talent, Fast?"}
-        description={data?.finalCTA?.description || "Tell us what you need. We'll match you with specialists in 48 hours."}
-        buttonText={data?.finalCTA?.cta?.text || "Book Free Consultation"}
-        buttonHref={data?.finalCTA?.cta?.link || "/contact"}
+        title={data?.finalCTA?.title}
+        description={data?.finalCTA?.description}
+        buttonText={data?.finalCTA?.cta?.text}
+        buttonHref={data?.finalCTA?.cta?.link}
         useWhiteButton={true}
       />
     </div>
