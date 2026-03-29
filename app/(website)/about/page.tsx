@@ -5,6 +5,7 @@ import { getAboutPage } from "@/lib/sanity/queries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { urlForImage } from "@/lib/sanity/image";
+import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getAboutPage();
@@ -119,6 +120,13 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <TestimonialCarousel 
+        testimonials={data?.testimonials} 
+        subtitle="Our Impact"
+        title="What Our Partners Say"
+      />
 
       {/* Bottom CTA Layer */}
       <section className="py-24 relative overflow-hidden bg-[#26201D] mt-12">

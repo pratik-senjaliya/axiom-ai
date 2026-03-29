@@ -8,6 +8,18 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post, featured = false }: BlogCardProps) {
+  const serviceLabels: { [key: string]: string } = {
+    "ai": "AI Implementation",
+    "erp": "ERP Transformation",
+    "data": "Data & Analytics",
+    "managed": "Managed Delivery",
+    "sustainability": "Sustainability"
+  };
+
+  const displayCategory = post.relatedService && serviceLabels[post.relatedService] 
+    ? serviceLabels[post.relatedService] 
+    : post.category;
+
   // Privacy filter for author names
   const displayAuthor = (post.author?.toLowerCase().includes("pratik") || 
                         post.author?.toLowerCase().includes("senjaliya") || 
@@ -41,7 +53,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
                 Featured
               </span>
               <span className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-white text-[10px] font-bold tracking-wider uppercase border border-white/20">
-                {post.category}
+                {displayCategory}
               </span>
               <span className="text-white/70 text-xs font-medium">{post.readTime}</span>
             </div>
@@ -87,7 +99,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
           )}
           <div className="absolute top-4 left-4">
             <span className="px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-[#FF821C] text-[9px] font-bold tracking-wider uppercase border border-[#FF821C]/10 shadow-sm">
-              {post.category}
+              {displayCategory}
             </span>
           </div>
         </div>

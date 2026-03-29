@@ -11,6 +11,7 @@ export interface BlogPost {
   image: string;
   imageAlt?: string;
   readTime: string;
+  relatedService?: string;
 }
 
 export const blogPosts: BlogPost[] = [

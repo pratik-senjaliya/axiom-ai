@@ -6,9 +6,10 @@ export default defineType({
     type: 'document',
     groups: [
         { name: 'hero', title: 'Hero Section' },
-        { name: 'layers', title: 'Data Services' },
-        { name: 'roadmap', title: 'Methodology' },
+        { name: 'layers', title: 'Data Stack' },
+        { name: 'roadmap', title: 'The Roadmap' },
         { name: 'faqs', title: 'FAQs' },
+        { name: 'testimonials', title: 'Testimonials' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -79,8 +80,24 @@ export default defineType({
         defineField({
             name: 'finalCta',
             title: 'Final CTA',
-            type: 'hero',
+            type: 'object',
             group: 'faqs',
+            fields: [
+              { name: 'badgeText', type: 'string', title: 'Badge Text' },
+              { name: 'title', type: 'string', title: 'Title' },
+              { name: 'description', type: 'text', rows: 3, title: 'Description' },
+              { name: 'buttonText', type: 'string', title: 'Button Text' },
+              { name: 'buttonLink', type: 'string', title: 'Button Link' },
+            ]
+        }),
+
+        // Testimonials Section
+        defineField({
+            name: 'testimonials',
+            title: 'Testimonials',
+            type: 'array',
+            of: [{ type: 'testimonial' }],
+            group: 'testimonials',
         }),
 
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),

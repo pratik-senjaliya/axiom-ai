@@ -3,7 +3,9 @@ import { ServiceHero } from "@/components/services/ServiceHero";
 import { HorizontalFeature, HorizontalFeatureItem } from "@/components/services/HorizontalFeature";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { getDataAnalyticsPage } from "@/lib/sanity/queries";
+import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { RelatedInsights } from "@/components/services/RelatedInsights";
+import { getDataAnalyticsPage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 import { FAQ } from "@/components/ui/FAQ";
@@ -23,7 +25,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function DataAnalyticsPage() {
-  const data = await getDataAnalyticsPage();
+  const [data, relatedPosts] = await Promise.all([
+    getDataAnalyticsPage(),
+    getLatestPostsByService('data')
+  ]);
+  
   if (!data) notFound();
 
   const hardcodedIcons = [
@@ -100,6 +106,14 @@ export default async function DataAnalyticsPage() {
         />
       )}
 
+      <TestimonialCarousel 
+        testimonials={data?.testimonials} 
+        subtitle="Inside Data"
+        title="Impact Stories"
+      />
+
+      <RelatedInsights posts={relatedPosts} serviceName="Data & Analytics" />
+
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
@@ -109,10 +123,11 @@ export default async function DataAnalyticsPage() {
       )}
 
       <DarkCTA 
+        badgeText={data?.finalCta?.badgeText}
         title={data?.finalCta?.title}
         description={data?.finalCta?.description}
-        buttonText={data?.finalCta?.primaryCta?.text}
-        buttonHref={data?.finalCta?.primaryCta?.link}
+        buttonText={data?.finalCta?.buttonText}
+        buttonHref={data?.finalCta?.buttonLink}
         useWhiteButton={true}
       />
     </div>

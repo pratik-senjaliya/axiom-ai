@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { getAIImplementationPage } from "@/lib/sanity/queries";
+import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { RelatedInsights } from "@/components/services/RelatedInsights";
+import { getAIImplementationPage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 
@@ -31,7 +33,11 @@ const BrainIcon = () => (
 );
 
 export default async function AIImplementationPage() {
-  const data = await getAIImplementationPage();
+  const [data, relatedPosts] = await Promise.all([
+    getAIImplementationPage(),
+    getLatestPostsByService('ai')
+  ]);
+  
   if (!data) notFound();
 
   const pitfallItems = (data?.pitfalls || []).map((p: any) => ({
@@ -139,31 +145,22 @@ export default async function AIImplementationPage() {
         small={true}
       />
 
-      {/* Minimal Deployment Models */}
-      <section className="py-24 bg-[#FAF8F5]">
-        <div className="container-custom px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#26201D]">
-            {data?.modelsHeadline || "Engagement Models"}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 max-w-5xl mx-auto">
-            {engagementModels.map((item: any, index: number) => (
-              <div key={index} className="flex flex-col items-center text-center gap-6 group">
-                <div className="w-16 h-16 rounded-2xl bg-[#FF821C] flex items-center justify-center text-white shadow-[0_8px_16px_rgba(255,130,28,0.2)] transition-transform group-hover:scale-110 duration-300">
-                  {item.icon}
-                </div>
-                <span className="font-bold text-base text-[#26201D] leading-[1.3] max-w-[180px]">
-                  {item.title}
-                </span>
-                <p className="text-sm text-neutral-500">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FeatureGrid 
+        title={data?.modelsHeadline}
+        items={engagementModels.length > 0 ? engagementModels : []}
+        columns={2}
+        bgWhite={true}
+        small={true}
+      />
 
-      {/* FAQs Section */}
+      <TestimonialCarousel 
+        testimonials={data?.testimonials} 
+        subtitle="AI Success"
+        title="Impact Stories"
+      />
+
+      <RelatedInsights posts={relatedPosts} serviceName="AI Implementation" />
+
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
@@ -173,10 +170,11 @@ export default async function AIImplementationPage() {
       )}
 
       <DarkCTA 
+        badgeText={data?.finalCta?.badgeText}
         title={data?.finalCta?.title}
         description={data?.finalCta?.description}
-        buttonText={data?.finalCta?.primaryCta?.text}
-        buttonHref={data?.finalCta?.primaryCta?.link}
+        buttonText={data?.finalCta?.buttonText}
+        buttonHref={data?.finalCta?.buttonLink}
       />
     </div>
   );

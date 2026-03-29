@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { getUseCasesPage } from "@/lib/sanity/queries";
 import { notFound } from "next/navigation";
+import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 
 export const dynamic = "force-dynamic";
 
@@ -100,6 +101,13 @@ export default async function UseCasesPage() {
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <TestimonialCarousel 
+        testimonials={data?.testimonials} 
+        subtitle="Impact"
+        title="Case Results"
+      />
 
       {/* Bottom CTA Layer */}
       <section className="py-24 relative overflow-hidden bg-[#26201D] mt-12">

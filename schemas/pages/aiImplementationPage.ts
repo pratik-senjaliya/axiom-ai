@@ -9,9 +9,10 @@ export default defineType({
         { name: 'pitfalls', title: 'Why AI Initiatives Stall' },
         { name: 'layers', title: 'Enterprise AI Stack' },
         { name: 'useCases', title: 'Industry Use Cases' },
-        { name: 'roadmap', title: 'Pilot to Platform' },
-        { name: 'deployment', title: 'Deployment Models' },
+        { name: 'roadmap', title: 'Roadmap' },
+        { name: 'models', title: 'Engagement Models' },
         { name: 'faqs', title: 'FAQs' },
+        { name: 'testimonials', title: 'Testimonials' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -121,7 +122,7 @@ export default defineType({
             title: 'Deployment Headline',
             type: 'string',
             initialValue: 'Deployment Models',
-            group: 'deployment',
+            group: 'models',
         }),
         defineField({
             name: 'models',
@@ -135,15 +136,7 @@ export default defineType({
                     { name: 'description', type: 'text', rows: 2, title: 'Description' }
                 ]
             }],
-            group: 'deployment',
-        }),
-
-        // Section 7: Final CTA
-        defineField({
-            name: 'finalCta',
-            title: 'Final CTA',
-            type: 'hero', // Reuse hero specifically for the structure
-            group: 'deployment',
+            group: 'models',
         }),
 
         // FAQ Section
@@ -153,6 +146,30 @@ export default defineType({
             type: 'array',
             of: [{ type: 'faq' }],
             group: 'faqs',
+        }),
+
+        // Final CTA
+        defineField({
+            name: 'finalCta',
+            title: 'Final CTA',
+            type: 'object',
+            group: 'faqs',
+            fields: [
+              { name: 'badgeText', type: 'string', title: 'Badge Text' },
+              { name: 'title', type: 'string', title: 'Title' },
+              { name: 'description', type: 'text', rows: 3, title: 'Description' },
+              { name: 'buttonText', type: 'string', title: 'Button Text' },
+              { name: 'buttonLink', type: 'string', title: 'Button Link' },
+            ]
+        }),
+
+        // Testimonials Section
+        defineField({
+            name: 'testimonials',
+            title: 'Testimonials',
+            type: 'array',
+            of: [{ type: 'testimonial' }],
+            group: 'testimonials',
         }),
 
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),

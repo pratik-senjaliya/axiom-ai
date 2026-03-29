@@ -3,7 +3,9 @@ import { ServiceHero } from "@/components/services/ServiceHero";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { getSustainabilityPage } from "@/lib/sanity/queries";
+import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { RelatedInsights } from "@/components/services/RelatedInsights";
+import { getSustainabilityPage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { PortableText } from "@portabletext/react";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 import { notFound } from "next/navigation";
@@ -23,7 +25,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SustainabilityPage() {
-  const data = await getSustainabilityPage();
+  const [data, relatedPosts] = await Promise.all([
+    getSustainabilityPage(),
+    getLatestPostsByService('sustainability')
+  ]);
+  
   if (!data) notFound();
 
   const obstacleItems = (data?.pitfalls || []).map((obs: any) => ({
@@ -141,6 +147,14 @@ export default async function SustainabilityPage() {
         small={true}
       />
 
+      <TestimonialCarousel 
+        testimonials={data?.testimonials} 
+        subtitle="Green AI"
+        title="Impact Stories"
+      />
+
+      <RelatedInsights posts={relatedPosts} serviceName="Sustainability" />
+
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
@@ -150,10 +164,12 @@ export default async function SustainabilityPage() {
       )}
 
       <DarkCTA 
+        badgeText={data?.finalCta?.badgeText}
         title={data?.finalCta?.title}
         description={data?.finalCta?.description}
-        buttonText={data?.finalCta?.primaryCta?.text}
-        buttonHref={data?.finalCta?.primaryCta?.link}
+        buttonText={data?.finalCta?.buttonText}
+        buttonHref={data?.finalCta?.buttonLink}
+        useWhiteButton={true}
       />
     </div>
   );

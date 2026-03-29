@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 import { getHomePage } from "@/lib/sanity/queries";
+import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 
 export const dynamic = "force-dynamic";
 
@@ -221,6 +222,13 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 5.5 Testimonials */}
+      <TestimonialCarousel 
+        testimonials={data?.testimonials} 
+        subtitle="Success"
+        title="Client Stories"
+      />
 
       {/* 6. Contact CTA */}
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(255, 130, 28, 0.08), rgba(173, 88, 217, 0.08))' }}>

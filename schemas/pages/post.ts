@@ -62,6 +62,21 @@ export default defineType({
             hidden: true, // Hidden but keep for data migration
         }),
         defineField({
+            name: 'relatedService',
+            title: 'Related Service Area',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'AI Implementation', value: 'ai' },
+                    { title: 'ERP Transformation', value: 'erp' },
+                    { title: 'Data & Analytics', value: 'data' },
+                    { title: 'Managed Delivery', value: 'managed' },
+                    { title: 'Sustainability', value: 'sustainability' },
+                ],
+            },
+            description: 'Select which service page this blog should appear on.',
+        }),
+        defineField({
             name: 'publishedAt',
             title: 'Published At',
             type: 'date', // using date string YYYY-MM-DD

@@ -4,7 +4,9 @@ import { HorizontalFeature, HorizontalFeatureItem } from "@/components/services/
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { getERPTransformationPage } from "@/lib/sanity/queries";
+import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { RelatedInsights } from "@/components/services/RelatedInsights";
+import { getERPTransformationPage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
@@ -24,7 +26,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ERPTransformationPage() {
-  const data = await getERPTransformationPage();
+  const [data, relatedPosts] = await Promise.all([
+    getERPTransformationPage(),
+    getLatestPostsByService('erp')
+  ]);
+  
   if (!data) notFound();
 
   const hardcodedIcons = [
@@ -117,6 +123,14 @@ export default async function ERPTransformationPage() {
         />
       )}
 
+      <TestimonialCarousel 
+        testimonials={data?.testimonials} 
+        subtitle="Success"
+        title="ERP Impact"
+      />
+
+      <RelatedInsights posts={relatedPosts} serviceName="ERP Transformation" />
+
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
@@ -126,10 +140,11 @@ export default async function ERPTransformationPage() {
       )}
 
       <DarkCTA 
+        badgeText={data?.finalCta?.badgeText}
         title={data?.finalCta?.title}
         description={data?.finalCta?.description}
-        buttonText={data?.finalCta?.primaryCta?.text}
-        buttonHref={data?.finalCta?.primaryCta?.link}
+        buttonText={data?.finalCta?.buttonText}
+        buttonHref={data?.finalCta?.buttonLink}
         useWhiteButton={true}
       />
     </div>

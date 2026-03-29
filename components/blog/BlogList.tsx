@@ -12,11 +12,19 @@ interface BlogListProps {
 export function BlogList({ posts }: BlogListProps) {
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const categories = Array.from(new Set(posts.map((p) => p.category))).filter(Boolean);
+  const serviceMap: { [key: string]: string } = {
+    "AI Implementation": "ai",
+    "ERP Transformation": "erp",
+    "Data & Analytics": "data",
+    "Managed Delivery": "managed",
+    "Sustainability": "sustainability"
+  };
+
+  const categories = Object.keys(serviceMap);
   
   const filteredPosts = activeCategory === "All" 
     ? posts 
-    : posts.filter((p) => p.category === activeCategory);
+    : posts.filter((p) => p.relatedService === serviceMap[activeCategory]);
 
   const featuredPost = activeCategory === "All" ? filteredPosts[0] : null;
   const gridPosts = activeCategory === "All" ? filteredPosts.slice(1) : filteredPosts;

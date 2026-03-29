@@ -8,6 +8,7 @@ export default defineType({
         { name: 'hero', title: 'Hero Section' },
         { name: 'content', title: 'Content / Cards' },
         { name: 'poc', title: 'POC Offer' },
+        { name: 'testimonials', title: 'Testimonials' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -65,6 +66,15 @@ export default defineType({
               { name: 'description', type: 'text', rows: 3, title: 'Description' }
             ],
             group: 'poc',
+        }),
+
+        // Testimonials
+        defineField({
+            name: 'testimonials',
+            title: 'Testimonials',
+            type: 'array',
+            of: [{ type: 'testimonial' }],
+            group: 'testimonials',
         }),
 
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),

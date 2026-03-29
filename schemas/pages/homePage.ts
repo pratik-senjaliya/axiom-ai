@@ -10,6 +10,7 @@ export default defineType({
         { name: 'solutions', title: 'What We Do' },
         { name: 'roadmap', title: 'Phases to Production' },
         { name: 'personas', title: 'Target Audience' },
+        { name: 'testimonials', title: 'Testimonials' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -115,6 +116,15 @@ export default defineType({
                 { name: 'description', type: 'text', rows: 3, title: 'Description' },
                 { name: 'primaryCta', type: 'cta', title: 'Primary CTA' }
             ]
+        }),
+
+        // Section 7: Testimonials
+        defineField({
+            name: 'testimonials',
+            title: 'Testimonials',
+            type: 'array',
+            of: [{ type: 'testimonial' }],
+            group: 'testimonials',
         }),
 
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),

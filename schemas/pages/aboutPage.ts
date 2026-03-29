@@ -9,6 +9,7 @@ export default defineType({
         { name: 'why', title: 'Why We Exist' },
         { name: 'values', title: 'Core Values' },
         { name: 'team', title: 'Team' },
+        { name: 'testimonials', title: 'Testimonials' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -86,6 +87,14 @@ export default defineType({
             title: 'Final CTA',
             type: 'hero',
             group: 'team',
+        }),
+
+        defineField({
+            name: 'testimonials',
+            title: 'Testimonials',
+            type: 'array',
+            of: [{ type: 'testimonial' }],
+            group: 'testimonials',
         }),
 
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),

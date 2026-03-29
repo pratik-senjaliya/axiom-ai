@@ -22,9 +22,39 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     "date": publishedAt,
     "author": coalesce(author, "AxiomAI Team"),
     "authorRole": coalesce(authorRole, "Contributor"),
-    "image": mainImage.asset->url,
+    "image": coalesce(mainImage.asset->url, 
+      select(
+        relatedService == "ai" => select(
+          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
+          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1620712943543-bcc4628c9757?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=800&auto=format&fit=crop"
+        ),
+        relatedService == "erp" => select(
+          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1454165833968-3860bb617482?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop"
+        ),
+        relatedService == "data" => select(
+          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1504868584819-f8e905263543?q=80&w=800&auto=format&fit=crop"
+        ),
+        relatedService == "managed" => select(
+          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop",
+          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
+        ),
+        relatedService == "sustainability" => select(
+          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop",
+          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1508514177221-18d14de04965?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1466611653911-95282ee365d5?q=80&w=800&auto=format&fit=crop"
+        ),
+        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop"
+      )
+    ),
     "imageAlt": mainImage.alt,
     "readTime": coalesce(readTime, "5 min read"),
+    "relatedService": relatedService,
     "content": ""
   }`
 
@@ -220,6 +250,12 @@ export async function getHomePage(): Promise<any> {
       title,
       description,
       primaryCta { text, link }
+    },
+    testimonials[] {
+      quote,
+      author,
+      role,
+      company
     }
   }`
 
@@ -261,6 +297,12 @@ export async function getAboutPage(): Promise<any> {
       title,
       description,
       primaryCta { text, link }
+    },
+    testimonials[] {
+      quote,
+      author,
+      role,
+      company
     }
   }`
     return safeFetch<any>(query, {}, null)
@@ -355,6 +397,12 @@ export async function getUseCasesPage(): Promise<any> {
     pocOffer {
       title,
       description
+    },
+    testimonials[] {
+      quote,
+      author,
+      role,
+      company
     }
   }`
     return safeFetch<any>(query, {}, null)
@@ -385,9 +433,17 @@ export async function getAIImplementationPage(): Promise<any> {
     models[] { model, title, description },
     faqs[] { question, answer },
     finalCta {
+      badgeText,
       title,
       description,
-      primaryCta { text, link }
+      buttonText,
+      buttonLink
+    },
+    testimonials[] {
+      quote,
+      author,
+      role,
+      company
     }
   }`
     return safeFetch<any>(query, {}, null)
@@ -414,9 +470,17 @@ export async function getSustainabilityPage(): Promise<any> {
     roadmap[] { step, title, description },
     faqs[] { question, answer },
     finalCta {
+      badgeText,
       title,
       description,
-      primaryCta { text, link }
+      buttonText,
+      buttonLink
+    },
+    testimonials[] {
+      quote,
+      author,
+      role,
+      company
     }
   }`
     return safeFetch<any>(query, {}, null)
@@ -443,9 +507,17 @@ export async function getERPTransformationPage(): Promise<any> {
     roadmap[] { step, title, description },
     faqs[] { question, answer },
     finalCta {
+      badgeText,
       title,
       description,
-      primaryCta { text, link }
+      buttonText,
+      buttonLink
+    },
+    testimonials[] {
+      quote,
+      author,
+      role,
+      company
     }
   }`
     return safeFetch<any>(query, {}, null)
@@ -470,9 +542,17 @@ export async function getDataAnalyticsPage(): Promise<any> {
     roadmap[] { step, title, description },
     faqs[] { question, answer },
     finalCta {
+      badgeText,
       title,
       description,
-      primaryCta { text, link }
+      buttonText,
+      buttonLink
+    },
+    testimonials[] {
+      quote,
+      author,
+      role,
+      company
     }
   }`
     return safeFetch<any>(query, {}, null)
@@ -500,12 +580,67 @@ export async function getManagedDeliveryPage(): Promise<any> {
     roadmap[] { step, title, description },
     faqs[] { question, answer },
     finalCta {
+      badgeText,
       title,
       description,
-      primaryCta { text, link }
+      buttonText,
+      buttonLink
+    },
+    testimonials[] {
+      quote,
+      author,
+      role,
+      company
     }
   }`
     return safeFetch<any>(query, {}, null)
+}
+
+// ==================== BLOG FILTERING ====================
+
+export async function getLatestPostsByService(service: string, limit: number = 3): Promise<BlogPost[]> {
+  const query = `*[_type == "post" && relatedService == $service] | order(publishedAt desc) [0...$limit] {
+    "id": _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    "category": coalesce(category, "Insights"),
+    "date": publishedAt,
+    "author": coalesce(author, "Axiom AI Team"),
+    "image": coalesce(mainImage.asset->url, 
+      select(
+        relatedService == "ai" => select(
+          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
+          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1620712943543-bcc4628c9757?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=800&auto=format&fit=crop"
+        ),
+        relatedService == "erp" => select(
+          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1454165833968-3860bb617482?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop"
+        ),
+        relatedService == "data" => select(
+          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1504868584819-f8e905263543?q=80&w=800&auto=format&fit=crop"
+        ),
+        relatedService == "managed" => select(
+          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop",
+          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
+        ),
+        relatedService == "sustainability" => select(
+          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop",
+          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1508514177221-18d14de04965?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1466611653911-95282ee365d5?q=80&w=800&auto=format&fit=crop"
+        ),
+        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop"
+      )
+    ),
+    "readTime": coalesce(readTime, "5 min read")
+  }`
+
+  return safeFetch<BlogPost[]>(query, { service, limit }, [])
 }
 
 // ==================== SETTINGS ====================
