@@ -73,12 +73,58 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
         
         {/* Title */}
         <h1 className="type-hero text-[#26201D] mb-6 mx-auto">
-          {title}{" "}
-          {gradientTitlePart && (
-            <span className="gradient-text">
-              {gradientTitlePart}
-            </span>
-          )}
+          {(() => {
+            const rawTitle = title || "";
+            const highlight = gradientTitlePart || "";
+            
+            // Case 1: If highlight is already part of the title (to avoid duplication)
+            if (highlight && rawTitle.toLowerCase().includes(highlight.toLowerCase())) {
+              const parts = rawTitle.split(new RegExp(`(${highlight})`, "gi"));
+              return (
+                <>
+                  {parts.map((part, i) => 
+                    part.toLowerCase() === highlight.toLowerCase() ? (
+                      <span key={i} className="gradient-text">{part}</span>
+                    ) : part
+                  )}
+                </>
+              );
+            }
+            
+            // Case 2: If highlight is explicitly provided but not in title, append it
+            if (highlight) {
+              return (
+                <>
+                  {rawTitle}{" "}
+                  <span className="gradient-text">{highlight}</span>
+                </>
+              );
+            }
+            
+            // Case 3: No explicit highlight, try to highlight words after a colon or the last few words
+            if (rawTitle.includes(":")) {
+              const [prefix, suffix] = rawTitle.split(":");
+              return (
+                <>
+                  {prefix}: <span className="gradient-text">{suffix}</span>
+                </>
+              );
+            }
+
+            // Case 4: Default fallback highlight the last two words if title is long enough
+            const words = rawTitle.split(" ");
+            if (words.length > 3) {
+              const mainText = words.slice(0, -2).join(" ");
+              const highlightedText = words.slice(-2).join(" ");
+              return (
+                <>
+                  {mainText} <span className="gradient-text">{highlightedText}</span>
+                </>
+              );
+            }
+            
+            return rawTitle;
+          })()}
         </h1>
         
         {/* Description */}

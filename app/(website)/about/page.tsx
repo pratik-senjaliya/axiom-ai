@@ -41,7 +41,28 @@ export default async function AboutPage() {
             <span>{data?.hero?.badge || "About Us"}</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
-            {data?.hero?.title} <span className="gradient-text">{data?.hero?.titleHighlight}</span>
+            {(() => {
+              const rawTitle = data?.hero?.title || "Engineering Success through";
+              const highlight = data?.hero?.titleHighlight || "Objective Intelligence";
+              
+              if (rawTitle.toLowerCase().includes(highlight.toLowerCase())) {
+                const parts = rawTitle.split(new RegExp(`(${highlight})`, "gi"));
+                return (
+                  <>
+                    {parts.map((part: string, i: number) => 
+                      part.toLowerCase() === highlight.toLowerCase() ? (
+                        <span key={i} className="gradient-text">{part}</span>
+                      ) : part
+                    )}
+                  </>
+                );
+              }
+              return (
+                <>
+                  {rawTitle} <span className="gradient-text">{highlight}</span>
+                </>
+              );
+            })()}
           </h1>
           <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto leading-relaxed">
             {data?.hero?.description}

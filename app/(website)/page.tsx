@@ -65,7 +65,28 @@ export default async function HomePage() {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#26201D] tracking-tight mb-8 leading-[1.05]">
-            {data?.hero?.title} <span className="gradient-text">{data?.hero?.titleHighlight}</span>
+            {(() => {
+              const rawTitle = data?.hero?.title || "Architecting the";
+              const highlight = data?.hero?.titleHighlight || "Intelligent Enterprise";
+              
+              if (rawTitle.toLowerCase().includes(highlight.toLowerCase())) {
+                const parts = rawTitle.split(new RegExp(`(${highlight})`, "gi"));
+                return (
+                  <>
+                    {parts.map((part: string, i: number) => 
+                      part.toLowerCase() === highlight.toLowerCase() ? (
+                        <span key={i} className="gradient-text">{part}</span>
+                      ) : part
+                    )}
+                  </>
+                );
+              }
+              return (
+                <>
+                  {rawTitle} <span className="gradient-text">{highlight}</span>
+                </>
+              );
+            })()}
           </h1>
           
           <p className="text-lg md:text-xl text-neutral-500 mb-12 max-w-3xl mx-auto leading-relaxed font-light">

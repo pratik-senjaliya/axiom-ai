@@ -42,7 +42,28 @@ export default async function UseCasesPage() {
             <span>{data?.hero?.badge || "Use Cases"}</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
-            {data?.hero?.title} <span className="gradient-text">{data?.hero?.titleHighlight}</span>
+            {(() => {
+              const rawTitle = data?.hero?.title || "Real-World Impact through";
+              const highlight = data?.hero?.titleHighlight || "Objective Execution";
+              
+              if (rawTitle.toLowerCase().includes(highlight.toLowerCase())) {
+                const parts = rawTitle.split(new RegExp(`(${highlight})`, "gi"));
+                return (
+                  <>
+                    {parts.map((part: string, i: number) => 
+                      part.toLowerCase() === highlight.toLowerCase() ? (
+                        <span key={i} className="gradient-text">{part}</span>
+                      ) : part
+                    )}
+                  </>
+                );
+              }
+              return (
+                <>
+                  {rawTitle} <span className="gradient-text">{highlight}</span>
+                </>
+              );
+            })()}
           </h1>
           <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto mb-10">
             {data?.hero?.description}
