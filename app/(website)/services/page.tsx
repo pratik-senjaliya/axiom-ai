@@ -2,12 +2,26 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { client } from "@/lib/sanity/client";
+import { 
+  getServicesPage, 
+  getAIImplementationPage, 
+  getERPTransformationPage, 
+  getDataAnalyticsPage, 
+  getManagedDeliveryPage, 
+  getSustainabilityPage 
+} from "@/lib/sanity/queries";
+import { Button } from "@/components/ui/Button";
 
 export const dynamic = "force-dynamic";
 
+const SparkleIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" className="text-[#FF821C]">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/>
+    </svg>
+);
+
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await client.fetch(`*[_type == "servicesPage"][0]{ seo }`);
+  const data = await getServicesPage();
   if (!data?.seo) {
     return {
       title: "Enterprise Solutions & Services | AxiomAI",
@@ -22,12 +36,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ServicesHubPage() {
   const [pageData, ai, erp, analytics, managed, sustainability] = await Promise.all([
-    client.fetch(`*[_type == "servicesPage"][0]`),
-    client.fetch(`*[_type == "aiImplementationPage"][0]{ title, description, serviceAreas }`),
-    client.fetch(`*[_type == "erpTransformationPage"][0]{ title, description, serviceAreas }`),
-    client.fetch(`*[_type == "dataAnalyticsPage"][0]{ title, description, serviceAreas }`),
-    client.fetch(`*[_type == "managedDeliveryPage"][0]{ title, description, serviceAreas }`),
-    client.fetch(`*[_type == "sustainabilityPage"][0]{ title, description, serviceAreas }`),
+    getServicesPage(),
+    getAIImplementationPage(),
+    getERPTransformationPage(),
+    getDataAnalyticsPage(),
+    getManagedDeliveryPage(),
+    getSustainabilityPage(),
   ]);
 
   if (!pageData) notFound();
@@ -39,12 +53,12 @@ export default async function ServicesHubPage() {
     { page: managed, href: "/managed-delivery" },
     { page: sustainability, href: "/sustainability" },
   ]
-    .filter((item) => item.page?.title && item.page?.description)
+    .filter((item) => item.page?.hero?.title && item.page?.hero?.description)
     .map((item) => ({
-      title: item.page.title as string,
+      title: item.page.hero.title as string,
       href: item.href,
-      description: item.page.description as string,
-      tags: (item.page.serviceAreas || []).slice(0, 5).map((s: any) => s.name).filter(Boolean) as string[],
+      description: item.page.hero.description as string,
+      tags: (item.page.tags || []).slice(0, 5),
     }));
 
   return (
@@ -59,10 +73,10 @@ export default async function ServicesHubPage() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 mb-6 text-[#FF821C] font-semibold text-xs tracking-wide uppercase">
               <span className="text-xl leading-none font-light block -mt-1">+</span>
-              <span>{pageData.badgeText}</span>
+              <span>{pageData.badgeText || "Strategic Advisory"}</span>
             </div>
             
-            {/* Title - Decreased to 6xl from 7xl */}
+            {/* Title */}
             <h1 className="type-hero text-[#26201D] mb-2">{pageData.title}</h1>
             <h1 className="type-hero gradient-text tracking-tight leading-[1.1] mb-6">
               <span className="bg-gradient-to-r from-[#FF821C] to-[#DE2297] bg-clip-text text-transparent">
@@ -70,8 +84,8 @@ export default async function ServicesHubPage() {
               </span>
             </h1>
             
-            {/* Description - Decreased to lg from xl/2xl */}
-            <p className="text-lg md:text-xl text-neutral-500 font-light mt-8">{pageData.description}</p>
+            {/* Description */}
+            <p className="text-lg md:text-xl text-neutral-500 font-light mt-8 leading-relaxed max-w-2xl">{pageData.description}</p>
           </div>
         </div>
       </section>
@@ -90,11 +104,11 @@ export default async function ServicesHubPage() {
               >
                 <div className="bg-white rounded-[2rem] p-8 sm:p-9 shadow-sm flex flex-col h-full border border-neutral-100 group-hover:border-orange-200 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.06)] transition-all duration-300">
                   {/* Icon */}
-                  <div className="w-12 h-12 rounded-2xl bg-[#FF821C] flex items-center justify-center text-white mb-6 shadow-sm">
-                    <span className="font-bold text-sm">{String(idx + 1).padStart(2, "0")}</span>
+                  <div className="w-12 h-12 rounded-2xl bg-[#FF821C] flex items-center justify-center text-white mb-6 shadow-sm transition-transform group-hover:scale-110">
+                    <span className="font-bold text-sm tracking-tighter">0{idx + 1}</span>
                   </div>
                   
-                  {/* Title & Description - Decreased font sizes */}
+                  {/* Title & Description */}
                   <h3 className="type-card-title text-[#26201D] group-hover:text-[#FF821C] transition-colors mb-3">
                     {service.title}
                   </h3>
@@ -102,9 +116,9 @@ export default async function ServicesHubPage() {
                     {service.description}
                   </p>
 
-                  {/* Tags - Decreased to text-xs */}
+                  {/* Tags */}
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {service.tags.map(tag => (
+                    {service.tags.map((tag: string) => (
                       <span 
                         key={tag} 
                         className="px-3 py-1 bg-[#F4F4F4] group-hover:bg-[#FFF5ED] text-neutral-500 group-hover:text-[#FF821C] rounded-full text-[12px] font-medium transition-colors"

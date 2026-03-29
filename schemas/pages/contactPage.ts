@@ -6,11 +6,6 @@ export default defineType({
     type: 'document',
     fields: [
         defineField({
-            name: 'seo',
-            title: 'SEO',
-            type: 'seo',
-        }),
-        defineField({
             name: 'title',
             title: 'Page Title',
             type: 'string',
@@ -38,6 +33,12 @@ export default defineType({
                     defineField({ name: 'hours', title: 'Hours', type: 'string' })
                 ]
             }]
+        }),
+
+        defineField({
+            name: 'seo',
+            title: 'SEO',
+            type: 'seo',
         }),
     ],
 })

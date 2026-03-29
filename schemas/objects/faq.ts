@@ -13,7 +13,8 @@ export default defineType({
         defineField({
             name: 'answer',
             title: 'Answer',
-            type: 'text',
+            type: 'array',
+            of: [{ type: 'block' }],
         }),
     ],
 })

@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
+import { getHomePage } from "@/lib/sanity/queries";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await client.fetch(`*[_type == "homePage"][0]{ seo }`);
+  const data = await getHomePage();
   if (!data?.seo) return {
     title: "AxiomAI | Enterprise AI, ERP & Data Advisory",
     description: "Building the future of intelligent enterprise. Strategic guidance for digital transformation.",
@@ -26,7 +26,7 @@ const SparkleIcon = () => (
 );
 
 export default async function HomePage() {
-  const data = await client.fetch(`*[_type == "homePage"][0]`);
+  const data = await getHomePage();
   if (!data) notFound();
   
   const featureStats = [
@@ -34,16 +34,6 @@ export default async function HomePage() {
     { value: "75%", label: "exceed timeline", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" /></svg> },
     { value: "70%", label: "lack data strategy", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> }
   ];
-
-  const serviceCards: { num: string; title: string; description: string; link: string; tags: string[] }[] = (data?.trustCards || [])
-    .filter((card: any) => card?.link)
-    .map((card: any, index: number) => ({
-    num: String(index + 1).padStart(2, "0"),
-    title: card.title,
-    description: card.description,
-    link: card.link,
-    tags: card.tags || [],
-  }));
 
   const processStyles = [
     { bg: "from-primary-500/20 to-primary-500/5", text: "text-primary-500/40" },
@@ -57,12 +47,12 @@ export default async function HomePage() {
     { bg: "from-rose-500 to-primary-500", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg> },
     { bg: "from-primary-500 to-orange-400", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg> }
   ];
+
   return (
     <>
       {/* 1. Hero Section */}
       <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-24 overflow-hidden text-center">
         <div className="bg-grid opacity-40"></div>
-        {/* Soft radial glows to emulate the background in Lovable */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] bg-orange-100/40 rounded-full blur-[100px] pointer-events-none -z-10"></div>
         <div className="absolute top-[40%] right-[10%] w-[40rem] h-[40rem] bg-violet-100/30 rounded-full blur-[100px] pointer-events-none -z-10"></div>
 
@@ -70,41 +60,35 @@ export default async function HomePage() {
           
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-neutral-200 shadow-sm mb-8">
             <SparkleIcon />
-            <span className="text-sm font-medium text-neutral-800">Enterprise AI & Data Advisory</span>
+            <span className="text-sm font-medium text-neutral-800">{data?.hero?.badge || "Enterprise AI & Data Advisory"}</span>
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#26201D] tracking-tight mb-8 leading-[1.05]">
-            Architecting the <span className="gradient-text">Intelligent Enterprise</span>
+            {data?.hero?.title} <span className="gradient-text">{data?.hero?.titleHighlight}</span>
           </h1>
           
           <p className="text-lg md:text-xl text-neutral-500 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
-            {data?.heroDescription}
+            {data?.hero?.description}
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            {data?.introductionCta?.text && data?.introductionCta?.link && (
-            <Link href={data.introductionCta.link} className="w-full sm:w-auto">
+            {data?.hero?.primaryCta?.text && data?.hero?.primaryCta?.link && (
+            <Link href={data.hero.primaryCta.link} className="w-full sm:w-auto">
               <Button size="lg" className="btn-primary w-full sm:w-auto px-8 h-12 text-lg rounded-full flex items-center justify-center gap-2 font-medium">
-                {data.introductionCta.text}
+                {data.hero.primaryCta.text}
                 <svg className="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Button>
             </Link>
             )}
-            <Link href="#services" className="w-full sm:w-auto">
+            {data?.hero?.secondaryCta?.text && data?.hero?.secondaryCta?.link && (
+            <Link href={data.hero.secondaryCta.link} className="w-full sm:w-auto">
               <Button variant="outline" size="lg" className="bg-white border text-neutral-800 border-neutral-200 rounded-full hover:bg-neutral-50 shadow-sm w-full sm:w-auto px-8 h-12 text-lg font-medium">
-                Explore Solutions
+                {data.hero.secondaryCta.text}
               </Button>
             </Link>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 max-w-4xl mx-auto">
-            {(data?.heroStats && data.heroStats.length > 0 ? data.heroStats.map((stat: any) => stat.label) : ["GenAI & LLMs", "Agentic AI", "S/4HANA", "Data Fabric", "ML Ops", "AI Governance"]).map((tag: string) => (
-              <span key={tag} className="px-5 py-2.5 bg-white border border-neutral-200 text-neutral-500 rounded-full text-sm font-medium shadow-sm">
-                {tag}
-              </span>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -114,32 +98,29 @@ export default async function HomePage() {
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
-              {data?.featuresTitle}
+              {data?.pitfallsHeadline}
             </h2>
-            <p className="text-lg text-neutral-500">
-              {data?.featuresDescription}
-            </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {data?.features?.map((feature: any, index: number) => {
-              const statInfo = featureStats[index % featureStats.length];
+            {data?.pitfalls?.map((card: any, index: number) => {
+              const staticInfo = featureStats[index % featureStats.length];
               return (
                 <div key={index} className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between h-full">
                   <div className="flex justify-between items-start mb-12">
                     <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center">
-                      {statInfo.icon}
+                      {staticInfo.icon}
                     </div>
                     <div className="text-right">
-                      <div className="text-3xl font-bold text-red-600 mb-1">{statInfo.value}</div>
-                      <div className="text-xs font-medium text-neutral-400 uppercase tracking-wide">{statInfo.label}</div>
+                      <div className="text-3xl font-bold text-red-600 mb-1">{card.stat}</div>
+                      <div className="text-xs font-medium text-neutral-400 uppercase tracking-wide">Business Risk</div>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-[#26201D] mb-3">{feature.title}</h3>
-                    <div className="text-neutral-500 leading-relaxed text-sm prose">
-                      <PortableText value={feature.description} />
-                    </div>
+                    <h3 className="text-xl font-bold text-[#26201D] mb-3">{card.title}</h3>
+                    <p className="text-neutral-500 leading-relaxed text-sm">
+                      {card.description}
+                    </p>
                   </div>
                 </div>
               );
@@ -157,34 +138,22 @@ export default async function HomePage() {
               <span className="text-sm font-medium">What We Do</span>
             </div>
             <h2 className="type-section-title text-[#26201D] mb-4">
-              {data?.trustTitle}
+              {data?.solutionsHeadline || "Enterprise-grade AI Solutions"}
             </h2>
-            <p className="text-lg text-neutral-500">
-              {data?.trustDescription}
-            </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {serviceCards.map((card: { num: string; title: string; description: string; link: string; tags: string[] }, idx: number) => (
-              <Link key={idx} href={card.link} className="group block focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-[32px]">
-                <div className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 group-hover:bg-white group-hover:border-primary-500/30 group-hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col cursor-pointer">
+            {data?.solutions?.map((card: any, idx: number) => (
+                <div key={idx} className="bg-[#FAF8F5] border border-transparent rounded-[32px] p-8 sm:p-10 transition-all duration-300 hover:bg-white hover:border-primary-500/30 hover:shadow-[0_8px_30px_rgba(249,118,31,0.12)] h-full flex flex-col">
                   <div className="flex items-center gap-2 mb-8 text-primary-500 font-semibold text-[0.95rem]">
                     <SparkleIcon />
-                    <span>{card.num}</span>
+                    <span>0{idx + 1}</span>
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4 leading-tight">{card.title}</h3>
-                  <p className="text-neutral-500 leading-relaxed mb-10 flex-grow text-sm sm:text-[0.95rem]">
+                  <p className="text-neutral-500 leading-relaxed text-sm sm:text-[0.95rem]">
                     {card.description}
                   </p>
-                  {card.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-auto">
-                      {card.tags.map((tag: string) => (
-                        <span key={tag} className="px-3.5 py-1.5 bg-[#F1EFEA] group-hover:bg-neutral-100 text-neutral-500 rounded-full text-xs font-medium transition-colors">{tag}</span>
-                      ))}
-                    </div>
-                  )}
                 </div>
-              </Link>
             ))}
           </div>
         </div>
@@ -200,41 +169,28 @@ export default async function HomePage() {
               <span className="text-sm font-medium">Our Approach</span>
             </div>
             <h2 className="type-section-title text-[#26201D] mb-4">
-              {data?.processTitle}
+              {data?.roadmapHeadline}
             </h2>
-            <p className="text-lg text-neutral-500">
-              {data?.processDescription}
-            </p>
           </div>
 
-          {data?.process && data.process.length > 0 && (
-            <div className={`grid md:grid-cols-${data.process.length} gap-6 relative max-w-5xl mx-auto`}>
-              {/* Dotted connecting line behind cards */}
+          {data?.roadmap && data.roadmap.length > 0 && (
+            <div className={`grid md:grid-cols-3 gap-6 relative max-w-5xl mx-auto`}>
               <div className="hidden md:block absolute top-[50%] left-10 right-10 h-0 border-t border-dashed border-neutral-300 -z-10"></div>
               
-              {data.process.map((step: any, index: number) => {
+              {data.roadmap.map((phase: any, index: number) => {
                 const style = processStyles[index % processStyles.length];
                 return (
                   <div key={index} className={`bg-gradient-to-br ${style.bg} rounded-[24px] w-full max-w-[340px] h-[230px] p-7 shadow-sm mx-auto flex flex-col justify-center`}>
-                    <div className={`${style.text} text-[4.25rem] font-black mb-3 leading-none`}>{step.step || `0${index + 1}`}</div>
-                    <h3 className="text-xl font-bold text-[#26201D] mb-2">{step.title}</h3>
+                    <div className={`${style.text} text-[4.25rem] font-black mb-3 leading-none`}>{phase.step || `0${index + 1}`}</div>
+                    <h3 className="text-xl font-bold text-[#26201D] mb-2">{phase.title}</h3>
                     <p className="text-neutral-500 leading-relaxed text-sm">
-                      {step.description}
+                      {phase.description}
                     </p>
                   </div>
                 );
               })}
             </div>
           )}
-
-          <div className="text-center mt-12">
-            <Link href="/use-cases" className="inline-flex items-center gap-2 text-primary-500 font-semibold hover:text-primary-600 transition-colors">
-              Explore use cases
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -243,11 +199,8 @@ export default async function HomePage() {
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-[2.5rem] font-bold text-[#26201D] mb-4">
-              {data?.personasTitle}
+              {data?.personasHeadline}
             </h2>
-            <p className="text-lg text-neutral-500 max-w-2xl mx-auto">
-              {data?.personasDescription}
-            </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -258,10 +211,10 @@ export default async function HomePage() {
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-bl ${style.bg} flex items-center justify-center mb-6 text-white shadow-inner`}>
                     {style.icon}
                   </div>
-                  <h3 className="text-lg font-bold text-[#26201D] mb-3">{persona.title}</h3>
-                  <div className="text-neutral-500 text-sm leading-relaxed prose prose-sm">
-                    <PortableText value={persona.description} />
-                  </div>
+                  <h3 className="text-lg font-bold text-[#26201D] mb-3">{persona.role}</h3>
+                  <p className="text-neutral-500 text-sm leading-relaxed">
+                    {persona.description}
+                  </p>
                 </div>
               );
             })}
@@ -273,16 +226,16 @@ export default async function HomePage() {
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(255, 130, 28, 0.08), rgba(173, 88, 217, 0.08))' }}>
         <div className="container-custom text-center relative z-10">
           <h2 className="type-section-title text-[#26201D] mb-6">
-            {data?.finalCTA?.title}
+            {data?.finalCta?.title}
           </h2>
           <p className="text-lg text-[#6D5A4C] max-w-2xl mx-auto mb-10">
-            {data?.finalCTA?.description}
+            {data?.finalCta?.description}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            {data?.finalCTA?.cta?.text && data?.finalCTA?.cta?.link && (
-            <Link href={data.finalCTA.cta.link} className="w-full sm:w-auto">
+            {data?.finalCta?.primaryCta?.text && data?.finalCta?.primaryCta?.link && (
+            <Link href={data.finalCta.primaryCta.link} className="w-full sm:w-auto">
               <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-base rounded-2xl flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#D122E3] text-white hover:opacity-90 transition-colors shadow-sm border-none font-medium">
-                {data.finalCTA.cta.text}
+                {data.finalCta.primaryCta.text}
                 <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>

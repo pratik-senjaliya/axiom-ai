@@ -1,75 +1,81 @@
 import { type SchemaTypeDefinition } from 'sanity'
 
-// Objects
+// Modular Objects
 import faq from './objects/faq'
 import feature from './objects/feature'
+import featureCard from './objects/featureCard'
 import testimonial from './objects/testimonial'
 import processStep from './objects/processStep'
+import advantage from './objects/advantage'
 import stat from './objects/stat'
 import seo from './objects/seo'
 import cta from './objects/cta'
 import finalCtaSection from './objects/finalCtaSection'
+import hero from './objects/hero'
 
-// Documents
-import post from './post'
-import service from './service'
-import homePage from './homePage'
-import aboutPage from './aboutPage'
-import contactSubmission from './contactSubmission'
-import contactPage from './contactPage'
-import privacyPolicy from './privacyPolicy'
+// Document Types (Collections)
+import post from './pages/post'
+import service from './pages/service'
 import teamMember from './teamMember'
-
-import blogPage from './blogPage'
-import servicesPage from './servicesPage'
-import settings from './settings'
+import contactSubmission from './contactSubmission'
 import newsletterSubscription from './newsletterSubscription'
 
-// New Singleton Pages
-import aiImplementationPage from './aiImplementationPage'
-import erpTransformationPage from './erpTransformationPage'
-import dataAnalyticsPage from './dataAnalyticsPage'
-import managedDeliveryPage from './managedDeliveryPage'
-import sustainabilityPage from './sustainabilityPage'
-import termsOfUsage from './termsOfUsage'
-import useCasesPage from './useCasesPage'
+// Page Singletons (Specialized)
+import homePage from './pages/homePage'
+import aboutPage from './pages/aboutPage'
+import blogPage from './pages/blogPage'
+import servicesPage from './pages/servicesPage'
+import contactPage from './pages/contactPage'
+import useCasesPage from './pages/useCasesPage'
+import aiImplementationPage from './pages/aiImplementationPage'
+import erpTransformationPage from './pages/erpTransformationPage'
+import dataAnalyticsPage from './pages/dataAnalyticsPage'
+import managedDeliveryPage from './pages/managedDeliveryPage'
+import sustainabilityPage from './pages/sustainabilityPage'
+import privacyPolicy from './pages/privacyPolicy'
+import termsOfUsage from './pages/termsOfUsage'
+import settings from './settings'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [
         // Objects
         faq,
         feature,
+        featureCard,
         testimonial,
         processStep,
+        advantage,
         stat,
         seo,
         cta,
         finalCtaSection,
+        hero,
 
-        // Documents
+        // Settings & Meta
         settings,
+
+        // Core Pages (Singletons)
         homePage,
         aboutPage,
-        service,
-        blogPage,
+        useCasesPage,
         servicesPage,
-        post,
+        blogPage,
         contactPage,
-        privacyPolicy,
-        teamMember,
-
-        contactSubmission,
-        newsletterSubscription,
-
-        // Specific Service Singletons
         aiImplementationPage,
         erpTransformationPage,
         dataAnalyticsPage,
         managedDeliveryPage,
         sustainabilityPage,
-        
-        // Other Pages
+        privacyPolicy,
         termsOfUsage,
-        useCasesPage,
+
+        // Collections
+        service,
+        post,
+        teamMember,
+
+        // Forms & Subscriptions
+        contactSubmission,
+        newsletterSubscription,
     ],
 }

@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { client } from "@/lib/sanity/client";
+import { getUseCasesPage } from "@/lib/sanity/queries";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await client.fetch(`*[_type == "useCasesPage"][0]`);
+  const data = await getUseCasesPage();
   if (!data) return {
     title: "Use Cases | AxiomAI",
     description: "Real-world examples of our enterprise advisory impact.",
   };
   return {
-    title: `${data.title} | AxiomAI`,
-    description: data.description,
+    title: `${data.hero?.title} | AxiomAI`,
+    description: data.hero?.description,
   };
 }
 
@@ -26,7 +26,7 @@ const SparkleIcon = () => (
 );
 
 export default async function UseCasesPage() {
-  const data = await client.fetch(`*[_type == "useCasesPage"][0]`);
+  const data = await getUseCasesPage();
   if (!data) notFound();
 
   return (
@@ -38,13 +38,13 @@ export default async function UseCasesPage() {
         <div className="container-custom relative z-10 px-4">
           <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-200 bg-white/50 backdrop-blur-sm text-sm font-medium text-neutral-800 shadow-sm">
             <SparkleIcon />
-            <span>{data?.badgeText}</span>
+            <span>{data?.hero?.badge || "Use Cases"}</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
-            {data?.title} <span className="gradient-text">{data?.titleHighlight}</span>
+            {data?.hero?.title} <span className="gradient-text">{data?.hero?.titleHighlight}</span>
           </h1>
           <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto mb-10">
-            {data?.description}
+            {data?.hero?.description}
           </p>
 
           {/* Filters */}
@@ -61,12 +61,15 @@ export default async function UseCasesPage() {
       <section className="py-24 relative z-10">
         <div className="container-custom px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {(data?.useCases || []).map((item: any, idx: number) => (
+            {(data?.cases || []).map((item: any, idx: number) => (
               <div key={idx} className="card p-10 bg-white border border-neutral-100 rounded-[2rem] hover:border-primary-200 transition-all shadow-sm hover:shadow-md flex flex-col items-start group">
-                <div className="w-14 h-14 bg-[#FF821C] text-white rounded-xl flex items-center justify-center mb-6 shadow-sm">
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
+                <div className="flex items-center justify-between w-full mb-8">
+                    <div className="w-14 h-14 bg-[#FF821C] text-white rounded-xl flex items-center justify-center shadow-sm">
+                        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <span className="text-xs font-bold text-neutral-300 tracking-widest">{item.caseNumber}</span>
                 </div>
                 
                 <h3 className="type-card-title text-[#26201D] mb-8">{item.title}</h3>
@@ -78,7 +81,9 @@ export default async function UseCasesPage() {
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-[#FF821C] tracking-wider mb-2">TOOLS & TECH</h4>
-                    <p className="text-neutral-500 text-sm leading-relaxed">{item.tools}</p>
+                    <p className="text-neutral-500 text-sm leading-relaxed">
+                        {Array.isArray(item.tools) ? item.tools.join(", ") : item.tools}
+                    </p>
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-[#FF821C] tracking-wider mb-2">APPROACH</h4>
@@ -100,20 +105,16 @@ export default async function UseCasesPage() {
       <section className="py-24 relative overflow-hidden bg-[#26201D] mt-12">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none"></div>
         <div className="container-custom relative z-10 text-center flex flex-col items-center">
-          <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-neutral-300">
-            <SparkleIcon />
-            <span>{data?.howWePartnerBadgeText}</span>
-          </div>
           <h2 className="type-section-title text-white mb-6">
-            {data?.howWePartnerCTA?.title}
+            {data?.midPageCta?.title}
           </h2>
           <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
-            {data?.howWePartnerCTA?.description}
+            {data?.midPageCta?.description}
           </p>
-          {data?.howWePartnerCTA?.cta?.text && data?.howWePartnerCTA?.cta?.link && (
-          <Link href={data.howWePartnerCTA.cta.link} className="w-full sm:w-auto">
+          {data?.midPageCta?.primaryCta?.text && data?.midPageCta?.primaryCta?.link && (
+          <Link href={data.midPageCta.primaryCta.link} className="w-full sm:w-auto">
             <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 transition-opacity shadow-md border-none">
-              {data.howWePartnerCTA.cta.text}
+              {data.midPageCta.primaryCta.text}
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -123,12 +124,14 @@ export default async function UseCasesPage() {
         </div>
       </section>
 
-      <DarkCTA 
-        title={data?.pocGuaranteeCTA?.title}
-        description={data?.pocGuaranteeCTA?.description}
-        buttonText={data?.pocGuaranteeCTA?.cta?.text}
-        buttonHref={data?.pocGuaranteeCTA?.cta?.link}
-      />
+      {data?.pocOffer && (
+        <DarkCTA 
+            title={data.pocOffer.title}
+            description={data.pocOffer.description}
+            buttonText="Start Your Pilot"
+            buttonHref="/contact"
+        />
+      )}
     </div>
   );
 }

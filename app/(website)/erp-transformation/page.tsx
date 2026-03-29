@@ -4,14 +4,15 @@ import { HorizontalFeature, HorizontalFeatureItem } from "@/components/services/
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { client } from "@/lib/sanity/client";
+import { getERPTransformationPage } from "@/lib/sanity/queries";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
+import { ObstacleSection } from "@/components/services/ObstacleSection";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await client.fetch(`*[_type == "erpTransformationPage"][0]{ seo }`);
+  const data = await getERPTransformationPage();
   if (!data?.seo) return {
     title: "ERP Transformation | AxiomAI",
     description: "Microsoft Dynamics 365 implementations designed for business value, not just go-live.",
@@ -23,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ERPTransformationPage() {
-  const data = await client.fetch(`*[_type == "erpTransformationPage"][0]`);
+  const data = await getERPTransformationPage();
   if (!data) notFound();
 
   const hardcodedIcons = [
@@ -55,17 +56,23 @@ export default async function ERPTransformationPage() {
     )
   ];
 
-  const erpServices: HorizontalFeatureItem[] = (data?.serviceAreas || []).map((service: any, index: number) => ({
-    title: service.name,
-    description: service.focus,
-    outcomeTitle: service.sections?.[0]?.title || "",
-    outcomeDescription: service.sections?.[0]?.tasks?.[0] || "",
+  const erpLayers: HorizontalFeatureItem[] = (data?.layers || []).map((layer: any, index: number) => ({
+    title: layer.title,
+    description: layer.description,
+    outcomeTitle: "Key Benefit",
+    outcomeDescription: layer.tasks?.[0] || "",
     icon: hardcodedIcons[index % hardcodedIcons.length]
   }));
 
-  const whyChooseUsItems: FeatureItem[] = (data?.whyChooseUs || []).map((item: any) => ({
-    title: item.title,
-    description: item.description,
+  const pitfallItems = (data?.pitfalls || []).map((p: any) => ({
+    title: p.title,
+    description: p.description
+  }));
+
+  const roadmapSteps: FeatureItem[] = (data?.roadmap || []).map((step: any, index: number) => ({
+    stepNumber: index + 1,
+    title: step.title,
+    description: step.description,
   }));
 
   const faqs = (data?.faqs || []).map((faq: any) => ({
@@ -78,27 +85,33 @@ export default async function ERPTransformationPage() {
       <ServiceHero 
         backLink={{ href: "/services", label: "Back to Services" }}
         pills={["Dynamics 365 BC", "Dynamics 365 F&O", "ERP Migration", "Process Advisory"]}
-        title={data?.title?.replace("Transformation", "").trim()}
-        gradientTitlePart="Transformation"
-        description={data?.description}
-        primaryButtonText={data?.heroCTA?.text}
-        primaryButtonLink={data?.heroCTA?.link}
-        secondaryButtonText={data?.secondaryCTA?.text}
-        secondaryButtonLink={data?.secondaryCTA?.link}
+        badgeText={data?.hero?.badge}
+        title={data?.hero?.title}
+        gradientTitlePart={data?.hero?.titleHighlight}
+        description={data?.hero?.description}
+        primaryButtonText={data?.hero?.primaryCta?.text}
+        primaryButtonLink={data?.hero?.primaryCta?.link}
+        secondaryButtonText={data?.hero?.secondaryCta?.text}
+        secondaryButtonLink={data?.hero?.secondaryCta?.link}
       />
 
-      {erpServices.length > 0 && (
+      <ObstacleSection 
+        title={data?.pitfallsHeadline}
+        items={pitfallItems}
+      />
+
+      {erpLayers.length > 0 && (
         <HorizontalFeature 
-          items={erpServices}
+          items={erpLayers}
           bgWhite={true}
         />
       )}
 
-      {whyChooseUsItems.length > 0 && (
+      {roadmapSteps.length > 0 && (
         <FeatureGrid 
-          title={data?.whyChooseSectionTitle}
-          columns={3}
-          items={whyChooseUsItems}
+          title={data?.roadmapHeadline}
+          items={roadmapSteps}
+          isRoadmap={true}
           bgWhite={false}
           small={true}
         />
@@ -107,16 +120,16 @@ export default async function ERPTransformationPage() {
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title={data?.faqSectionTitle} />
+            <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>
         </section>
       )}
 
       <DarkCTA 
-        title={data?.finalCTA?.title}
-        description={data?.finalCTA?.description}
-        buttonText={data?.finalCTA?.cta?.text}
-        buttonHref={data?.finalCTA?.cta?.link}
+        title={data?.finalCta?.title}
+        description={data?.finalCta?.description}
+        buttonText={data?.finalCta?.primaryCta?.text}
+        buttonHref={data?.finalCta?.primaryCta?.link}
         useWhiteButton={true}
       />
     </div>

@@ -3,7 +3,7 @@ import { ServiceHero } from "@/components/services/ServiceHero";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { client } from "@/lib/sanity/client";
+import { getSustainabilityPage } from "@/lib/sanity/queries";
 import { PortableText } from "@portabletext/react";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 import { notFound } from "next/navigation";
@@ -11,7 +11,7 @@ import { notFound } from "next/navigation";
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await client.fetch(`*[_type == "sustainabilityPage"][0]{ seo }`);
+  const data = await getSustainabilityPage();
   if (!data?.seo) return {
     title: "AI for Sustainable Operations | AxiomAI",
     description: "Use AI and enterprise data to improve carbon visibility, reporting accuracy, and operational efficiency.",
@@ -23,30 +23,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SustainabilityPage() {
-  const data = await client.fetch(`*[_type == "sustainabilityPage"][0]`);
+  const data = await getSustainabilityPage();
   if (!data) notFound();
 
-  const obstacleItems = (data?.whyChooseUs || []).length > 0 ? data.whyChooseUs.map((obs: any) => ({
+  const obstacleItems = (data?.pitfalls || []).map((obs: any) => ({
     title: obs.title,
     description: obs.description
-  })) : [
-    {
-      title: "Manual ESG & Carbon Reporting",
-      description: "Heavy reliance on spreadsheets and disconnected workflows leads to errors, delays, and audit risks."
-    },
-    {
-      title: "Fragmented Emissions Data",
-      description: "Carbon data is scattered across ERP systems, vendors, utilities, and manual inputs."
-    },
-    {
-      title: "Limited Operational Visibility",
-      description: "Lack of real-time tracking makes it difficult to act on emissions, inefficiencies, or waste."
-    },
-    {
-      title: "No Measurable ROI Tracking",
-      description: "Sustainability is often treated as a compliance cost rather than a performance driver."
-    }
-  ];
+  }));
 
   const hardcodedIcons = [
     (
@@ -71,15 +54,15 @@ export default async function SustainabilityPage() {
     )
   ];
 
-  const serviceItems: FeatureItem[] = (data?.serviceAreas || []).map((service: any, index: number) => ({
-    title: service.name,
-    description: service.focus,
-    outcomeTitle: service.sections?.[0]?.title || "",
-    outcomeDescription: service.sections?.[0]?.tasks?.[0] || "",
+  const serviceItems: FeatureItem[] = (data?.layers || []).map((layer: any, index: number) => ({
+    title: layer.title,
+    description: layer.description,
+    outcomeTitle: "Key Focus",
+    outcomeDescription: layer.tasks?.[0] || "",
     icon: hardcodedIcons[index % hardcodedIcons.length]
   }));
 
-  const methodologySteps: FeatureItem[] = (data?.process || []).map((step: any, index: number) => {
+  const methodologySteps: FeatureItem[] = (data?.roadmap || []).map((step: any, index: number) => {
     const pillarIcons = [
       (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,37 +100,6 @@ export default async function SustainabilityPage() {
     };
   });
 
-  const engagementModels = (data?.engagement?.models || []).map((model: any, index: number) => {
-    const hardcodedEngIcons = [
-      (
-        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-      (
-        <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M11 21v-7H6l9-12v7h5l-9 12z" />
-        </svg>
-      ),
-      (
-        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-          <path d="M4 7L12 3L20 7L12 11L4 7Z" />
-          <path d="M4 12L12 16L20 12" />
-          <path d="M4 17L12 21L20 17" />
-        </svg>
-      ),
-      (
-        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-          <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-        </svg>
-      )
-    ];
-    return {
-      title: model.title,
-      icon: hardcodedEngIcons[index % hardcodedEngIcons.length]
-    };
-  });
-
   const faqs = (data?.faqs || []).map((faq: any) => ({
     question: faq.question,
     answer: <PortableText value={faq.answer} />
@@ -157,25 +109,23 @@ export default async function SustainabilityPage() {
     <div className="pt-0 pb-0">
       <ServiceHero 
         badgeText={data?.hero?.badge}
-        title={data?.title?.split("Business Impact")[0]}
-        gradientTitlePart="Business Impact"
-        description={data?.description || data?.hero?.subHeadline}
-        primaryButtonText={data?.heroCTA?.text}
-        primaryButtonLink={data?.heroCTA?.link}
-        secondaryButtonText={data?.secondaryCTA?.text}
-        secondaryButtonLink={data?.secondaryCTA?.link}
+        title={data?.hero?.title}
+        gradientTitlePart={data?.hero?.titleHighlight}
+        description={data?.hero?.description}
+        primaryButtonText={data?.hero?.primaryCta?.text}
+        primaryButtonLink={data?.hero?.primaryCta?.link}
+        secondaryButtonText={data?.hero?.secondaryCta?.text}
+        secondaryButtonLink={data?.hero?.secondaryCta?.link}
       />
 
       {/* Obstacles Section */}
       <ObstacleSection 
-        title={data?.introTitle}
-        subtitle={data?.introSubtitle}
+        title={data?.pitfallsHeadline}
         items={obstacleItems}
       />
 
       <FeatureGrid 
-        title={data?.serviceAreasTitle}
-        description={data?.serviceAreasDescription}
+        title={data?.layersHeadline}
         columns={2}
         items={serviceItems.length > 0 ? serviceItems : []}
         bgWhite={true}
@@ -183,8 +133,7 @@ export default async function SustainabilityPage() {
       />
 
       <FeatureGrid 
-        title={data?.processSectionTitle}
-        description={data?.processSectionDescription}
+        title={data?.roadmapHeadline}
         items={methodologySteps.length > 0 ? methodologySteps : []}
         columns={3}
         isRoadmap={false}
@@ -192,42 +141,19 @@ export default async function SustainabilityPage() {
         small={true}
       />
 
-      {/* Deployment Approach (Only render if provided) */}
-      {engagementModels.length > 0 && (
-        <section className="py-24 bg-[#FAF8F5]">
-          <div className="container-custom px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#26201D]">
-              {data?.engagementSectionTitle}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 max-w-5xl mx-auto">
-              {engagementModels.map((item: any, index: number) => (
-                <div key={index} className="flex flex-col items-center text-center gap-6 group">
-                  <div className="w-16 h-16 rounded-2xl bg-[#FF821C] flex items-center justify-center text-white shadow-[0_8px_16px_rgba(255,130,28,0.2)] transition-transform group-hover:scale-110 duration-300">
-                    {item.icon}
-                  </div>
-                  <span className="font-bold text-base text-[#26201D] leading-[1.3] max-w-[180px]">
-                    {item.title}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title={data?.faqSectionTitle} />
+            <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>
         </section>
       )}
 
       <DarkCTA 
-        title={data?.finalCTA?.title}
-        description={data?.finalCTA?.description}
-        buttonText={data?.finalCTA?.cta?.text}
-        buttonHref={data?.finalCTA?.cta?.link}
+        title={data?.finalCta?.title}
+        description={data?.finalCta?.description}
+        buttonText={data?.finalCta?.primaryCta?.text}
+        buttonHref={data?.finalCta?.primaryCta?.link}
       />
     </div>
   );

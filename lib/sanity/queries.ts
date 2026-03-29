@@ -176,7 +176,7 @@ export async function getAllServiceSlugs(): Promise<string[]> {
 
 // GROQ query to get home page data
 export async function getHomePage(): Promise<any> {
-  const query = `*[_type == "homePage"][0] {
+    const query = `*[_type == "homePage"][0] {
     seo {
       metaTitle,
       metaDescription,
@@ -184,69 +184,52 @@ export async function getHomePage(): Promise<any> {
       "openGraphImage": openGraphImage.asset->url,
       "openGraphImageAlt": openGraphImage.alt
     },
-    heroTitle,
-    heroTitleHighlight,
-    heroDescription,
-    "heroBackgroundImage": heroBackgroundImage.asset->url,
-    "heroBackgroundImageAlt": heroBackgroundImage.alt,
-    "heroImage": heroImage.asset->url,
-    "heroImageAlt": heroImage.alt,
-    heroStats,
-    introductionTitle,
-    introductionBody,
-    introductionCta {
-      text,
-      link
-    },
-    "introductionImage": introductionImage.asset->url,
-    "introductionImageAlt": introductionImage.alt,
-    trustTitle,
-    trustDescription,
-    trustStats,
-    testimonialsTitle,
-    testimonialsDescription,
-    testimonials,
-    featuresTitle,
-    featuresDescription,
-    features[] {
+    hero {
+      badge,
       title,
+      titleHighlight,
       description,
-      linkText,
-      linkHref,
       "image": image.asset->url,
-      "imageAlt": image.alt
+      "imageAlt": image.alt,
+      primaryCta { text, link },
+      secondaryCta { text, link }
     },
-    partnersTitle,
-    partnersDescription,
-    partners[] {
-      name,
-      "logo": logo.asset->url,
-      "logoAlt": logo.alt
+    pitfallsHeadline,
+    pitfalls[] {
+      stat,
+      title,
+      description
     },
-    processTitle,
-    processDescription,
-    process,
-    personasTitle,
-    personasDescription,
-    personas,
-    blogTitle,
-    blogDescription,
-    faqTitle,
-    faqs,
-    finalCTA {
+    solutionsHeadline,
+    solutions[] {
+      title,
+      description
+    },
+    roadmapHeadline,
+    roadmap[] {
+      step,
+      title,
+      description
+    },
+    personasHeadline,
+    personas[] {
+      role,
+      description
+    },
+    finalCta {
       title,
       description,
-      cta
+      primaryCta { text, link }
     }
   }`
 
-  return safeFetch<any>(query, {}, null)
+    return safeFetch<any>(query, {}, null)
 }
 
 // ==================== ABOUT PAGE ====================
 
 export async function getAboutPage(): Promise<any> {
-  const query = `*[_type == "aboutPage"][0] {
+    const query = `*[_type == "aboutPage"][0] {
     seo {
       metaTitle,
       metaDescription,
@@ -254,17 +237,18 @@ export async function getAboutPage(): Promise<any> {
       "openGraphImage": openGraphImage.asset->url,
       "openGraphImageAlt": openGraphImage.alt
     },
-    heroTitle,
-    heroTitleHighlight,
-    heroDescription,
-    "heroBackgroundImage": heroBackgroundImage.asset->url,
-    "heroBackgroundImageAlt": heroBackgroundImage.alt,
-    "heroImage": heroImage.asset->url,
-    "heroImageAlt": heroImage.alt,
-    whyWeExistTitle,
-    whyWeExistBody,
-    "whyWeExistImage": whyWeExistImage.asset->url,
-    "whyWeExistImageAlt": whyWeExistImage.alt,
+    hero {
+      badge,
+      title,
+      titleHighlight,
+      description,
+      "image": image.asset->url,
+      "imageAlt": image.alt
+    },
+    whyTitle,
+    whyBody,
+    whyImage,
+    "whyImageAlt": whyImage.alt,
     valuesTitle,
     values[] {
       title,
@@ -273,13 +257,13 @@ export async function getAboutPage(): Promise<any> {
     },
     teamTitle,
     teamBody,
-    finalCTA {
+    finalCta {
       title,
       description,
-      cta
+      primaryCta { text, link }
     }
   }`
-  return safeFetch<any>(query, {}, null)
+    return safeFetch<any>(query, {}, null)
 }
 
 // ==================== CONTACT PAGE ====================
@@ -325,7 +309,7 @@ export async function getServicesPage(): Promise<any> {
 
 
 export async function getBlogPage(): Promise<any> {
-  const query = `*[_type == "blogPage"][0] {
+    const query = `*[_type == "blogPage"][0] {
       seo {
         metaTitle,
         metaDescription,
@@ -339,7 +323,189 @@ export async function getBlogPage(): Promise<any> {
       newsletterButtonText,
       newsletterButtonLink
     }`
-  return safeFetch<any>(query, {}, null)
+    return safeFetch<any>(query, {}, null)
+}
+
+// ==================== SPECIALIZED SINGLETONS ====================
+
+export async function getUseCasesPage(): Promise<any> {
+    const query = `*[_type == "useCasesPage"][0] {
+    seo,
+    hero {
+      badge,
+      title,
+      titleHighlight,
+      description,
+      "image": image.asset->url
+    },
+    tabs,
+    cases[] {
+      caseNumber,
+      title,
+      problem,
+      tools,
+      approach,
+      impact
+    },
+    midPageCta {
+      title,
+      description,
+      primaryCta { text, link }
+    },
+    pocOffer {
+      title,
+      description
+    }
+  }`
+    return safeFetch<any>(query, {}, null)
+}
+
+export async function getAIImplementationPage(): Promise<any> {
+    const query = `*[_type == "aiImplementationPage"][0] {
+    seo,
+    hero {
+      badge,
+      title,
+      titleHighlight,
+      description,
+      "image": image.asset->url,
+      primaryCta { text, link },
+      secondaryCta { text, link }
+    },
+    tags,
+    pitfallsHeadline,
+    pitfalls[] { title, description },
+    layersHeadline,
+    layers[] { layer, title, outcome, description },
+    useCasesHeadline,
+    useCases[] { industry, title, description },
+    roadmapHeadline,
+    roadmap[] { step, title, description },
+    modelsHeadline,
+    models[] { model, title, description },
+    faqs[] { question, answer },
+    finalCta {
+      title,
+      description,
+      primaryCta { text, link }
+    }
+  }`
+    return safeFetch<any>(query, {}, null)
+}
+
+export async function getSustainabilityPage(): Promise<any> {
+    const query = `*[_type == "sustainabilityPage"][0] {
+    seo,
+    hero {
+      badge,
+      title,
+      titleHighlight,
+      description,
+      "image": image.asset->url,
+      primaryCta { text, link },
+      secondaryCta { text, link }
+    },
+    tags,
+    pitfallsHeadline,
+    pitfalls[] { title, description },
+    layersHeadline,
+    layers[] { title, description, tasks },
+    roadmapHeadline,
+    roadmap[] { step, title, description },
+    faqs[] { question, answer },
+    finalCta {
+      title,
+      description,
+      primaryCta { text, link }
+    }
+  }`
+    return safeFetch<any>(query, {}, null)
+}
+
+export async function getERPTransformationPage(): Promise<any> {
+    const query = `*[_type == "erpTransformationPage"][0] {
+    seo,
+    hero {
+      badge,
+      title,
+      titleHighlight,
+      description,
+      "image": image.asset->url,
+      primaryCta { text, link },
+      secondaryCta { text, link }
+    },
+    tags,
+    pitfallsHeadline,
+    pitfalls[] { title, description },
+    layersHeadline,
+    layers[] { title, description, tasks },
+    roadmapHeadline,
+    roadmap[] { step, title, description },
+    faqs[] { question, answer },
+    finalCta {
+      title,
+      description,
+      primaryCta { text, link }
+    }
+  }`
+    return safeFetch<any>(query, {}, null)
+}
+
+export async function getDataAnalyticsPage(): Promise<any> {
+    const query = `*[_type == "dataAnalyticsPage"][0] {
+    seo,
+    hero {
+      badge,
+      title,
+      titleHighlight,
+      description,
+      "image": image.asset->url,
+      primaryCta { text, link },
+      secondaryCta { text, link }
+    },
+    tags,
+    layersHeadline,
+    layers[] { title, description, tasks },
+    roadmapHeadline,
+    roadmap[] { step, title, description },
+    faqs[] { question, answer },
+    finalCta {
+      title,
+      description,
+      primaryCta { text, link }
+    }
+  }`
+    return safeFetch<any>(query, {}, null)
+}
+
+export async function getManagedDeliveryPage(): Promise<any> {
+    const query = `*[_type == "managedDeliveryPage"][0] {
+    seo,
+    hero {
+      badge,
+      title,
+      titleHighlight,
+      description,
+      "image": image.asset->url,
+      primaryCta { text, link },
+      secondaryCta { text, link }
+    },
+    pitfallsHeadline,
+    pitfalls[] { title, description },
+    layersHeadline,
+    layers[] { title, description, tasks },
+    modelsHeadline,
+    models[] { title, description, tasks },
+    roadmapHeadline,
+    roadmap[] { step, title, description },
+    faqs[] { question, answer },
+    finalCta {
+      title,
+      description,
+      primaryCta { text, link }
+    }
+  }`
+    return safeFetch<any>(query, {}, null)
 }
 
 // ==================== SETTINGS ====================

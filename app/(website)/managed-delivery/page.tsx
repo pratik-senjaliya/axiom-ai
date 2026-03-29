@@ -4,14 +4,15 @@ import { HorizontalFeature, HorizontalFeatureItem } from "@/components/services/
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { client } from "@/lib/sanity/client";
+import { getManagedDeliveryPage } from "@/lib/sanity/queries";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
+import { ObstacleSection } from "@/components/services/ObstacleSection";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await client.fetch(`*[_type == "managedDeliveryPage"][0]{ seo }`);
+  const data = await getManagedDeliveryPage();
   if (!data?.seo) return {
     title: "Managed Delivery | AxiomAI",
     description: "Flexible, high-performance engineering teams that scale with your enterprise ambitions.",
@@ -23,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ManagedDeliveryPage() {
-  const data = await client.fetch(`*[_type == "managedDeliveryPage"][0]`);
+  const data = await getManagedDeliveryPage();
   if (!data) notFound();
 
   const hardcodedIcons = [
@@ -49,15 +50,21 @@ export default async function ManagedDeliveryPage() {
     )
   ];
 
-  const deliveryServices: HorizontalFeatureItem[] = (data?.serviceAreas || []).map((service: any, index: number) => ({
-    title: service.name,
-    description: service.focus,
-    outcomeTitle: service.sections?.[0]?.title || "",
-    outcomeDescription: service.sections?.[0]?.tasks?.[0] || "",
+  const deliveryServices: HorizontalFeatureItem[] = (data?.layers || []).map((layer: any, index: number) => ({
+    title: layer.title,
+    description: layer.description,
+    outcomeTitle: "Key Advantage",
+    outcomeDescription: layer.tasks?.[0] || "",
     icon: hardcodedIcons[index % hardcodedIcons.length]
   }));
 
-  const whyChooseUsItems: FeatureItem[] = (data?.whyChooseUs || []).map((item: any) => ({
+  const roadmapSteps: FeatureItem[] = (data?.roadmap || []).map((step: any, index: number) => ({
+    stepNumber: index + 1,
+    title: step.title,
+    description: step.description,
+  }));
+
+  const pitfallItems = (data?.pitfalls || []).map((item: any) => ({
     title: item.title,
     description: item.description,
   }));
@@ -71,14 +78,19 @@ export default async function ManagedDeliveryPage() {
     <div className="pt-0 pb-0">
       <ServiceHero 
         backLink={{ href: "/services", label: "Back to Services" }}
-        pills={["Staff Augmentation", "Managed Teams", "Offshore Delivery", "Project Execution"]}
-        title={data?.introTitle?.replace("Delivery", "").trim() || data?.title?.replace("Delivery", "").trim()}
-        gradientTitlePart="Delivery"
-        description={data?.description || data?.hero?.subHeadline}
-        primaryButtonText={data?.heroCTA?.text}
-        primaryButtonLink={data?.heroCTA?.link}
-        secondaryButtonText={data?.secondaryCTA?.text}
-        secondaryButtonLink={data?.secondaryCTA?.link}
+        badgeText={data?.hero?.badge}
+        title={data?.hero?.title}
+        gradientTitlePart={data?.hero?.titleHighlight}
+        description={data?.hero?.description}
+        primaryButtonText={data?.hero?.primaryCta?.text}
+        primaryButtonLink={data?.hero?.primaryCta?.link}
+        secondaryButtonText={data?.hero?.secondaryCta?.text}
+        secondaryButtonLink={data?.hero?.secondaryCta?.link}
+      />
+
+      <ObstacleSection 
+        title={data?.pitfallsHeadline}
+        items={pitfallItems}
       />
 
       {deliveryServices.length > 0 && (
@@ -88,29 +100,43 @@ export default async function ManagedDeliveryPage() {
         />
       )}
 
-      {whyChooseUsItems.length > 0 && (
+      {data?.models && data.models.length > 0 && (
         <FeatureGrid 
-          title={data?.whyChooseSectionTitle}
+          title={data?.modelsHeadline}
           columns={3}
-          items={whyChooseUsItems}
+          items={data.models.map((m: any) => ({
+            title: m.title,
+            description: m.description,
+            outcomeTitle: "Key Outcome",
+            outcomeDescription: m.tasks?.[0] || ""
+          }))}
           bgWhite={false}
           small={true}
+        />
+      )}
+
+      {roadmapSteps.length > 0 && (
+        <FeatureGrid 
+          title={data?.roadmapHeadline}
+          items={roadmapSteps}
+          isRoadmap={true}
+          bgWhite={true}
         />
       )}
 
       {faqs.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title={data?.faqSectionTitle} />
+            <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>
         </section>
       )}
 
       <DarkCTA 
-        title={data?.finalCTA?.title}
-        description={data?.finalCTA?.description}
-        buttonText={data?.finalCTA?.cta?.text}
-        buttonHref={data?.finalCTA?.cta?.link}
+        title={data?.finalCta?.title}
+        description={data?.finalCta?.description}
+        buttonText={data?.finalCta?.primaryCta?.text}
+        buttonHref={data?.finalCta?.primaryCta?.link}
         useWhiteButton={true}
       />
     </div>

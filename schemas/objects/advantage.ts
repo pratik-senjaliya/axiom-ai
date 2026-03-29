@@ -1,16 +1,10 @@
 import { defineType, defineField } from 'sanity'
 
 export default defineType({
-    name: 'processStep',
-    title: 'Process Step',
+    name: 'advantage',
+    title: 'Advantage',
     type: 'object',
     fields: [
-        defineField({
-            name: 'step',
-            title: 'Step Number',
-            type: 'string',
-            description: 'Example: 01, Step 1, Phase 1',
-        }),
         defineField({
             name: 'title',
             title: 'Title',
@@ -23,10 +17,10 @@ export default defineType({
             rows: 3,
         }),
         defineField({
-          name: 'icon',
-          title: 'Icon Name',
-          type: 'string',
-          description: 'Lucide icon name (optional)',
+            name: 'icon',
+            title: 'Icon Name',
+            type: 'string',
+            description: 'Lucide icon name (e.g. Brain, BarChart, Settings)',
         }),
     ],
 })
