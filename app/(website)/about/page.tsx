@@ -9,17 +9,20 @@ import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getAboutPage();
+  const defaultTitle = "About Axiom AI - Driving Innovation with AI Solutions";
+  const defaultDesc = "Learn about Axiom AI, our mission, expertise, and commitment to delivering AI-driven solutions that transform businesses and accelerate growth.";
+
   if (!data?.seo) return {
-    title: "About Us | AxiomAI",
-    description: "Who we are and our mission of engineering business success.",
+    title: defaultTitle,
+    description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle,
-    description: data.seo.metaDescription,
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
     keywords: data.seo.metaKeywords,
     openGraph: {
-      title: data.seo.metaTitle,
-      description: data.seo.metaDescription,
+      title: data.seo.metaTitle || defaultTitle,
+      description: data.seo.metaDescription || defaultDesc,
       images: data.seo.openGraphImage ? [{ url: data.seo.openGraphImage }] : [],
     },
   };

@@ -24,18 +24,21 @@ async function getTermsOfUsage() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getTermsOfUsage();
+  const defaultTitle = "Terms of Usage - Website Policies & Conditions | Axiom AI";
+  const defaultDesc = "Review Axiom AI’s terms of usage to understand website policies, user responsibilities, and conditions governing the use of our services.";
+
   if (page?.seo) {
     return genMeta({
-      title: page.seo.metaTitle || page.title,
-      description: page.seo.metaDescription,
+      title: page.seo.metaTitle || defaultTitle,
+      description: page.seo.metaDescription || defaultDesc,
       keywords: page.seo.metaKeywords,
       ogImage: page.seo.openGraphImage,
       slug: "/terms-of-usage",
     });
   }
   return genMeta({
-    title: "Terms of Usage",
-    description: "Our terms of usage outline the rules for using our platform.",
+    title: defaultTitle,
+    description: defaultDesc,
     slug: "/terms-of-usage",
   });
 }

@@ -14,13 +14,16 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSustainabilityPage();
+  const defaultTitle = "AI Sustainability Solutions | Carbon Tracking & ESG Automation";
+  const defaultDesc = "Drive impact with sustainability solutions. Enable carbon tracking, automate ESG reporting, and optimize performance with data-driven insights.";
+  
   if (!data?.seo) return {
-    title: "AI for Sustainable Operations | AxiomAI",
-    description: "Use AI and enterprise data to improve carbon visibility, reporting accuracy, and operational efficiency.",
+    title: defaultTitle,
+    description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle || "AI for Sustainable Operations | AxiomAI",
-    description: data.seo.metaDescription || "Use AI and enterprise data to improve carbon visibility, reporting accuracy, and operational efficiency.",
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
   };
 }
 

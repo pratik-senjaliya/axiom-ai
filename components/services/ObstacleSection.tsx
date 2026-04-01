@@ -8,13 +8,13 @@ interface ObstacleItemProps {
 }
 
 const ObstacleItem: React.FC<ObstacleItemProps> = ({ title, description }) => (
-  <div className="p-8 rounded-[2.5rem] hover:shadow-md transition-all group animate-on-scroll" data-anim="fade-up" style={{ background: 'rgba(26,46,71,0.7)', border: '1px solid rgba(239,68,68,0.2)', backdropFilter: 'blur(10px)' }}>
-    <div className="w-11 h-11 rounded-full flex items-center justify-center mb-7 group-hover:scale-110 transition-all duration-300" style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171' }}>
+  <div className="p-8 rounded-[2.5rem] transition-all group animate-on-scroll duration-300 hover:[border-color:rgba(0,229,255,0.35)] hover:[box-shadow:0_0_25px_rgba(0,229,255,0.1)] hover:-translate-y-1" data-anim="fade-up" style={{ background: 'rgba(26,46,71,0.7)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
+    <div className="w-11 h-11 rounded-full flex items-center justify-center mb-7 group-hover:scale-110 transition-all duration-300" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF' }}>
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
       </svg>
     </div>
-    <h3 className="text-xl font-bold text-white mb-4 tracking-tight group-hover:text-[#f87171] transition-colors">{title}</h3>
+    <h3 className="text-xl font-bold text-white mb-4 tracking-tight group-hover:text-[#00E5FF] transition-colors">{title}</h3>
     <div className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
       <PortableText value={description} />
     </div>

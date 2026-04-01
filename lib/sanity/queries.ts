@@ -280,7 +280,10 @@ export async function getHomePage(): Promise<any> {
       author,
       role,
       company
-    }
+    },
+    affiliationHeadline,
+    affiliationTitle,
+    affiliationBody
   }`
 
     return safeFetch<any>(query, {}, null)

@@ -15,13 +15,16 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getManagedDeliveryPage();
+  const defaultTitle = "Managed Delivery Services for Efficient Project Execution";
+  const defaultDesc = "Ensure seamless project execution with managed delivery services. Optimize workflows, reduce risks, and achieve faster results with expert-driven solutions.";
+  
   if (!data?.seo) return {
-    title: "Managed Delivery | AxiomAI",
-    description: "Flexible, high-performance engineering teams that scale with your enterprise ambitions.",
+    title: defaultTitle,
+    description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle || "Managed Delivery | AxiomAI",
-    description: data.seo.metaDescription || "Flexible, high-performance engineering teams that scale with your enterprise ambitions.",
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
   };
 }
 

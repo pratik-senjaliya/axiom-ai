@@ -15,13 +15,16 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getERPTransformationPage();
+  const defaultTitle = "ERP Transformation Services for Scalable Business Systems";
+  const defaultDesc = "Modernize legacy systems with ERP transformation services. Improve efficiency, integrate processes & scale operations with advanced digital solutions.";
+  
   if (!data?.seo) return {
-    title: "ERP Transformation | AxiomAI",
-    description: "Microsoft Dynamics 365 implementations designed for business value, not just go-live.",
+    title: defaultTitle,
+    description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle || "ERP Transformation | AxiomAI",
-    description: data.seo.metaDescription || "Microsoft Dynamics 365 implementations designed for business value, not just go-live.",
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
   };
 }
 

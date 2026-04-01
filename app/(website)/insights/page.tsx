@@ -9,13 +9,16 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getBlogPage();
+  const defaultTitle = "AI Insights, Trends & Digital Transformation Blogs | Axiom AI";
+  const defaultDesc = "Stay updated with AI trends, industry insights, and digital transformation strategies to drive innovation and smarter decision-making with Axiom AI.";
+  
   if (!data?.seo) return {
-    title: "Insights | AxiomAI",
-    description: "Expert perspectives on enterprise technology and digital transformation.",
+    title: defaultTitle,
+    description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle || "Insights | AxiomAI",
-    description: data.seo.metaDescription || "Expert perspectives on enterprise technology and digital transformation.",
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
   };
 }
 

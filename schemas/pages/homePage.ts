@@ -11,6 +11,7 @@ export default defineType({
         { name: 'roadmap', title: 'Phases to Production' },
         { name: 'personas', title: 'Target Audience' },
         { name: 'testimonials', title: 'Testimonials' },
+        { name: 'affiliation', title: 'Corporate Affiliation' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -125,6 +126,27 @@ export default defineType({
             type: 'array',
             of: [{ type: 'testimonial' }],
             group: 'testimonials',
+        }),
+        // Section 8: Corporate Affiliation
+        defineField({
+            name: 'affiliationHeadline',
+            title: 'Affiliation Headline',
+            type: 'string',
+            initialValue: 'Backed By',
+            group: 'affiliation',
+        }),
+        defineField({
+            name: 'affiliationTitle',
+            title: 'Affiliation Name',
+            type: 'string',
+            initialValue: 'Lashan Digital',
+            group: 'affiliation',
+        }),
+        defineField({
+            name: 'affiliationBody',
+            title: 'Affiliation Description',
+            type: 'simpleBlockContent',
+            group: 'affiliation',
         }),
 
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),

@@ -24,18 +24,21 @@ async function getPrivacyPolicy() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPrivacyPolicy();
+  const defaultTitle = "Privacy Policy - Data Protection & Security | Axiom AI";
+  const defaultDesc = "Read Axiom AI’s privacy policy to understand how we collect, use, and protect your data while ensuring transparency and security.";
+
   if (page?.seo) {
     return genMeta({
-      title: page.seo.metaTitle || page.title,
-      description: page.seo.metaDescription,
+      title: page.seo.metaTitle || defaultTitle,
+      description: page.seo.metaDescription || defaultDesc,
       keywords: page.seo.metaKeywords,
       ogImage: page.seo.openGraphImage,
       slug: "/privacy-policy",
     });
   }
   return genMeta({
-    title: "Privacy Policy",
-    description: "Our privacy policy outlines how we collect, use, and protect your personal information.",
+    title: defaultTitle,
+    description: defaultDesc,
     slug: "/privacy-policy",
   });
 }

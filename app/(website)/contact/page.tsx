@@ -8,11 +8,13 @@ export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const sanityData = await getContactPage().catch(() => null);
+  const defaultTitle = "Contact Us for AI & Digital Solutions | Axiom AI";
+  const defaultDesc = "Get in touch with Axiom AI for expert AI, ERP, and data solutions. Let’s discuss how we can transform your business with tailored strategies.";
 
   if (sanityData?.seo) {
     return genMeta({
-      title: sanityData.seo.metaTitle || "Contact Us",
-      description: sanityData.seo.metaDescription,
+      title: sanityData.seo.metaTitle || defaultTitle,
+      description: sanityData.seo.metaDescription || defaultDesc,
       keywords: sanityData.seo.metaKeywords,
       ogImage: sanityData.seo.openGraphImage,
       slug: "/contact"
@@ -20,9 +22,8 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return genMeta({
-    title: "Contact Us",
-    description:
-      "Get in touch with our team. We're here to help you solve your business challenges.",
+    title: defaultTitle,
+    description: defaultDesc,
     keywords: ["contact", "support", "help", "message"],
     slug: "/contact"
   });

@@ -14,13 +14,16 @@ import { ObstacleSection } from "@/components/services/ObstacleSection";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getAIImplementationPage();
+  const defaultTitle = "AI Implementation Services for Business Automation & Growth";
+  const defaultDesc = "Transform operations with AI implementation services. Automate workflows, improve efficiency, & smarter decision-making with tailored AI solutions.";
+  
   if (!data?.seo) return {
-    title: "AI Implementation & Strategy | AxiomAI",
-    description: "From Generative AI to Agentic and Autonomous Systems — we design production-ready AI platforms.",
+    title: defaultTitle,
+    description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle || "AI Implementation & Strategy | AxiomAI",
-    description: data.seo.metaDescription || "From Generative AI to Agentic and Autonomous Systems — we design production-ready AI platforms.",
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
   };
 }
 

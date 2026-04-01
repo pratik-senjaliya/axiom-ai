@@ -59,16 +59,16 @@ export function TestimonialCarousel({
           </h2>
         </div>
 
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative w-full px-4 md:px-12">
           {/* Carousel */}
-          <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
+          <div className="overflow-hidden cursor-grab active:cursor-grabbing -my-24 py-24" ref={emblaRef}>
             <div className="flex">
               {testimonials.map((testimonial, index) => (
                 <div
                   key={index}
-                  className="flex-[0_0_100%] min-w-0 px-4"
+                  className="flex-[0_0_100%] min-w-0 px-4 flex justify-center"
                 >
-                  <div className="rounded-[2.5rem] p-10 md:p-16 flex flex-col items-center text-center relative" style={{ background: 'rgba(26,46,71,0.7)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(16px)', boxShadow: '0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,229,255,0.08) inset' }}>
+                  <div className="w-full max-w-5xl rounded-[2.5rem] p-10 md:p-16 flex flex-col items-center text-center relative" style={{ background: 'rgba(26,46,71,0.7)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(16px)', boxShadow: '0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,229,255,0.08) inset' }}>
                     {/* Big quote icon */}
                     <div className="absolute top-10 left-10 pointer-events-none" style={{ color: 'rgba(0,229,255,0.07)' }}>
                       <Quote size={90} fill="currentColor" />

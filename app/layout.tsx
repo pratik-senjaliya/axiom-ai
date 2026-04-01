@@ -17,10 +17,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: {
-    default: "AxiomAI | Professional AI, ERP & Data Services",
-    template: "%s | AxiomAI",
-  },
+  title: "AxiomAI | Professional AI, ERP & Data Services",
   description:
     "Strategic B2B partnerships and professional solutions for your business. We deliver expert guidance, global expertise, and innovative strategies for growth.",
   keywords: ["business", "consulting", "professional services", "solutions", "strategy", "growth", "B2B"],

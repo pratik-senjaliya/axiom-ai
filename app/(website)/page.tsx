@@ -10,13 +10,16 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getHomePage();
+  const defaultTitle = "AI & Digital Transformation Solutions for Businesses | Axiom AI";
+  const defaultDesc = "Drive growth with Axiom AI digital transformation solutions, including ERP transformation, managed delivery, and sustainable strategies to improve efficiency and performance.";
+  
   if (!data?.seo) return {
-    title: "AxiomAI | Enterprise AI, ERP & Data Advisory",
-    description: "Building the future of intelligent enterprise. Strategic guidance for digital transformation.",
+    title: defaultTitle,
+    description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle || "AxiomAI | Enterprise AI, ERP & Data Advisory",
-    description: data.seo.metaDescription || "Building the future of intelligent enterprise. Strategic guidance for digital transformation.",
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
   };
 }
 
@@ -129,13 +132,13 @@ export default async function HomePage() {
             {data?.pitfalls?.map((card: any, index: number) => {
               const staticInfo = featureStats[index % featureStats.length];
               return (
-                <div key={index} className="rounded-3xl p-8 flex flex-col justify-between h-full" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(239,68,68,0.2)', backdropFilter: 'blur(10px)' }}>
+                <div key={index} className="rounded-3xl p-8 flex flex-col justify-between h-full group transition-all duration-300 hover:[border-color:rgba(0,229,255,0.35)] hover:[box-shadow:0_0_25px_rgba(0,229,255,0.1)]" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
                   <div className="flex justify-between items-start mb-12">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(239,68,68,0.12)', color: '#f87171' }}>
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF' }}>
                       {staticInfo.icon}
                     </div>
                     <div className="text-right">
-                      <div className="text-3xl font-bold mb-1" style={{ color: '#f87171' }}>{card.stat}</div>
+                      <div className="text-3xl font-bold mb-1" style={{ color: '#00E5FF' }}>{card.stat}</div>
                       <div className="text-xs font-medium uppercase tracking-wide" style={{ color: '#8FA3BF' }}>Business Risk</div>
                     </div>
                   </div>
@@ -255,7 +258,29 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 5.5 Testimonials */}
+      {/* 5.5 Corporate Affiliation */}
+      {data?.affiliationTitle && data?.affiliationBody && (
+        <section className="py-24 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
+          <div className="absolute top-0 w-full h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent)' }} />
+          <div className="container-custom max-w-5xl mx-auto text-center relative z-10 px-4">
+            <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border" style={{ background: 'rgba(0,229,255,0.05)', borderColor: 'rgba(0,229,255,0.2)' }}>
+              <SparkleIcon />
+              <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: '#00E5FF' }}>
+                {data?.affiliationHeadline || "Backed By"}
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 tracking-tight">
+              {data.affiliationTitle}
+            </h2>
+            <div className="text-lg md:text-xl leading-relaxed max-w-4xl mx-auto font-light" style={{ color: '#8FA3BF' }}>
+              <PortableText value={data.affiliationBody} />
+            </div>
+          </div>
+          <div className="absolute bottom-0 w-full h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.1), transparent)' }} />
+        </section>
+      )}
+
+      {/* 5.75 Testimonials */}
       <TestimonialCarousel
         testimonials={data?.testimonials}
         subtitle="Success"

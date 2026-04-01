@@ -23,15 +23,18 @@ const SparkleIcon = () => (
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getServicesPage();
+  const defaultTitle = "Our AI, ERP & Business Transformation Services | Axiom AI";
+  const defaultDesc = "Explore Axiom AI’s services in AI implementation, ERP transformation, managed delivery, and sustainability to optimize operations and scale efficiently.";
+
   if (!data?.seo) {
     return {
-      title: "Enterprise Solutions & Services | AxiomAI",
-      description: "Comprehensive GenAI, Data, and ERP transformation capabilities.",
+      title: defaultTitle,
+      description: defaultDesc,
     };
   }
   return {
-    title: data.seo.metaTitle || "Enterprise Solutions & Services | AxiomAI",
-    description: data.seo.metaDescription || "Comprehensive GenAI, Data, and ERP transformation capabilities.",
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
   };
 }
 
