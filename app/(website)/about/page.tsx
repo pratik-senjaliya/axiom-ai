@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
 import { PortableText } from "@/components/ui/PortableText";
 import { getAboutPage } from "@/lib/sanity/queries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { urlForImage } from "@/lib/sanity/image";
-import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getAboutPage();
@@ -14,170 +13,181 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "About Us | AxiomAI",
     description: "Who we are and our mission of engineering business success.",
   };
+
   return {
-    title: data.seo.metaTitle || "About Us | AxiomAI",
-    description: data.seo.metaDescription || "Who we are and our mission of engineering business success.",
+    title: data.seo.metaTitle,
+    description: data.seo.metaDescription,
+    keywords: data.seo.metaKeywords,
+    openGraph: {
+      title: data.seo.metaTitle,
+      description: data.seo.metaDescription,
+      images: data.seo.openGraphImage ? [{ url: data.seo.openGraphImage }] : [],
+    },
   };
 }
-
-const SparkleIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" className="text-primary-500">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/>
-  </svg>
-);
 
 export default async function AboutPage() {
   const data = await getAboutPage();
   if (!data) notFound();
 
+  const capabilitiesItems: FeatureItem[] = (data?.capabilities || []).map((cap: any) => ({
+    title: cap.title,
+    description: cap.description,
+  }));
+
+  const whyUsItems: FeatureItem[] = (data?.whyUsPoints || []).map((v: any) => ({
+    title: v.title,
+    description: v.description,
+  }));
+
   return (
     <div className="pt-24 pb-0">
       {/* Hero Section */}
-      <section className="py-24 relative overflow-hidden flex flex-col items-center text-center">
-        <div className="bg-grid opacity-20"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-orange-50/40 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply"></div>
-        <div className="container-custom relative z-10 px-4">
-          <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-200 bg-white/50 backdrop-blur-sm text-sm font-medium text-neutral-800 shadow-sm">
-            <SparkleIcon />
-            <span>{data?.hero?.badge || "About Us"}</span>
+      <section className="relative pt-20 pb-32 overflow-hidden bg-[#FAF8F5]">
+        <div className="absolute inset-0 z-0 opacity-10" 
+             style={{ backgroundImage: 'radial-gradient(circle at 100% 0%, #FF821C 0%, transparent 40%), radial-gradient(circle at 0% 100%, #AD58D9 0%, transparent 40%)'}}></div>
+        <div className="container-custom px-4 relative z-10 text-center flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#F2ECE4] text-sm font-semibold text-[#FF821C] mb-8 shadow-sm">
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span className="tracking-wide uppercase text-xs">{data?.hero?.badge || "About Us"}</span>
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-[#26201D] max-w-4xl mx-auto">
-            {(() => {
-              const rawTitle = data?.hero?.title || "Engineering Success through";
-              const highlight = data?.hero?.titleHighlight || "Objective Intelligence";
-              
-              if (rawTitle.toLowerCase().includes(highlight.toLowerCase())) {
-                const parts = rawTitle.split(new RegExp(`(${highlight})`, "gi"));
-                return (
-                  <>
-                    {parts.map((part: string, i: number) => 
-                      part.toLowerCase() === highlight.toLowerCase() ? (
-                        <span key={i} className="gradient-text">{part}</span>
-                      ) : part
-                    )}
-                  </>
-                );
-              }
-              return (
-                <>
-                  {rawTitle} <span className="gradient-text">{highlight}</span>
-                </>
-              );
-            })()}
+          
+          <h1 className="type-hero-title mb-8 max-w-5xl mx-auto">
+            {data?.hero?.title || "Where Enterprise Systems Become"} <br className="hidden md:block"/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF821C] to-[#AD58D9]">
+              {data?.hero?.titleHighlight || "Intelligent"}
+            </span>
           </h1>
-          <div className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto leading-relaxed">
+          
+          <div className="type-body-large text-neutral-500 max-w-3xl mx-auto">
             <PortableText value={data?.hero?.description} />
           </div>
         </div>
       </section>
 
-      {/* Story Section */}
-      <section className="py-24 relative z-10">
-        <div className="container-custom px-4">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            <div>
-              <h2 className="type-section-title text-[#26201D] mb-8">{data?.whyTitle || "Our Story"}</h2>
-              <div className="space-y-6 text-lg text-neutral-500 leading-relaxed">
-                <PortableText value={data?.whyBody} />
-              </div>
-            </div>
-            {data?.whyImage ? (
-                <div className="relative aspect-square rounded-[2rem] overflow-hidden shadow-xl">
-                    <Image 
-                        src={urlForImage(data.whyImage).url()} 
-                        alt={data.whyImageAlt || "Our Story"} 
-                        fill 
-                        className="object-cover"
-                    />
+      {/* Who We Are */}
+      {data?.whoWeAreHeadline && (
+        <section className="py-24 relative z-10 bg-white">
+          <div className="container-custom px-4">
+            <div className="grid lg:grid-cols-12 gap-16 items-start">
+                <div className="lg:col-span-5 relative">
+                  <h2 className="type-section-title text-[#26201D] mb-8 sticky top-32">{data.whoWeAreHeadline}</h2>
                 </div>
-            ) : (
-                <div className="bg-white rounded-[2rem] p-10 md:p-14 border border-neutral-100 text-center flex flex-col items-center justify-center min-h-[400px] shadow-sm">
-                    <div className="bg-[#E6F3FF] text-[#0066CC] w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-sm">
-                        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <h3 className="text-2xl font-bold text-[#26201D] mb-4">Independent & Objective</h3>
-                    <p className="text-neutral-500 leading-relaxed">
-                        We take no commission from software vendors or systems integrators. Our only loyalty is to our clients' success.
+                <div className="lg:col-span-7">
+                  <div className="prose prose-lg max-w-none text-neutral-500 [&>p]:mb-6 [&>ul]:mb-6 [&>ul>li]:mb-4 [&>ul>li]:flex [&>ul>li]:items-center [&>ul]:list-none [&>ul]:pl-0">
+                    <PortableText value={data.whoWeAreBody} />
+                  </div>
+                </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Philosophy Section */}
+      {data?.philosophyHeadline && (
+        <section className="py-24 relative z-10 bg-[#FAF8F5]">
+          <div className="container-custom px-4 max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+                <h2 className="type-section-title text-[#26201D] mb-6">{data.philosophyHeadline}</h2>
+                <div className="prose prose-lg max-w-none text-neutral-500 mx-auto [&>ul]:list-none [&>ul]:pl-0 [&>ul>li]:bg-white [&>ul>li]:p-6 [&>ul>li]:rounded-2xl [&>ul>li]:border [&>ul>li]:border-neutral-100 [&>ul>li]:mb-4 [&>ul>li]:shadow-sm">
+                  <PortableText value={data.philosophyBody} />
+                </div>
+            </div>
+
+            {data.philosophyPrinciple && (
+                <div className="bg-gradient-to-r from-[#FF821C] to-[#AD58D9] rounded-3xl p-10 md:p-14 text-center text-white shadow-lg transform -rotate-1 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-white/10 opacity-50 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSI+PC9yZWN0Pgo8L3N2Zz4=')]"></div>
+                    <p className="text-2xl md:text-3xl font-bold tracking-tight relative z-10 leading-snug">
+                        "{data.philosophyPrinciple}"
                     </p>
                 </div>
             )}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Values Grid */}
-      <section className="py-24 relative z-10 bg-white">
-        <div className="container-custom px-4">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="type-section-title tracking-tight text-[#26201D] mb-6">{data?.valuesTitle || "Our Values"}</h2>
+      {/* What We Do */}
+      {capabilitiesItems.length > 0 && (
+        <section className="py-24 relative z-10 bg-white">
+          <div className="container-custom px-4 text-center">
+            <h2 className="type-section-title text-[#26201D] mb-6">{data.whatWeDoHeadline}</h2>
+            {data.whatWeDoIntro && (
+                <div className="text-xl text-neutral-500 max-w-3xl mx-auto mb-16">
+                    <PortableText value={data.whatWeDoIntro} />
+                </div>
+            )}
+            <FeatureGrid 
+              title=""
+              items={capabilitiesItems}
+              columns={2}
+              bgWhite={true}
+            />
           </div>
+        </section>
+      )}
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {data?.values?.map((v: any, i: number) => (
-              <div key={i} className="card p-10 bg-white border border-neutral-100 rounded-[2rem] flex flex-col hover:border-primary-200 transition-all shadow-sm hover:shadow-md">
-                <div className="w-12 h-12 bg-[#FFF2E5] text-[#FF821C] rounded-xl flex items-center justify-center mb-6 shadow-sm">
-                  {/* Defaulting to a check icon if icon is specified as name but we don't have dynamic icons here yet */}
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+      {/* Why Us */}
+      {whyUsItems.length > 0 && (
+        <section className="py-24 relative z-10 bg-[#FAF8F5]">
+          <div className="container-custom px-4">
+            <FeatureGrid 
+              title={data.whyUsHeadline}
+              items={whyUsItems}
+              columns={2}
+              bgWhite={true}
+            />
+            
+            {data.visionStatement && (
+                <div className="mt-20 max-w-4xl mx-auto text-center border-t border-neutral-200 pt-16">
+                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#F2ECE4] text-sm font-semibold text-[#FF821C] mb-8 shadow-sm">
+                     <span className="tracking-wide uppercase text-xs">Our Vision</span>
+                   </div>
+                   <div className="text-xl md:text-2xl text-[#26201D] font-medium leading-relaxed">
+                       <PortableText value={data.visionStatement} />
+                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-[#26201D] mb-4">{v.title}</h3>
-                <div className="text-neutral-500 leading-relaxed">
-                  <PortableText value={v.description} />
-                </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Final Multi-CTA Layer */}
+      {data?.ctaHeadline && (
+        <section className="py-24 relative overflow-hidden bg-[#26201D]">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none"></div>
+          <div className="container-custom px-4 relative z-10 text-center flex flex-col items-center">
+            
+            <h2 className="type-section-title text-white mb-10 max-w-3xl">
+              {data.ctaHeadline}
+            </h2>
+            
+            {data.ctaOptions && data.ctaOptions.length > 0 && (
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mb-12">
+                {data.ctaOptions.map((cta: any, index: number) => (
+                   <Link href={cta.link || '#'} key={index}>
+                     <button className={`px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 transition-all shadow-md ${
+                       index === 0 
+                       ? 'bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 border-none' 
+                       : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
+                     }`}>
+                       {cta.text}
+                     </button>
+                   </Link>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            )}
 
-      {/* Team Section Placeholder */}
-      <section className="py-24 relative z-10">
-        <div className="container-custom px-4">
-          <div className="max-w-3xl">
-            <h2 className="type-section-title text-[#26201D] mb-8">{data?.teamTitle || "Our Team"}</h2>
-            <div className="text-lg text-neutral-500 leading-relaxed mb-8">
-                <PortableText value={data?.teamBody} />
-            </div>
+            {data.ctaClosing && (
+                <p className="text-xl md:text-2xl text-neutral-400 font-medium max-w-3xl mx-auto">
+                    {data.ctaClosing}
+                </p>
+            )}
+            
           </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <TestimonialCarousel 
-        testimonials={data?.testimonials} 
-        subtitle="Our Impact"
-        title="What Our Partners Say"
-      />
-
-      {/* Bottom CTA Layer */}
-      <section className="py-24 relative overflow-hidden bg-[#26201D] mt-12">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none"></div>
-        <div className="container-custom relative z-10 text-center flex flex-col items-center">
-          <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-neutral-300">
-            <SparkleIcon />
-            <span>Connect</span>
-          </div>
-          <h2 className="type-section-title text-white mb-6">
-            {data?.finalCta?.title || "Ready to evolve?"}
-          </h2>
-          <div className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
-            <PortableText value={data?.finalCta?.description} />
-          </div>
-          {data?.finalCta?.primaryCta?.link && (
-            <Link href={data.finalCta.primaryCta.link} className="w-full sm:w-auto">
-                <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 transition-opacity shadow-md border-none">
-                {data.finalCta.primaryCta.text || "Get in touch"}
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-                </Button>
-            </Link>
-          )}
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }

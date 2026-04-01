@@ -6,10 +6,13 @@ export default defineType({
     type: 'document',
     groups: [
         { name: 'hero', title: 'Hero Section' },
-        { name: 'layers', title: 'Data Stack' },
-        { name: 'roadmap', title: 'The Roadmap' },
-        { name: 'faqs', title: 'FAQs' },
-        { name: 'testimonials', title: 'Testimonials' },
+        { name: 'problem', title: 'The Problem We Solve' },
+        { name: 'approach', title: 'Our Approach' },
+        { name: 'differentiators', title: 'What Makes Us Different' },
+        { name: 'useCases', title: 'Use Cases' },
+        { name: 'techEcosystem', title: 'Technology Ecosystem' },
+        { name: 'engagement', title: 'Engagement Model' },
+        { name: 'cta', title: 'Call to Action' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -20,84 +23,170 @@ export default defineType({
             type: 'hero',
             group: 'hero',
         }),
-        defineField({ 
-            name: "tags", 
-            title: "Hub Tags", 
-            type: "array", 
-            of: [{ type: "string" }], 
-            group: "hero" 
-        }),
 
-        // Section 2: Data Services
+        // Section 2: The Problem We Solve
         defineField({
-            name: 'layersHeadline',
-            title: 'Layers Section Headline',
+            name: 'problemHeadline',
+            title: 'Problem Headline',
             type: 'string',
-            initialValue: 'From Data Silos to Predictive Intelligence',
-            group: 'layers',
+            group: 'problem',
         }),
         defineField({
-            name: 'layers',
-            title: 'Service Layers',
+            name: 'problemIntro',
+            title: 'Problem Intro (Body Copy)',
+            type: 'simpleBlockContent',
+            group: 'problem',
+        }),
+        defineField({
+            name: 'problems',
+            title: 'Problem Points',
             type: 'array',
             of: [{
                 type: 'object',
                 fields: [
-                    { name: 'title', type: 'string', title: 'Layer Title' },
-                    { name: 'description', type: 'simpleBlockContent', title: 'Description' },
-                    { name: 'tasks', type: 'array', of: [{ type: 'string' }], title: 'Tasks / Business Impact' }
+                    { name: 'title', type: 'string', title: 'Title' },
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
                 ]
             }],
-            group: 'layers',
+            group: 'problem',
+        }),
+        defineField({
+            name: 'problemConclusion',
+            title: 'Problem Conclusion (The result?)',
+            type: 'simpleBlockContent',
+            group: 'problem',
         }),
 
-        // Section 3: Roadmap Methodology
+        // Section 3: Our Approach
         defineField({
-            name: 'roadmapHeadline',
-            title: 'Roadmap Headline',
+            name: 'approachHeadline',
+            title: 'Approach Headline',
             type: 'string',
-            initialValue: 'The "AxiomAI Advantage" Methodology',
-            group: 'roadmap',
+            group: 'approach',
         }),
         defineField({
-            name: 'roadmap',
-            title: 'Roadmap Steps',
+            name: 'approachBody',
+            title: 'Approach Body Copy',
+            type: 'simpleBlockContent',
+            group: 'approach',
+        }),
+        defineField({
+            name: 'approachCapabilities',
+            title: 'Core Capabilities',
+            type: 'array',
+            of: [{
+                type: 'object',
+                fields: [
+                    { name: 'title', type: 'string', title: 'Title' },
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
+                ]
+            }],
+            group: 'approach',
+        }),
+
+        // Section 4: What Makes Us Different
+        defineField({
+            name: 'differentiatorsHeadline',
+            title: 'Differentiators Headline',
+            type: 'string',
+            group: 'differentiators',
+        }),
+        defineField({
+            name: 'differentiators',
+            title: 'Differentiators',
+            type: 'array',
+            of: [{
+                type: 'object',
+                fields: [
+                    { name: 'title', type: 'string', title: 'Title' },
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
+                ]
+            }],
+            group: 'differentiators',
+        }),
+
+        // Section 5: Key Use Cases
+        defineField({
+            name: 'useCasesHeadline',
+            title: 'Use Cases Headline',
+            type: 'string',
+            group: 'useCases',
+        }),
+        defineField({
+            name: 'useCases',
+            title: 'Use Cases',
+            type: 'array',
+            of: [{
+                type: 'object',
+                fields: [
+                    { name: 'title', type: 'string', title: 'Title' },
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
+                ]
+            }],
+            group: 'useCases',
+        }),
+
+        // Section 6: Technology Ecosystem
+        defineField({
+            name: 'techHeadline',
+            title: 'Technology Headline',
+            type: 'string',
+            group: 'techEcosystem',
+        }),
+        defineField({
+            name: 'techBody',
+            title: 'Technology Body Copy',
+            type: 'simpleBlockContent',
+            group: 'techEcosystem',
+        }),
+        defineField({
+            name: 'technologies',
+            title: 'Technologies',
+            type: 'array',
+            of: [{
+                type: 'object',
+                fields: [
+                    { name: 'title', type: 'string', title: 'Category' },
+                    { name: 'technologiesList', type: 'string', title: 'Technologies (Comma separated)' }
+                ]
+            }],
+            group: 'techEcosystem',
+        }),
+
+        // Section 7: Engagement Model
+        defineField({
+            name: 'engagementHeadline',
+            title: 'Engagement Headline',
+            type: 'string',
+            group: 'engagement',
+        }),
+        defineField({
+            name: 'engagementSteps',
+            title: 'Engagement Steps',
             type: 'array',
             of: [{ type: 'processStep' }],
-            group: 'roadmap',
+            group: 'engagement',
         }),
 
-        // FAQ Section
+        // Section 8: Call to Action (Multi-button support)
         defineField({
-            name: 'faqs',
-            title: 'Frequently Asked Questions',
+            name: 'ctaHeadline',
+            title: 'CTA Headline',
+            type: 'string',
+            group: 'cta',
+        }),
+        defineField({
+            name: 'ctaOptions',
+            title: 'CTA Options',
             type: 'array',
-            of: [{ type: 'faq' }],
-            group: 'faqs',
+            of: [{ type: 'cta' }],
+            group: 'cta',
         }),
-
-        // Final CTA
         defineField({
-            name: 'finalCta',
-            title: 'Final CTA',
-            type: 'object',
-            group: 'faqs',
-            fields: [
-              { name: 'badgeText', type: 'string', title: 'Badge Text' },
-              { name: 'title', type: 'string', title: 'Title' },
-              { name: 'description', type: 'simpleBlockContent', title: 'Description' },
-              { name: 'buttonText', type: 'string', title: 'Button Text' },
-              { name: 'buttonLink', type: 'string', title: 'Button Link' },
-            ]
-        }),
-
-        // Testimonials Section
-        defineField({
-            name: 'testimonials',
-            title: 'Testimonials',
-            type: 'array',
-            of: [{ type: 'testimonial' }],
-            group: 'testimonials',
+            name: 'ctaClosing',
+            title: 'CTA Closing Line',
+            type: 'string',
+            group: 'cta',
         }),
 
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),

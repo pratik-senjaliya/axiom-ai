@@ -286,16 +286,59 @@ export async function getHomePage(): Promise<any> {
     return safeFetch<any>(query, {}, null)
 }
 
-// ==================== ABOUT PAGE ====================
+// ==================== DATA ANALYTICS PAGE ====================
 
-export async function getAboutPage(): Promise<any> {
-    const query = `*[_type == "aboutPage"][0] {
+export async function getDataAnalyticsPage(): Promise<any> {
+  const query = `*[_type == "dataAnalyticsPage"][0] {
     seo {
       metaTitle,
       metaDescription,
       metaKeywords,
-      "openGraphImage": openGraphImage.asset->url,
-      "openGraphImageAlt": openGraphImage.alt
+      "openGraphImage": openGraphImage.asset->url
+    },
+    hero {
+      badge,
+      title,
+      titleHighlight,
+      description,
+      "image": image.asset->url,
+      "imageAlt": image.alt,
+      primaryCta { text, link },
+      secondaryCta { text, link }
+    },
+    tags,
+    problemHeadline,
+    problemIntro,
+    problems[] { title, description },
+    problemConclusion,
+    approachHeadline,
+    approachBody,
+    approachCapabilities[] { title, description },
+    differentiatorsHeadline,
+    differentiators[] { title, description },
+    useCasesHeadline,
+    useCases[] { title, description },
+    techHeadline,
+    techBody,
+    technologies[] { title, technologiesList },
+    engagementHeadline,
+    engagementSteps[] { title, description },
+    ctaHeadline,
+    ctaOptions[] { text, link },
+    ctaClosing
+  }`
+    return safeFetch<any>(query, {}, null)
+}
+
+// ==================== ABOUT US PAGE ====================
+
+export async function getAboutPage(): Promise<any> {
+  const query = `*[_type == "aboutPage"][0] {
+    seo {
+      metaTitle,
+      metaDescription,
+      metaKeywords,
+      "openGraphImage": openGraphImage.asset->url
     },
     hero {
       badge,
@@ -305,29 +348,20 @@ export async function getAboutPage(): Promise<any> {
       "image": image.asset->url,
       "imageAlt": image.alt
     },
-    whyTitle,
-    whyBody,
-    whyImage,
-    "whyImageAlt": whyImage.alt,
-    valuesTitle,
-    values[] {
-      title,
-      description,
-      icon
-    },
-    teamTitle,
-    teamBody,
-    finalCta {
-      title,
-      description,
-      primaryCta { text, link }
-    },
-    testimonials[] {
-      quote,
-      author,
-      role,
-      company
-    }
+    whoWeAreHeadline,
+    whoWeAreBody,
+    philosophyHeadline,
+    philosophyBody,
+    philosophyPrinciple,
+    whatWeDoHeadline,
+    whatWeDoIntro,
+    capabilities[] { title, description },
+    whyUsHeadline,
+    whyUsPoints[] { title, description },
+    visionStatement,
+    ctaHeadline,
+    ctaOptions[] { text, link },
+    ctaClosing
   }`
     return safeFetch<any>(query, {}, null)
 }
@@ -547,40 +581,7 @@ export async function getERPTransformationPage(): Promise<any> {
     return safeFetch<any>(query, {}, null)
 }
 
-export async function getDataAnalyticsPage(): Promise<any> {
-    const query = `*[_type == "dataAnalyticsPage"][0] {
-    seo,
-    hero {
-      badge,
-      title,
-      titleHighlight,
-      description,
-      "image": image.asset->url,
-      primaryCta { text, link },
-      secondaryCta { text, link }
-    },
-    tags,
-    layersHeadline,
-    layers[] { title, description, tasks },
-    roadmapHeadline,
-    roadmap[] { step, title, description },
-    faqs[] { question, answer },
-    finalCta {
-      badgeText,
-      title,
-      description,
-      buttonText,
-      buttonLink
-    },
-    testimonials[] {
-      quote,
-      author,
-      role,
-      company
-    }
-  }`
-    return safeFetch<any>(query, {}, null)
-}
+
 
 export async function getManagedDeliveryPage(): Promise<any> {
     const query = `*[_type == "managedDeliveryPage"][0] {
