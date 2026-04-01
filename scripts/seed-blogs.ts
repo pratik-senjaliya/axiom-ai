@@ -1,231 +1,184 @@
-import { createClient } from "next-sanity";
+import { createClient } from 'next-sanity';
+import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
 
-require("dotenv").config({ path: ".env.local" });
-
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
-const token = process.env.NEXT_PUBLIC_SANITY_TOKEN || process.env.SANITY_API_TOKEN;
-
-if (!projectId || !dataset || !token) {
-  console.error(
-    "Missing Sanity env. Required: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, and SANITY_API_TOKEN (or NEXT_PUBLIC_SANITY_TOKEN)."
-  );
-  process.exit(1);
-}
+dotenv.config({ path: path.join(process.cwd(), '.env.local') });
 
 const client = createClient({
-  projectId,
-  dataset,
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2024-01-01",
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01',
   useCdn: false,
-  token,
+  token: process.env.NEXT_PUBLIC_SANITY_TOKEN || process.env.SANITY_API_TOKEN,
 });
 
-function textBlock(text: string, style: "normal" | "h2" = "normal") {
-  return {
-    _key: Math.random().toString(36).slice(2),
-    _type: "block",
-    style,
-    children: [
-      {
-        _key: Math.random().toString(36).slice(2),
-        _type: "span",
-        marks: [],
-        text,
-      },
-    ],
-  };
+function simpleBlock(text: string, style = 'normal') {
+  if (!text) return [];
+  return [{ _type: 'block', children: [{ _type: 'span', text: text, marks: [] }], markDefs: [], style: style }];
 }
 
-const realPosts = [
-  {
-    title:
-      "Agentic AI: How Autonomous Systems Are Replacing Traditional Automation in Modern Businesses",
-    slug: "agentic-ai-autonomous-systems-vs-traditional-automation",
-    excerpt:
-      "Agentic AI moves beyond rule-based automation by enabling systems to make context-aware decisions, adapt continuously, and execute complex workflows with minimal human dependency.",
-    category: "Agentic AI",
-    author: "Axiom AI Team",
-    authorRole: "AI Strategy",
-    readTime: "6 min read",
-    publishedAt: "2026-03-26",
-    content: [
-      textBlock(
-        "Most businesses are still stuck in rule-based automation. But automation that only follows predefined instructions is no longer enough."
-      ),
-      textBlock(
-        "The real shift is toward Agentic AI: systems that do not just execute tasks, but make decisions, adapt, and act independently."
-      ),
-      textBlock(
-        "This is the next evolution of AI automation, intelligent systems, and enterprise AI transformation."
-      ),
-      textBlock(
-        "Companies that fail to adopt autonomous AI systems risk falling behind competitors that operate faster, smarter, and with less human dependency."
-      ),
-      textBlock("What Makes Agentic AI Different", "h2"),
-      textBlock(
-        "Moves Beyond Rule-Based Automation: traditional automation follows scripts. Agentic AI makes context-aware decisions."
-      ),
-      textBlock(
-        "Operates Autonomously: AI agents can plan, execute, and optimize workflows without constant human input."
-      ),
-      textBlock(
-        "Learns and Adapts Continuously: systems improve performance based on real-time data and feedback loops."
-      ),
-      textBlock(
-        "Handles Complex Workflows: from operations to customer interactions, AI agents manage multi-step processes."
-      ),
-      textBlock(
-        "Drives Real-Time Decision Making: businesses shift from reactive to proactive operations."
-      ),
-      textBlock("Where Businesses Are Seeing Impact", "h2"),
-      textBlock("Customer support automation"),
-      textBlock("Revenue optimization systems"),
-      textBlock("Autonomous operations management"),
-      textBlock("AI-driven decision intelligence"),
-      textBlock("Workflow orchestration across departments"),
-      textBlock("The Adoption Framework", "h2"),
-      textBlock("Identify high-impact automation gaps"),
-      textBlock("Replace static workflows with AI agents"),
-      textBlock("Integrate real-time data pipelines"),
-      textBlock("Enable continuous learning systems"),
-      textBlock("Scale across business functions"),
-      textBlock("Why This Matters Now", "h2"),
-      textBlock(
-        "Agentic AI is not a future trend. It is already reshaping how modern businesses operate."
-      ),
-      textBlock(
-        "Companies adopting autonomous AI systems, AI agents, and intelligent automation platforms are seeing faster execution, reduced costs, and improved decision accuracy."
-      ),
-      textBlock("Call to Action", "h2"),
-      textBlock(
-        "If your business is still relying on traditional automation, now is the time to evolve."
-      ),
-      textBlock(
-        "Start by identifying one workflow that can be transformed into an autonomous system and scale from there."
-      ),
-    ],
-  },
-  {
-    title:
-      "Agentic AI in Finance: Building Autonomous Systems for Reporting, Compliance and Decision-Making",
-    slug: "agentic-ai-in-finance-autonomous-reporting-compliance",
-    excerpt:
-      "Finance teams can use Agentic AI to automate reporting, monitor compliance in real time, detect anomalies quickly, and improve forecasting accuracy.",
-    category: "AI in Finance",
-    author: "Axiom AI Team",
-    authorRole: "Finance Transformation",
-    readTime: "6 min read",
-    publishedAt: "2026-03-26",
-    content: [
-      textBlock(
-        "Finance teams are overwhelmed with manual processes, delayed reporting, and compliance complexity."
-      ),
-      textBlock(
-        "Traditional automation helps, but it still requires constant oversight."
-      ),
-      textBlock(
-        "Agentic AI introduces a new model: autonomous finance systems that operate with minimal human intervention."
-      ),
-      textBlock(
-        "This is redefining financial automation, real-time reporting, AI in finance, and intelligent decision-making systems."
-      ),
-      textBlock("What Autonomous Finance Looks Like", "h2"),
-      textBlock(
-        "Real-Time Financial Reporting: reports are generated continuously, not at the end of the cycle."
-      ),
-      textBlock(
-        "Automated Compliance Monitoring: AI systems track regulations and flag risks instantly."
-      ),
-      textBlock(
-        "Intelligent Decision Support: AI agents provide insights for forecasting and strategic planning."
-      ),
-      textBlock(
-        "Fraud Detection in Real Time: anomalies are identified and addressed immediately."
-      ),
-      textBlock(
-        "Self-Optimizing Financial Workflows: processes improve automatically based on historical data."
-      ),
-      textBlock("Key Benefits for Finance Teams", "h2"),
-      textBlock("Reduced manual workload"),
-      textBlock("Faster financial close cycles"),
-      textBlock("Improved data accuracy"),
-      textBlock("Stronger compliance and risk management"),
-      textBlock("Better forecasting and planning"),
-      textBlock("The Implementation Strategy", "h2"),
-      textBlock("Automate data ingestion from financial systems"),
-      textBlock("Deploy AI agents for reporting and compliance"),
-      textBlock("Integrate real-time analytics dashboards"),
-      textBlock("Implement governance and audit frameworks"),
-      textBlock("Scale across financial operations"),
-      textBlock("Why Finance Leaders Are Adopting Agentic AI", "h2"),
-      textBlock(
-        "The demand for real-time financial insights, automated compliance, and AI-driven finance transformation is growing rapidly."
-      ),
-      textBlock(
-        "Organizations that adopt early gain a strategic advantage through speed, accuracy, and efficiency."
-      ),
-      textBlock("Call to Action", "h2"),
-      textBlock(
-        "If your finance team is still relying on spreadsheets and delayed reporting, it is time to upgrade."
-      ),
-      textBlock(
-        "Start building autonomous financial systems that deliver insights instantly and scale with your business."
-      ),
-    ],
-  },
-] as const;
-
-async function seedBlogPageSingleton() {
-  await client.createOrReplace({
-    _id: "blogPageSingleton",
-    _type: "blogPage",
-    title: "Articles & Perspectives",
-    description:
-      "Strategic thought leadership on the future of enterprise intelligence, AI implementation, and business transformation.",
-    newsletterTitle: "Stay Ahead of the Curve",
-    newsletterDescription:
-      "Join 5,000+ executives receiving monthly insights on autonomous systems and ERP strategies.",
-    newsletterButtonText: "Subscribe to Insights",
-    newsletterButtonLink: "/contact",
-  });
+function bulletList(texts: string[]) {
+    return texts.map((text, i) => ({
+        _key: `bullet_${i}`,
+        _type: 'block',
+        children: [{ _type: 'span', text: text, marks: [] }],
+        markDefs: [],
+        style: 'normal',
+        listItem: 'bullet'
+    }));
 }
 
-async function deleteExistingPosts() {
-  const posts = await client.fetch<{ _id: string }[]>(`*[_type == "post"]{_id}`);
-  if (!posts.length) return;
-  const tx = client.transaction();
-  posts.forEach((p) => tx.delete(p._id));
-  await tx.commit();
-}
-
-async function seedPosts() {
-  for (const post of realPosts) {
-    await client.createOrReplace({
-      _id: `post-${post.slug}`,
-      _type: "post",
-      title: post.title,
-      slug: { _type: "slug", current: post.slug },
-      excerpt: post.excerpt,
-      category: post.category,
-      publishedAt: post.publishedAt,
-      author: post.author,
-      authorRole: post.authorRole,
-      readTime: post.readTime,
-      content: post.content,
+async function uploadImage(filePath: string) {
+    console.log(`Uploading image: ${filePath}`);
+    const imageData = fs.readFileSync(filePath);
+    const asset = await client.assets.upload('image', imageData, {
+        filename: path.basename(filePath)
     });
-  }
+    return {
+        _type: 'image',
+        asset: {
+            _type: 'reference',
+            _ref: asset._id
+        },
+        alt: 'AI themed hero image'
+    };
 }
 
 async function run() {
-  console.log("Replacing existing posts with your real insights content...");
-  await seedBlogPageSingleton();
-  await deleteExistingPosts();
-  await seedPosts();
-  console.log(`Done. Seeded ${realPosts.length} real posts.`);
+  console.log("Starting blog content seeding...");
+
+  const images = {
+    fails: '/home/silent-infotech/.gemini/antigravity/brain/e455d11c-fc34-4042-8d9f-a4ca014a9df0/why_genai_fails_blog_hero_1775067199671.png',
+    finance: '/home/silent-infotech/.gemini/antigravity/brain/e455d11c-fc34-4042-8d9f-a4ca014a9df0/ai_finance_blog_hero_1775067218128.png',
+    manufacturing: '/home/silent-infotech/.gemini/antigravity/brain/e455d11c-fc34-4042-8d9f-a4ca014a9df0/ai_manufacturing_blog_hero_1775067234442.png',
+    data: '/home/silent-infotech/.gemini/antigravity/brain/e455d11c-fc34-4042-8d9f-a4ca014a9df0/data_analytics_blog_hero_1775067251275.png'
+  };
+
+  const blogPosts = [
+    {
+      title: "Why Most GenAI Projects Fail",
+      slug: "why-most-genai-projects-fail",
+      relatedService: "ai",
+      excerpt: "Many companies begin their AI journey by experimenting with tools rather than solving real business challenges. Learn why 85% of GenAI projects fail and how to be in the successful 15%.",
+      imagePath: images.fails,
+      content: [
+        ...simpleBlock("Gen AI Blog 1 - Why Most GenAI Projects Fail", "h2"),
+        ...simpleBlock("One of the biggest challenges enterprises face today is the “AI pilot trap.” While many companies launch multiple experiments, they often struggle to scale them into production systems."),
+        ...simpleBlock("1. Starting With Technology Instead of Business Problems", "h3"),
+        ...simpleBlock("Successful AI initiatives start with clear objectives such as reducing operational costs or accelerating decision-making, rather than just experimenting with tools."),
+        ...simpleBlock("2. The Pilot-to-Production Gap", "h3"),
+        ...simpleBlock("Proof-of-concept projects often demonstrate value in controlled environments but fail to scale across the organization without infrastructure planning."),
+        ...simpleBlock("3. Weak Data Foundations", "h3"),
+        ...simpleBlock("AI systems rely on high-quality data. Organizations often struggle with silos, inconsistent datasets, and lack of governance."),
+        ...bulletList(["Data silos", "Inconsistent datasets", "Lack of governance", "Poor data quality"]),
+        ...simpleBlock("How the Successful 15% Deploy GenAI", "h2"),
+        ...simpleBlock("Organizations that successfully scale AI focus on business outcomes, invest in data infrastructure, and design for production from day one."),
+      ]
+    },
+    {
+      title: "7 Powerful Use Cases for AI Agents in the Finance Industry",
+      slug: "7-ai-agent-use-cases-finance",
+      relatedService: "ai",
+      excerpt: "Financial institutions are under constant pressure to improve efficiency. Discover 7 high-impact use cases where AI agents are delivering measurable value.",
+      imagePath: images.finance,
+      content: [
+        ...simpleBlock("7 Powerful Use Cases for AI Agents in the Finance Industry", "h2"),
+        ...simpleBlock("Financial institutions are under constant pressure to improve operational efficiency and strengthen risk management. AI agents are transforming how banks and fintechs operate."),
+        ...simpleBlock("1. Fraud Detection and Prevention", "h3"),
+        ...simpleBlock("AI agents can analyze millions of transactions in real time to detect suspicious activity and reduce false positives."),
+        ...simpleBlock("2. Intelligent Customer Support Agents", "h3"),
+        ...simpleBlock("Virtual assistants handle routine inquiries, assisting with loan applications and account questions instantly."),
+        ...simpleBlock("3. Automated Financial Advisory", "h3"),
+        ...simpleBlock("Analyzing customer spending behavior to recommend personalized investment strategies and portfolio adjustments."),
+        ...simpleBlock("4. Risk Management and Credit Scoring", "h3"),
+        ...simpleBlock("Broader data analysis leads to more accurate risk assessments and better lending decisions."),
+        ...simpleBlock("5. Intelligent Document Processing", "h3"),
+        ...simpleBlock("Extracting key info from loan applications and contracts to accelerate approval workflows."),
+        ...simpleBlock("6. Compliance Monitoring", "h3"),
+        ...simpleBlock("Automating compliance reporting and monitoring transactions for regulatory violations."),
+        ...simpleBlock("7. Real-Time Market Intelligence", "h3"),
+        ...simpleBlock("Continuously monitoring market signals and generating actionable insights for traders and analysts."),
+      ]
+    },
+    {
+      title: "7 AI Agents We Can Build for the Manufacturing Industry",
+      slug: "7-ai-agents-for-manufacturing",
+      relatedService: "ai",
+      excerpt: "From predictive maintenance to supply chain intelligence, learn how AI agents powered by strong data engineering are transforming factories.",
+      imagePath: images.manufacturing,
+      content: [
+        ...simpleBlock("7 AI Agents We Can Build for the Manufacturing Industry", "h2"),
+        ...simpleBlock("Manufacturing companies generate massive amounts of sensor and production data. AI agents can transform this data into smarter operations."),
+        ...simpleBlock("1. Predictive Maintenance AI Agent", "h3"),
+        ...simpleBlock("Identify early warning signs of equipment failure to prevent unplanned downtime and reduce costs."),
+        ...simpleBlock("2. Production Optimization AI Agent", "h3"),
+        ...simpleBlock("Analyze operational data to identify inefficiencies and bottlenecks in the production line."),
+        ...simpleBlock("3. Supply Chain Intelligence Agent", "h3"),
+        ...simpleBlock("Forecast raw material demand and identify potential disruptions before they occur."),
+        ...simpleBlock("4. Smart Factory Data Integration", "h3"),
+        ...simpleBlock("Unify disconnected ERP, IoT, and production systems into a centralized analytics layer."),
+        ...simpleBlock("5. Energy Optimization Agent", "h3"),
+        ...simpleBlock("Monitor energy usage and recommend optimized operating schedules to reduce environmental impact."),
+        ...simpleBlock("6. Demand Forecasting", "h3"),
+        ...simpleBlock("Align production with market demand more effectively using historical sales and market trends."),
+        ...simpleBlock("7. Performance Analytics Agent", "h3"),
+        ...simpleBlock("Provide real-time visibility across plants for faster, data-driven leadership decisions."),
+      ]
+    },
+    {
+      title: "Data Analytics: From Raw Data to Intelligent Decision Systems",
+      slug: "data-analytics-intelligent-decision-systems",
+      relatedService: "data",
+      excerpt: "Most organizations today are data-rich but insight-poor. Explore how to build end-to-end data intelligence systems that drive real business outcomes.",
+      imagePath: images.data,
+      content: [
+        ...simpleBlock("Data Analytics: From Raw Data to Intelligent Decision Systems", "h2"),
+        ...simpleBlock("We design and deploy modern data ecosystems that convert fragmented data into real-time intelligence. From dashboards to predictive models, we enable organizations to move from reporting to decision automation."),
+        ...simpleBlock("The Problem We Solve", "h3"),
+        ...simpleBlock("Disconnected systems create fragmented visibility. Business teams often rely on intuition instead of intelligence, and data teams spend more time preparing data than using it."),
+        ...bulletList([
+          "Disconnected systems create fragmented visibility",
+          "Reports are delayed, static, and reactive",
+          "Business teams rely on intuition instead of intelligence",
+          "Data teams spend more time preparing data than using it"
+        ]),
+        ...simpleBlock("Our Approach", "h3"),
+        ...simpleBlock("At Sync Origins, we go beyond dashboards. We build scalable, AI-ready data architectures that power real business outcomes including Data Engineering, Warehousing, and Advanced Analytics."),
+      ]
+    }
+  ];
+
+  for (const post of blogPosts) {
+    console.log(`Processing blog: ${post.title}`);
+    
+    // Upload image
+    const mainImage = post.imagePath ? await uploadImage(post.imagePath) : undefined;
+    
+    const doc = {
+      _type: 'post',
+      _id: `blog-${post.slug}`,
+      title: post.title,
+      slug: { _type: 'slug', current: post.slug },
+      excerpt: post.excerpt,
+      relatedService: post.relatedService,
+      publishedAt: new Date().toISOString().split('T')[0],
+      author: "AxiomAI Team",
+      readTime: "5 min read",
+      mainImage: mainImage,
+      content: post.content,
+      seo: {
+        _type: 'seo',
+        metaTitle: `${post.title} | AxiomAI Insights`,
+        metaDescription: post.excerpt,
+      }
+    };
+
+    await client.createOrReplace(doc);
+    console.log(`Created/Updated blog post: ${post.title}`);
+  }
+
+  console.log("Seeding complete!");
 }
 
-run().catch((error) => {
-  console.error("Blog seeding failed:", error);
-  process.exit(1);
-});
+run().catch(console.error);

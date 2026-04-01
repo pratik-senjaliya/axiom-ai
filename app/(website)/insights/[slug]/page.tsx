@@ -94,6 +94,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                   fill 
                   className="object-cover"
                   priority
+                  unoptimized
                 />
               ) : (
                 <div className="w-full h-full bg-[#FF821C]/5 flex items-center justify-center text-neutral-200 text-4xl font-bold truncate p-8">

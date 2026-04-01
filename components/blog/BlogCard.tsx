@@ -39,6 +39,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               priority
+              unoptimized
             />
           ) : (
             <div className="w-full h-full bg-neutral-900 flex items-center justify-center">
@@ -91,6 +92,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
               alt={post.imageAlt || post.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
+              unoptimized
             />
           ) : (
             <div className="w-full h-full bg-[#FAF8F5] flex items-center justify-center">
