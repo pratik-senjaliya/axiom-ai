@@ -10,7 +10,7 @@ const sora = Sora({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#FF821C",
+  themeColor: "#0A0F1F",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,

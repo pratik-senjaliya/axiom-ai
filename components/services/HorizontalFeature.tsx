@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { cn } from "@/lib/utils";
 import { PortableText } from "@/components/ui/PortableText";
@@ -23,16 +25,14 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
   items,
   bgWhite = false
 }) => {
-  const containerClass = bgWhite ? "bg-white" : "bg-[#FAF8F5]";
-
   return (
-    <section className={cn("py-24", containerClass)}>
+    <section className="py-24" style={{ background: bgWhite ? '#0A0F1F' : '#14243A' }}>
       <div className="container-custom px-4">
         {(title || description) && (
           <div className="max-w-3xl mb-16">
-            {title && <h2 className="text-3xl md:text-4xl font-bold text-[#26201D] mb-6">{title}</h2>}
+            {title && <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{title}</h2>}
             {description && (
-              <div className="text-lg text-neutral-500 leading-relaxed">
+              <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
                 <PortableText value={description} />
               </div>
             )}
@@ -41,31 +41,34 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
 
         <div className="space-y-6">
           {items.map((item, index) => (
-            <div 
-              key={index} 
-              className="group bg-white border border-neutral-100 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-start gap-8 hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300"
+            <div
+              key={index}
+              className="group rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-start gap-8 transition-all duration-300"
+              style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.35)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 30px rgba(0,229,255,0.1), 0 20px 40px rgba(0,0,0,0.3)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.12)'; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
             >
               {/* Icon */}
-              <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-[1.5rem] bg-[#FF821C] flex items-center justify-center text-white shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform duration-300">
+              <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-[1.5rem] flex items-center justify-center text-[#0A0F1F] group-hover:scale-105 transition-transform duration-300" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 0 25px rgba(0,229,255,0.35)' }}>
                 {item.icon}
               </div>
 
               {/* Content */}
               <div className="flex-grow">
-                <h3 className="text-2xl font-bold text-[#26201D] mb-3 group-hover:text-[#FF821C] transition-colors">
+                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#00E5FF] transition-colors">
                   {item.title}
                 </h3>
-                <div className="text-lg text-neutral-500 leading-relaxed mb-6">
+                <div className="text-lg leading-relaxed mb-6" style={{ color: '#8FA3BF' }}>
                   <PortableText value={item.description} />
                 </div>
 
                 {/* Outcome Footer */}
                 {item.outcomeTitle && (
-                  <div className="inline-flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-orange-50/50 rounded-2xl px-6 py-4 border border-orange-100/50">
-                    <span className="text-sm font-bold text-[#FF821C] uppercase tracking-wider shrink-0">
+                  <div className="inline-flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 rounded-2xl px-6 py-4" style={{ background: 'rgba(0,229,255,0.07)', border: '1px solid rgba(0,229,255,0.2)' }}>
+                    <span className="text-sm font-bold uppercase tracking-wider shrink-0" style={{ color: '#00E5FF' }}>
                       {item.outcomeTitle}:
                     </span>
-                    <div className="text-neutral-600 text-[15px]">
+                    <div className="text-[15px]" style={{ color: '#C5D1E0' }}>
                       <PortableText value={item.outcomeDescription} />
                     </div>
                   </div>

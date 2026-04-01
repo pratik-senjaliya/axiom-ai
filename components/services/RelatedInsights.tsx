@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Clock, Tag } from 'lucide-react';
@@ -12,25 +14,26 @@ export function RelatedInsights({ posts, serviceName }: RelatedInsightsProps) {
   if (!posts || posts.length === 0) return null;
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-orange-500/5 rounded-full blur-[100px] -ml-20 -mb-20 pointer-events-none"></div>
-      
+    <section className="py-24 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
+      {/* Glow */}
+      <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] rounded-full blur-[100px] -ml-20 -mb-20 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%)' }} />
+
       <div className="container-custom px-4 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 mb-4 text-[#FF821C] font-semibold text-xs tracking-wide uppercase">
+            <div className="inline-flex items-center gap-2 mb-4 font-semibold text-xs tracking-wide uppercase" style={{ color: '#00E5FF' }}>
               <span className="text-xl leading-none font-light block -mt-1">+</span>
               <span>Related Insights</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#26201D] tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
               Expertise In {serviceName}
             </h2>
           </div>
-          
-          <Link 
-            href="/insights" 
-            className="group flex items-center text-[#FF821C] font-bold text-[15px] hover:text-[#DE2297] transition-all"
+
+          <Link
+            href="/insights"
+            className="group flex items-center font-bold text-[15px] transition-all"
+            style={{ color: '#00E5FF' }}
           >
             View all insights
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -39,35 +42,40 @@ export function RelatedInsights({ posts, serviceName }: RelatedInsightsProps) {
 
         <div className="grid md:grid-cols-3 gap-8">
           {posts.map((post, index) => (
-            <Link 
-              key={index} 
+            <Link
+              key={index}
               href={`/insights/${post.slug}`}
-              className="group block bg-white rounded-[2rem] overflow-hidden border border-neutral-100 hover:border-orange-200 hover:shadow-[0_20px_40px_-15px_rgba(255,130,28,0.08)] transition-all duration-300"
+              className="group block rounded-[2rem] overflow-hidden transition-all duration-300"
+              style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.35)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 25px rgba(0,229,255,0.1), 0 20px 40px rgba(0,0,0,0.3)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.12)'; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
             >
-              {/* Blog Card Content */}
               <div className="p-8 h-full flex flex-col">
-                <div className="flex items-center gap-4 mb-6 text-[12px] font-semibold text-[#FF821C]">
-                  <span className="flex items-center gap-1.5 px-3 py-1 bg-orange-50 rounded-full">
-                    <Tag size={12} fill="currentColor" className="opacity-40" />
+                <div className="flex items-center gap-4 mb-6 text-[12px] font-semibold" style={{ color: '#00E5FF' }}>
+                  <span className="flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: 'rgba(0,229,255,0.1)' }}>
+                    <Tag size={12} fill="currentColor" className="opacity-60" />
                     {post.category || "Insight"}
                   </span>
-                  <span className="flex items-center gap-1.5 text-neutral-400">
+                  <span className="flex items-center gap-1.5" style={{ color: '#8FA3BF' }}>
                     <Clock size={12} />
                     {post.readTime || "5 min read"}
                   </span>
                 </div>
-                
-                <h3 className="text-xl font-bold text-[#26201D] mb-4 group-hover:text-[#FF821C] transition-colors leading-snug">
+
+                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors leading-snug">
                   {post.title}
                 </h3>
-                
-                <p className="text-neutral-500 text-sm leading-relaxed mb-8 flex-grow line-clamp-3">
+
+                <p className="text-sm leading-relaxed mb-8 flex-grow line-clamp-3" style={{ color: '#8FA3BF' }}>
                   {post.excerpt}
                 </p>
-                
-                <div className="pt-6 border-t border-neutral-50 flex items-center justify-between text-sm font-bold text-[#26201D]">
-                  <span className="group-hover:text-[#FF821C] transition-colors">Read case study</span>
-                  <div className="w-8 h-8 rounded-full bg-neutral-50 flex items-center justify-center group-hover:bg-[#FF821C] group-hover:text-white transition-all">
+
+                <div className="pt-6 flex items-center justify-between text-sm font-bold border-t" style={{ borderColor: 'rgba(0,229,255,0.1)' }}>
+                  <span className="group-hover:text-[#00E5FF] transition-colors" style={{ color: '#C5D1E0' }}>Read case study</span>
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center transition-all" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#00E5FF'; (e.currentTarget as HTMLElement).style.color = '#0A0F1F'; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,229,255,0.1)'; (e.currentTarget as HTMLElement).style.color = '#00E5FF'; }}
+                  >
                     <ArrowRight size={14} />
                   </div>
                 </div>

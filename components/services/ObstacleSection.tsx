@@ -8,14 +8,14 @@ interface ObstacleItemProps {
 }
 
 const ObstacleItem: React.FC<ObstacleItemProps> = ({ title, description }) => (
-  <div className="bg-[#FFF5F5]/80 p-8 rounded-[2.5rem] border border-[#FEE2E2] shadow-sm hover:shadow-md transition-all group animate-on-scroll" data-anim="fade-up">
-    <div className="w-11 h-11 rounded-full bg-red-100/80 flex items-center justify-center text-red-600 mb-7 group-hover:scale-110 transition-all duration-300 shadow-sm">
+  <div className="p-8 rounded-[2.5rem] hover:shadow-md transition-all group animate-on-scroll" data-anim="fade-up" style={{ background: 'rgba(26,46,71,0.7)', border: '1px solid rgba(239,68,68,0.2)', backdropFilter: 'blur(10px)' }}>
+    <div className="w-11 h-11 rounded-full flex items-center justify-center mb-7 group-hover:scale-110 transition-all duration-300" style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171' }}>
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
       </svg>
     </div>
-    <h3 className="text-xl font-bold text-[#26201D] mb-4 tracking-tight group-hover:text-red-700 transition-colors">{title}</h3>
-    <div className="text-neutral-600 text-sm leading-relaxed">
+    <h3 className="text-xl font-bold text-white mb-4 tracking-tight group-hover:text-[#f87171] transition-colors">{title}</h3>
+    <div className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
       <PortableText value={description} />
     </div>
   </div>
@@ -35,17 +35,16 @@ export const ObstacleSection: React.FC<ObstacleSectionProps> = ({
   className 
 }) => {
   return (
-    <section className={cn("py-24 md:py-32 bg-[#FAF8F5] relative overflow-hidden", className)}>
-      {/* Background patterns */}
-      <div className="absolute inset-0 bg-grid opacity-[0.02] pointer-events-none"></div>
+    <section className={cn("py-24 md:py-32 relative overflow-hidden", className)} style={{ background: '#0D1B2A' }}>
+      <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
       
       <div className="container-custom px-4 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#26201D] mb-6 tracking-tight animate-on-scroll" data-anim="fade-up">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight animate-on-scroll" data-anim="fade-up">
             {title}
           </h2>
           {subtitle && (
-            <p className="text-lg md:text-xl text-neutral-500 font-medium leading-relaxed animate-on-scroll" data-anim="fade-up" data-delay="1">
+            <p className="text-lg md:text-xl font-medium leading-relaxed animate-on-scroll" data-anim="fade-up" data-delay="1" style={{ color: '#8FA3BF' }}>
               {subtitle}
             </p>
           )}

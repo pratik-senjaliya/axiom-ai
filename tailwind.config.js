@@ -13,50 +13,56 @@ module.exports = {
       },
     },
     extend: {
-      fontFamily: {
-        sans: ["var(--font-sora)", "system-ui", "sans-serif"],
-        serif: ["Playfair Display", "serif"],
-      },
       colors: {
-        // Lovable exact colors
+        // === NEW THEME: Dark Navy / Neon Cyan ===
+        // Primary = Neon Cyan (buttons, highlights, links, icons)
         primary: {
-          50: '#FFF4E5',
-          100: '#FFE6CC',
-          200: '#FFCD99',
-          300: '#FFB366',
-          400: '#FF9933',
-          500: '#FF821C', 
-          600: '#E66A00',
-          700: '#B35300',
-          800: '#803B00',
-          900: '#4D2400',
-          950: '#2B1300'
+          50:  '#E0FFFE',
+          100: '#B3FFFE',
+          200: '#66FCF1', // Soft Aqua Glow
+          300: '#33F0E8',
+          400: '#00E5FF', // Neon Cyan (Main Glow) — PRIMARY ACCENT
+          500: '#00C8E0',
+          600: '#1DA1F2', // Electric Blue — secondary accent
+          700: '#0E7FC2',
+          800: '#075D93',
+          900: '#003A60',
+          950: '#001E33',
         },
+        // Secondary = Electric Blue family
         secondary: {
-          50: '#F9F1FD',
-          100: '#F1E0FA',
-          200: '#E4BFFF',
-          300: '#D69EF5',
-          400: '#C785EB',
-          500: '#AD58D9',
-          600: '#8F3DB8',
-          700: '#6F2A93',
-          800: '#4D1A6A',
-          900: '#2E0D41',
-          950: '#1A0625'
+          50:  '#E8F4FE',
+          100: '#C8E6FD',
+          200: '#93CBF9',
+          300: '#5AB0F5',
+          400: '#2E97EF',
+          500: '#1DA1F2', // Electric Blue
+          600: '#0E7FC2',
+          700: '#085E94',
+          800: '#044067',
+          900: '#012340',
+          950: '#001020',
         },
+        // Neutral = Navy Blue Grays (for dark-theme text/surfaces)
         neutral: {
-          50: '#F9FAF3',
-          100: '#F3F2EE',
-          200: '#E6E4DD',
-          300: '#D5D2C8',
-          400: '#BDB9AA',
-          500: '#9E9988',
-          600: '#7B7766',
-          700: '#524F44',
-          800: '#3D3B33',
-          900: '#26201D', // Matches brand dark heading color
+          50:  '#C5D1E0', // Soft White / Secondary Text
+          100: '#8FA3BF', // Muted Text
+          200: '#5A7490',
+          300: '#3A5470',
+          400: '#243A52',
+          500: '#14243A', // Mid Night Blue (section bg)
+          600: '#0D1B2A', // Dark Blue Gradient
+          700: '#0A1525',
+          800: '#070F1A',
+          900: '#0A0F1F', // Deep Navy (Base Background)
         },
+        // Background aliases for convenience
+        navy: {
+          base:    '#0A0F1F',
+          gradient:'#0D1B2A',
+          section: '#14243A',
+          card:    '#1A2E47',
+        }
       },
       fontFamily: {
         sans: [
@@ -76,62 +82,80 @@ module.exports = {
         ],
       },
       fontSize: {
-        xs: ["0.75rem", { lineHeight: "1rem" }],
-        sm: ["0.875rem", { lineHeight: "1.25rem" }],
-        base: ["1.125rem", { lineHeight: "1.75rem" }],  // increased from 1rem
-        lg: ["1.25rem", { lineHeight: "1.875rem" }],    // increased from 1.125rem
-        xl: ["1.5rem", { lineHeight: "2rem" }],         // increased from 1.25rem
-        "2xl": ["1.875rem", { lineHeight: "2.25rem" }], // increased from 1.5rem
-        "3xl": ["2.25rem", { lineHeight: "2.5rem" }],   // increased from 1.875rem
-        "4xl": ["2.75rem", { lineHeight: "3rem" }],     // increased from 2.25rem
-        "5xl": ["3.5rem", { lineHeight: "1.1" }],       // increased from 3rem
-        "6xl": ["4.25rem", { lineHeight: "1.1" }],      // increased from 3.75rem
-        "7xl": ["5rem", { lineHeight: "1.1" }],         // increased from 4.5rem
-        "8xl": ["6.5rem", { lineHeight: "1" }],         // increased from 6rem
-        "9xl": ["8.5rem", { lineHeight: "1" }],         // increased from 8rem
+        xs:   ["0.75rem",  { lineHeight: "1rem" }],
+        sm:   ["0.875rem", { lineHeight: "1.25rem" }],
+        base: ["1.125rem", { lineHeight: "1.75rem" }],
+        lg:   ["1.25rem",  { lineHeight: "1.875rem" }],
+        xl:   ["1.5rem",   { lineHeight: "2rem" }],
+        "2xl":["1.875rem", { lineHeight: "2.25rem" }],
+        "3xl":["2.25rem",  { lineHeight: "2.5rem" }],
+        "4xl":["2.75rem",  { lineHeight: "3rem" }],
+        "5xl":["3.5rem",   { lineHeight: "1.1" }],
+        "6xl":["4.25rem",  { lineHeight: "1.1" }],
+        "7xl":["5rem",     { lineHeight: "1.1" }],
+        "8xl":["6.5rem",   { lineHeight: "1" }],
+        "9xl":["8.5rem",   { lineHeight: "1" }],
       },
       spacing: {
-        "18": "4.5rem",
-        "88": "22rem",
+        "18":  "4.5rem",
+        "88":  "22rem",
         "128": "32rem",
       },
       borderRadius: {
         "4xl": "2rem",
       },
       boxShadow: {
-        soft: "0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)",
-        medium: "0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        large: "0 10px 40px -10px rgba(0, 0, 0, 0.15)",
+        soft:   "0 2px 15px -3px rgba(0,0,0,0.3), 0 10px 20px -2px rgba(0,0,0,0.2)",
+        medium: "0 4px 25px -5px rgba(0,0,0,0.4), 0 10px 10px -5px rgba(0,0,0,0.2)",
+        large:  "0 10px 40px -10px rgba(0,0,0,0.5)",
+        // Glow shadows
+        "glow-cyan":  "0 0 20px rgba(0,229,255,0.4), 0 0 60px rgba(0,229,255,0.15)",
+        "glow-blue":  "0 0 20px rgba(29,161,242,0.4), 0 0 60px rgba(29,161,242,0.15)",
+        "glow-sm":    "0 0 10px rgba(0,229,255,0.3)",
       },
       screens: {
         xs: "475px",
       },
       animation: {
-        scroll: "scroll 60s linear infinite",
+        scroll:    "scroll 60s linear infinite",
         "fade-in": "fadeIn 0.5s ease-in-out",
-        "slide-up": "slideUp 0.5s ease-out",
+        "fade-up": "fadeUp 0.6s ease-out",
+        "slide-up":   "slideUp 0.5s ease-out",
         "slide-down": "slideDown 0.5s ease-out",
+        "pulse-glow": "pulseGlow 2s ease-in-out infinite",
+        "float":      "float 6s ease-in-out infinite",
       },
       keyframes: {
         scroll: {
-          "0%": { transform: "translateX(0)" },
+          "0%":   { transform: "translateX(0)" },
           "100%": { transform: "translateX(-100%)" },
         },
         fadeIn: {
-          "0%": { opacity: "0" },
+          "0%":   { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        fadeUp: {
+          "0%":   { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
         slideUp: {
-          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "0%":   { transform: "translateY(20px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
         slideDown: {
-          "0%": { transform: "translateY(-20px)", opacity: "0" },
+          "0%":   { transform: "translateY(-20px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        pulseGlow: {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(0,229,255,0.3)" },
+          "50%":       { boxShadow: "0 0 40px rgba(0,229,255,0.6), 0 0 80px rgba(0,229,255,0.2)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%":       { transform: "translateY(-8px)" },
         },
       },
     },
   },
   plugins: [],
 };
-
