@@ -8,14 +8,14 @@ export async function POST(req: NextRequest) {
         const { name, email, phone, company, service, message } = body
 
         // Basic server-side validation
-        if (!name || !email || !message) {
+        if (!name || !email || !message || !service) {
             return NextResponse.json(
-                { error: 'Name, Email, and Message are required fields.' },
+                { error: 'Name, Email, Service, and Message are required fields.' },
                 { status: 400 }
             )
         }
 
-        const token = process.env.SANITY_API_TOKEN
+        const token = process.env.NEXT_PUBLIC_SANITY_TOKEN
 
         if (!token) {
             console.error('Missing SANITY_API_TOKEN')

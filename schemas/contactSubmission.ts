@@ -36,10 +36,11 @@ export default defineType({
             type: 'string',
             options: {
                 list: [
-                    { title: 'Tax Preparation', value: 'tax-preparation' },
-                    { title: 'Bookkeeping', value: 'bookkeeping' },
-                    { title: 'Payroll', value: 'payroll' },
-                    { title: 'Full-Service Accounting', value: 'full-service-accounting' },
+                    { title: 'GenAI Implementation', value: 'genai-implementation' },
+                    { title: 'ERP Transformation', value: 'erp-transformation' },
+                    { title: 'Data Analytics', value: 'data-analytics' },
+                    { title: 'Managed Delivery', value: 'managed-delivery' },
+                    { title: 'Sustainability Solutions', value: 'sustainability' },
                     { title: 'Other', value: 'other' },
                 ],
             },

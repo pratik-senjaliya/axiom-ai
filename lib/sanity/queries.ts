@@ -379,8 +379,10 @@ export async function getContactPage(): Promise<any> {
         metaKeywords,
         "openGraphImage": openGraphImage.asset->url
       },
+      badge,
       title,
       description,
+      infoItems,
       phone,
       email,
       address,
