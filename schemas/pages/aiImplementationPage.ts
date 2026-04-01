@@ -47,7 +47,7 @@ export default defineType({
                 type: 'object',
                 fields: [
                     { name: 'title', type: 'string', title: 'Label (Bold)' },
-                    { name: 'description', type: 'text', rows: 2, title: 'Description' }
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
                 ]
             }],
             group: 'pitfalls',
@@ -71,7 +71,7 @@ export default defineType({
                     { name: 'layer', type: 'string', title: 'Layer Name (e.g. Layer 1)' },
                     { name: 'title', type: 'string', title: 'Title' },
                     { name: 'outcome', type: 'string', title: 'Outcome' },
-                    { name: 'description', type: 'text', rows: 2, title: 'Description' }
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
                 ]
             }],
             group: 'layers',
@@ -94,7 +94,7 @@ export default defineType({
                 fields: [
                     { name: 'industry', type: 'string', title: 'Industry (e.g. Manufacturing)' },
                     { name: 'title', type: 'string', title: 'Title' },
-                    { name: 'description', type: 'text', rows: 2, title: 'Description' }
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
                 ]
             }],
             group: 'useCases',
@@ -133,7 +133,7 @@ export default defineType({
                 fields: [
                     { name: 'model', type: 'string', title: 'Model Name (e.g. Model 1)' },
                     { name: 'title', type: 'string', title: 'Title' },
-                    { name: 'description', type: 'text', rows: 2, title: 'Description' }
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
                 ]
             }],
             group: 'models',
@@ -157,7 +157,7 @@ export default defineType({
             fields: [
               { name: 'badgeText', type: 'string', title: 'Badge Text' },
               { name: 'title', type: 'string', title: 'Title' },
-              { name: 'description', type: 'text', rows: 3, title: 'Description' },
+              { name: 'description', type: 'simpleBlockContent', title: 'Description' },
               { name: 'buttonText', type: 'string', title: 'Button Text' },
               { name: 'buttonLink', type: 'string', title: 'Button Link' },
             ]

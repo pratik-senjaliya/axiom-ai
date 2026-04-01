@@ -1,17 +1,18 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import { PortableText } from "@/components/ui/PortableText";
 
 export interface HorizontalFeatureItem {
   title: string;
-  description: string;
+  description: string | any[];
   icon: React.ReactNode;
   outcomeTitle?: string;
-  outcomeDescription?: string;
+  outcomeDescription?: string | any[];
 }
 
 interface HorizontalFeatureProps {
   title?: string;
-  description?: string;
+  description?: string | any[];
   items: HorizontalFeatureItem[];
   bgWhite?: boolean;
 }
@@ -30,7 +31,11 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
         {(title || description) && (
           <div className="max-w-3xl mb-16">
             {title && <h2 className="text-3xl md:text-4xl font-bold text-[#26201D] mb-6">{title}</h2>}
-            {description && <p className="text-lg text-neutral-500 leading-relaxed">{description}</p>}
+            {description && (
+              <div className="text-lg text-neutral-500 leading-relaxed">
+                <PortableText value={description} />
+              </div>
+            )}
           </div>
         )}
 
@@ -50,9 +55,9 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
                 <h3 className="text-2xl font-bold text-[#26201D] mb-3 group-hover:text-[#FF821C] transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-lg text-neutral-500 leading-relaxed mb-6">
-                  {item.description}
-                </p>
+                <div className="text-lg text-neutral-500 leading-relaxed mb-6">
+                  <PortableText value={item.description} />
+                </div>
 
                 {/* Outcome Footer */}
                 {item.outcomeTitle && (
@@ -60,9 +65,9 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
                     <span className="text-sm font-bold text-[#FF821C] uppercase tracking-wider shrink-0">
                       {item.outcomeTitle}:
                     </span>
-                    <span className="text-neutral-600 text-[15px]">
-                      {item.outcomeDescription}
-                    </span>
+                    <div className="text-neutral-600 text-[15px]">
+                      <PortableText value={item.outcomeDescription} />
+                    </div>
                   </div>
                 )}
               </div>

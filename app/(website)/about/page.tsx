@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { PortableText } from "@/components/ui/PortableText";
 import { getAboutPage } from "@/lib/sanity/queries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -64,9 +65,9 @@ export default async function AboutPage() {
               );
             })()}
           </h1>
-          <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto leading-relaxed">
-            {data?.hero?.description}
-          </p>
+          <div className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto leading-relaxed">
+            <PortableText value={data?.hero?.description} />
+          </div>
         </div>
       </section>
 
@@ -76,8 +77,8 @@ export default async function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <div>
               <h2 className="type-section-title text-[#26201D] mb-8">{data?.whyTitle || "Our Story"}</h2>
-              <div className="space-y-6 text-lg text-neutral-500 leading-relaxed whitespace-pre-wrap">
-                {data?.whyBody}
+              <div className="space-y-6 text-lg text-neutral-500 leading-relaxed">
+                <PortableText value={data?.whyBody} />
               </div>
             </div>
             {data?.whyImage ? (
@@ -123,7 +124,9 @@ export default async function AboutPage() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-[#26201D] mb-4">{v.title}</h3>
-                <p className="text-neutral-500 leading-relaxed">{v.description}</p>
+                <div className="text-neutral-500 leading-relaxed">
+                  <PortableText value={v.description} />
+                </div>
               </div>
             ))}
           </div>
@@ -135,9 +138,9 @@ export default async function AboutPage() {
         <div className="container-custom px-4">
           <div className="max-w-3xl">
             <h2 className="type-section-title text-[#26201D] mb-8">{data?.teamTitle || "Our Team"}</h2>
-            <p className="text-lg text-neutral-500 leading-relaxed mb-8">
-                {data?.teamBody}
-            </p>
+            <div className="text-lg text-neutral-500 leading-relaxed mb-8">
+                <PortableText value={data?.teamBody} />
+            </div>
           </div>
         </div>
       </section>
@@ -160,9 +163,9 @@ export default async function AboutPage() {
           <h2 className="type-section-title text-white mb-6">
             {data?.finalCta?.title || "Ready to evolve?"}
           </h2>
-          <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
-            {data?.finalCta?.description || "Speak with an architect today."}
-          </p>
+          <div className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
+            <PortableText value={data?.finalCta?.description} />
+          </div>
           {data?.finalCta?.primaryCta?.link && (
             <Link href={data.finalCta.primaryCta.link} className="w-full sm:w-auto">
                 <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 transition-opacity shadow-md border-none">

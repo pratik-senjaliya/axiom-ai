@@ -26,9 +26,7 @@ export default defineType({
         defineField({
             name: 'description',
             title: 'Description',
-            type: 'text',
-            rows: 3,
-            initialValue: 'Comprehensive GenAI, Data, and ERP transformation capabilities designed for the modern intelligent enterprise.'
+            type: 'simpleBlockContent',
         }),
         defineField({
             name: 'finalCTA',
@@ -36,7 +34,7 @@ export default defineType({
             type: 'object',
             fields: [
                 defineField({ name: 'title', type: 'string', title: 'CTA Title' }),
-                defineField({ name: 'description', type: 'text', title: 'CTA Description' }),
+                defineField({ name: 'description', type: 'simpleBlockContent', title: 'CTA Description' }),
                 defineField({ name: 'cta', type: 'cta', title: 'CTA Button' })
             ]
         }),

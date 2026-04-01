@@ -38,15 +38,13 @@ export default defineType({
         defineField({
             name: 'description',
             title: 'Short Description',
-            type: 'text',
-            rows: 3,
+            type: 'simpleBlockContent',
             group: 'hero',
         }),
         defineField({
             name: 'longDescription',
             title: 'Long Description',
-            type: 'text',
-            rows: 4,
+            type: 'simpleBlockContent',
             group: 'hero',
         }),
         defineField({
@@ -112,7 +110,7 @@ export default defineType({
         defineField({
             name: 'introContent',
             title: 'Intro Content',
-            type: 'text',
+            type: 'simpleBlockContent',
             group: 'intro',
         }),
         defineField({
@@ -190,9 +188,7 @@ export default defineType({
         defineField({
             name: 'whyPartnerImageTagline',
             title: 'Why Partner Image - Tagline',
-            type: 'text',
-            rows: 2,
-            description: 'Tagline text displayed on the image',
+            type: 'simpleBlockContent',
             group: 'content',
         }),
         defineField({
@@ -204,8 +200,7 @@ export default defineType({
         defineField({
             name: 'testimonialsDescription',
             title: 'Testimonials Section Description',
-            type: 'text',
-            rows: 2,
+            type: 'simpleBlockContent',
             group: 'content',
         }),
         defineField({

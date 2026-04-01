@@ -1,10 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { PortableText } from '@/components/ui/PortableText';
 
 interface LightCTAProps {
   title: string;
-  description: string;
+  description: string | any[];
   primaryButtonText: string;
   secondaryButtonText?: string;
   primaryButtonLink?: string;
@@ -26,9 +27,9 @@ export function LightCTA({
           {title}
         </h2>
         
-        <p className="text-lg text-neutral-500 mb-10 max-w-2xl font-light">
-          {description}
-        </p>
+        <div className="text-lg text-neutral-500 mb-10 max-w-2xl font-light">
+          <PortableText value={description} />
+        </div>
         
         <div className="flex flex-col sm:flex-row gap-4 items-center">
           <Link href={primaryButtonLink} className="w-full sm:w-auto">

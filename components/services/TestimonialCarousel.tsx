@@ -5,8 +5,10 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+import { PortableText } from '@/components/ui/PortableText';
+
 interface Testimonial {
-  quote: string;
+  quote: any; // Changed from string to any for Portable Text support
   author: string;
   role: string;
   company: string;
@@ -69,9 +71,9 @@ export function TestimonialCarousel({
                       <Quote size={80} fill="currentColor" />
                     </div>
                     
-                    <p className="text-xl md:text-2xl text-[#26201D] font-light leading-relaxed mb-10 relative z-10 max-w-3xl italic">
-                      "{testimonial.quote}"
-                    </p>
+                    <div className="text-xl md:text-2xl text-[#26201D] font-light leading-relaxed mb-10 relative z-10 max-w-3xl italic">
+                      <PortableText value={testimonial.quote} />
+                    </div>
                     
                     <div className="flex flex-col items-center">
                       <div className="w-12 h-1 bg-gradient-to-r from-orange-500 to-orange-300 rounded-full mb-6"></div>

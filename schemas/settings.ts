@@ -14,8 +14,7 @@ export default defineType({
         defineField({
             name: 'footerDescription',
             title: 'Footer Description',
-            type: 'text',
-            rows: 3,
+            type: 'simpleBlockContent',
             description: 'Short description appearing in the footer',
         }),
         defineField({

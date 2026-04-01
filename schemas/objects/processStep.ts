@@ -19,8 +19,7 @@ export default defineType({
         defineField({
             name: 'description',
             title: 'Description',
-            type: 'text',
-            rows: 3,
+            type: 'simpleBlockContent',
         }),
         defineField({
           name: 'icon',

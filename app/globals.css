@@ -127,8 +127,6 @@
   }
 
   p {
-    @apply text-base;
-    @apply text-neutral-700;
     @apply leading-relaxed;
   }
 

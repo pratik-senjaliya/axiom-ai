@@ -1,8 +1,9 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import { PortableText } from "@/components/ui/PortableText";
 
 interface TestimonialProps {
-  quote: string;
+  quote: string | any[];
   author: string;
   role: string;
   company: string;
@@ -18,9 +19,9 @@ export const Testimonial: React.FC<TestimonialProps> = ({
 }) => {
   return (
     <div className={cn("bg-white rounded-lg p-6 md:p-8 shadow-soft", className)}>
-      <p className="text-lg md:text-xl text-neutral-700 mb-6 leading-relaxed">
-        &ldquo;{quote}&rdquo;
-      </p>
+      <div className="text-lg md:text-xl text-neutral-700 mb-6 leading-relaxed italic">
+        <PortableText value={quote} />
+      </div>
       <div className="border-t border-neutral-200 pt-4">
         <p className="font-semibold text-neutral-900 mb-1">{author}</p>
         <p className="text-sm text-neutral-600">

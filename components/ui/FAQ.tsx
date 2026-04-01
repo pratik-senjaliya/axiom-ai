@@ -81,9 +81,9 @@ export const FAQ: React.FC<FAQProps> = ({
             </button>
             {openIndex === index && (
               <div className="px-6 py-4 bg-neutral-50 border-t border-neutral-200">
-                <p className="text-neutral-700 leading-relaxed">
+                <div className="text-neutral-700 leading-relaxed">
                   {item.answer}
-                </p>
+                </div>
               </div>
             )}
           </div>

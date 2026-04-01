@@ -46,7 +46,7 @@ export default defineType({
                 type: 'object',
                 fields: [
                     { name: 'title', type: 'string', title: 'Title' },
-                    { name: 'description', type: 'text', rows: 3, title: 'Description' }
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
                 ]
             }],
             group: 'pitfalls',
@@ -68,7 +68,7 @@ export default defineType({
                 type: 'object',
                 fields: [
                     { name: 'title', type: 'string', title: 'Layer Title' },
-                    { name: 'description', type: 'text', rows: 3, title: 'Description' },
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' },
                     { name: 'tasks', type: 'array', of: [{ type: 'string' }], title: 'Tasks / Key Advantages' }
                 ]
             }],
@@ -91,7 +91,7 @@ export default defineType({
                 type: 'object',
                 fields: [
                     { name: 'title', type: 'string', title: 'Model Title' },
-                    { name: 'description', type: 'text', rows: 3, title: 'Description' },
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' },
                     { name: 'tasks', type: 'array', of: [{ type: 'string' }], title: 'Tasks / Outcomes' }
                 ]
             }],
@@ -132,7 +132,7 @@ export default defineType({
             fields: [
               { name: 'badgeText', type: 'string', title: 'Badge Text' },
               { name: 'title', type: 'string', title: 'Title' },
-              { name: 'description', type: 'text', rows: 3, title: 'Description' },
+              { name: 'description', type: 'simpleBlockContent', title: 'Description' },
               { name: 'buttonText', type: 'string', title: 'Button Text' },
               { name: 'buttonLink', type: 'string', title: 'Button Link' },
             ]

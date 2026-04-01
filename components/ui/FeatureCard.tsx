@@ -17,20 +17,14 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
   linkHref,
   className,
 }) => {
-  const isRichText = Array.isArray(description);
-
   return (
     <div className={cn("space-y-4", className)}>
       <h3 className="text-2xl md:text-3xl font-semibold text-neutral-900">
         {title}
       </h3>
-      {isRichText ? (
-        <PortableText value={description} className="text-base md:text-lg text-neutral-600 leading-relaxed" />
-      ) : (
-        <p className="text-base md:text-lg text-neutral-600 leading-relaxed">
-          {description}
-        </p>
-      )}
+      <div className="text-base md:text-lg text-neutral-600 leading-relaxed">
+        <PortableText value={description} />
+      </div>
       {linkText && linkHref && (
         <a
           href={linkHref}

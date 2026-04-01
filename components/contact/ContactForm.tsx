@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { PortableText } from "@/components/ui/PortableText";
 
 export function ContactForm({ data }: { data: any }) {
     const [formData, setFormData] = useState({
@@ -78,11 +79,11 @@ export function ContactForm({ data }: { data: any }) {
                             Contact
                         </div>
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#26201D] mb-6 tracking-tight leading-[1.1]">
-                            Let's Talk Transformation
+                            {data.title || "Let's Talk Transformation"}
                         </h1>
-                        <p className="text-lg text-[#736B66] mb-12 leading-relaxed font-medium">
-                            Ready to discuss your GenAI, ERP, or data challenges? We'd love to hear from you.
-                        </p>
+                        <div className="text-lg text-[#736B66] mb-12 leading-relaxed font-medium">
+                            <PortableText value={data.description} />
+                        </div>
 
                         <div className="space-y-8 mb-12">
                             <div className="flex items-center gap-4 group">

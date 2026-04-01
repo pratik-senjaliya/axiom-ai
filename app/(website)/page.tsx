@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { PortableText } from "@portabletext/react";
+import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 import { getHomePage } from "@/lib/sanity/queries";
 import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
@@ -89,9 +89,9 @@ export default async function HomePage() {
             })()}
           </h1>
           
-          <p className="text-lg md:text-xl text-neutral-500 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
-            {data?.hero?.description}
-          </p>
+          <div className="text-lg md:text-xl text-neutral-500 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+            <PortableText value={data?.hero?.description} />
+          </div>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
             {data?.hero?.primaryCta?.text && data?.hero?.primaryCta?.link && (
@@ -140,9 +140,9 @@ export default async function HomePage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-[#26201D] mb-3">{card.title}</h3>
-                    <p className="text-neutral-500 leading-relaxed text-sm">
-                      {card.description}
-                    </p>
+                    <div className="text-neutral-500 leading-relaxed text-sm">
+                      <PortableText value={card.description} />
+                    </div>
                   </div>
                 </div>
               );
@@ -172,9 +172,9 @@ export default async function HomePage() {
                     <span>0{idx + 1}</span>
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-[#26201D] mb-4 leading-tight">{card.title}</h3>
-                  <p className="text-neutral-500 leading-relaxed text-sm sm:text-[0.95rem]">
-                    {card.description}
-                  </p>
+                  <div className="text-neutral-500 leading-relaxed text-sm sm:text-[0.95rem]">
+                    <PortableText value={card.description} />
+                  </div>
                 </div>
             ))}
           </div>
@@ -205,9 +205,9 @@ export default async function HomePage() {
                   <div key={index} className={`bg-gradient-to-br ${style.bg} rounded-[24px] w-full max-w-[340px] h-[230px] p-7 shadow-sm mx-auto flex flex-col justify-center`}>
                     <div className={`${style.text} text-[4.25rem] font-black mb-3 leading-none`}>{phase.step || `0${index + 1}`}</div>
                     <h3 className="text-xl font-bold text-[#26201D] mb-2">{phase.title}</h3>
-                    <p className="text-neutral-500 leading-relaxed text-sm">
-                      {phase.description}
-                    </p>
+                    <div className="text-neutral-500 leading-relaxed text-sm">
+                      <PortableText value={phase.description} />
+                    </div>
                   </div>
                 );
               })}
@@ -234,9 +234,9 @@ export default async function HomePage() {
                     {style.icon}
                   </div>
                   <h3 className="text-lg font-bold text-[#26201D] mb-3">{persona.role}</h3>
-                  <p className="text-neutral-500 text-sm leading-relaxed">
-                    {persona.description}
-                  </p>
+                  <div className="text-neutral-500 text-sm leading-relaxed">
+                    <PortableText value={persona.description} />
+                  </div>
                 </div>
               );
             })}
@@ -257,9 +257,9 @@ export default async function HomePage() {
           <h2 className="type-section-title text-[#26201D] mb-6">
             {data?.finalCta?.title}
           </h2>
-          <p className="text-lg text-[#6D5A4C] max-w-2xl mx-auto mb-10">
-            {data?.finalCta?.description}
-          </p>
+          <div className="text-lg text-[#6D5A4C] max-w-2xl mx-auto mb-10">
+            <PortableText value={data?.finalCta?.description} />
+          </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             {data?.finalCta?.primaryCta?.text && data?.finalCta?.primaryCta?.link && (
             <Link href={data.finalCta.primaryCta.link} className="w-full sm:w-auto">

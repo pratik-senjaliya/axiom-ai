@@ -5,7 +5,7 @@ import { DarkCTA } from "@/components/services/DarkCTA";
 import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { getAIImplementationPage, getLatestPostsByService } from "@/lib/sanity/queries";
-import { PortableText } from "@portabletext/react";
+import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -48,7 +48,7 @@ export default async function AIImplementationPage() {
   const aiLayers: FeatureItem[] = (data?.layers || []).map((layer: any) => ({
     title: layer.title,
     outcomeTitle: layer.outcome || "Business Value",
-    outcomeDescription: <p>{layer.description}</p>
+    outcomeDescription: layer.description
   }));
 
   const useCases: FeatureItem[] = (data?.useCases || []).map((uc: any) => ({

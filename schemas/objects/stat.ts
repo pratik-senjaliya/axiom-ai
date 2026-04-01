@@ -22,8 +22,7 @@ export default defineType({
         defineField({
             name: 'description',
             title: 'Description',
-            type: 'text',
-            rows: 2,
+            type: 'simpleBlockContent',
             description: 'Optional additional context',
         }),
     ],

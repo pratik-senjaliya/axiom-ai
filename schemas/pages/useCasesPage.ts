@@ -39,10 +39,10 @@ export default defineType({
                 fields: [
                     { name: 'caseNumber', type: 'string', title: 'Case Number (e.g. Case 01)' },
                     { name: 'title', type: 'string', title: 'Case Title' },
-                    { name: 'problem', type: 'text', rows: 3, title: 'The Problem' },
+                    { name: 'problem', type: 'simpleBlockContent', title: 'The Problem' },
                     { name: 'tools', type: 'array', of: [{ type: 'string' }], title: 'Tools & Tech' },
-                    { name: 'approach', type: 'text', rows: 3, title: 'The Approach' },
-                    { name: 'impact', type: 'text', rows: 3, title: 'Business Impact' }
+                    { name: 'approach', type: 'simpleBlockContent', title: 'The Approach' },
+                    { name: 'impact', type: 'simpleBlockContent', title: 'Business Impact' }
                 ]
             }],
             group: 'content',
@@ -63,7 +63,7 @@ export default defineType({
             type: 'object',
             fields: [
               { name: 'title', type: 'string', title: 'POC Title' },
-              { name: 'description', type: 'text', rows: 3, title: 'Description' }
+              { name: 'description', type: 'simpleBlockContent', title: 'Description' }
             ],
             group: 'poc',
         }),

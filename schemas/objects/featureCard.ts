@@ -14,8 +14,7 @@ export default defineType({
         defineField({
             name: 'description',
             title: 'Description',
-            type: 'text',
-            rows: 3,
+            type: 'simpleBlockContent',
             validation: (Rule) => Rule.required(),
         }),
         defineField({

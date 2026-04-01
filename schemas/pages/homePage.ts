@@ -39,7 +39,7 @@ export default defineType({
                 fields: [
                     { name: 'stat', type: 'string', title: 'Stat (e.g. 85%)' },
                     { name: 'title', type: 'string', title: 'Title' },
-                    { name: 'description', type: 'text', rows: 3, title: 'Description' }
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
                 ]
             }],
             group: 'pitfalls',
@@ -61,7 +61,7 @@ export default defineType({
               type: 'object',
               fields: [
                   { name: 'title', type: 'string', title: 'Solution Title' },
-                  { name: 'description', type: 'text', rows: 3, title: 'Description' }
+                  { name: 'description', type: 'simpleBlockContent', title: 'Description' }
               ]
           }],
           group: 'solutions',
@@ -99,7 +99,7 @@ export default defineType({
                 type: 'object',
                 fields: [
                     { name: 'role', type: 'string', title: 'Role (e.g. For CXOs)' },
-                    { name: 'description', type: 'text', rows: 3, title: 'Description' }
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
                 ]
             }],
             group: 'personas',
@@ -113,7 +113,7 @@ export default defineType({
             group: 'personas',
             fields: [
                 { name: 'title', type: 'string', title: 'Title' },
-                { name: 'description', type: 'text', rows: 3, title: 'Description' },
+                { name: 'description', type: 'simpleBlockContent', title: 'Description' },
                 { name: 'primaryCta', type: 'cta', title: 'Primary CTA' }
             ]
         }),

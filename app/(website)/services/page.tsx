@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DarkCTA } from "@/components/services/DarkCTA";
+import { PortableText } from "@/components/ui/PortableText";
 import { 
   getServicesPage, 
   getAIImplementationPage, 
@@ -85,7 +86,9 @@ export default async function ServicesHubPage() {
             </h1>
             
             {/* Description */}
-            <p className="text-lg md:text-xl text-neutral-500 font-light mt-8 leading-relaxed max-w-2xl">{pageData.description}</p>
+            <div className="text-lg md:text-xl text-neutral-500 font-light mt-8 leading-relaxed max-w-2xl">
+              <PortableText value={pageData.description} />
+            </div>
           </div>
         </div>
       </section>
@@ -112,9 +115,9 @@ export default async function ServicesHubPage() {
                   <h3 className="type-card-title text-[#26201D] group-hover:text-[#FF821C] transition-colors mb-3">
                     {service.title}
                   </h3>
-                  <p className="text-neutral-500 text-base leading-relaxed mb-6 flex-grow">
-                    {service.description}
-                  </p>
+                  <div className="text-neutral-500 text-base leading-relaxed mb-6 flex-grow">
+                    <PortableText value={service.description} />
+                  </div>
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2 mb-6">

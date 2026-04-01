@@ -13,10 +13,8 @@ export default defineType({
         }),
         defineField({
             name: 'description',
-            title: 'Page Description',
-            type: 'text',
-            rows: 3,
-            initialValue: 'Explore our latest perspectives on enterprise technology and digital transformation.'
+            title: 'Description',
+            type: 'simpleBlockContent',
         }),
         defineField({
             name: 'newsletterTitle',
@@ -28,9 +26,7 @@ export default defineType({
         defineField({
             name: 'newsletterDescription',
             title: 'Newsletter Description',
-            type: 'text',
-            rows: 3,
-            initialValue: "Subscribe to get our weekly perspectives on GenAI, Data, and it's impact on business growth."
+            type: 'simpleBlockContent'
         }),
         defineField({
             name: 'newsletterButtonText',

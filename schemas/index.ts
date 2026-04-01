@@ -12,6 +12,7 @@ import seo from './objects/seo'
 import cta from './objects/cta'
 import finalCtaSection from './objects/finalCtaSection'
 import hero from './objects/hero'
+import simpleBlockContent from './objects/simpleBlockContent'
 
 // Document Types (Collections)
 import post from './pages/post'
@@ -50,6 +51,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         cta,
         finalCtaSection,
         hero,
+        simpleBlockContent,
 
         // Settings & Meta
         settings,

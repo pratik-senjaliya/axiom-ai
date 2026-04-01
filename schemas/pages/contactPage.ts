@@ -14,8 +14,7 @@ export default defineType({
         defineField({
             name: 'description',
             title: 'Page Description',
-            type: 'text',
-            initialValue: "Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+            type: 'simpleBlockContent'
         }),
 
         // Contact Info

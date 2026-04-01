@@ -1,9 +1,10 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import { PortableText } from "@/components/ui/PortableText";
 
 interface ObstacleItemProps {
   title: string;
-  description: string;
+  description: string | any[];
 }
 
 const ObstacleItem: React.FC<ObstacleItemProps> = ({ title, description }) => (
@@ -14,7 +15,9 @@ const ObstacleItem: React.FC<ObstacleItemProps> = ({ title, description }) => (
       </svg>
     </div>
     <h3 className="text-xl font-bold text-[#26201D] mb-4 tracking-tight group-hover:text-red-700 transition-colors">{title}</h3>
-    <p className="text-neutral-600 text-sm leading-relaxed">{description}</p>
+    <div className="text-neutral-600 text-sm leading-relaxed">
+      <PortableText value={description} />
+    </div>
   </div>
 );
 

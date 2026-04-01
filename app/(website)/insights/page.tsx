@@ -3,6 +3,7 @@ import { getBlogPage, getAllPosts } from "@/lib/sanity/queries";
 import { BlogList } from "@/components/blog/BlogList";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { notFound } from "next/navigation";
+import { PortableText } from "@/components/ui/PortableText";
 
 export const dynamic = "force-dynamic";
 
@@ -45,9 +46,9 @@ export default async function InsightsPage() {
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-5 text-[#26201D] max-w-4xl mx-auto animate-fade-up">
             <span className="gradient-text">{pageData?.title}</span>
           </h1>
-          <p className="text-sm md:text-base text-neutral-500 max-w-2xl mx-auto mb-6 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            {pageData?.description}
-          </p>
+          <div className="text-sm md:text-base text-neutral-500 max-w-2xl mx-auto mb-6 animate-fade-up" style={{ animationDelay: "0.1s" }}>
+            <PortableText value={pageData?.description} />
+          </div>
         </div>
       </section>
 

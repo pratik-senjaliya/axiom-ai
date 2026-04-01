@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { PortableText } from "@/components/ui/PortableText";
 
 interface ServiceHeroProps {
   badgeText?: string;
@@ -9,7 +10,7 @@ interface ServiceHeroProps {
   pills?: string[];
   title: string;
   gradientTitlePart?: string;
-  description: string;
+  description: string | any[];
   primaryButtonText?: string;
   secondaryButtonText?: string;
   primaryButtonLink?: string;
@@ -128,9 +129,9 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
         </h1>
         
         {/* Description */}
-        <p className="type-lead mb-10 max-w-2xl mx-auto">
-          {description}
-        </p>
+        <div className="type-lead mb-10 max-w-2xl mx-auto">
+          <PortableText value={description} />
+        </div>
 
         {/* Buttons */}
         {(primaryButtonText || secondaryButtonText) && (

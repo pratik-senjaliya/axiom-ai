@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { PortableText } from "@/components/ui/PortableText";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { getUseCasesPage } from "@/lib/sanity/queries";
 import { notFound } from "next/navigation";
@@ -65,9 +66,9 @@ export default async function UseCasesPage() {
               );
             })()}
           </h1>
-          <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto mb-10">
-            {data?.hero?.description}
-          </p>
+          <div className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto mb-10">
+            <PortableText value={data?.hero?.description} />
+          </div>
 
           {/* Filters */}
           <div className="flex flex-wrap justify-center gap-3">
@@ -99,7 +100,9 @@ export default async function UseCasesPage() {
                 <div className="space-y-6 flex-grow mb-8 w-full">
                   <div>
                     <h4 className="text-xs font-bold text-[#FF821C] tracking-wider mb-2">THE PROBLEM</h4>
-                    <p className="text-neutral-500 text-sm leading-relaxed">{item.problem}</p>
+                    <div className="text-neutral-500 text-sm leading-relaxed">
+                      <PortableText value={item.problem} />
+                    </div>
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-[#FF821C] tracking-wider mb-2">TOOLS & TECH</h4>
@@ -109,11 +112,15 @@ export default async function UseCasesPage() {
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-[#FF821C] tracking-wider mb-2">APPROACH</h4>
-                    <p className="text-neutral-500 text-sm leading-relaxed">{item.approach}</p>
+                    <div className="text-neutral-500 text-sm leading-relaxed">
+                      <PortableText value={item.approach} />
+                    </div>
                   </div>
                   <div className="pt-6 border-t border-neutral-100">
                     <h4 className="text-xs font-bold text-[#FF821C] tracking-wider mb-2">BUSINESS IMPACT</h4>
-                    <p className="text-[#26201D] font-bold leading-relaxed">{item.impact}</p>
+                    <div className="text-[#26201D] font-bold leading-relaxed">
+                      <PortableText value={item.impact} />
+                    </div>
                   </div>
                 </div>
 
@@ -137,9 +144,9 @@ export default async function UseCasesPage() {
           <h2 className="type-section-title text-white mb-6">
             {data?.midPageCta?.title}
           </h2>
-          <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
-            {data?.midPageCta?.description}
-          </p>
+          <div className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
+            <PortableText value={data?.midPageCta?.description} />
+          </div>
           {data?.midPageCta?.primaryCta?.text && data?.midPageCta?.primaryCta?.link && (
           <Link href={data.midPageCta.primaryCta.link} className="w-full sm:w-auto">
             <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF821C] to-[#AD58D9] text-white hover:opacity-90 transition-opacity shadow-md border-none">

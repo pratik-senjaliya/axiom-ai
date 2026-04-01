@@ -2,11 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { SparkleIcon } from './ServiceHero';
+import { PortableText } from '@/components/ui/PortableText';
 
 interface DarkCTAProps {
   badgeText?: string;
   title: string;
-  description: string;
+  description: string | any[];
   buttonText?: string;
   buttonHref?: string;
   useWhiteButton?: boolean;
@@ -40,9 +41,9 @@ export function DarkCTA({
           {title}
         </h2>
         
-        <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
-          {description}
-        </p>
+        <div className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
+          <PortableText value={description} />
+        </div>
         
         {buttonText && buttonHref && (
           <Link href={buttonHref} className="w-full sm:w-auto">

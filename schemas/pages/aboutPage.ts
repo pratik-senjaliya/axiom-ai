@@ -31,8 +31,7 @@ export default defineType({
         defineField({
             name: 'whyBody',
             title: 'Why We Exist Body',
-            type: 'text',
-            rows: 5,
+            type: 'simpleBlockContent',
             group: 'why',
         }),
         defineField({
@@ -59,7 +58,7 @@ export default defineType({
                 type: 'object',
                 fields: [
                     { name: 'title', type: 'string', title: 'Title' },
-                    { name: 'description', type: 'text', rows: 3, title: 'Description' },
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' },
                     { name: 'icon', type: 'string', title: 'Icon Name' }
                 ]
             }],
@@ -76,8 +75,7 @@ export default defineType({
         defineField({
             name: 'teamBody',
             title: 'Team Section Body',
-            type: 'text',
-            rows: 4,
+            type: 'simpleBlockContent',
             group: 'team',
         }),
 

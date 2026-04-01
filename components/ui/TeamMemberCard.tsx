@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { TeamMember } from '@/lib/sanity/teamQueries'
+import { PortableText } from '@/components/ui/PortableText'
 
 interface TeamMemberCardProps {
     member: TeamMember
@@ -56,9 +57,9 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
                 )}
 
                 {/* Bio */}
-                <p className="text-neutral-700 leading-relaxed mb-4 line-clamp-4">
-                    {member.bio}
-                </p>
+                <div className="text-neutral-700 leading-relaxed mb-4 line-clamp-4">
+                    <PortableText value={member.bio} />
+                </div>
 
                 {/* Certifications */}
                 {member.certifications && member.certifications.length > 0 && (

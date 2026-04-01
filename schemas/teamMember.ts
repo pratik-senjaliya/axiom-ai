@@ -30,8 +30,7 @@ export default defineType({
         defineField({
             name: 'bio',
             title: 'Biography',
-            type: 'text',
-            rows: 6,
+            type: 'simpleBlockContent',
             validation: (Rule) => Rule.required(),
             description: 'Professional biography and background',
         }),

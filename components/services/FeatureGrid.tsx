@@ -1,22 +1,23 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import { PortableText } from "@/components/ui/PortableText";
 
 export interface FeatureItem {
   /* Common */
   title: string;
-  description?: React.ReactNode;
+  description?: any;
   badge?: string;
   icon?: React.ReactNode;
   
   /* Layer Cards (Checkmarks + Outcome Footer) */
   bullets?: string[];
   outcomeTitle?: string;
-  outcomeDescription?: React.ReactNode;
+  outcomeDescription?: any;
 
   /* Industry Use Case Cards */
   useCaseLabel?: string;
-  pocText?: React.ReactNode;
-  impactText?: React.ReactNode;
+  pocText?: any;
+  impactText?: any;
   
   /* Roadmap Items (numbered circle on the left) */
   stepNumber?: number;
@@ -28,7 +29,7 @@ export interface FeatureItem {
 
 interface FeatureGridProps {
   title?: string;
-  description?: string;
+  description?: any;
   items: FeatureItem[];
   columns?: 2 | 3 | 4;
   bgWhite?: boolean;
@@ -71,7 +72,11 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
         {(title || description) && (
           <div className="text-center max-w-3xl mx-auto mb-16">
             {title && <h2 className={cn("tracking-tight font-bold text-[#26201D] mb-6", small ? "text-2xl md:text-3xl" : "text-3xl md:text-[2.5rem]")}>{title}</h2>}
-            {description && <p className={cn("text-neutral-500 leading-relaxed", small ? "text-base" : "text-lg")}>{description}</p>}
+            {description && (
+              <div className={cn("text-neutral-500 leading-relaxed", small ? "text-base" : "text-lg")}>
+                <PortableText value={description} />
+              </div>
+            )}
           </div>
         )}
 
@@ -88,7 +93,11 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
                   <div className={cn("w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] bg-white rounded-[2rem] shadow-sm border border-neutral-100 hover:border-orange-200 transition-colors", small ? "p-6" : "p-8")}>
                     {item.badge && <span className="inline-block px-3 py-1 bg-orange-50 text-[#FF821C] text-xs font-bold uppercase tracking-wider rounded-full mb-4">{item.badge}</span>}
                     <h3 className={cn("font-bold text-[#26201D] mb-4", small ? "text-xl" : "text-2xl")}>{item.title}</h3>
-                    {item.description && <p className="text-neutral-500 leading-relaxed text-sm">{item.description}</p>}
+                    {item.description && (
+                      <div className="text-neutral-500 leading-relaxed text-sm">
+                        <PortableText value={item.description} />
+                      </div>
+                    )}
                   </div>
                 </div>
               );
@@ -133,7 +142,11 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
 
                 {/* Title and Description */}
                 {(!item.metricValue || item.title) && <h3 className={cn("font-bold text-[#26201D] mb-4", small ? "text-xl" : "text-2xl")}>{item.title}</h3>}
-                {item.description && <p className={cn("text-neutral-500 leading-relaxed mb-6", small ? "text-sm sm:text-base" : "text-base sm:text-lg")}>{item.description}</p>}
+                {item.description && (
+                  <div className={cn("text-neutral-500 leading-relaxed mb-6", small ? "text-sm sm:text-base" : "text-base sm:text-lg")}>
+                    <PortableText value={item.description} />
+                  </div>
+                )}
 
                 {/* Checkmark Bullets */}
                 {item.bullets && item.bullets.length > 0 && (
@@ -157,7 +170,9 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
                         </svg>
                         <div>
                           <span className="block text-xs font-bold text-neutral-400 uppercase mb-0.5">POC Focus</span>
-                          <span className="text-neutral-600">{item.pocText}</span>
+                          <div className="text-neutral-600">
+                            <PortableText value={item.pocText} />
+                          </div>
                         </div>
                       </div>
                     )}
@@ -168,7 +183,9 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
                         </svg>
                         <div>
                           <span className="block text-xs font-bold text-neutral-400 uppercase mb-0.5">Business Impact</span>
-                          <span className="text-neutral-600">{item.impactText}</span>
+                          <div className="text-neutral-600">
+                            <PortableText value={item.impactText} />
+                          </div>
                         </div>
                       </div>
                     )}
@@ -179,7 +196,9 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
                 {item.outcomeTitle && (
                   <div className="mt-auto bg-[#FDF9F2] p-5 rounded-xl border border-orange-100/50">
                     <div className="text-sm font-bold text-[#FF821C] mb-1">{item.outcomeTitle}</div>
-                    <div className="text-neutral-600 text-sm leading-relaxed">{item.outcomeDescription}</div>
+                    <div className="text-neutral-600 text-sm leading-relaxed">
+                      <PortableText value={item.outcomeDescription} />
+                    </div>
                   </div>
                 )}
               </div>

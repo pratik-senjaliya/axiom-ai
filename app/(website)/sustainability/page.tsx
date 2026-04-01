@@ -6,7 +6,7 @@ import { DarkCTA } from "@/components/services/DarkCTA";
 import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { getSustainabilityPage, getLatestPostsByService } from "@/lib/sanity/queries";
-import { PortableText } from "@portabletext/react";
+import { PortableText } from "@/components/ui/PortableText";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 import { notFound } from "next/navigation";
 

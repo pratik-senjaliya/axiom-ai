@@ -46,9 +46,16 @@ module.exports = {
           950: '#1A0625'
         },
         neutral: {
-          700: "#b91c1c",
-          800: "#991b1b",
-          900: "#7f1d1d",
+          50: '#F9FAF3',
+          100: '#F3F2EE',
+          200: '#E6E4DD',
+          300: '#D5D2C8',
+          400: '#BDB9AA',
+          500: '#9E9988',
+          600: '#7B7766',
+          700: '#524F44',
+          800: '#3D3B33',
+          900: '#26201D', // Matches brand dark heading color
         },
       },
       fontFamily: {
