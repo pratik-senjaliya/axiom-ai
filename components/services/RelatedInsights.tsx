@@ -73,7 +73,7 @@ export function RelatedInsights({ posts, serviceName }: RelatedInsightsProps) {
                 </p>
 
                 <div className="pt-6 flex items-center justify-between text-sm font-bold border-t" style={{ borderColor: 'rgba(0,229,255,0.1)' }}>
-                  <span className="group-hover:text-[#00E5FF] transition-colors" style={{ color: '#C5D1E0' }}>Read case study</span>
+                  <span className="group-hover:text-[#00E5FF] transition-colors" style={{ color: '#C5D1E0' }}>Read more</span>
                   <div className="w-8 h-8 rounded-full flex items-center justify-center transition-all" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF' }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#00E5FF'; (e.currentTarget as HTMLElement).style.color = '#0A0F1F'; }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,229,255,0.1)'; (e.currentTarget as HTMLElement).style.color = '#00E5FF'; }}

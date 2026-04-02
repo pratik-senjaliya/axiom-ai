@@ -28,8 +28,8 @@ export function BlogList({ posts }: BlogListProps) {
     ? posts 
     : posts.filter((p) => p.relatedService === serviceMap[activeCategory]);
 
-  const featuredPost = activeCategory === "All" ? filteredPosts[0] : null;
-  const gridPosts = activeCategory === "All" ? filteredPosts.slice(1) : filteredPosts;
+  const featuredPost = filteredPosts.length > 0 ? filteredPosts[0] : null;
+  const gridPosts = filteredPosts.slice(1);
 
   return (
     <div className="container-custom px-4 relative z-10">
