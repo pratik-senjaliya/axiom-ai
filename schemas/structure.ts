@@ -24,7 +24,6 @@ export const structure = (S: StructureBuilder) =>
             singletonListItem(S, 'homePage', 'Home Page'),
             singletonListItem(S, 'aboutPage', 'About Page'),
             singletonListItem(S, 'useCasesPage', 'Use Cases Page'),
-            singletonListItem(S, 'servicesPage', 'Services Hub Page'),
             singletonListItem(S, 'blogPage', 'Blog Listing Page'),
             singletonListItem(S, 'contactPage', 'Contact Page', 'contactPage'), // Likely doesn't use Singleton suffix in this project if not in seed
             

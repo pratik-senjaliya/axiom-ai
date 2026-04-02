@@ -9,20 +9,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Fetch all dynamic content slugs from Sanity
     let serviceSlugs: string[] = [];
-    let industrySlugs: string[] = [];
-    let hireStaffSlugs: string[] = [];
     let postSlugs: string[] = [];
 
     try {
-        const [s, i, h, p] = await Promise.all([
+        const [s, p] = await Promise.all([
             client.fetch<string[]>(`*[_type == "service"].slug.current`),
-            client.fetch<string[]>(`*[_type == "industry"].slug.current`),
-            client.fetch<string[]>(`*[_type == "hireStaff"].slug.current`),
             client.fetch<string[]>(`*[_type == "post"].slug.current`)
         ]);
         serviceSlugs = s || [];
-        industrySlugs = i || [];
-        hireStaffSlugs = h || [];
         postSlugs = p || [];
     } catch (e) {
         console.error("Error fetching sitemap slugs:", e);
@@ -43,28 +37,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.8,
         },
         {
-            url: `${baseUrl}/services`,
+            url: `${baseUrl}/use-cases`,
             lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
+            changeFrequency: 'weekly',
+            priority: 0.9,
         },
         {
-            url: `${baseUrl}/services/data-analytics`,
+            url: `${baseUrl}/insights`,
             lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/services/managed-delivery`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/services/erp-transformation`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
+            changeFrequency: 'daily',
+            priority: 0.9,
         },
         {
             url: `${baseUrl}/contact`,
@@ -73,10 +55,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.8,
         },
         {
-            url: `${baseUrl}/blog`,
+            url: `${baseUrl}/ai-implementation`,
             lastModified: new Date(),
-            changeFrequency: 'daily',
-            priority: 0.9,
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/data-analytics`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/erp-transformation`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/managed-delivery`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/sustainability`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
         },
         {
             url: `${baseUrl}/privacy-policy`,
@@ -84,9 +90,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: 'yearly',
             priority: 0.3,
         },
+        {
+            url: `${baseUrl}/terms-of-usage`,
+            lastModified: new Date(),
+            changeFrequency: 'yearly',
+            priority: 0.3,
+        },
     ]
 
-    // Dynamic service pages
+    // Dynamic service pages (handled by [slug]/page.tsx at root)
     const serviceRoutes: MetadataRoute.Sitemap = serviceSlugs.map((slug) => ({
         url: `${baseUrl}/${slug}`,
         lastModified: new Date(),
@@ -94,30 +106,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
     }))
 
-    // Dynamic industry pages
-    const industryRoutes: MetadataRoute.Sitemap = industrySlugs.map((slug) => ({
-        url: `${baseUrl}/industries/${slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-    }))
-
-    // Dynamic hire staff pages
-    const hireStaffRoutes: MetadataRoute.Sitemap = hireStaffSlugs.map((slug) => ({
-        url: `${baseUrl}/${slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-    }))
-
-    // Dynamic blog post pages
+    // Dynamic blog post pages (handled by insights/[slug]/page.tsx)
     const postRoutes: MetadataRoute.Sitemap = postSlugs.map((slug) => ({
-        url: `${baseUrl}/blog/${slug}`,
+        url: `${baseUrl}/insights/${slug}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
         priority: 0.7,
     }))
 
     // Combine all routes
-    return [...staticRoutes, ...serviceRoutes, ...industryRoutes, ...hireStaffRoutes, ...postRoutes]
+    return [...staticRoutes, ...serviceRoutes, ...postRoutes]
 }

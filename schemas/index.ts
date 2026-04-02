@@ -25,7 +25,6 @@ import newsletterSubscription from './newsletterSubscription'
 import homePage from './pages/homePage'
 import aboutPage from './pages/aboutPage'
 import blogPage from './pages/blogPage'
-import servicesPage from './pages/servicesPage'
 import contactPage from './pages/contactPage'
 import useCasesPage from './pages/useCasesPage'
 import aiImplementationPage from './pages/aiImplementationPage'
@@ -60,7 +59,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         homePage,
         aboutPage,
         useCasesPage,
-        servicesPage,
         blogPage,
         contactPage,
         aiImplementationPage,

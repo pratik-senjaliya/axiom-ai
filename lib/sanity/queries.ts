@@ -391,28 +391,6 @@ export async function getContactPage(): Promise<any> {
   return safeFetch<any>(query, {}, null)
 }
 
-export async function getServicesPage(): Promise<any> {
-  const query = `*[_type == "servicesPage"][0] {
-      seo {
-        metaTitle,
-        metaDescription,
-        metaKeywords,
-        "openGraphImage": openGraphImage.asset->url
-      },
-      badgeText,
-      title,
-      titleHighlight,
-      description,
-      finalCTA {
-        title,
-        description,
-        cta
-      }
-    }`
-  return safeFetch<any>(query, {}, null)
-}
-
-
 export async function getBlogPage(): Promise<any> {
     const query = `*[_type == "blogPage"][0] {
       seo {

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/Button";
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Services", href: "/services", hasDropdown: true },
+  { name: "Services", href: "#", hasDropdown: true },
   { name: "Use Cases", href: "/use-cases" },
   { name: "Insights", href: "/insights" },
   { name: "About", href: "/about" },
@@ -150,22 +150,40 @@ export const Header: React.FC = () => {
                   onMouseEnter={item.hasDropdown ? handleMouseEnter : undefined}
                   onMouseLeave={item.hasDropdown ? handleMouseLeave : undefined}
                 >
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "px-6 py-2.5 text-base font-medium rounded-full transition-all flex items-center gap-1.5 tracking-tight",
-                      isActive(item)
-                        ? "text-[#00E5FF] bg-[#00E5FF]/10 border border-[#00E5FF]/25"
-                        : "text-[#C5D1E0] hover:text-white hover:bg-white/5"
-                    )}
-                  >
-                    {item.name}
-                    {item.hasDropdown && (
-                      <svg className={cn("w-3.5 h-3.5 text-[#8FA3BF] transition-transform duration-200", isServicesOpen && "rotate-180")} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    )}
-                  </Link>
+                  {item.name === "Services" ? (
+                    <div
+                      className={cn(
+                        "px-6 py-2.5 text-base font-medium rounded-full transition-all flex items-center gap-1.5 tracking-tight cursor-pointer",
+                        isActive(item)
+                          ? "text-[#00E5FF] bg-[#00E5FF]/10 border border-[#00E5FF]/25"
+                          : "text-[#C5D1E0] hover:text-white hover:bg-white/5"
+                      )}
+                    >
+                      {item.name}
+                      {item.hasDropdown && (
+                        <svg className={cn("w-3.5 h-3.5 text-[#8FA3BF] transition-transform duration-200", isServicesOpen && "rotate-180")} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "px-6 py-2.5 text-base font-medium rounded-full transition-all flex items-center gap-1.5 tracking-tight",
+                        isActive(item)
+                          ? "text-[#00E5FF] bg-[#00E5FF]/10 border border-[#00E5FF]/25"
+                          : "text-[#C5D1E0] hover:text-white hover:bg-white/5"
+                      )}
+                    >
+                      {item.name}
+                      {item.hasDropdown && (
+                        <svg className={cn("w-3.5 h-3.5 text-[#8FA3BF] transition-transform duration-200", isServicesOpen && "rotate-180")} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      )}
+                    </Link>
+                  )}
 
                   {/* Mega Menu */}
                   {item.hasDropdown && isServicesOpen && (
@@ -237,17 +255,29 @@ export const Header: React.FC = () => {
           <nav className="flex flex-col gap-6 text-lg font-medium">
             {navigation.map((item) => (
               <React.Fragment key={item.name}>
-                <Link
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={cn(
-                    "border-b border-[#00E5FF]/10 pb-4 flex justify-between items-center",
-                    isActive(item) ? "text-[#00E5FF]" : "text-[#C5D1E0]"
-                  )}
-                >
-                  {item.name}
-                  {item.hasDropdown && <svg className="w-5 h-5 text-[#8FA3BF]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>}
-                </Link>
+                {item.name === "Services" ? (
+                  <div
+                    className={cn(
+                      "border-b border-[#00E5FF]/10 pb-4 flex justify-between items-center cursor-pointer",
+                      isActive(item) ? "text-[#00E5FF]" : "text-[#C5D1E0]"
+                    )}
+                  >
+                    {item.name}
+                    {item.hasDropdown && <svg className="w-5 h-5 text-[#8FA3BF]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>}
+                  </div>
+                ) : (
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={cn(
+                      "border-b border-[#00E5FF]/10 pb-4 flex justify-between items-center",
+                      isActive(item) ? "text-[#00E5FF]" : "text-[#C5D1E0]"
+                    )}
+                  >
+                    {item.name}
+                    {item.hasDropdown && <svg className="w-5 h-5 text-[#8FA3BF]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>}
+                  </Link>
+                )}
                 {item.hasDropdown && (
                   <div className="pl-4 flex flex-col gap-4 -mt-2">
                     {serviceCategories.map((cat) => (
