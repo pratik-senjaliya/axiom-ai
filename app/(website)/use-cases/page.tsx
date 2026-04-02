@@ -6,6 +6,9 @@ import { DarkCTA } from "@/components/services/DarkCTA";
 import { getUseCasesPage } from "@/lib/sanity/queries";
 import { notFound } from "next/navigation";
 import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { SlideUp } from "@/components/ui/animations/SlideUp";
+import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
+import { HoverCard } from "@/components/ui/animations/HoverCard";
 
 export const dynamic = "force-dynamic";
 
@@ -38,13 +41,13 @@ export default async function UseCasesPage() {
     <div className="pt-24 pb-0" style={{ background: '#0A0F1F' }}>
       
       {/* ── Hero Section ── */}
-      <section className="py-24 relative overflow-hidden flex flex-col items-center text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
+      <section className="relative pt-20 pb-32 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
         <div className="bg-grid opacity-60 z-0" />
         {/* Glow radials */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[50rem] rounded-full blur-[130px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
         <div className="absolute top-[20%] right-[5%] w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.07) 0%, transparent 70%)' }} />
 
-        <div className="container-custom relative z-10 px-4">
+        <SlideUp className="container-custom relative z-10 px-4 flex flex-col items-center">
           <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)' }}>
             <SparkleIcon />
             <span className="tracking-wide uppercase text-xs font-semibold" style={{ color: '#00E5FF' }}>
@@ -77,7 +80,7 @@ export default async function UseCasesPage() {
             })()}
           </h1>
 
-          <div className="type-body-large max-w-3xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
+          <div className="type-body-large max-w-3xl mx-auto mb-10 text-[#8FA3BF] [&>p]:text-lg [&>p]:md:text-xl [&>p]:leading-relaxed" style={{ color: '#8FA3BF' }}>
             <PortableText value={data?.hero?.description} />
           </div>
 
@@ -94,15 +97,17 @@ export default async function UseCasesPage() {
                 </button>
              ))}
           </div>
-        </div>
+        </SlideUp>
       </section>
 
       {/* ── Grid Section ── */}
       <section className="py-24 relative z-10" style={{ background: '#14243A' }}>
         <div className="container-custom px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <StaggerGroup className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {(data?.cases || []).map((item: any, idx: number) => (
-              <div key={idx} className="group p-10 rounded-[2rem] flex flex-col items-start shadow-sm transition-all" style={{ background: 'rgba(26,46,71,0.5)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
+              <StaggerItem key={idx}>
+                <HoverCard className="h-full">
+                  <div className="group h-full p-10 rounded-[2rem] flex flex-col items-start shadow-sm transition-all" style={{ background: 'rgba(26,46,71,0.5)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
                 <div className="flex items-center justify-between w-full mb-8">
                     <div className="w-14 h-14 rounded-xl flex items-center justify-center shadow-sm" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
                         <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,9 +148,11 @@ export default async function UseCasesPage() {
                   </div>
                 </div>
 
-              </div>
+                  </div>
+                </HoverCard>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -163,7 +170,7 @@ export default async function UseCasesPage() {
         {/* Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[30rem] rounded-full blur-[100px] pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
 
-        <div className="container-custom relative z-10 text-center flex flex-col items-center">
+        <SlideUp className="container-custom relative z-10 text-center flex flex-col items-center">
           <h2 className="type-section-title text-white mb-6">
             {data?.midPageCta?.title}
           </h2>
@@ -182,7 +189,7 @@ export default async function UseCasesPage() {
               </Button>
             </Link>
           )}
-        </div>
+        </SlideUp>
       </section>
 
       {data?.pocOffer && (

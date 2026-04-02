@@ -332,12 +332,12 @@ export default async function ServicePage({ params }: PageProps) {
       )}
 
       {/* 7. FAQ Section */}
-      <Section background="white" spacing="lg">
+      <section className="py-24 relative z-10" style={{ background: '#0A0F1F' }}>
         <Container>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16 animate-fade-in-up">
-              <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-6">Frequently Asked Questions</h2>
-              <p className="text-lg text-neutral-600 font-medium">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Frequently Asked Questions</h2>
+              <p className="text-lg font-medium" style={{ color: '#8FA3BF' }}>
                 Detailed answers to the most common questions regarding our {service.title} services.
               </p>
             </div>
@@ -346,7 +346,7 @@ export default async function ServicePage({ params }: PageProps) {
             </div>
           </div>
         </Container>
-      </Section>
+      </section>
 
       {/* 8. CTA Section */}
       <Section

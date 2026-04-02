@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { SparkleIcon } from './ServiceHero';
 import { PortableText } from '@/components/ui/PortableText';
+import { SlideUp } from '@/components/ui/animations/SlideUp';
 
 interface DarkCTAProps {
   badgeText?: string;
@@ -33,7 +34,7 @@ export function DarkCTA({
       {/* Cyan border line on top */}
       <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(0,229,255,0.4), transparent)' }} />
 
-      <div className="container-custom relative z-10 text-center flex flex-col items-center">
+      <SlideUp className="container-custom relative z-10 text-center flex flex-col items-center">
         {badgeText && (
           <div className="mb-6 inline-flex items-center gap-2 text-[#00E5FF] text-sm font-semibold tracking-wide">
             <SparkleIcon className="w-4 h-4 text-[#00E5FF]" />
@@ -68,7 +69,7 @@ export function DarkCTA({
             )}
           </Link>
         )}
-      </div>
+      </SlideUp>
     </section>
   );
 }

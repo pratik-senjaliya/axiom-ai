@@ -4,6 +4,7 @@ import { BlogList } from "@/components/blog/BlogList";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { notFound } from "next/navigation";
 import { PortableText } from "@/components/ui/PortableText";
+import { SlideUp } from "@/components/ui/animations/SlideUp";
 
 export const dynamic = "force-dynamic";
 
@@ -38,27 +39,30 @@ export default async function InsightsPage() {
   return (
     <div className="pt-24 pb-0" style={{ background: '#0A0F1F' }}>
       {/* Hero Section */}
-      <section className="py-12 relative overflow-hidden flex flex-col items-center text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
+      <section className="relative pt-20 pb-32 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
         <div className="bg-grid opacity-60 z-0" />
         {/* Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[30rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.07) 0%, transparent 70%)' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[50rem] rounded-full blur-[130px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
+        <div className="absolute top-[20%] right-[5%] w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.07) 0%, transparent 70%)' }} />
 
-        <div className="container-custom relative z-10 px-4">
-          <div className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-medium animate-fade-up" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF', backdropFilter: 'blur(8px)' }}>
+        <SlideUp className="container-custom relative z-10 px-4 flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-8" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)', backdropFilter: 'blur(8px)' }}>
             <SparkleIcon />
-            <span>{pageData?.seo?.metaTitle?.split("|")[0] || pageData?.title}</span>
+            <span className="tracking-wide uppercase text-xs font-semibold" style={{ color: '#00E5FF' }}>
+              {pageData?.seo?.metaTitle?.split("|")[0] || pageData?.title}
+            </span>
           </div>
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-5 text-white max-w-4xl mx-auto animate-fade-up">
-            <span className="gradient-text">{pageData?.title}</span>
+          <h1 className="type-hero-title text-white mb-8 max-w-5xl mx-auto">
+            {pageData?.title}
           </h1>
-          <div className="text-sm md:text-base max-w-2xl mx-auto mb-6 animate-fade-up" style={{ animationDelay: "0.1s", color: '#8FA3BF' }}>
+          <div className="type-body-large max-w-3xl mx-auto text-[#8FA3BF] [&>p]:text-lg [&>p]:md:text-xl [&>p]:leading-relaxed" style={{ color: '#8FA3BF' }}>
             <PortableText value={pageData?.description} />
           </div>
-        </div>
+        </SlideUp>
       </section>
 
       {/* Grid Content with Filtering */}
-      <section className="pb-24 pt-0 relative z-10" style={{ background: '#0A0F1F' }}>
+      <section className="pb-24 pt-4 md:pt-8 relative z-10" style={{ background: '#0A0F1F' }}>
         <BlogList posts={posts} />
       </section>
 

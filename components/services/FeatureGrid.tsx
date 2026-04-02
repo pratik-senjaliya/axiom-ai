@@ -3,6 +3,8 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { PortableText } from "@/components/ui/PortableText";
+import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
+import { HoverCard } from "@/components/ui/animations/HoverCard";
 
 export interface FeatureItem {
   /* Common */
@@ -83,15 +85,15 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
           </div>
         )}
 
-        <div className={gridClass}>
+        <StaggerGroup className={gridClass}>
           {items.map((item, index) => {
             if (isRoadmap) {
               return (
-                <div key={index} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                <StaggerItem key={index} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
                   <div className="flex items-center justify-center w-16 h-16 rounded-full shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xl border-2" style={{ background: 'rgba(0,229,255,0.15)', borderColor: '#00E5FF', color: '#00E5FF', boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
                     {item.stepNumber || index + 1}
                   </div>
-                  <div className={cn("w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] rounded-[2rem] border transition-all", small ? "p-6" : "p-8")} style={{ background: 'rgba(26,46,71,0.7)', borderColor: 'rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
+                  <HoverCard className={cn("w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] rounded-[2rem] border h-full", small ? "p-6" : "p-8")} style={{ background: 'rgba(26,46,71,0.7)', borderColor: 'rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
                     {item.badge && <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full mb-4" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.25)' }}>{item.badge}</span>}
                     <h3 className={cn("font-bold text-white mb-4", small ? "text-xl" : "text-2xl")}>{item.title}</h3>
                     {item.description && (
@@ -99,17 +101,15 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
                         <PortableText value={item.description} />
                       </div>
                     )}
-                  </div>
-                </div>
+                  </HoverCard>
+                </StaggerItem>
               );
             }
 
             // Standard / Layer / Use Case Card
             return (
-              <div key={index} className={cn("rounded-[2rem] flex flex-col h-full transition-all duration-300", small ? "p-6 md:p-8" : "p-8 sm:p-10")} style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.35)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 25px rgba(0,229,255,0.1), 0 20px 40px rgba(0,0,0,0.3)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.12)'; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
-              >
+              <StaggerItem key={index} className="h-full">
+                <HoverCard className={cn("rounded-[2rem] flex flex-col h-full", small ? "p-6 md:p-8" : "p-8 sm:p-10")} style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
                 {/* Header (Badge or Icon) */}
                 <div className="mb-6 flex items-center gap-3">
                   {item.badge && (
@@ -205,10 +205,11 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
                     </div>
                   </div>
                 )}
-              </div>
-            );
-          })}
-        </div>
+              </HoverCard>
+            </StaggerItem>
+          );
+        })}
+        </StaggerGroup>
       </div>
     </section>
   );

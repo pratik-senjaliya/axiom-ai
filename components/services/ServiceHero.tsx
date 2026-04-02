@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { PortableText } from "@/components/ui/PortableText";
+import { SlideUp } from "@/components/ui/animations/SlideUp";
 
 interface ServiceHeroProps {
   badgeText?: string;
@@ -46,7 +47,7 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] rounded-full blur-[120px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%)' }} />
       <div className="absolute top-[30%] right-[10%] w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.08) 0%, transparent 70%)' }} />
 
-      <div className="container-custom relative z-10 px-4 max-w-4xl mx-auto flex flex-col items-center">
+      <SlideUp className="container-custom relative z-10 px-4 max-w-4xl mx-auto flex flex-col items-center">
         {/* Back Link */}
         {backLink && (
           <Link href={backLink.href} className="inline-flex items-center text-sm font-medium text-[#8FA3BF] hover:text-[#00E5FF] transition-colors mb-8">
@@ -151,7 +152,7 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
             )}
           </div>
         )}
-      </div>
+      </SlideUp>
     </section>
   );
 };

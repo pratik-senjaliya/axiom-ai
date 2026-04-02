@@ -119,7 +119,7 @@ export function PortableText({ value, className = '' }: PortableTextProps) {
     if (typeof value === 'string') {
         return (
             <div className={className}>
-                <p className="mb-4 last:mb-0 leading-relaxed text-neutral-700">{value}</p>
+                <p className="mb-4 last:mb-0 leading-relaxed">{value}</p>
             </div>
         )
     }

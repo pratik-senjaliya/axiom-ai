@@ -5,6 +5,10 @@ import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 import { getHomePage } from "@/lib/sanity/queries";
 import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { SlideUp } from "@/components/ui/animations/SlideUp";
+import { FadeIn } from "@/components/ui/animations/FadeIn";
+import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
+import { HoverCard } from "@/components/ui/animations/HoverCard";
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +65,7 @@ export default async function HomePage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[50rem] rounded-full blur-[120px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
         <div className="absolute top-[30%] right-[5%] w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.09) 0%, transparent 70%)' }} />
 
-        <div className="container-custom relative z-10 flex flex-col items-center">
+        <SlideUp className="container-custom relative z-10 flex flex-col items-center">
 
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-8" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)' }}>
             <SparkleIcon />
@@ -116,7 +120,7 @@ export default async function HomePage() {
               </Link>
             )}
           </div>
-        </div>
+        </SlideUp>
       </section>
 
       {/* 2. Why Digital Transformations Fail */}
@@ -128,30 +132,32 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <StaggerGroup className="grid md:grid-cols-3 gap-8">
             {data?.pitfalls?.map((card: any, index: number) => {
               const staticInfo = featureStats[index % featureStats.length];
               return (
-                <div key={index} className="rounded-3xl p-8 flex flex-col justify-between h-full group transition-all duration-300 hover:[border-color:rgba(0,229,255,0.35)] hover:[box-shadow:0_0_25px_rgba(0,229,255,0.1)]" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
-                  <div className="flex justify-between items-start mb-12">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF' }}>
-                      {staticInfo.icon}
+                <StaggerItem key={index} className="h-full">
+                  <HoverCard className="rounded-3xl p-8 flex flex-col justify-between h-full group" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
+                    <div className="flex justify-between items-start mb-12">
+                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF' }}>
+                        {staticInfo.icon}
+                      </div>
+                      <div className="text-right">
+                        <div className="text-3xl font-bold mb-1" style={{ color: '#00E5FF' }}>{card.stat}</div>
+                        <div className="text-xs font-medium uppercase tracking-wide" style={{ color: '#8FA3BF' }}>Business Risk</div>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-3xl font-bold mb-1" style={{ color: '#00E5FF' }}>{card.stat}</div>
-                      <div className="text-xs font-medium uppercase tracking-wide" style={{ color: '#8FA3BF' }}>Business Risk</div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
+                      <div className="leading-relaxed text-sm" style={{ color: '#8FA3BF' }}>
+                        <PortableText value={card.description} />
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
-                    <div className="leading-relaxed text-sm" style={{ color: '#8FA3BF' }}>
-                      <PortableText value={card.description} />
-                    </div>
-                  </div>
-                </div>
+                  </HoverCard>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -168,21 +174,22 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <StaggerGroup className="grid md:grid-cols-3 gap-8">
             {data?.solutions?.map((card: any, idx: number) => (
-              <div key={idx} className="group rounded-[32px] p-8 sm:p-10 transition-all duration-300 h-full flex flex-col hover:[border-color:rgba(0,229,255,0.35)] hover:[box-shadow:0_0_25px_rgba(0,229,255,0.12)]" style={{ background: 'rgba(20,36,58,0.7)', border: '1px solid rgba(0,229,255,0.1)', backdropFilter: 'blur(10px)' }}
-              >
-                <div className="flex items-center gap-2 mb-8 font-semibold text-[0.95rem]" style={{ color: '#00E5FF' }}>
-                  <SparkleIcon />
-                  <span>0{idx + 1}</span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 leading-tight">{card.title}</h3>
-                <div className="leading-relaxed text-sm sm:text-[0.95rem]" style={{ color: '#8FA3BF' }}>
-                  <PortableText value={card.description} />
-                </div>
-              </div>
+              <StaggerItem key={idx} className="h-full">
+                <HoverCard className="group rounded-[32px] p-8 sm:p-10 h-full flex flex-col" style={{ background: 'rgba(20,36,58,0.7)', border: '1px solid rgba(0,229,255,0.1)', backdropFilter: 'blur(10px)' }}>
+                  <div className="flex items-center gap-2 mb-8 font-semibold text-[0.95rem]" style={{ color: '#00E5FF' }}>
+                    <SparkleIcon />
+                    <span>0{idx + 1}</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 leading-tight">{card.title}</h3>
+                  <div className="leading-relaxed text-sm sm:text-[0.95rem]" style={{ color: '#8FA3BF' }}>
+                    <PortableText value={card.description} />
+                  </div>
+                </HoverCard>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -201,25 +208,27 @@ export default async function HomePage() {
           </div>
 
           {data?.roadmap && data.roadmap.length > 0 && (
-            <div className="grid md:grid-cols-3 gap-6 relative max-w-5xl mx-auto">
+            <StaggerGroup className="grid md:grid-cols-3 gap-6 relative max-w-5xl mx-auto">
               {/* Dashed connector line */}
-              <div className="hidden md:block absolute top-[50%] left-10 right-10 h-0 border-t border-dashed pointer-events-none" style={{ borderColor: 'rgba(0,229,255,0.2)' }} />
+              <div className="hidden md:block absolute top-[50%] left-10 right-10 h-0 border-t border-dashed pointer-events-none z-0" style={{ borderColor: 'rgba(0,229,255,0.2)' }} />
 
               {data.roadmap.map((phase: any, index: number) => {
                 const style = processStyles[index % processStyles.length];
                 return (
-                  <div key={index} className="rounded-[24px] w-full max-w-[340px] h-[230px] p-7 mx-auto flex flex-col justify-center" style={{ background: style.bg, border: `1px solid ${style.border}` }}>
-                    <div className="text-[4.25rem] font-black mb-3 leading-none select-none" style={{ color: style.num }}>
-                      {phase.step || `0${index + 1}`}
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">{phase.title}</h3>
-                    <div className="leading-relaxed text-sm" style={{ color: '#8FA3BF' }}>
-                      <PortableText value={phase.description} />
-                    </div>
-                  </div>
+                  <StaggerItem key={index} className="relative z-10 w-full max-w-[340px] mx-auto">
+                    <HoverCard className="rounded-[24px] h-full min-h-[230px] p-7 flex flex-col justify-center" style={{ background: style.bg, border: `1px solid ${style.border}` }}>
+                      <div className="text-[4.25rem] font-black mb-3 leading-none select-none" style={{ color: style.num }}>
+                        {phase.step || `0${index + 1}`}
+                      </div>
+                      <h3 className="text-xl font-bold text-white mb-2">{phase.title}</h3>
+                      <div className="leading-relaxed text-sm" style={{ color: '#8FA3BF' }}>
+                        <PortableText value={phase.description} />
+                      </div>
+                    </HoverCard>
+                  </StaggerItem>
                 );
               })}
-            </div>
+            </StaggerGroup>
           )}
         </div>
       </section>
@@ -233,7 +242,7 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {data?.personas?.map((persona: any, index: number) => {
               const gradient = personaGradients[index % personaGradients.length];
               const personaIcon = [
@@ -243,18 +252,20 @@ export default async function HomePage() {
                 <svg key="3" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>,
               ][index % 4];
               return (
-                <div key={index} className="rounded-3xl p-8" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 text-[#0A0F1F]" style={{ background: gradient, boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
-                    {personaIcon}
-                  </div>
-                  <h3 className="text-lg font-bold text-white mb-3">{persona.role}</h3>
-                  <div className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
-                    <PortableText value={persona.description} />
-                  </div>
-                </div>
+                <StaggerItem key={index} className="h-full">
+                  <HoverCard className="rounded-3xl p-8 h-full" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 text-[#0A0F1F]" style={{ background: gradient, boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
+                      {personaIcon}
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-3">{persona.role}</h3>
+                    <div className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
+                      <PortableText value={persona.description} />
+                    </div>
+                  </HoverCard>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -262,7 +273,7 @@ export default async function HomePage() {
       {data?.affiliationTitle && data?.affiliationBody && (
         <section className="py-24 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
           <div className="absolute top-0 w-full h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent)' }} />
-          <div className="container-custom max-w-5xl mx-auto text-center relative z-10 px-4">
+          <FadeIn className="container-custom max-w-5xl mx-auto text-center relative z-10 px-4">
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border" style={{ background: 'rgba(0,229,255,0.05)', borderColor: 'rgba(0,229,255,0.2)' }}>
               <SparkleIcon />
               <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: '#00E5FF' }}>
@@ -275,7 +286,7 @@ export default async function HomePage() {
             <div className="text-lg md:text-xl leading-relaxed max-w-4xl mx-auto font-light" style={{ color: '#8FA3BF' }}>
               <PortableText value={data.affiliationBody} />
             </div>
-          </div>
+          </FadeIn>
           <div className="absolute bottom-0 w-full h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.1), transparent)' }} />
         </section>
       )}
@@ -294,7 +305,7 @@ export default async function HomePage() {
         {/* Top border accent */}
         <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(0,229,255,0.4), transparent)' }} />
 
-        <div className="container-custom text-center relative z-10">
+        <SlideUp className="container-custom text-center relative z-10">
           <h2 className="type-section-title text-white mb-6">
             {data?.finalCta?.title}
           </h2>
@@ -313,7 +324,7 @@ export default async function HomePage() {
               </Link>
             )}
           </div>
-        </div>
+        </SlideUp>
       </section>
     </>
   );

@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
+import { SlideUp } from "@/components/ui/animations/SlideUp";
+import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 
 interface FAQItem {
   question: string;
@@ -32,63 +34,72 @@ export const FAQ: React.FC<FAQProps> = ({
   return (
     <div className="w-full">
       {(title || showMoreLink) && (
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+        <SlideUp className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
           {title && (
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 sm:mb-0">
+            <h2 className="type-section-title text-white mb-4 sm:mb-0">
               {title}
             </h2>
           )}
           {showMoreLink && (
             <a
               href={moreLinkHref}
-              className="text-primary-600 font-medium hover:text-primary-700 transition-colors"
+              className="font-medium hover:text-[#00E5FF] transition-colors"
+              style={{ color: '#C5D1E0' }}
             >
               {moreLinkText}
             </a>
           )}
-        </div>
+        </SlideUp>
       )}
 
-      <div className="space-y-4">
+      <StaggerGroup className="space-y-4 max-w-4xl mx-auto">
         {items.map((item, index) => (
-          <div
+          <StaggerItem
             key={index}
-            className="border border-neutral-200 rounded-lg overflow-hidden"
+            className="border overflow-hidden rounded-2xl transition-all duration-300"
+            style={{ 
+              borderColor: openIndex === index ? 'rgba(0,229,255,0.4)' : 'rgba(0,229,255,0.15)',
+              background: openIndex === index ? 'rgba(0,229,255,0.05)' : 'rgba(26,46,71,0.6)',
+              backdropFilter: 'blur(10px)',
+              boxShadow: openIndex === index ? '0 0 20px rgba(0,229,255,0.1)' : 'none'
+            }}
           >
             <button
               onClick={() => toggleItem(index)}
-              className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-neutral-50 transition-colors"
+              className="w-full px-6 py-5 text-left flex items-center justify-between transition-colors hover:bg-white/5"
             >
-              <span className="font-semibold text-neutral-900 pr-4">
+              <span className="font-semibold text-lg text-white pr-4">
                 {item.question}
               </span>
-              <svg
-                className={cn(
-                  "w-5 h-5 text-neutral-600 flex-shrink-0 transition-transform",
-                  openIndex === index && "rotate-180"
-                )}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              <div 
+                className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300"
+                style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', transform: openIndex === index ? 'rotate(180deg)' : 'rotate(0deg)' }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
             </button>
             {openIndex === index && (
-              <div className="px-6 py-4 bg-neutral-50 border-t border-neutral-200">
-                <div className="text-neutral-700 leading-relaxed">
+              <div className="px-6 py-5 border-t" style={{ borderColor: 'rgba(0,229,255,0.1)', background: 'rgba(10,15,31,0.3)' }}>
+                <div className="text-[15px] leading-relaxed" style={{ color: '#8FA3BF' }}>
                   {item.answer}
                 </div>
               </div>
             )}
-          </div>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerGroup>
     </div>
   );
 };

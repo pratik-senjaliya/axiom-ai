@@ -4,6 +4,7 @@ import React, { useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { PortableText } from '@/components/ui/PortableText';
+import { SlideUp } from '@/components/ui/animations/SlideUp';
 
 interface Testimonial {
   quote: any;
@@ -49,7 +50,7 @@ export function TestimonialCarousel({
       <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] rounded-full blur-[100px] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.07) 0%, transparent 70%)' }} />
 
       <div className="container-custom px-4 relative z-10">
-        <div className="text-center mb-16">
+        <SlideUp className="text-center mb-16">
           <div className="inline-flex items-center gap-2 mb-4 font-semibold text-xs tracking-wide uppercase" style={{ color: '#00E5FF' }}>
             <span className="text-xl leading-none font-light block -mt-1">+</span>
             <span>{subtitle}</span>
@@ -57,9 +58,9 @@ export function TestimonialCarousel({
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
             {title}
           </h2>
-        </div>
+        </SlideUp>
 
-        <div className="relative w-full px-4 md:px-12">
+        <SlideUp delay={0.2} className="relative w-full px-4 md:px-12">
           {/* Carousel */}
           <div className="overflow-hidden cursor-grab active:cursor-grabbing -my-24 py-24" ref={emblaRef}>
             <div className="flex">
@@ -119,7 +120,7 @@ export function TestimonialCarousel({
               </button>
             </div>
           )}
-        </div>
+        </SlideUp>
       </div>
     </section>
   );

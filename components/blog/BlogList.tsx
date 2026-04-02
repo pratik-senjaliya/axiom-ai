@@ -4,6 +4,8 @@ import { useState } from "react";
 import { BlogPost } from "@/lib/blog";
 import { BlogCard } from "./BlogCard";
 import { BlogFilter } from "./BlogFilter";
+import { SlideUp } from "@/components/ui/animations/SlideUp";
+import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -38,18 +40,18 @@ export function BlogList({ posts }: BlogListProps) {
       />
 
       {featuredPost && (
-        <div className="animate-fade-up">
+        <SlideUp>
           <BlogCard post={featuredPost} featured={true} />
-        </div>
+        </SlideUp>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
         {gridPosts.map((post, idx) => (
-          <div key={post.id || idx} className="animate-fade-up" style={{ animationDelay: `${idx * 0.1}s` }}>
+          <StaggerItem key={post.id || idx}>
             <BlogCard post={post} />
-          </div>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerGroup>
 
       {filteredPosts.length === 0 && (
         <div className="py-24 text-center">

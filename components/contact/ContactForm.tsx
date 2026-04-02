@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PortableText } from "@/components/ui/PortableText";
+import { SlideUp } from "@/components/ui/animations/SlideUp";
 
 const SERVICES = [
   { title: 'GenAI Implementation', value: 'genai-implementation' },
@@ -90,7 +91,7 @@ export function ContactForm({ data }: { data: any }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
 
           {/* Left Column: Information */}
-          <div className="max-w-xl">
+          <SlideUp delay={0.1} className="max-w-xl">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF' }}>
               <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" /></svg>
@@ -143,16 +144,16 @@ export function ContactForm({ data }: { data: any }) {
             {/* Social Icons (Dynamic or Fallback) */}
             <div className="flex gap-4">
               <a href="#" className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300" style={{ background: 'rgba(20,36,58,0.8)', color: '#8FA3BF', border: '1px solid rgba(0,229,255,0.2)' }}>
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
               </a>
               <a href="#" className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300" style={{ background: 'rgba(20,36,58,0.8)', color: '#8FA3BF', border: '1px solid rgba(0,229,255,0.2)' }}>
                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
               </a>
             </div>
-          </div>
+          </SlideUp>
 
           {/* Right Column: Form Card */}
-          <div className="w-full rounded-[2.5rem] p-8 md:p-12 transition-all hover:[box-shadow:0_30px_100px_rgba(0,0,0,0.6),0_0_0_1px_rgba(0,229,255,0.15)_inset]" style={{ background: 'rgba(20,36,58,0.85)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(16px)', boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,229,255,0.07) inset' }}>
+          <SlideUp delay={0.3} className="w-full rounded-[2.5rem] p-8 md:p-12 transition-all hover:[box-shadow:0_30px_100px_rgba(0,0,0,0.6),0_0_0_1px_rgba(0,229,255,0.15)_inset]" style={{ background: 'rgba(20,36,58,0.85)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(16px)', boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,229,255,0.07) inset' }}>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 tracking-tight">
               Send a Message
             </h2>
@@ -270,7 +271,7 @@ export function ContactForm({ data }: { data: any }) {
                 )}
               </button>
             </form>
-          </div>
+          </SlideUp>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ export function BlogFilter({ categories, activeCategory, onCategoryChange }: Blo
   const allCategories = ["All", ...categories.filter(c => c && c !== "All")];
 
   return (
-    <div className="flex flex-wrap justify-center gap-3 mb-16">
+    <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 mb-16 max-w-5xl mx-auto">
       {allCategories.map((category) => (
         <button
           key={category}
@@ -21,7 +21,7 @@ export function BlogFilter({ categories, activeCategory, onCategoryChange }: Blo
               ? {
                   background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)',
                   color: '#0A0F1F',
-                  border: 'none',
+                  border: '1px solid transparent',
                   boxShadow: '0 0 15px rgba(0,229,255,0.4)',
                   transform: 'scale(1.05)',
                 }
