@@ -122,13 +122,51 @@ export default async function AIImplementationPage() {
         items={pitfallItems}
       />
 
-      <FeatureGrid 
-        title={data?.layersHeadline}
-        columns={2}
-        items={aiLayers.length > 0 ? aiLayers : []}
-        small={true}
-        bgWhite={true}
-      />
+      {/* Our Enterprise AI Stack (The 4 Layers) */}
+      <section className="py-24 relative overflow-hidden" style={{ background: '#0D1B2A' }}>
+        <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
+        <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
+              {data?.layersHeadline}
+            </h2>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
+            {aiLayers.map((item, index) => (
+              <div 
+                key={index} 
+                className="flex flex-col group w-full lg:basis-[calc(50%-2rem)] min-w-[320px] max-w-[500px]"
+              >
+                <div 
+                  className="rounded-[2.5rem] p-8 md:p-10 flex flex-col h-full border transition-all duration-300" 
+                  style={{ background: 'rgba(26,46,71,0.6)', borderColor: 'rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}
+                >
+                  <div className="flex-grow">
+                    <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-[#00E5FF] transition-colors">
+                      {item.title}
+                    </h3>
+                    <div className="text-base leading-relaxed mb-8" style={{ color: '#8FA3BF' }}>
+                      <PortableText value={item.outcomeDescription} />
+                    </div>
+                  </div>
+
+                  {item.outcomeTitle && (
+                    <div 
+                      className="mt-auto p-6 rounded-2xl transition-all duration-300 group-hover:bg-[#00E5FF]/10" 
+                      style={{ background: 'rgba(0,229,255,0.07)', border: '1px solid rgba(0,229,255,0.2)' }}
+                    >
+                      <div className="text-sm font-bold mb-1" style={{ color: '#00E5FF' }}>
+                        {item.outcomeTitle}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <FeatureGrid 
         title={data?.useCasesHeadline}
