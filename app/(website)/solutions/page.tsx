@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/Button";
 import { PortableText } from "@/components/ui/PortableText";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { getUseCasesPage } from "@/lib/sanity/queries";
-import { notFound } from "next/navigation";
 import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
@@ -33,20 +32,43 @@ const SparkleIcon = () => (
   </svg>
 );
 
-export default async function SolutionsPage() {
+export default async function SolutionsPage({
+  searchParams,
+}: {
+  searchParams: { tag?: string };
+}) {
   const data = await getUseCasesPage();
-  if (!data) notFound();
+  const activeTag = searchParams.tag || null;
+
+  const allTags = (() => {
+    if (!data?.cases) return [];
+    const tags = new Set<string>();
+    data.cases.forEach((item: any) => {
+      if (item.tools) {
+        const itemTools = Array.isArray(item.tools) ? item.tools : [item.tools];
+        itemTools.forEach((tag: string) => tags.add(tag));
+      }
+    });
+    return Array.from(tags).sort();
+  })();
+
+  const filteredCases = (() => {
+    if (!data?.cases) return [];
+    if (!activeTag) return data.cases;
+    return data.cases.filter((item: any) => {
+      const itemTools = Array.isArray(item.tools) ? item.tools : [item.tools];
+      return itemTools.includes(activeTag);
+    });
+  })();
 
   return (
     <div className="pt-24 pb-0" style={{ background: '#0A0F1F' }}>
       
       {/* ── Hero Section ── */}
-      <section className="relative pt-20 pb-32 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
+      <section className="relative pt-20 pb-28 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
         <div className="bg-grid opacity-60 z-0" />
-        {/* Glow radials */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[50rem] rounded-full blur-[130px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
-        <div className="absolute top-[20%] right-[5%] w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.07) 0%, transparent 70%)' }} />
-
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[40rem] rounded-full blur-[130px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
+        
         <SlideUp className="container-custom relative z-10 px-4 flex flex-col items-center">
           <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)' }}>
             <SparkleIcon />
@@ -86,68 +108,127 @@ export default async function SolutionsPage() {
 
           {/* Filters */}
           <div className="flex flex-wrap justify-center gap-3">
-             <button className="px-5 py-2 rounded-full text-sm font-medium shadow-sm border transition-colors" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', borderColor: 'transparent', boxShadow: '0 0 15px rgba(0,229,255,0.2)' }}>
+             <Link 
+              href="/solutions"
+              scroll={false}
+              className="px-5 py-2 rounded-full text-sm font-medium shadow-sm border transition-all duration-300" 
+              style={{ 
+                background: !activeTag ? 'linear-gradient(135deg, #1DA1F2, #00E5FF)' : 'rgba(26,46,71,0.6)', 
+                color: !activeTag ? '#0A0F1F' : '#C5D1E0', 
+                borderColor: !activeTag ? 'transparent' : 'rgba(0,229,255,0.15)',
+                boxShadow: !activeTag ? '0 0 15px rgba(0,229,255,0.2)' : 'none'
+              }}
+             >
                All Solutions
-             </button>
-             {data?.tabs?.map((tab: string, idx: number) => (
-                <button key={idx} className="px-5 py-2 rounded-full text-sm font-medium shadow-sm transition-colors border" style={{ background: 'rgba(26,46,71,0.6)', color: '#C5D1E0', borderColor: 'rgba(0,229,255,0.15)' }}
-                  // In a real app we'd add interactive state, for now styling as inactive
+             </Link>
+             {allTags.map((tag, idx: number) => (
+                <Link 
+                  key={idx} 
+                  href={`/solutions?tag=${encodeURIComponent(tag)}`}
+                  scroll={false}
+                  className="px-5 py-2 rounded-full text-sm font-medium shadow-sm transition-all duration-300 border" 
+                  style={{ 
+                    background: activeTag === tag ? 'linear-gradient(135deg, #1DA1F2, #00E5FF)' : 'rgba(26,46,71,0.6)', 
+                    color: activeTag === tag ? '#0A0F1F' : '#C5D1E0', 
+                    borderColor: activeTag === tag ? 'transparent' : 'rgba(0,229,255,0.15)',
+                    boxShadow: activeTag === tag ? '0 0 15px rgba(0,229,255,0.2)' : 'none'
+                  }}
                 >
-                  {tab}
-                </button>
+                  {tag}
+                </Link>
              ))}
           </div>
         </SlideUp>
       </section>
 
       {/* ── Grid Section ── */}
-      <section className="py-24 relative z-10" style={{ background: '#14243A' }}>
-        <div className="container-custom px-4">
-          <StaggerGroup className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {(data?.cases || []).map((item: any, idx: number) => (
-              <StaggerItem key={idx}>
-                <HoverCard className="h-full">
-                  <div className="group h-full p-10 rounded-[2rem] flex flex-col items-start shadow-sm transition-all" style={{ background: 'rgba(26,46,71,0.5)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
-                <div className="flex items-center justify-between w-full mb-8">
-                    <div className="w-14 h-14 rounded-xl flex items-center justify-center shadow-sm" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
-                        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <span className="text-xs font-bold tracking-widest" style={{ color: '#8FA3BF' }}>
-                      {item.caseNumber}
-                    </span>
-                </div>
-                
-                <h3 className="type-card-title text-white mb-8 group-hover:text-[#00E5FF] transition-colors">{item.title}</h3>
-                
-                <div className="space-y-6 flex-grow mb-8 w-full">
-                  <div>
-                    <h4 className="text-xs font-bold tracking-wider mb-2" style={{ color: '#00E5FF' }}>THE PROBLEM</h4>
-                    <div className="text-sm leading-relaxed" style={{ color: '#C5D1E0' }}>
-                      <PortableText value={item.problem} />
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold tracking-wider mb-2" style={{ color: '#00E5FF' }}>TOOLS & TECH</h4>
-                    <p className="text-sm leading-relaxed" style={{ color: '#C5D1E0' }}>
-                        {Array.isArray(item.tools) ? item.tools.join(", ") : item.tools}
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold tracking-wider mb-2" style={{ color: '#00E5FF' }}>APPROACH</h4>
-                    <div className="text-sm leading-relaxed" style={{ color: '#C5D1E0' }}>
-                      <PortableText value={item.approach} />
-                    </div>
-                  </div>
-                  <div className="pt-6 border-t" style={{ borderColor: 'rgba(0,229,255,0.15)' }}>
-                    <h4 className="text-xs font-bold tracking-wider mb-2" style={{ color: '#00E5FF' }}>BUSINESS IMPACT</h4>
-                    <div className="font-bold leading-relaxed text-white">
-                      <PortableText value={item.impact} />
-                    </div>
-                  </div>
-                </div>
+      <section className="py-24 relative z-10" style={{ background: '#0A0F1F' }}>
+        <div className="container-custom px-4 max-w-[95rem] mx-auto">
+          <StaggerGroup className="flex flex-wrap justify-center gap-10 lg:gap-12" key={activeTag || 'all'}>
+            {filteredCases.map((item: any, idx: number) => (
+              <StaggerItem 
+                key={item._id || idx} 
+                className="flex flex-col w-full sm:w-[calc(50%-1.5rem)] lg:basis-[calc(50%-3rem)] min-w-[380px] max-w-[650px] flex-grow"
+              >
+                <HoverCard className="h-full rounded-[2rem] flex flex-col border transition-all duration-700 overflow-hidden group shadow-lg shadow-black/40" 
+                  style={{ background: 'rgba(20,36,58,0.7)', borderColor: 'rgba(0,229,255,0.15)', backdropFilter: 'blur(20px)' }}
+                >
+                  <div className="flex flex-col h-full relative">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E5FF]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    
+                    <div className="p-7 md:p-8 flex h-full">
+                      <div className="hidden sm:flex flex-col items-center mr-8 pt-1 shrink-0">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] mb-2.5 shadow-[0_0_10px_#00E5FF]" />
+                        <div className="flex-grow w-px bg-gradient-to-b from-[#00E5FF]/40 via-[#00E5FF]/10 to-transparent" />
+                      </div>
 
+                      <div className="flex-grow flex flex-col text-left">
+                        <div className="flex items-start justify-between mb-5">
+                          <div className="max-w-[85%] min-h-[3rem]">
+                            <h3 className="text-xl md:text-2xl font-bold text-white transition-all duration-500 group-hover:text-[#00E5FF] leading-tight">
+                              {item.title}
+                            </h3>
+                          </div>
+                          <span className="text-[0.55rem] font-black tracking-[0.1em] py-1 px-2.5 rounded-md bg-[#00E5FF]/10 border border-[#00E5FF]/20" style={{ color: '#00E5FF' }}>
+                            {item.caseNumber || `S${idx + 1}`}
+                          </span>
+                        </div>
+
+                        <div className="flex-grow flex flex-col gap-4 mb-6">
+                          <div className="relative min-h-[50px]">
+                            <div className="flex items-center gap-2.5 mb-2 group/label">
+                              <div className="w-5 h-[2px] bg-[#00E5FF]" />
+                              <h4 className="text-[0.65rem] font-black tracking-[0.2em] uppercase" style={{ color: '#00E5FF' }}>THE CHALLENGE</h4>
+                            </div>
+                            <div className="text-sm md:text-base leading-snug text-white font-normal">
+                              <PortableText value={item.problem} />
+                            </div>
+                          </div>
+
+                          <div className="relative min-h-[40px]">
+                            <div className="flex items-center gap-2.5 mb-2 group/label">
+                              <div className="w-5 h-[2px] bg-[#00E5FF]/40" />
+                              <h4 className="text-[0.65rem] font-bold tracking-[0.2em] uppercase" style={{ color: '#00E5FF' }}>STRATEGIC APPROACH</h4>
+                            </div>
+                            <div className="text-sm md:text-base leading-snug text-white font-light opacity-85">
+                              <PortableText value={item.approach} />
+                            </div>
+                          </div>
+
+                          <div className="pt-0">
+                             {item.tools && (
+                              <div className="flex flex-wrap gap-2">
+                                {(Array.isArray(item.tools) ? item.tools : [item.tools]).map((tool: string, i: number) => (
+                                  <Link 
+                                    key={i} 
+                                    href={`/solutions?tag=${encodeURIComponent(tool)}`}
+                                    scroll={false}
+                                    className={`text-[0.6rem] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg border transition-all ${activeTag === tool ? 'bg-[#00E5FF] text-black border-[#00E5FF]' : 'border-[#00E5FF]/10 bg-white/5 text-white/70 hover:bg-[#00E5FF]/20 hover:text-white hover:border-[#00E5FF]/30'}`}
+                                  >
+                                    {tool}
+                                  </Link>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="mt-auto">
+                          <div className="relative p-5 md:p-6 rounded-[1.5rem] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(0,229,255,0.1)] overflow-hidden" 
+                            style={{ background: 'rgba(0,229,255,0.06)', border: '1px solid rgba(0,229,255,0.2)' }}>
+                            <div className="relative z-10 flex flex-col justify-between gap-2.5">
+                                <div className="flex items-center gap-2 mb-0.5">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]" />
+                                  <h4 className="text-[0.6rem] font-bold tracking-[0.2em] uppercase" style={{ color: '#00E5FF' }}>VALUE DELIVERED</h4>
+                                </div>
+                                <div className="text-base md:text-lg font-bold text-white leading-tight">
+                                  <PortableText value={item.impact} />
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </HoverCard>
               </StaggerItem>
@@ -156,18 +237,14 @@ export default async function SolutionsPage() {
         </div>
       </section>
 
-      {/* ── Testimonials ── */}
       <TestimonialCarousel 
         testimonials={data?.testimonials} 
         subtitle="Impact"
         title="Solutions Index"
       />
 
-      {/* ── Bottom CTA Layer ── */}
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #0A0F1F 100%)' }}>
-        {/* Grid overlay */}
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '100px 100px' }} />
-        {/* Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[30rem] rounded-full blur-[100px] pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
 
         <SlideUp className="container-custom relative z-10 text-center flex flex-col items-center">
