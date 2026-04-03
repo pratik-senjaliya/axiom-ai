@@ -39,36 +39,36 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
           </div>
         )}
 
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {items.map((item, index) => (
             <div
               key={index}
-              className="group rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-start gap-8 transition-all duration-300"
+              className="group rounded-[2rem] p-8 md:p-10 flex flex-col items-start gap-8 transition-all duration-300 h-full"
               style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.35)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 30px rgba(0,229,255,0.1), 0 20px 40px rgba(0,0,0,0.3)'; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.12)'; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
             >
               {/* Icon */}
-              <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-[1.5rem] flex items-center justify-center text-[#0A0F1F] group-hover:scale-105 transition-transform duration-300" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 0 25px rgba(0,229,255,0.35)' }}>
+              <div className="w-16 h-16 shrink-0 rounded-[1.5rem] flex items-center justify-center text-[#0A0F1F] group-hover:scale-105 transition-transform duration-300" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 0 25px rgba(0,229,255,0.35)' }}>
                 {item.icon}
               </div>
-
+ 
               {/* Content */}
-              <div className="flex-grow">
-                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#00E5FF] transition-colors">
+              <div className="flex-grow flex flex-col">
+                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors">
                   {item.title}
                 </h3>
-                <div className="text-lg leading-relaxed mb-6" style={{ color: '#8FA3BF' }}>
+                <div className="text-base md:text-lg leading-relaxed mb-6 flex-grow" style={{ color: '#8FA3BF' }}>
                   <PortableText value={item.description} />
                 </div>
-
+ 
                 {/* Outcome Footer */}
                 {item.outcomeTitle && (
-                  <div className="inline-flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 rounded-2xl px-6 py-4" style={{ background: 'rgba(0,229,255,0.07)', border: '1px solid rgba(0,229,255,0.2)' }}>
-                    <span className="text-sm font-bold uppercase tracking-wider shrink-0" style={{ color: '#00E5FF' }}>
-                      {item.outcomeTitle}:
+                  <div className="mt-auto inline-flex flex-col gap-2 rounded-2xl px-6 py-4" style={{ background: 'rgba(0,229,255,0.07)', border: '1px solid rgba(0,229,255,0.2)' }}>
+                    <span className="text-xs font-bold uppercase tracking-wider shrink-0" style={{ color: '#00E5FF' }}>
+                      {item.outcomeTitle}
                     </span>
-                    <div className="text-[15px]" style={{ color: '#C5D1E0' }}>
+                    <div className="text-sm font-medium" style={{ color: '#C5D1E0' }}>
                       <PortableText value={item.outcomeDescription} />
                     </div>
                   </div>

@@ -68,11 +68,11 @@ export default async function DataAnalyticsPage() {
   }));
 
   return (
-    <div className="pt-24 pb-0">
+    <div className="pt-0 pb-0">
       <ServiceHero 
         badgeText={data?.hero?.badge || "Data & Analytics"}
-        title={data?.hero?.title || "From Raw Data to"}
-        gradientTitlePart={data?.hero?.titleHighlight || "Intelligent Systems"}
+        title={data?.hero?.title}
+        gradientTitlePart={data?.hero?.titleHighlight}
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
@@ -82,77 +82,35 @@ export default async function DataAnalyticsPage() {
 
       {/* The Problem We Solve */}
       {data?.problemHeadline && (
-        <section className="py-24 relative z-10 overflow-hidden" style={{ background: '#0D1B2A' }}>
-          <div className="container-custom px-4 relative z-10">
-            <div className="max-w-4xl mx-auto text-center mb-16 px-4">
-              <h2 className="type-section-title text-white mb-6">
-                {data.problemHeadline}
-              </h2>
-              {data.problemIntro && (
-                <div className="text-lg md:text-xl max-w-2xl mx-auto" style={{ color: '#8FA3BF' }}>
-                    <PortableText value={data.problemIntro} />
-                </div>
-              )}
-            </div>
-
-            <StaggerGroup className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4 lg:px-0">
-              {problemItems.map((item: any, i: number) => (
-                <StaggerItem key={i} className="flex group h-full">
-                  <HoverCard className="flex gap-6 w-full p-6 sm:p-8 rounded-[2rem] border h-full" style={{ background: 'rgba(26,46,71,0.5)', borderColor: 'rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
-                    <div className="flex-shrink-0 mt-1">
-                      <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-[#00E5FF] group-hover:bg-[#00E5FF]/10 group-hover:border-[#00E5FF]/30 transition-all duration-300">
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-3 tracking-tight group-hover:text-[#00E5FF] transition-colors">{item.title}</h3>
-                      <div className="leading-relaxed type-body-large" style={{ color: '#8FA3BF' }}>
-                        <PortableText value={item.description} />
-                      </div>
-                    </div>
-                  </HoverCard>
-                </StaggerItem>
-              ))}
-            </StaggerGroup>
-
-            {data.problemConclusion && (
-                <div className="mt-16 text-center text-xl md:text-2xl font-semibold text-white max-w-4xl mx-auto">
-                    <PortableText value={data.problemConclusion} />
-                </div>
-            )}
-          </div>
-        </section>
+        <ObstacleSection 
+          title={data.problemHeadline}
+          subtitle={data.problemIntro ? <PortableText value={data.problemIntro} /> : undefined}
+          items={problemItems}
+        />
       )}
 
       {/* Our Approach */}
-      {(data?.approachHeadline) && (
+      {data?.approachHeadline && (
         <section className="py-24 relative z-10" style={{ background: '#14243A' }}>
-          <div className="container-custom px-4">
+          <div className="container-custom">
             <div className="max-w-4xl mb-16 text-left">
-              <h2 className="type-section-title text-white mb-6">{data?.approachHeadline}</h2>
+              <h2 className="type-section-title text-white mb-6">
+                {data?.approachHeadline}
+              </h2>
               {data.approachBody && (
-                <div className="text-xl leading-relaxed font-medium" style={{ color: '#8FA3BF' }}>
+                <div className="type-lead" style={{ color: '#8FA3BF' }}>
                   <PortableText value={data.approachBody} />
                 </div>
               )}
             </div>
             
-            <StaggerGroup className="space-y-6 max-w-6xl">
-              {approachItems.map((item: any, index: number) => (
-                <StaggerItem key={index} className="flex flex-col md:flex-row gap-8 rounded-[2rem] p-8 md:p-12 transition-all border" style={{ background: 'rgba(26,46,71,0.5)', borderColor: 'rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
-                  <div className="md:w-1/3 flex-shrink-0">
-                    <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors">{item.title}</h3>
-                  </div>
-                  <div className="md:w-2/3">
-                    <div className="text-lg leading-relaxed" style={{ color: '#C5D1E0' }}>
-                      <PortableText value={item.description} />
-                    </div>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerGroup>
+            <HorizontalFeature 
+              items={approachItems.map((item: any) => ({
+                ...item,
+                outcomeTitle: "Key Capability",
+                outcomeDescription: "" // Can be mapped if exists
+              }))}
+            />
           </div>
         </section>
       )}

@@ -57,13 +57,8 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
   small = false
 }) => {
   const gridClass = cn(
-    "gap-8",
-    !isRoadmap && "grid",
-    !isRoadmap && {
-      "md:grid-cols-2": columns === 2,
-      "md:grid-cols-3": columns === 3,
-      "md:grid-cols-4": columns === 4,
-    },
+    "gap-6 lg:gap-8 justify-center",
+    !isRoadmap && "flex flex-wrap lg:flex-nowrap",
     isRoadmap && "flex flex-col gap-12 max-w-4xl mx-auto relative before:absolute before:inset-0 before:ml-[31px] md:before:ml-[50%] before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#00E5FF]/30 before:to-transparent"
   );
 
@@ -72,7 +67,7 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
 
-      <div className="container-custom px-4 relative z-10">
+      <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
 
         {(title || description) && (
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -108,8 +103,8 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
 
             // Standard / Layer / Use Case Card
             return (
-              <StaggerItem key={index} className="h-full">
-                <HoverCard className={cn("rounded-[2rem] flex flex-col h-full", small ? "p-6 md:p-8" : "p-8 sm:p-10")} style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
+              <StaggerItem key={index} className="flex h-auto w-full sm:w-[calc(50%-1.5rem)] lg:basis-[calc(25%-2.5rem)] flex-grow flex-shrink-0 min-w-[280px] max-w-[400px]">
+                <HoverCard className={cn("rounded-[2rem] flex flex-col w-full h-full", small ? "p-6 md:p-8" : "p-8 sm:p-10")} style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
                 {/* Header (Badge or Icon) */}
                 <div className="mb-6 flex items-center gap-3">
                   {item.badge && (

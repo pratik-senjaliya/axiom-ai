@@ -26,7 +26,7 @@ const ObstacleItem: React.FC<ObstacleItemProps> = ({ title, description }) => (
 
 interface ObstacleSectionProps {
   title: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   items: ObstacleItemProps[];
   className?: string;
 }
@@ -53,9 +53,9 @@ export const ObstacleSection: React.FC<ObstacleSectionProps> = ({
           )}
         </SlideUp>
         
-        <StaggerGroup className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <StaggerGroup className="flex flex-wrap justify-center gap-6 lg:gap-8 max-w-[95rem] mx-auto px-4">
           {items.map((item, index) => (
-            <StaggerItem key={index} className="flex h-full">
+            <StaggerItem key={index} className="flex h-auto w-full sm:w-[calc(50%-1.5rem)] lg:basis-[calc(25%-2.5rem)] flex-grow flex-shrink-0 min-w-[280px] max-w-[400px]">
               <ObstacleItem 
                 title={item.title} 
                 description={item.description} 

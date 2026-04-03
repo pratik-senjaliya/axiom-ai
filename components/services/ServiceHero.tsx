@@ -47,36 +47,34 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] rounded-full blur-[120px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%)' }} />
       <div className="absolute top-[30%] right-[10%] w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.08) 0%, transparent 70%)' }} />
 
-      <SlideUp className="container-custom relative z-10 px-4 max-w-4xl mx-auto flex flex-col items-center">
-        {/* Back Link */}
-        {backLink && (
-          <Link href={backLink.href} className="inline-flex items-center text-sm font-medium text-[#8FA3BF] hover:text-[#00E5FF] transition-colors mb-8">
-            <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            {backLink.label}
-          </Link>
+      <SlideUp key={title} className="container-custom relative z-10 px-6 max-w-6xl mx-auto flex flex-col items-center">
+        {/* Navigation & Badge Row - Single Line Constraint */}
+        {(badgeText || (pills && pills.length > 0)) && (
+          <div className="flex flex-col items-center mb-8 w-full">
+            <div className="w-full flex justify-center overflow-x-auto no-scrollbar pb-1">
+              <div className="flex flex-nowrap items-center gap-3 px-4">
+                {badgeText && (
+                  <div className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/08 backdrop-blur-sm" style={{ background: 'rgba(0,229,255,0.08)' }}>
+                    {badgeIcon || <SparkleIcon className="w-4 h-4 text-[#00E5FF]" />}
+                    <span className="text-sm font-semibold text-[#00E5FF] uppercase tracking-wide whitespace-nowrap">{badgeText}</span>
+                  </div>
+                )}
+                {pills?.map((pill, i) => (
+                  <div key={i} className="flex-shrink-0 inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium text-[#C5D1E0] border border-[#00E5FF]/15 whitespace-nowrap" style={{ background: 'rgba(20,36,58,0.6)' }}>
+                    {pill}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         )}
-
-        {/* Badge or Pills */}
-        <div className="flex flex-wrap gap-3 mb-8 justify-center">
-          {badgeText && (
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/08 backdrop-blur-sm" style={{ background: 'rgba(0,229,255,0.08)' }}>
-              {badgeIcon || <SparkleIcon className="w-4 h-4 text-[#00E5FF]" />}
-              <span className="text-sm font-semibold text-[#00E5FF] uppercase tracking-wide">{badgeText}</span>
-            </div>
-          )}
-          {pills?.map((pill, i) => (
-            <div key={i} className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium text-[#C5D1E0] border border-[#00E5FF]/15" style={{ background: 'rgba(20,36,58,0.6)' }}>
-              {pill}
-            </div>
-          ))}
-        </div>
 
         {/* Title */}
         <h1 className="type-hero text-white mb-6 mx-auto">
           {(() => {
-            const rawTitle = title || "";
+            // Display-layer hotfix for persistent typo in dataset
+            const normalizedTitle = (title || "").replace(/Intelligient/g, "Intelligent");
+            const rawTitle = normalizedTitle;
             const highlight = gradientTitlePart || "";
 
             if (highlight && rawTitle.toLowerCase().includes(highlight.toLowerCase())) {
@@ -126,8 +124,8 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
         </h1>
 
         {/* Description */}
-        <div className="type-lead mb-10 max-w-2xl mx-auto" style={{ color: '#C5D1E0' }}>
-          <PortableText value={description} />
+        <div className="type-lead mb-10 max-w-4xl mx-auto" style={{ color: '#C5D1E0' }}>
+          <PortableText value={description} className="text-inherit" />
         </div>
 
         {/* Buttons */}
