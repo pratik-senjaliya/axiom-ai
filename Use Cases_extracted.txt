@@ -1,0 +1,96 @@
+Section 1: Hero Header
+
+ Headline: Proven Impact: Enterprise AI & Data in Production
+
+ Modified Sub-headline: Real-world results from the intersection of GenAI, ERP, and Predictive Analytics. See how we turn complex data into operational advantages.
+
+Section 2: The Filter/Tabs
+
+ Cost Optimization  
+
+ Growth & Revenue
+
+ Operational Excellence  
+
+Section 3: The Use Cases Cards
+
+Case 01: Demand Forecasting Engine
+
+The Problem: High inventory carrying costs and stockouts due to fragmented regional data.
+
+Tools & Tech: Azure ML, Power BI, Dynamics 365 Supply Chain.
+
+The Approach: Developed region-level predictive models that pull real-time signals from ERP and external market data.
+
+Business Impact: 25% improvement in forecast accuracy and a 12% reduction in overstock within 6 months.
+
+Case 02: Executive Decision Dashboards (Data Modernization)
+
+The Problem: Leadership was making decisions based on "month-old" PDF reports and siloed spreadsheets.
+
+Tools & Tech: Power BI Premium, Azure Synapse, DAX.
+
+The Approach: Centralized 14 disparate data sources into a single Azure Lakehouse with automated KPI refreshes every 4 hours.
+
+Business Impact: 90% elimination of manual reporting hours and real-time visibility into global margin leakage.
+
+Case 03: Customer Analytics & Segmentation
+
+The Problem: Generic marketing spend with low ROI due to an inability to identify high-value "at-risk" customers.
+
+Tools & Tech: Azure AI, Dynamics 365 Customer Insights, Python.
+
+The Approach: ML-driven segmentation using RFM (Recency, Frequency, Monetary) modeling and predictive Lifetime Value (LTV) scoring.
+
+Business Impact: 15% increase in customer retention and highly targeted personalization at scale.
+
+Case 04: Supply Chain Optimization (The "Agentic" Angle)
+
+The Problem: Procurement teams were reactive, only discovering vendor delays after they impacted production.
+
+Tools & Tech: Azure Databricks, AI Agents, Dynamics 365 SCM.
+
+The Approach: An "Agentic" monitoring system that scans global risk signals and vendor history to predict bottlenecks before they occur.
+
+Business Impact: 18% reduction in inventory holding costs and a 22% improvement in on-time delivery.
+
+Case 05: Enterprise Knowledge Assistant (GenAI + RAG)
+
+The Problem: Support and Sales teams were spending 2+ hours a day searching through thousands of internal PDFs, Sharepoint folders, and technical manuals to answer client queries.
+
+Tools & Tech: Azure OpenAI (GPT-4), Pinecone (Vector DB), LangChain.
+
+The Approach: Built a Retrieval-Augmented Generation (RAG) "Knowledge Engine" that indexes all unstructured company data with enterprise-grade security and citation tracking.
+
+Business Impact: 80% reduction in document search time and a 30% improvement in first-call resolution for technical support teams.
+
+Case 06: Automated Financial Reconciliation
+
+The Problem: Finance teams were manually matching bank statements to ERP invoices across 12 international entities, leading to month-end closing delays and human error.
+
+Tools & Tech: Python (AI-matching logic), Power Automate, Dynamics 365 Finance.
+
+The Approach: An Intelligent Automation layer that uses fuzzy matching and ML to reconcile 95% of transactions automatically, flagging only high-risk anomalies for human review.
+
+Business Impact: Month-end close shortened by 4 days and 100% audit-readiness with automated transaction logging.
+
+Section 4: The "How We Partner" Section (Mid-page CTA)
+
+Headline: Have a Similar Challenge?
+
+Sub-text: These aren't just one-off projects; they are blueprints for your transformation. We can adapt any of these models to your specific ERP and data landscape in 6–8 weeks.
+
+Button: Discuss a Use Case
+
+Section 5: The "Proof of Concept" (POC) Offer
+
+Add a small section at the bottom of the Use Cases page to lower the friction for new leads:
+
+The 6-8 Week Pilot Guarantee Don't commit to a year-long roadmap. Pick one high-impact use case above, and we will build a working POC in your environment in 6 weeks to prove the ROI.
+
+
+
+
+
+
+

@@ -125,7 +125,7 @@ export function PortableText({ value, className = '' }: PortableTextProps) {
     }
 
     return (
-        <div className={className}>
+        <div className={`prose-clean ${className}`}>
             <PortableTextReact value={value} components={components} />
         </div>
     )

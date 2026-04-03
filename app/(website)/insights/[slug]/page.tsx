@@ -136,34 +136,52 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         <div className="container-custom px-4 max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20">
           
           {/* Sticky Sidebar Left */}
-          <aside className="lg:w-[300px] hidden lg:block flex-shrink-0">
-            <div className="sticky top-40">
-              <div className="p-8 rounded-[1.5rem] border" style={{ background: '#0D1B2A', borderColor: 'rgba(0,229,255,0.15)' }}>
-                <h4 className="text-xs font-bold uppercase tracking-widest mb-6" style={{ color: '#8FA3BF' }}>In this article</h4>
-                <nav className="flex flex-col gap-4">
+          <aside className="lg:w-[320px] hidden lg:block flex-shrink-0">
+            <div className="sticky top-40 space-y-10">
+              {/* Table of Contents */}
+              <div className="p-8 rounded-[2rem] border transition-all hover:border-[#00E5FF]/30" style={{ background: 'rgba(13,27,42,0.4)', borderColor: 'rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
+                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-8 flex items-center justify-between" style={{ color: '#00E5FF' }}>
+                  <span>In this article</span>
+                  <ChevronRight className="w-3 h-3" />
+                </h4>
+                <nav className="flex flex-col gap-5 text-sm">
                   {headings.map((heading: any, i: number) => (
                     <a
                       key={i}
                       href={`#${heading.id}`}
-                      className={`flex items-start gap-3 transition-colors hover:text-[#00E5FF] ${
-                        heading.level === 'h3' ? 'pl-5 text-xs' : 'text-xs font-bold'
+                      className={`transition-all hover:text-[#00E5FF] leading-snug border-l-2 pl-4 -ml-[2px] ${
+                        heading.level === 'h3' ? 'text-xs border-transparent pr-4' : 'font-bold border-[#00E5FF]/20 pr-4'
                       }`}
                       style={{ color: heading.level === 'h3' ? '#8FA3BF' : '#C5D1E0' }}
                     >
-                      <span>{heading.text}</span>
+                      {heading.text}
                     </a>
                   ))}
-                  <a href="#faqs" className="flex items-start gap-3 text-xs font-bold transition-colors hover:text-[#00E5FF]" style={{ color: '#C5D1E0' }}>
-                    <span>Frequently Asked Questions</span>
+                  <a href="#faqs" className="font-bold transition-colors hover:text-[#00E5FF] border-l-2 border-transparent pl-4 -ml-[2px]" style={{ color: '#C5D1E0' }}>
+                    FAQs
                   </a>
                 </nav>
               </div>
 
-              <div className="mt-8 p-8 rounded-[1.5rem] border text-white relative overflow-hidden group" style={{ background: '#0D1B2A', borderColor: 'rgba(0,229,255,0.2)', boxShadow: '0 0 30px rgba(0,229,255,0.07)' }}>
+              {/* Related Reads Sidebar Widget */}
+              <div className="p-8 rounded-[2rem] border" style={{ background: 'rgba(13,27,42,0.4)', borderColor: 'rgba(0,229,255,0.15)' }}>
+                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-8" style={{ color: '#8FA3BF' }}>Related Reads</h4>
+                <div className="space-y-8">
+                  {finalRelated.slice(0, 2).map((rp, i) => (
+                    <Link key={i} href={`/insights/${rp.slug}`} className="group block">
+                      <div className="text-[10px] uppercase tracking-widest font-bold mb-2 transition-colors group-hover:text-[#00E5FF]" style={{ color: '#00E5FF' }}>{rp.category}</div>
+                      <h5 className="text-sm font-bold text-white group-hover:text-[#00E5FF] transition-colors line-clamp-2 leading-snug">{rp.title}</h5>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* CTA Widget */}
+              <div className="p-8 rounded-[2rem] border text-white relative overflow-hidden group" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #14243A 100%)', borderColor: 'rgba(0,229,255,0.2)', boxShadow: '0 0 30px rgba(0,229,255,0.07)' }}>
                   <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" style={{ background: '#00E5FF' }} />
                   <h4 className="text-lg font-bold mb-3 relative z-10">Need an AI Strategy?</h4>
                   <p className="text-xs mb-6 leading-relaxed relative z-10" style={{ color: 'rgba(255,255,255,0.6)' }}>We help enterprises architect and deploy production-grade AI solutions.</p>
-                  <Button className="w-full font-bold rounded-xl text-xs py-3 h-auto relative z-10 border-0 hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
+                  <Button className="w-full font-bold rounded-xl text-xs py-3 h-auto relative z-10 border-0 hover:scale-105 transition-all text-[#0A0F1F]" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
                     Book a Discovery Call
                   </Button>
               </div>
@@ -171,8 +189,8 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
           </aside>
 
           {/* Core Article Body */}
-          <article className="lg:w-2/3 max-w-none">
-            <div className="prose-clean max-w-none">
+          <article className="lg:w-2/3 flex-grow">
+            <div className="prose-clean max-w-4xl mx-auto lg:mx-0">
               <PortableText value={post.content} className="max-w-none" />
             </div>
 

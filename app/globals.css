@@ -144,8 +144,8 @@
 
   *:focus-visible {
     @apply outline-none ring-2 ring-offset-2;
-    ring-color: #00E5FF;
-    ring-offset-color: #0A0F1F;
+    --tw-ring-color: #00E5FF;
+    --tw-ring-offset-color: #0A0F1F;
   }
 }
 
@@ -299,6 +299,101 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+
+  /* Premium Blog Typography - Lean and Modern (dark) */
+  .prose-clean {
+    color: #C5D1E0;
+    max-width: 100%;
+    line-height: 1.8;
+    font-size: 1.125rem;
+  }
+
+  .prose-clean p {
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+    color: #8FA3BF;
+  }
+
+  .prose-clean h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    line-height: 1.25;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+    scroll-margin-top: 8rem;
+  }
+
+  .prose-clean h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.25;
+    color: #00E5FF;
+    letter-spacing: -0.01em;
+    scroll-margin-top: 8rem;
+  }
+
+  .prose-clean h4 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: #FFFFFF;
+  }
+
+  .prose-clean ul, .prose-clean ol {
+    margin-bottom: 2.5rem;
+    margin-left: 1.5rem;
+  }
+
+  .prose-clean li {
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+    color: #8FA3BF;
+  }
+
+  .prose-clean strong {
+    font-weight: 800;
+    color: #FFFFFF;
+  }
+
+  .prose-clean blockquote {
+    border-left: 3px solid #00E5FF;
+    padding: 1rem 0 1rem 2rem;
+    margin: 3rem 0;
+    font-style: italic;
+    font-size: 1.25rem;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+    position: relative;
+    background: linear-gradient(90deg, rgba(0, 229, 255, 0.08) 0%, transparent 100%);
+    color: #C5D1E0;
+  }
+
+  .prose-clean blockquote p {
+      margin-bottom: 0;
+      color: #C5D1E0;
+  }
+
+  .prose-clean a {
+      color: #00E5FF;
+      text-decoration: underline;
+      text-decoration-color: rgba(0, 229, 255, 0.3);
+      transition: all 0.2s ease;
+  }
+
+  .prose-clean a:hover {
+      text-decoration-color: #00E5FF;
+  }
+
+  .prose-clean hr {
+      margin: 4rem 0;
+      border: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
 
