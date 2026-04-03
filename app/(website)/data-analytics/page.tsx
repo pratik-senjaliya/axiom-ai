@@ -4,7 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { HorizontalFeature, HorizontalFeatureItem } from "@/components/services/HorizontalFeature";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
-import { getDataAnalyticsPage } from "@/lib/sanity/queries";
+import { getDataAnalyticsPage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
+import { RelatedInsights } from "@/components/services/RelatedInsights";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +39,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function DataAnalyticsPage() {
-  const data = await getDataAnalyticsPage();
+  const [data, relatedPosts] = await Promise.all([
+    getDataAnalyticsPage(),
+    getLatestPostsByService('data')
+  ]);
+  
   if (!data) notFound();
 
   const engagementSteps: FeatureItem[] = (data?.engagementSteps || []).map((step: any, index: number) => ({
@@ -170,6 +175,8 @@ export default async function DataAnalyticsPage() {
           small={false}
         />
       )}
+
+      <RelatedInsights posts={relatedPosts} serviceName="Data & Analytics" />
 
       {/* Final Multi-CTA Layer */}
       {data?.ctaHeadline && (
