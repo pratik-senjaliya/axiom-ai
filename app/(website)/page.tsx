@@ -293,7 +293,7 @@ export default async function HomePage() {
       {/* 5.75 Testimonials */}
       <TestimonialCarousel
         testimonials={data?.testimonials}
-        subtitle="Success"
+        subtitle="AI SUCCESS"
         title="Powered by AI, Proven by Clients"
       />
 

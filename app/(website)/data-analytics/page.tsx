@@ -47,7 +47,17 @@ export default async function DataAnalyticsPage() {
   
   if (!data) notFound();
 
-  console.log("DEBUG: Data Analytics Testimonials:", data.testimonials);
+  const problemIcons = [
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+    </svg>,
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+    </svg>,
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg>
+  ];
 
   const engagementSteps: FeatureItem[] = (data?.engagementSteps || []).map((step: any, index: number) => ({
     stepNumber: index + 1,
@@ -55,9 +65,10 @@ export default async function DataAnalyticsPage() {
     description: step.description,
   }));
 
-  const problemItems = (data?.problems || []).map((p: any) => ({
+  const problemItems = (data?.problems || []).map((p: any, index: number) => ({
     title: p.title,
-    description: p.description
+    description: p.description,
+    icon: problemIcons[index % problemIcons.length]
   }));
 
   const approachItems = (data?.approachCapabilities || []).map((l: any) => ({
@@ -211,7 +222,7 @@ export default async function DataAnalyticsPage() {
 
       <TestimonialCarousel 
         testimonials={data?.testimonials} 
-        subtitle="Success"
+        subtitle="AI SUCCESS"
         title="Powered by AI, Proven by Clients"
       />
 

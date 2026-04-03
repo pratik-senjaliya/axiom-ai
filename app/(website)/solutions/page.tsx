@@ -74,7 +74,7 @@ export default async function SolutionsPage({
       {/* ── Testimonials ── */}
       <TestimonialCarousel 
         testimonials={data?.testimonials} 
-        subtitle="Impact"
+        subtitle="AI SUCCESS"
         title="Powered by AI, Proven by Clients"
       />
 
