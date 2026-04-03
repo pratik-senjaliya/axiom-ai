@@ -1,51 +1,39 @@
-"use client";
+import Link from "next/link";
 
 interface BlogFilterProps {
   categories: string[];
   activeCategory: string;
-  onCategoryChange: (category: string) => void;
 }
 
-export function BlogFilter({ categories, activeCategory, onCategoryChange }: BlogFilterProps) {
+export function BlogFilter({ categories, activeCategory }: BlogFilterProps) {
   const allCategories = ["All", ...categories.filter(c => c && c !== "All")];
 
   return (
-    <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 mb-16 max-w-5xl mx-auto">
+    <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 mb-16 max-w-[95rem] mx-auto w-full px-4">
       {allCategories.map((category) => (
-        <button
+        <Link
           key={category}
-          onClick={() => onCategoryChange(category)}
-          className="px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-200"
+          href={category === "All" ? "/insights" : `/insights?category=${encodeURIComponent(category)}`}
+          scroll={false}
+          className="px-6 py-2.5 rounded-full text-[0.7rem] font-bold uppercase tracking-widest transition-all duration-300 border flex-shrink-0"
           style={
             activeCategory === category
               ? {
                   background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)',
                   color: '#0A0F1F',
-                  border: '1px solid transparent',
-                  boxShadow: '0 0 15px rgba(0,229,255,0.4)',
+                  borderColor: 'transparent',
+                  boxShadow: '0 0 20px rgba(0,229,255,0.3)',
                   transform: 'scale(1.05)',
                 }
               : {
                   background: 'rgba(20,36,58,0.7)',
-                  border: '1px solid rgba(0,229,255,0.2)',
+                  borderColor: 'rgba(0,229,255,0.1)',
                   color: '#8FA3BF',
                 }
           }
-          onMouseEnter={e => {
-            if (activeCategory !== category) {
-              (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.5)';
-              (e.currentTarget as HTMLElement).style.color = '#C5D1E0';
-            }
-          }}
-          onMouseLeave={e => {
-            if (activeCategory !== category) {
-              (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.2)';
-              (e.currentTarget as HTMLElement).style.color = '#8FA3BF';
-            }
-          }}
         >
           {category}
-        </button>
+        </Link>
       ))}
     </div>
   );
