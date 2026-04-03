@@ -294,7 +294,7 @@ export default async function HomePage() {
       <TestimonialCarousel
         testimonials={data?.testimonials}
         subtitle="Success"
-        title="Client Stories"
+        title="Powered by AI, Proven by Clients"
       />
 
       {/* 6. Contact CTA */}

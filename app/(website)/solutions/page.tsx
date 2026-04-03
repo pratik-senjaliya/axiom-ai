@@ -75,7 +75,7 @@ export default async function SolutionsPage({
       <TestimonialCarousel 
         testimonials={data?.testimonials} 
         subtitle="Impact"
-        title="Solutions Index"
+        title="Powered by AI, Proven by Clients"
       />
 
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #0A0F1F 100%)' }}>

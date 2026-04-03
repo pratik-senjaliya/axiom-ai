@@ -195,7 +195,7 @@ export default async function AIImplementationPage() {
       <TestimonialCarousel 
         testimonials={data?.testimonials} 
         subtitle="AI Success"
-        title="Impact Stories"
+        title="Powered by AI, Proven by Clients"
       />
 
       <RelatedInsights posts={relatedPosts} serviceName="AI Implementation" />

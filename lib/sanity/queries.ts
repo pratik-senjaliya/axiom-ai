@@ -4,6 +4,8 @@ import type { BlogPost } from '../blog'
 async function safeFetch<T>(query: string, params: Record<string, any> = {}, defaultValue: T): Promise<T> {
   try {
     const result = await client.fetch(query, params);
+    console.log(`DEBUG: GROQ result for query:`, query.substring(0, 50), "...", !!result);
+    if (result && result.testimonials) console.log("DEBUG: Testimonials found:", result.testimonials.length);
     return result || defaultValue;
   } catch (error) {
     console.error("Sanity fetch error:", error);
@@ -292,7 +294,7 @@ export async function getHomePage(): Promise<any> {
 // ==================== DATA ANALYTICS PAGE ====================
 
 export async function getDataAnalyticsPage(): Promise<any> {
-  const query = `*[_type == "dataAnalyticsPage"][0] {
+  const query = `*[_type == "dataAnalyticsPage" && _id == "dataAnalyticsPageSingleton"][0] {
     seo {
       metaTitle,
       metaDescription,
@@ -328,7 +330,13 @@ export async function getDataAnalyticsPage(): Promise<any> {
     engagementSteps[] { title, description },
     ctaHeadline,
     ctaOptions[] { text, link },
-    ctaClosing
+    ctaClosing,
+    testimonials[] {
+      quote,
+      author,
+      role,
+      company
+    }
   }`
     return safeFetch<any>(query, {}, null)
 }

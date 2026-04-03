@@ -185,7 +185,7 @@ export default async function SustainabilityPage() {
       <TestimonialCarousel 
         testimonials={data?.testimonials} 
         subtitle="Green AI"
-        title="Impact Stories"
+        title="Powered by AI, Proven by Clients"
       />
 
       <RelatedInsights posts={relatedPosts} serviceName="Sustainability" />

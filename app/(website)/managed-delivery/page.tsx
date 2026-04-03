@@ -134,7 +134,7 @@ export default async function ManagedDeliveryPage() {
       <TestimonialCarousel 
         testimonials={data?.testimonials} 
         subtitle="Global Teams"
-        title="Impact Stories"
+        title="Powered by AI, Proven by Clients"
       />
 
       <RelatedInsights posts={relatedPosts} serviceName="Managed Delivery" />

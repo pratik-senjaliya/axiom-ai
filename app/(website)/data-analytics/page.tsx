@@ -13,6 +13,7 @@ import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
+import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 
 export const dynamic = "force-dynamic";
 
@@ -45,6 +46,8 @@ export default async function DataAnalyticsPage() {
   ]);
   
   if (!data) notFound();
+
+  console.log("DEBUG: Data Analytics Testimonials:", data.testimonials);
 
   const engagementSteps: FeatureItem[] = (data?.engagementSteps || []).map((step: any, index: number) => ({
     stepNumber: index + 1,
@@ -205,6 +208,12 @@ export default async function DataAnalyticsPage() {
           small={false}
         />
       )}
+
+      <TestimonialCarousel 
+        testimonials={data?.testimonials} 
+        subtitle="Success"
+        title="Powered by AI, Proven by Clients"
+      />
 
       <RelatedInsights posts={relatedPosts} serviceName="Data & Analytics" />
 

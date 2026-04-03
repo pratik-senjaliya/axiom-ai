@@ -127,7 +127,7 @@ export default async function ERPTransformationPage() {
       <TestimonialCarousel 
         testimonials={data?.testimonials} 
         subtitle="Success"
-        title="ERP Impact"
+        title="Powered by AI, Proven by Clients"
       />
 
       <RelatedInsights posts={relatedPosts} serviceName="ERP Transformation" />
