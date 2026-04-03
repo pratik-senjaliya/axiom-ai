@@ -150,48 +150,43 @@ export default async function AboutPage() {
 
       {/* ── What We Do ── */}
       {capabilitiesItems.length > 0 && (
-        <section className="py-24 relative z-10" style={{ background: '#0D1B2A' }}>
-          <div className="container-custom px-4 text-center">
-            <h2 className="type-section-title text-white mb-6">{data.whatWeDoHeadline}</h2>
-            {data.whatWeDoIntro && (
-              <div className="text-xl max-w-3xl mx-auto mb-16" style={{ color: '#8FA3BF' }}>
-                <PortableText value={data.whatWeDoIntro} />
-              </div>
-            )}
-            <FeatureGrid
-              title=""
-              items={capabilitiesItems}
-              columns={2}
-              bgWhite={false}
-            />
-          </div>
-        </section>
+        <FeatureGrid
+          title={data.whatWeDoHeadline}
+          description={data.whatWeDoIntro}
+          items={capabilitiesItems}
+          columns={2}
+          bgWhite={true}
+        />
       )}
 
       {/* ── Why Us ── */}
-      {whyUsItems.length > 0 && (
-        <section className="py-24 relative z-10" style={{ background: '#14243A' }}>
-          <div className="container-custom px-4">
+      {(whyUsItems.length > 0 || data.visionStatement) && (
+        <>
+          {whyUsItems.length > 0 && (
             <FeatureGrid
               title={data.whyUsHeadline}
               items={whyUsItems}
               columns={2}
               bgWhite={false}
             />
+          )}
 
-            {data.visionStatement && (
-              <div className="mt-20 max-w-4xl mx-auto text-center border-t pt-16" style={{ borderColor: 'rgba(0,229,255,0.15)' }}>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-8" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF' }}>
-                  <SparkleIcon />
-                  <span className="tracking-wide uppercase text-xs font-semibold">Our Vision</span>
-                </div>
-                <div className="text-xl md:text-2xl font-medium leading-relaxed text-white">
-                  <PortableText value={data.visionStatement} />
+          {data.visionStatement && (
+            <section className="pb-24 relative z-10" style={{ background: '#14243A' }}>
+              <div className="container-custom px-4">
+                <div className="max-w-4xl mx-auto text-center border-t pt-16" style={{ borderColor: 'rgba(0,229,255,0.15)' }}>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-8" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF' }}>
+                    <SparkleIcon />
+                    <span className="tracking-wide uppercase text-xs font-semibold">Our Vision</span>
+                  </div>
+                  <div className="text-xl md:text-2xl font-medium leading-relaxed text-white">
+                    <PortableText value={data.visionStatement} />
+                  </div>
                 </div>
               </div>
-            )}
-          </div>
-        </section>
+            </section>
+          )}
+        </>
       )}
 
       {/* ── Final CTA ── */}

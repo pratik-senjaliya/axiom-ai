@@ -127,14 +127,46 @@ export default async function DataAnalyticsPage() {
         />
       )}
 
+      {/* ── Use Cases (Where Data Creates Immediate Impact) ── */}
       {useCaseItems.length > 0 && (
-        <FeatureGrid 
-          title={data?.useCasesHeadline}
-          items={useCaseItems}
-          columns={2}
-          bgWhite={false}
-          small={true}
-        />
+        <section className="py-24 relative overflow-hidden" style={{ background: '#14243A' }}>
+          <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
+
+          <div className="container-custom px-4 relative z-10 max-w-[90rem] mx-auto">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem]">
+                {data?.useCasesHeadline}
+              </h2>
+            </div>
+
+            <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+              {useCaseItems.map((item: any, index: number) => (
+                <StaggerItem key={index} className="h-full">
+                  <HoverCard 
+                    className="rounded-[2rem] flex flex-col h-full p-6 border border-white/5 bg-[#1A2E47]/40 hover:bg-[#1A2E47]/60 group transition-all duration-300 items-start justify-start"
+                    style={{ backdropFilter: 'blur(8px)' }}
+                  >
+                    {item.icon && (
+                      <div className="h-10 mb-6 flex items-center">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#00E5FF]/10 text-[#00E5FF] group-hover:scale-110 transition-transform">
+                          {item.icon}
+                        </div>
+                      </div>
+                    )}
+                    <div className="min-h-[3.5rem] mb-3">
+                      <h3 className="text-lg font-bold text-white leading-snug group-hover:text-[#00E5FF] transition-colors">
+                        {item.title}
+                      </h3>
+                    </div>
+                    <div className="text-[0.9rem] leading-relaxed text-[#8FA3BF] flex-grow">
+                      <PortableText value={item.description} />
+                    </div>
+                  </HoverCard>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        </section>
       )}
 
       {data?.technologies && data.technologies.length > 0 && (
