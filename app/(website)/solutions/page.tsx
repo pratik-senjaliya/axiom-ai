@@ -14,8 +14,8 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getUseCasesPage();
-  const defaultTitle = "AI Use Cases Across Industries & Business Functions | Axiom AI";
-  const defaultDesc = "Explore real-world AI use cases across industries, leveraging automation and intelligent strategies to improve efficiency and outcomes.";
+  const defaultTitle = "Enterprise AI Solutions Across Industries | Axiom AI";
+  const defaultDesc = "Explore high-impact AI solutions across industries, leveraging automation and objective execution to drive measurable ROI.";
   
   if (!data?.seo) return {
     title: defaultTitle,
@@ -33,7 +33,7 @@ const SparkleIcon = () => (
   </svg>
 );
 
-export default async function UseCasesPage() {
+export default async function SolutionsPage() {
   const data = await getUseCasesPage();
   if (!data) notFound();
 
@@ -51,7 +51,7 @@ export default async function UseCasesPage() {
           <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)' }}>
             <SparkleIcon />
             <span className="tracking-wide uppercase text-xs font-semibold" style={{ color: '#00E5FF' }}>
-              {data?.hero?.badge || "Use Cases"}
+              {data?.hero?.badge || "Solutions"}
             </span>
           </div>
           
@@ -87,7 +87,7 @@ export default async function UseCasesPage() {
           {/* Filters */}
           <div className="flex flex-wrap justify-center gap-3">
              <button className="px-5 py-2 rounded-full text-sm font-medium shadow-sm border transition-colors" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', borderColor: 'transparent', boxShadow: '0 0 15px rgba(0,229,255,0.2)' }}>
-               All Cases
+               All Solutions
              </button>
              {data?.tabs?.map((tab: string, idx: number) => (
                 <button key={idx} className="px-5 py-2 rounded-full text-sm font-medium shadow-sm transition-colors border" style={{ background: 'rgba(26,46,71,0.6)', color: '#C5D1E0', borderColor: 'rgba(0,229,255,0.15)' }}
@@ -160,7 +160,7 @@ export default async function UseCasesPage() {
       <TestimonialCarousel 
         testimonials={data?.testimonials} 
         subtitle="Impact"
-        title="Case Results"
+        title="Solutions Index"
       />
 
       {/* ── Bottom CTA Layer ── */}
