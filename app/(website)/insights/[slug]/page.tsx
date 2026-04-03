@@ -6,6 +6,7 @@ import { getPostBySlug, getAllPosts } from "@/lib/sanity/queries";
 import { PortableText } from "@/components/ui/PortableText";
 import { FAQ } from "@/components/ui/FAQ";
 import { Button } from "@/components/ui/Button";
+import { DarkCTA } from "@/components/services/DarkCTA";
 import { User, Calendar, Clock, ChevronRight } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -37,6 +38,46 @@ const slugify = (text: string) =>
     .replace(/[^\w\s-]/g, "")
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
+
+const SERVICE_CTAS: Record<string, any> = {
+  ai: {
+    title: "Ready to Scale with Enterprise AI?",
+    description: "Supercharge your operations with custom AI agents and automation. Book a strategy call today.",
+    buttonText: "Launch Your AI Strategy",
+    buttonHref: "/ai-implementation",
+  },
+  erp: {
+    title: "Accelerate Your ERP Transformation",
+    description: "Empower your organization with modern ERP solutions and seamless system integration.",
+    buttonText: "Start Your ERP Journey",
+    buttonHref: "/erp-transformation",
+  },
+  data: {
+    title: "Unlock the Power of Your Data",
+    description: "Turn raw data into actionable insights with enterprise analytics and predictive modeling.",
+    buttonText: "Get Data-Driven Insights",
+    buttonHref: "/data-analytics",
+  },
+  managed: {
+    title: "Expert Managed Delivery Services",
+    description: "Scale your engineering and product teams with our high-performing managed delivery models.",
+    buttonText: "Explore Delivery Models",
+    buttonHref: "/managed-delivery",
+  },
+  sustainability: {
+    title: "Optimize for Sustainable Growth",
+    description: "Leverage technology to drive ESG performance and long-term business resilience.",
+    buttonText: "Build Sustainable Futures",
+    buttonHref: "/sustainability",
+  },
+};
+
+const DEFAULT_CTA = {
+  title: "Need a Custom AI Strategy?",
+  description: "We help enterprises architect and deploy production-grade AI solutions. Schedule your strategy session today.",
+  buttonText: "Book a Discovery Call",
+  buttonHref: "/contact",
+};
 
 export default async function BlogPostPage({ params }: BlogPageProps) {
   const { slug } = await params;
@@ -168,7 +209,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                 <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-8" style={{ color: '#8FA3BF' }}>Related Reads</h4>
                 <div className="space-y-8">
                   {finalRelated.slice(0, 2).map((rp, i) => (
-                    <Link key={i} href={`/insights/${rp.slug}`} className="group block">
+                    <Link key={i} href={`/insights/${rp.slug || ""}`} className="group block">
                       <div className="text-[10px] uppercase tracking-widest font-bold mb-2 transition-colors group-hover:text-[#00E5FF]" style={{ color: '#00E5FF' }}>{rp.category}</div>
                       <h5 className="text-sm font-bold text-white group-hover:text-[#00E5FF] transition-colors line-clamp-2 leading-snug">{rp.title}</h5>
                     </Link>
@@ -177,14 +218,21 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
               </div>
 
               {/* CTA Widget */}
-              <div className="p-8 rounded-[2rem] border text-white relative overflow-hidden group" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #14243A 100%)', borderColor: 'rgba(0,229,255,0.2)', boxShadow: '0 0 30px rgba(0,229,255,0.07)' }}>
-                  <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" style={{ background: '#00E5FF' }} />
-                  <h4 className="text-lg font-bold mb-3 relative z-10">Need an AI Strategy?</h4>
-                  <p className="text-xs mb-6 leading-relaxed relative z-10" style={{ color: 'rgba(255,255,255,0.6)' }}>We help enterprises architect and deploy production-grade AI solutions.</p>
-                  <Button className="w-full font-bold rounded-xl text-xs py-3 h-auto relative z-10 border-0 hover:scale-105 transition-all text-[#0A0F1F]" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
-                    Book a Discovery Call
-                  </Button>
-              </div>
+              {(() => {
+                const cta = (post.relatedService && SERVICE_CTAS[post.relatedService]) || DEFAULT_CTA;
+                return (
+                  <div className="p-8 rounded-[2rem] border text-white relative overflow-hidden group" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #14243A 100%)', borderColor: 'rgba(0,229,255,0.2)', boxShadow: '0 0 30px rgba(0,229,255,0.07)' }}>
+                      <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" style={{ background: '#00E5FF' }} />
+                      <h4 className="text-lg font-bold mb-3 relative z-10">{cta.title === DEFAULT_CTA.title ? "Need a Strategy?" : cta.title.replace("Ready to ", "Need a ").replace("?", "") + "?"}</h4>
+                      <p className="text-xs mb-6 leading-relaxed relative z-10" style={{ color: 'rgba(255,255,255,0.6)' }}>{cta.description}</p>
+                      <Link href={cta.buttonHref || "/contact"}>
+                        <Button className="w-full font-bold rounded-xl text-xs py-3 h-auto relative z-10 border-0 hover:scale-105 transition-all text-[#0A0F1F]" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
+                          {cta.buttonText}
+                        </Button>
+                      </Link>
+                  </div>
+                );
+              })()}
             </div>
           </aside>
 
@@ -227,7 +275,21 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         </div>
       </section>
 
-      {/* 4. Related Posts Section */}
+      {/* 4. Bottom CTA Section - Dynamic based on service */}
+      {(() => {
+        const cta = (post.relatedService && SERVICE_CTAS[post.relatedService]) || DEFAULT_CTA;
+        return (
+          <DarkCTA 
+            title={cta.title}
+            description={cta.description}
+            buttonText={cta.buttonText}
+            buttonHref={cta.buttonHref}
+            badgeText={post.relatedService ? (post.relatedService === 'ai' ? "AI Strategy" : post.relatedService.toUpperCase()) : "Enterprise AI"}
+          />
+        );
+      })()}
+
+      {/* 5. Related Posts Section */}
       <section className="py-20" style={{ background: '#0D1B2A' }}>
         <div className="container-custom px-4 max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-12">
@@ -242,7 +304,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {finalRelated.map((rp, i) => (
-              <Link key={i} href={`/insights/${rp.slug}`} className="group flex flex-col h-full rounded-[1.5rem] overflow-hidden transition-all hover:[border-color:rgba(0,229,255,0.35)]" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)' }}
+              <Link key={i} href={`/insights/${rp.slug || ""}`} className="group flex flex-col h-full rounded-[1.5rem] overflow-hidden transition-all hover:[border-color:rgba(0,229,255,0.35)]" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)' }}
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   {rp.image ? (

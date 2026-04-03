@@ -81,8 +81,6 @@ export default async function DataAnalyticsPage() {
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
-        secondaryButtonText={data?.hero?.secondaryCta?.text}
-        secondaryButtonLink={data?.hero?.secondaryCta?.link}
       />
 
       {/* The Problem We Solve */}
@@ -197,7 +195,7 @@ export default async function DataAnalyticsPage() {
             {data.ctaOptions && data.ctaOptions.length > 0 && (
               <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mb-12">
                 {data.ctaOptions.map((cta: any, index: number) => (
-                   <Link href={cta.link || '#'} key={index}>
+                   <Link href={cta.link || '/contact'} key={index}>
                      <button className="px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 transition-all font-bold hover:scale-105"
                      style={index === 0
                        ? { background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', border: 'none', boxShadow: '0 0 25px rgba(0,229,255,0.4)' }

@@ -116,8 +116,8 @@ export default async function ServicePage({ params }: PageProps) {
               <p className="text-lg md:text-xl text-primary-100 mb-10 max-w-2xl leading-relaxed">
                 {service.longDescription}
               </p>
-              {service.heroCTA?.text && service.heroCTA?.link && (
-              <Link href={service.heroCTA.link}>
+              {service.heroCTA?.text && (
+              <Link href={service.heroCTA.link || "/contact"}>
                 <Button
                   variant={service.heroCTA?.variant || "secondary"}
                   size="lg"
@@ -202,8 +202,8 @@ export default async function ServicePage({ params }: PageProps) {
               <p className="text-base md:text-lg text-neutral-300">{service.introCTA?.description || "Get a customized quote for your business needs"}</p>
             </div>
             <div className="flex-shrink-0">
-              {service.introCTA?.cta?.text && service.introCTA?.cta?.link && (
-              <Link href={service.introCTA.cta.link}>
+              {service.introCTA?.cta?.text && (
+              <Link href={service.introCTA.cta.link || "/contact"}>
                 <Button
                   variant={service.introCTA?.cta?.variant || "secondary"}
                   size="lg"
@@ -268,8 +268,8 @@ export default async function ServicePage({ params }: PageProps) {
                 ))}
               </div>
               <div className="mt-8 text-center mr-[8rem]">
-                {service.whyChooseCTA?.text && service.whyChooseCTA?.link && (
-                <Link href={service.whyChooseCTA.link} className="inline-block">
+                {service.whyChooseCTA?.text && (
+                <Link href={service.whyChooseCTA.link || "/contact"} className="inline-block">
                   <Button
                     variant={service.whyChooseCTA?.variant || "secondary"}
                     size="lg"
@@ -364,8 +364,8 @@ export default async function ServicePage({ params }: PageProps) {
               {service.finalCTA?.description || "Join elite businesses that trust our experts with their growth. Schedule your strategy session today."}
             </p>
             <div className="flex justify-center">
-              {service.finalCTA?.cta?.text && service.finalCTA?.cta?.link && (
-              <Link href={service.finalCTA.cta.link}>
+              {service.finalCTA?.cta?.text && (
+              <Link href={service.finalCTA.cta.link || "/contact"}>
                 <Button
                   variant={service.finalCTA?.cta?.variant || "secondary"}
                   size="lg"

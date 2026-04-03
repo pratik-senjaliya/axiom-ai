@@ -89,8 +89,8 @@ export default async function SolutionsPage({
           <div className="text-lg max-w-2xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
             <PortableText value={data?.midPageCta?.description} />
           </div>
-          {data?.midPageCta?.primaryCta?.text && data?.midPageCta?.primaryCta?.link && (
-            <Link href={data.midPageCta.primaryCta.link} className="w-full sm:w-auto">
+          {data?.midPageCta?.primaryCta?.text && (
+            <Link href={data.midPageCta.primaryCta.link || "/contact"} className="w-full sm:w-auto">
               <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 border-none transition-all hover:scale-[1.02] shadow-md hover:opacity-90"
                 style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 20px rgba(0,229,255,0.3)' }}
               >

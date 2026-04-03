@@ -46,7 +46,7 @@ export function RelatedInsights({ posts, serviceName }: RelatedInsightsProps) {
           {posts.map((post, index) => (
             <StaggerItem key={index} className="h-full">
             <Link
-              href={`/insights/${post.slug}`}
+              href={`/insights/${post.slug || ""}`}
               className="group block rounded-[2rem] overflow-hidden transition-all duration-300 h-full"
               style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.35)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 25px rgba(0,229,255,0.1), 0 20px 40px rgba(0,0,0,0.3)'; }}

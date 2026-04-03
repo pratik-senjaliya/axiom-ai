@@ -50,8 +50,8 @@ export function DarkCTA({
           <PortableText value={description} />
         </div>
 
-        {buttonText && buttonHref && (
-          <Link href={buttonHref} className="w-full sm:w-auto">
+        {buttonText && (
+          <Link href={buttonHref || "/contact"} className="w-full sm:w-auto">
             {useWhiteButton ? (
               <Button size="lg" className="w-full sm:w-auto px-10 h-14 text-[15px] rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'rgba(255,255,255,0.95)', color: '#0A0F1F' }}>
                 {buttonText}

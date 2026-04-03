@@ -150,9 +150,6 @@ export function SolutionsGrid({ cases, allTags, initialTag, heroData }: Solution
                             {item.title}
                           </h3>
                         </div>
-                        <span className="text-[0.55rem] font-black tracking-[0.1em] py-1 px-2.5 rounded-md bg-[#00E5FF]/10 border border-[#00E5FF]/20" style={{ color: '#00E5FF' }}>
-                          {item.caseNumber || `S${idx + 1}`}
-                        </span>
                       </div>
 
                       <div className="flex-grow flex flex-col gap-4 mb-6">

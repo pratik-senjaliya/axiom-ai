@@ -31,7 +31,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
 
   if (featured) {
     return (
-      <Link href={`/insights/${post.slug}`} className="group block mb-12">
+      <Link href={`/insights/${post.slug || ""}`} className="group block mb-12">
         <div className="relative h-[350px] md:h-[450px] w-full rounded-[2rem] overflow-hidden transition-transform duration-500 group-hover:scale-[1.005]" style={{ boxShadow: '0 0 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,229,255,0.15)' }}>
           {post.image ? (
             <Image
@@ -87,7 +87,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
   }
 
   return (
-    <Link href={`/insights/${post.slug}`} className="group h-full flex flex-col">
+    <Link href={`/insights/${post.slug || ""}`} className="group h-full flex flex-col">
       <div className="h-full flex flex-col overflow-hidden rounded-[1.5rem] transition-all duration-300" style={{ background: 'rgba(26,46,71,0.7)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}
         onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = 'rgba(0,229,255,0.35)'; el.style.boxShadow = '0 0 25px rgba(0,229,255,0.1), 0 20px 40px rgba(0,0,0,0.4)'; }}
         onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = 'rgba(0,229,255,0.12)'; el.style.boxShadow = ''; }}

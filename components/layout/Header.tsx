@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/Button";
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Services", href: "#", hasDropdown: true },
+  { name: "Services", href: "#services", hasDropdown: true },
   { name: "Solutions", href: "/solutions" },
   { name: "Insights", href: "/insights" },
   { name: "About", href: "/about" },
@@ -17,6 +17,7 @@ const navigation = [
 const servicePaths = [
   "/ai-implementation",
   "/erp-transformation",
+
   "/data-analytics",
   "/managed-delivery",
   "/sustainability",

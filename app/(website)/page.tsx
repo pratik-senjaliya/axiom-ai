@@ -102,8 +102,8 @@ export default async function HomePage() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            {data?.hero?.primaryCta?.text && data?.hero?.primaryCta?.link && (
-              <Link href={data.hero.primaryCta.link} className="w-full sm:w-auto">
+            {data?.hero?.primaryCta?.text && (
+              <Link href={data.hero.primaryCta.link || "/contact"} className="w-full sm:w-auto">
                 <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-lg rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.45)' }}>
                   {data.hero.primaryCta.text}
                   <svg className="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -180,7 +180,6 @@ export default async function HomePage() {
                 <HoverCard className="group rounded-[32px] p-8 sm:p-10 h-full flex flex-col" style={{ background: 'rgba(20,36,58,0.7)', border: '1px solid rgba(0,229,255,0.1)', backdropFilter: 'blur(10px)' }}>
                   <div className="flex items-center gap-2 mb-8 font-semibold text-[0.95rem]" style={{ color: '#00E5FF' }}>
                     <SparkleIcon />
-                    <span>0{idx + 1}</span>
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 leading-tight">{card.title}</h3>
                   <div className="leading-relaxed text-sm sm:text-[0.95rem]" style={{ color: '#8FA3BF' }}>
@@ -313,8 +312,8 @@ export default async function HomePage() {
             <PortableText value={data?.finalCta?.description} />
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            {data?.finalCta?.primaryCta?.text && data?.finalCta?.primaryCta?.link && (
-              <Link href={data.finalCta.primaryCta.link} className="w-full sm:w-auto">
+            {data?.finalCta?.primaryCta?.text && (
+              <Link href={data.finalCta.primaryCta.link || "/contact"} className="w-full sm:w-auto">
                 <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-base rounded-2xl flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
                   {data.finalCta.primaryCta.text}
                   <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

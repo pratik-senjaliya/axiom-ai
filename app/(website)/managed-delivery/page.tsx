@@ -93,8 +93,6 @@ export default async function ManagedDeliveryPage() {
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
-        secondaryButtonText={data?.hero?.secondaryCta?.text}
-        secondaryButtonLink={data?.hero?.secondaryCta?.link}
       />
 
       <ObstacleSection 
