@@ -318,7 +318,7 @@ export async function getDataAnalyticsPage(): Promise<any> {
     problemConclusion,
     approachHeadline,
     approachBody,
-    approachCapabilities[] { title, description },
+    approachCapabilities[] { title, description, outcome },
     differentiatorsHeadline,
     differentiators[] { title, description },
     useCasesHeadline,

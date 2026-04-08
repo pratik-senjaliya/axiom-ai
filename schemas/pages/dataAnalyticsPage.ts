@@ -79,7 +79,8 @@ export default defineType({
                 type: 'object',
                 fields: [
                     { name: 'title', type: 'string', title: 'Title' },
-                    { name: 'description', type: 'simpleBlockContent', title: 'Description' }
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' },
+                    { name: 'outcome', type: 'string', title: 'Key Outcome' }
                 ]
             }],
             group: 'approach',

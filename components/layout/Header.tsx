@@ -35,7 +35,7 @@ const serviceCategories = [
         </svg>
       </div>
     ),
-    tags: ["AI Strategy", "GenAI & LLM Integration", "Agentic Systems", "Automation", "AI Governance"]
+    tags: ["AI Strategy", "GenAI & LLM Integration", "Agentic Systems", "AI Automation", "AI Governance"]
   },
   {
     title: "ERP Transformation",
