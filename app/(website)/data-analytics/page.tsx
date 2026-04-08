@@ -186,7 +186,7 @@ export default async function DataAnalyticsPage() {
       {data?.approachHeadline && (
         <section className="py-24 relative z-10" style={{ background: '#14243A' }}>
           <div className="container-custom">
-            <div className="max-w-4xl mb-16 text-left">
+            <div className="max-w-4xl text-left">
               <h2 className="type-section-title text-white mb-6">
                 {data?.approachHeadline || "Core Capabilities"}
               </h2>
@@ -195,8 +195,7 @@ export default async function DataAnalyticsPage() {
                   <PortableText value={data.approachBody} />
                 </div>
               )}
-            </div>
-            
+            </div>      
             <HorizontalFeature 
               items={approachItems.map((item: any) => ({
                 ...item,
