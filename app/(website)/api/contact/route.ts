@@ -5,7 +5,35 @@ import { apiVersion, dataset, projectId } from '@/lib/sanity/env'
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json()
-        const { name, email, phone, company, service, message } = body
+        const { name, email, phone, company, service, message, turnstileToken } = body
+
+        // 1. Verify Cloudflare Turnstile Token
+        if (!turnstileToken) {
+            return NextResponse.json(
+                { error: 'Security verification token is missing.' },
+                { status: 400 }
+            )
+        }
+
+        const verifyResponse = await fetch(
+            'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `secret=0x4AAAAAAC2Ad1U-f_mhS8x26kkW22XfTVE&response=${turnstileToken}`,
+            }
+        )
+
+        const verification = await verifyResponse.json()
+
+        if (!verification.success) {
+            return NextResponse.json(
+                { error: 'Security verification failed. Please try again.' },
+                { status: 403 }
+            )
+        }
 
         // Basic server-side validation
         if (!name || !email || !message || !service) {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PortableText } from "@/components/ui/PortableText";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 const SERVICES = [
   { title: 'GenAI Implementation', value: 'genai-implementation' },
@@ -23,6 +24,8 @@ export function ContactForm({ data }: { data: any }) {
     message: "",
   });
 
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<{
     type: "success" | "error" | null;
@@ -31,6 +34,12 @@ export function ContactForm({ data }: { data: any }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!turnstileToken) {
+      setStatus({ type: "error", message: "Security verification required." });
+      return;
+    }
+
     setIsSubmitting(true);
     setStatus({ type: null, message: null });
 
@@ -38,7 +47,7 @@ export function ContactForm({ data }: { data: any }) {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, turnstileToken }),
       });
 
       const responseData = await response.json();
@@ -52,6 +61,7 @@ export function ContactForm({ data }: { data: any }) {
         message: "Thank you! Your message has been sent successfully.",
       });
       setFormData({ name: "", email: "", phone: "", company: "", service: "", message: "" });
+      setTurnstileToken(null);
     } catch (error) {
       setStatus({
         type: "error",
@@ -80,28 +90,28 @@ export function ContactForm({ data }: { data: any }) {
   };
 
   return (
-    <div className="pt-32 pb-24 min-h-screen" style={{ background: 'linear-gradient(160deg, #0A0F1F 0%, #0D1B2A 50%, #0A0F1F 100%)' }}>
+    <div className="pt-24 pb-12 min-h-screen flex items-center overflow-hidden" style={{ background: 'linear-gradient(160deg, #0A0F1F 0%, #0D1B2A 50%, #0A0F1F 100%)' }}>
       {/* Background grid */}
       <div className="fixed inset-0 pointer-events-none z-0" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px), linear-gradient(to right, rgba(0,229,255,0.025) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
       {/* Glow effects */}
-      <div className="absolute top-1/2 left-0 w-[40rem] h-[40rem] -translate-y-1/2 rounded-full blur-[120px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%)' }} />
-      <div className="absolute top-[30%] right-0 w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.07) 0%, transparent 70%)' }} />
+      <div className="absolute top-1/2 left-0 w-[30rem] h-[30rem] -translate-y-1/2 rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%)' }} />
+      <div className="absolute top-[30%] right-0 w-[25rem] h-[25rem] rounded-full blur-[80px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.06) 0%, transparent 70%)' }} />
 
       <div className="container-custom px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           {/* Left Column: Information */}
           <SlideUp delay={0.1} className="max-w-xl">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF' }}>
-              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" /></svg>
-              <span className="text-sm font-semibold tracking-wide uppercase">{data?.badge || "Contact"}</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-6" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF' }}>
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" /></svg>
+              <span className="text-xs font-semibold tracking-wide uppercase">{data?.badge || "Contact"}</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight leading-[1.1]">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 tracking-tight leading-[1.1]">
               {data?.title || "Let's Talk Transformation"}
             </h1>
-            <div className="text-lg mb-12 leading-relaxed font-medium" style={{ color: '#8FA3BF' }}>
+            <div className="text-base mb-8 leading-relaxed font-medium" style={{ color: '#8FA3BF' }}>
               {data?.description ? (
                 <PortableText value={data.description} />
               ) : (
@@ -110,77 +120,68 @@ export function ContactForm({ data }: { data: any }) {
             </div>
 
             {/* Contact info items */}
-            <div className="space-y-6 mb-12">
+            <div className="space-y-4 mb-8">
               {data?.infoItems && data.infoItems.length > 0 ? (
                 data.infoItems.map((item: any, i: number) => (
                   <div key={i} className="flex items-center gap-4 group">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
                       {getIcon(item.icon)}
                     </div>
                     <div>
-                      <div className="text-xs uppercase tracking-widest text-[#8FA3BF] font-bold mb-0.5">{item.label}</div>
-                      <span className="text-lg font-bold text-white tracking-wide">{item.value}</span>
+                      <div className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold mb-0.5">{item.label}</div>
+                      <span className="text-base font-bold text-white tracking-wide">{item.value}</span>
                     </div>
                   </div>
                 ))
               ) : (
                 <>
                   <div className="flex items-center gap-4 group">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
                       {getIcon('mail')}
                     </div>
-                    <span className="text-lg font-bold text-white tracking-wide">hello@axiom-ai.com</span>
-                  </div>
-                  <div className="flex items-center gap-4 group">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
-                      {getIcon('map-pin')}
-                    </div>
-                    <span className="text-lg font-bold text-white tracking-wide">Global Advisory Services</span>
+                    <span className="text-base font-bold text-white tracking-wide">hello@axiom-ai.com</span>
                   </div>
                 </>
               )}
             </div>
 
-            {/* Social Icons (Dynamic or Fallback) */}
-            <div className="flex gap-4">
-              <a href="#" className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300" style={{ background: 'rgba(20,36,58,0.8)', color: '#8FA3BF', border: '1px solid rgba(0,229,255,0.2)' }}>
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              </a>
-              <a href="#" className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300" style={{ background: 'rgba(20,36,58,0.8)', color: '#8FA3BF', border: '1px solid rgba(0,229,255,0.2)' }}>
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+            {/* Social Icons */}
+            <div className="flex gap-3">
+              <a href="#" className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300" style={{ background: 'rgba(20,36,58,0.8)', color: '#8FA3BF', border: '1px solid rgba(0,229,255,0.2)' }}>
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
               </a>
             </div>
           </SlideUp>
 
           {/* Right Column: Form Card */}
-          <SlideUp delay={0.3} className="w-full rounded-[2.5rem] p-8 md:p-12 transition-all hover:[box-shadow:0_30px_100px_rgba(0,0,0,0.6),0_0_0_1px_rgba(0,229,255,0.15)_inset]" style={{ background: 'rgba(20,36,58,0.85)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(16px)', boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,229,255,0.07) inset' }}>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 tracking-tight">
+          <SlideUp delay={0.3} className="w-full rounded-[2rem] p-6 lg:p-10 transition-all" style={{ background: 'rgba(20,36,58,0.85)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(16px)', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}>
+            <h2 className="text-2xl font-bold text-white mb-6 tracking-tight">
               Send a Message
             </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {status.message && (
-                <div className={`p-4 rounded-2xl text-sm font-semibold mb-6 ${status.type === "success" ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}`}>
+                <div className={`p-3 rounded-xl text-sm font-semibold mb-4 ${status.type === "success" ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}`}>
                   {status.message}
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Name</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Name</label>
                   <input
                     type="text"
                     name="name"
                     required
-                    placeholder="E.g. Elon Musk"
+                    placeholder=" Elon Musk"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-6 py-4 rounded-2xl font-medium outline-none transition-all placeholder:text-[#3E526D]"
+                    className="w-full px-5 py-2.5 rounded-xl font-medium outline-none transition-all placeholder:text-[#3E526D] text-sm"
                     style={{ background: 'rgba(10,15,31,0.8)', border: '1px solid rgba(0,229,255,0.15)', color: '#ffffff' }}
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Email</label>
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Email</label>
                   <input
                     type="email"
                     name="email"
@@ -188,48 +189,48 @@ export function ContactForm({ data }: { data: any }) {
                     placeholder="elon@mars.com"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-6 py-4 rounded-2xl font-medium outline-none transition-all placeholder:text-[#3E526D]"
+                    className="w-full px-5 py-2.5 rounded-xl font-medium outline-none transition-all placeholder:text-[#3E526D] text-sm"
                     style={{ background: 'rgba(10,15,31,0.8)', border: '1px solid rgba(0,229,255,0.15)', color: '#ffffff' }}
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Company</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Company</label>
                   <input
                     type="text"
                     name="company"
                     placeholder="SpaceX"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full px-6 py-4 rounded-2xl font-medium outline-none transition-all placeholder:text-[#3E526D]"
+                    className="w-full px-5 py-2.5 rounded-xl font-medium outline-none transition-all placeholder:text-[#3E526D] text-sm"
                     style={{ background: 'rgba(10,15,31,0.8)', border: '1px solid rgba(0,229,255,0.15)', color: '#ffffff' }}
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Phone</label>
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Phone</label>
                   <input
                     type="tel"
                     name="phone"
                     placeholder="+1 (555) 000-0000"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-6 py-4 rounded-2xl font-medium outline-none transition-all placeholder:text-[#3E526D]"
+                    className="w-full px-5 py-2.5 rounded-xl font-medium outline-none transition-all placeholder:text-[#3E526D] text-sm"
                     style={{ background: 'rgba(10,15,31,0.8)', border: '1px solid rgba(0,229,255,0.15)', color: '#ffffff' }}
                   />
                 </div>
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Service Of Interest</label>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Service Of Interest</label>
                 <div className="relative">
                   <select
                     name="service"
                     required
                     value={formData.service}
                     onChange={handleChange}
-                    className="w-full px-6 py-4 rounded-2xl font-medium outline-none transition-all appearance-none cursor-pointer"
+                    className="w-full px-5 py-2.5 rounded-xl font-medium outline-none transition-all appearance-none cursor-pointer text-sm"
                     style={{ background: 'rgba(10,15,31,0.8)', border: '1px solid rgba(0,229,255,0.15)', color: formData.service ? '#ffffff' : '#3E526D' }}
                   >
                     <option value="" disabled>Select a Service</option>
@@ -237,35 +238,50 @@ export function ContactForm({ data }: { data: any }) {
                       <option key={s.value} value={s.value} className="bg-[#0A0F1F] text-white py-2">{s.title}</option>
                     ))}
                   </select>
-                  <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-cyan-500">
-                    <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                  <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-cyan-500">
+                    <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Message</label>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold ml-1">Message</label>
                 <textarea
                   name="message"
                   required
-                  rows={4}
+                  rows={2}
                   placeholder="Tell us about your project challenges..."
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-6 py-5 rounded-3xl font-medium resize-none outline-none transition-all placeholder:text-[#3E526D]"
+                  className="w-full px-5 py-3 rounded-xl font-medium resize-none outline-none transition-all placeholder:text-[#3E526D] text-sm"
                   style={{ background: 'rgba(10,15,31,0.8)', border: '1px solid rgba(0,229,255,0.15)', color: '#ffffff' }}
                 />
+              </div>
+
+              <div className="mb-4 overflow-hidden rounded-xl border border-white/10 bg-white/5 flex justify-center py-2">
+                <div className="scale-[0.85] origin-center h-[65px] flex items-center justify-center">
+                  <Turnstile 
+                    siteKey="0x4AAAAAAC2Ad-4TbaB5wHzQ" 
+                    onSuccess={(token) => setTurnstileToken(token)}
+                    onError={() => setTurnstileToken(null)}
+                    onExpire={() => setTurnstileToken(null)}
+                    options={{
+                      theme: 'dark',
+                      appearance: 'always'
+                    }}
+                  />
+                </div>
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-16 rounded-2xl font-black text-[#0A0F1F] flex items-center justify-center gap-3 transition-all hover:scale-[1.01] hover:brightness-110 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed mt-4 group"
+                className="w-full h-14 rounded-xl font-black text-[#0A0F1F] flex items-center justify-center gap-3 transition-all hover:scale-[1.01] hover:brightness-110 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed mt-2 group"
                 style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 10px 40px rgba(0,229,255,0.3)' }}
               >
-                <span className="tracking-tight text-lg uppercase">{isSubmitting ? "Sending Intelligence..." : "Transmit Message"}</span>
+                <span className="tracking-tight text-base uppercase">{isSubmitting ? "Sending..." : "Transmit Message"}</span>
                 {!isSubmitting && (
-                  <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" className="transition-transform group-hover:translate-x-1.5 duration-300">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" className="transition-transform group-hover:translate-x-1.5 duration-300">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 )}
