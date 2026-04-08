@@ -60,7 +60,7 @@ export default async function HomePage() {
   return (
     <>
       {/* 1. Hero Section */}
-      <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-24 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
+      <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-12 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
         <div className="bg-grid opacity-60 z-0" />
         {/* Center glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[50rem] rounded-full blur-[120px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
@@ -102,7 +102,7 @@ export default async function HomePage() {
             <PortableText value={data?.hero?.description} className="prose-tight" />
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             {data?.hero?.primaryCta?.text && (
               <Link href={data.hero.primaryCta.link || "/contact"} className="w-full sm:w-auto">
                 <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-lg rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.45)' }}>

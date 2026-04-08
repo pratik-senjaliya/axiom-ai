@@ -49,16 +49,30 @@ export function SolutionsGrid({ cases, allTags, initialTag, heroData }: Solution
 
   const filteredCases = useMemo(() => {
     if (!activeTag) return cases;
+    
+    const searchStr = activeTag.toLowerCase();
+    
     return cases.filter((item: any) => {
-      const itemTools = Array.isArray(item.tools) ? item.tools : [item.tools];
-      return itemTools.includes(activeTag);
+      // 1. Check Title
+      const titleMatch = item.title?.toLowerCase().includes(searchStr);
+      
+      // 2. Check Tools/Tags
+      const itemTools = Array.isArray(item.tools) 
+        ? item.tools 
+        : item.tools ? [item.tools] : [];
+        
+      const toolsMatch = itemTools.some((t: string) => 
+        t.toLowerCase().includes(searchStr)
+      );
+
+      return titleMatch || toolsMatch;
     });
   }, [cases, activeTag]);
 
   return (
     <div className="w-full">
       {/* ── Hero Section (Inside Client Component for seamless filtering) ── */}
-      <section className="relative pt-20 pb-20 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
+      <section className="relative pt-20 pb-12 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
         <div className="bg-grid opacity-60 z-0" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[40rem] rounded-full blur-[130px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
         
@@ -114,7 +128,7 @@ export function SolutionsGrid({ cases, allTags, initialTag, heroData }: Solution
       </section>
 
       {/* ── Animated Grid section ── */}
-      <section className="pb-32 pt-16 relative z-10" style={{ background: '#0A0F1F' }}>
+      <section className="pb-32 pt-8 relative z-10" style={{ background: '#0A0F1F' }}>
         <div className="container-custom px-4 max-w-[95rem] mx-auto">
           <motion.div 
             layout

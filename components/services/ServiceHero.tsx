@@ -35,7 +35,7 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
   backLink
 }) => {
   return (
-    <section className="relative min-h-[70vh] pt-32 pb-28 flex flex-col items-center justify-center overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
+    <section className="relative min-h-[70vh] pt-32 pb-16 flex flex-col items-center justify-center overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
       {/* Cyan grid pattern */}
       <div className="bg-grid opacity-60 z-0" />
 

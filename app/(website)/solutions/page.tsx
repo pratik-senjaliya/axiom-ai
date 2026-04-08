@@ -48,17 +48,19 @@ export default async function SolutionsPage({
   ]);
   const activeTag = resolvedParams.tag || null;
 
-  const allTags = (() => {
-    if (!data?.cases) return [];
-    const tags = new Set<string>();
-    data.cases.forEach((item: any) => {
-      if (item.tools) {
-        const itemTools = Array.isArray(item.tools) ? item.tools : [item.tools];
-        itemTools.forEach((tag: string) => tags.add(tag));
-      }
-    });
-    return Array.from(tags).sort();
-  })();
+  const allTags = [
+    "AI Agents",
+    "Machine Learning",
+    "Data Engineering",
+    "Advanced Analytics",
+    "Azure OpenAI",
+    "Data Platforms",
+    "Business Intelligence",
+    "Workflow Automation",
+    "Microsoft D365",
+    "Power Platform",
+    "ERP"
+  ];
 
   return (
     <div className="pt-24 pb-0" style={{ background: '#0A0F1F' }}>
