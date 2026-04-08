@@ -40,7 +40,8 @@ export default async function HomePage() {
   const featureStats = [
     { value: "85%", label: "of AI projects fail", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
     { value: "75%", label: "exceed timeline", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" /></svg> },
-    { value: "70%", label: "lack data strategy", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> }
+    { value: "70%", label: "lack data strategy", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> },
+    { value: "60%", label: "budget burn", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> }
   ];
 
   const processStyles = [
@@ -98,7 +99,7 @@ export default async function HomePage() {
           </h1>
 
           <div className="text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed font-light" style={{ color: '#8FA3BF' }}>
-            <PortableText value={data?.hero?.description} />
+            <PortableText value={data?.hero?.description} className="prose-tight" />
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
@@ -126,30 +127,42 @@ export default async function HomePage() {
       {/* 2. Why Digital Transformations Fail */}
       <section className="py-24 relative" style={{ background: '#14243A' }}>
         <div className="container-custom">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-4">
-              {data?.pitfallsHeadline}
+          <div className="text-center mb-20 max-w-4xl mx-auto">
+            <h2 className="type-section-title text-white mb-6">
+              {data?.pitfallsHeadline || "Escape the “Pilot Purgatory”"}
             </h2>
+            {data?.pitfallsBody && (
+              <div className="type-lead text-[#8FA3BF] max-w-3xl mx-auto">
+                <PortableText value={data.pitfallsBody} />
+              </div>
+            )}
           </div>
 
-          <StaggerGroup className="grid md:grid-cols-3 gap-8">
+          <StaggerGroup className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {data?.pitfalls?.map((card: any, index: number) => {
               const staticInfo = featureStats[index % featureStats.length];
               return (
                 <StaggerItem key={index} className="h-full">
-                  <HoverCard className="rounded-3xl p-8 flex flex-col justify-between h-full group" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
-                    <div className="flex justify-between items-start mb-12">
-                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF' }}>
+                  <HoverCard className="rounded-3xl p-8 h-full group flex flex-col" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
+                    {/* Top Row: Icon and Stat */}
+                    <div className="flex justify-between items-start mb-8">
+                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', boxShadow: '0 0 20px rgba(0,229,255,0.1)' }}>
                         {staticInfo.icon}
                       </div>
                       <div className="text-right">
-                        <div className="text-3xl font-bold mb-1" style={{ color: '#00E5FF' }}>{card.stat}</div>
-                        <div className="text-xs font-medium uppercase tracking-wide" style={{ color: '#8FA3BF' }}>Business Risk</div>
+                        <div className="text-3xl font-bold mb-1 tracking-tight" style={{ color: '#00E5FF' }}>{card.stat}</div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest opacity-60" style={{ color: '#8FA3BF' }}>Business Risk</div>
                       </div>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
-                      <div className="leading-relaxed text-sm" style={{ color: '#8FA3BF' }}>
+
+                    {/* Bottom Section: Title and Description */}
+                    <div className="flex flex-col flex-grow">
+                      <div className="min-h-[4rem] flex flex-col justify-end mb-4">
+                        <h3 className="text-xl font-bold text-white leading-tight group-hover:text-[#00E5FF] transition-colors">
+                          {card.title}
+                        </h3>
+                      </div>
+                      <div className="leading-relaxed text-sm opacity-80" style={{ color: '#8FA3BF' }}>
                         <PortableText value={card.description} />
                       </div>
                     </div>
@@ -161,30 +174,44 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3. Enterprise-grade AI solutions */}
+      {/* 3. Execution Across AI, Data & ERP */}
       <section id="services" className="py-24 relative" style={{ background: '#0A0F1F' }}>
         <div className="container-custom">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 font-medium mb-4" style={{ color: '#00E5FF' }}>
               <SparkleIcon />
-              <span className="text-sm font-medium">What We Do</span>
+              <span className="text-sm font-medium uppercase tracking-widest">{data?.solutionsSubtitle || "What We Do"}</span>
             </div>
-            <h2 className="type-section-title text-white mb-4">
-              {data?.solutionsHeadline || "Enterprise-grade AI Solutions"}
+            <h2 className="type-section-title text-white mb-6">
+              {data?.solutionsHeadline || "What We Build & Deliver"}
             </h2>
+            {data?.solutionsBody && (
+              <div className="type-lead text-[#8FA3BF] max-w-2xl mx-auto">
+                <PortableText value={data.solutionsBody} />
+              </div>
+            )}
           </div>
 
           <StaggerGroup className="grid md:grid-cols-3 gap-8">
             {data?.solutions?.map((card: any, idx: number) => (
               <StaggerItem key={idx} className="h-full">
-                <HoverCard className="group rounded-[32px] p-8 sm:p-10 h-full flex flex-col" style={{ background: 'rgba(20,36,58,0.7)', border: '1px solid rgba(0,229,255,0.1)', backdropFilter: 'blur(10px)' }}>
+                <HoverCard className="group rounded-[32px] p-8 sm:p-10 h-full flex flex-col transition-all duration-300" style={{ background: 'rgba(20,36,58,0.7)', border: '1px solid rgba(0,229,255,0.1)', backdropFilter: 'blur(10px)' }}>
                   <div className="flex items-center gap-2 mb-8 font-semibold text-[0.95rem]" style={{ color: '#00E5FF' }}>
                     <SparkleIcon />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 leading-tight">{card.title}</h3>
-                  <div className="leading-relaxed text-sm sm:text-[0.95rem]" style={{ color: '#8FA3BF' }}>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 leading-tight group-hover:text-[#00E5FF] transition-colors">{card.title}</h3>
+                  <div className="leading-relaxed text-sm sm:text-[0.95rem] mb-8" style={{ color: '#8FA3BF' }}>
                     <PortableText value={card.description} />
                   </div>
+
+                  {card.outcome && (
+                    <div className="mt-auto">
+                      <div className="p-5 rounded-2xl transition-all duration-300 group-hover:bg-[#00E5FF]/10" style={{ background: 'rgba(0,229,255,0.05)', border: '1px solid rgba(0,229,255,0.15)' }}>
+                        <div className="text-[10px] uppercase tracking-widest font-black mb-2" style={{ color: '#00E5FF' }}>Key Outcome</div>
+                        <div className="text-white text-sm font-bold leading-snug">{card.outcome}</div>
+                      </div>
+                    </div>
+                  )}
                 </HoverCard>
               </StaggerItem>
             ))}

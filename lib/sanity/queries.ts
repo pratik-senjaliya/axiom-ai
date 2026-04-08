@@ -251,15 +251,19 @@ export async function getHomePage(): Promise<any> {
       secondaryCta { text, link }
     },
     pitfallsHeadline,
+    pitfallsBody,
     pitfalls[] {
       stat,
       title,
       description
     },
     solutionsHeadline,
+    solutionsSubtitle,
+    solutionsBody,
     solutions[] {
       title,
-      description
+      description,
+      outcome
     },
     roadmapHeadline,
     roadmap[] {

@@ -32,6 +32,12 @@ export default defineType({
             group: 'pitfalls',
         }),
         defineField({
+            name: 'pitfallsBody',
+            title: 'Pitfalls Section Body',
+            type: 'simpleBlockContent',
+            group: 'pitfalls',
+        }),
+        defineField({
             name: 'pitfalls',
             title: 'Pitfalls (Failures)',
             type: 'array',
@@ -51,7 +57,19 @@ export default defineType({
             name: 'solutionsHeadline',
             title: 'Solutions Headline',
             type: 'string',
-            initialValue: 'Enterprise-grade AI Solutions',
+            initialValue: 'What We Build & Deliver',
+            group: 'solutions',
+        }),
+        defineField({
+            name: 'solutionsSubtitle',
+            title: 'Solutions Subtitle',
+            type: 'string',
+            group: 'solutions',
+        }),
+        defineField({
+            name: 'solutionsBody',
+            title: 'Solutions Section Body',
+            type: 'simpleBlockContent',
             group: 'solutions',
         }),
         defineField({
@@ -62,7 +80,8 @@ export default defineType({
               type: 'object',
               fields: [
                   { name: 'title', type: 'string', title: 'Solution Title' },
-                  { name: 'description', type: 'simpleBlockContent', title: 'Description' }
+                  { name: 'description', type: 'simpleBlockContent', title: 'Description' },
+                  { name: 'outcome', type: 'string', title: 'Key Outcome' }
               ]
           }],
           group: 'solutions',
