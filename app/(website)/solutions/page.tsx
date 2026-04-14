@@ -57,8 +57,6 @@ export default async function SolutionsPage({
     "Data Platforms",
     "Business Intelligence",
     "Workflow Automation",
-    "Microsoft D365",
-    "Power Platform",
     "ERP"
   ];
 
