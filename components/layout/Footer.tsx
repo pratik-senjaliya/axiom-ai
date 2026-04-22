@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "./Container";
 import { Linkedin, Twitter, Mail } from "lucide-react";
 
@@ -10,12 +11,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
           <div className="md:col-span-5 lg:col-span-4 pr-4">
             <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="flex items-center justify-center w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#00E5FF] to-[#1DA1F2] text-[#0A0F1F] font-bold text-[20px] shadow-[0_0_20px_rgba(0,229,255,0.35)]">
-                A
+              <div className="relative w-80 h-24">
+                <Image
+                  src="/SyncOrigin_Logo.png"
+                  alt="Sync Origin Logo"
+                  fill
+                  className="object-contain"
+                />
               </div>
-              <span className="font-bold text-[26px] tracking-tight text-white inline-block">
-                Axiom<span className="bg-gradient-to-r from-[#00E5FF] to-[#66FCF1] bg-clip-text text-transparent">AI</span>
-              </span>
             </Link>
             <p className="text-sm text-[#8FA3BF] mb-8 max-w-[280px] leading-relaxed">
               Enterprise AI, ERP & Data advisory. Building the
@@ -61,7 +64,7 @@ export function Footer() {
 
         <div className="border-t border-[#00E5FF]/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-[#8FA3BF]">
-            © 2026 AxiomAI. All rights reserved.
+            © 2026 Sync Origin. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <Link href="/privacy-policy" className="text-sm text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">Privacy Policy</Link>

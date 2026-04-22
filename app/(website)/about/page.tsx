@@ -11,8 +11,8 @@ import { FadeIn } from "@/components/ui/animations/FadeIn";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getAboutPage();
-  const defaultTitle = "About Axiom AI - Driving Innovation with AI Solutions";
-  const defaultDesc = "Learn about Axiom AI, our mission, expertise, and commitment to delivering AI-driven solutions that transform businesses and accelerate growth.";
+  const defaultTitle = "About Sync Origin - Driving Innovation with AI Solutions";
+  const defaultDesc = "Learn about Sync Origin, our mission, expertise, and commitment to delivering AI-driven solutions that transform businesses and accelerate growth.";
 
   if (!data?.seo) return {
     title: defaultTitle,

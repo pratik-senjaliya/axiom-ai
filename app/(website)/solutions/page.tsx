@@ -18,11 +18,11 @@ export async function generateMetadata({
   const data = await getUseCasesPage();
   const resolvedParams = await searchParams;
   const tag = resolvedParams.tag;
-  const defaultTitle = "Enterprise AI Solutions Across Industries | Axiom AI";
+  const defaultTitle = "Enterprise AI Solutions Across Industries | Sync Origin";
   const defaultDesc = "Explore high-impact AI solutions across industries, leveraging automation and objective execution to drive measurable ROI.";
   
   if (!data?.seo) return {
-    title: tag ? `${tag} Solutions | Axiom AI` : defaultTitle,
+    title: tag ? `${tag} Solutions | Sync Origin` : defaultTitle,
     description: defaultDesc,
   };
   return {

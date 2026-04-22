@@ -5,7 +5,7 @@ import { client } from '@/lib/sanity/client'
 export const revalidate = 60
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://axiomai.com'
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://syncorigin.ai'
 
     // Fetch all dynamic content slugs from Sanity
     let serviceSlugs: string[] = [];

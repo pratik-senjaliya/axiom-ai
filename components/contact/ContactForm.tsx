@@ -139,7 +139,7 @@ export function ContactForm({ data }: { data: any }) {
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
                       {getIcon('mail')}
                     </div>
-                    <span className="text-base font-bold text-white tracking-wide">hello@axiom-ai.com</span>
+                    <span className="text-base font-bold text-white tracking-wide">hello@syncorigin.ai</span>
                   </div>
                 </>
               )}

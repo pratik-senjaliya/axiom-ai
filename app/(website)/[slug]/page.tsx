@@ -59,7 +59,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   }
 
   return genMeta({
-    title: "Service | AxiomAI",
+    title: "Service | Sync Origin",
     description: "Detailed information about our professional advisory services.",
     slug: `/${params.slug}`
   });

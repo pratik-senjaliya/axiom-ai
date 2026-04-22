@@ -26,7 +26,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
     post.author?.toLowerCase().includes("senjaliya") ||
     post.author?.toLowerCase().includes("xconcile") ||
     !post.author)
-    ? "AxiomAI Team"
+    ? "Sync Origin Team"
     : post.author;
 
   if (featured) {
@@ -44,7 +44,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #0D1B2A, #14243A)' }}>
-              <span style={{ color: '#14243A' }}>AxiomAI Insights</span>
+              <span style={{ color: '#14243A' }}>Sync Origin Insights</span>
             </div>
           )}
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,15,31,0.95) 0%, rgba(10,15,31,0.5) 40%, transparent 100%)' }} />

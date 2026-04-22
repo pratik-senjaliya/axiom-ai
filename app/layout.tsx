@@ -17,15 +17,15 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "AxiomAI | Professional AI, ERP & Data Services",
+  title: "Sync Origin | Professional AI, ERP & Data Services",
   description:
     "Strategic B2B partnerships and professional solutions for your business. We deliver expert guidance, global expertise, and innovative strategies for growth.",
   keywords: ["business", "consulting", "professional services", "solutions", "strategy", "growth", "B2B"],
-  authors: [{ name: "AxiomAI" }],
-  creator: "AxiomAI",
-  publisher: "AxiomAI",
+  authors: [{ name: "Sync Origin" }],
+  creator: "Sync Origin",
+  publisher: "Sync Origin",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://axiomai.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigin.ai"
   ),
   formatDetection: {
     email: false,
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://axiomai.com",
-    siteName: "AxiomAI",
-    title: "AxiomAI | Professional AI, ERP & Data Services",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigin.ai",
+    siteName: "Sync Origin",
+    title: "Sync Origin | Professional AI, ERP & Data Services",
     description:
       "Strategic B2B partnerships and professional solutions for your business. We deliver expert guidance, global expertise, and innovative strategies for growth.",
     images: [
@@ -45,17 +45,17 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "AxiomAI - Professional Services",
+        alt: "Sync Origin - Professional Services",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AxiomAI | Professional AI, ERP & Data Services",
+    title: "Sync Origin | Professional AI, ERP & Data Services",
     description:
       "Strategic B2B partnerships and professional solutions for your business. We deliver expert guidance, global expertise, and innovative strategies for growth.",
     images: ["/og-image.png"],
-    creator: "@axiomai",
+    creator: "@syncorigin",
   },
   robots: {
     index: true,

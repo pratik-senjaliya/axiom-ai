@@ -20,7 +20,7 @@ export interface SEOConfig {
 }
 
 const defaultSEO: Partial<SEOConfig> = {
-  author: "AxiomAI",
+  author: "Sync Origin",
   ogType: "website",
   twitterCard: "summary_large_image",
   keywords: ["accounting", "financial services", "bookkeeping", "payroll", "tax preparation"],
@@ -41,7 +41,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
     nofollow = false,
   } = { ...defaultSEO, ...config };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://axiomai.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigin.ai";
   // Don't add site name suffix here - Next.js will handle it via title template
   const fullTitle = title;
 
@@ -78,7 +78,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
       title: fullTitle,
       description,
       url: currentUrl,
-      siteName: defaultSEO.author || "AxiomAI",
+      siteName: defaultSEO.author || "Sync Origin",
       images: [
         {
           url: imageUrl,
@@ -158,10 +158,10 @@ export function generateArticleSchema(post: {
     },
     publisher: {
       "@type": "Organization",
-      name: "AxiomAI",
+      name: "Sync Origin",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://axiomai.com"}/favicon.ico`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigin.ai"}/SyncOrigin_Logo.png`,
       },
     },
     mainEntityOfPage: {
@@ -175,15 +175,15 @@ export function generateArticleSchema(post: {
  * Common organization structured data
  */
 export function getOrganizationSchema() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://axiomai.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigin.ai";
   return generateStructuredData("Organization", {
-    name: "AxiomAI",
+    name: "Sync Origin",
     url: siteUrl,
-    logo: `${siteUrl}/favicon.ico`,
+    logo: `${siteUrl}/SyncOrigin_Logo.png`,
     sameAs: [
-      "https://www.linkedin.com/company/axiomai",
-      "https://twitter.com/axiomai",
-      "https://www.facebook.com/axiomai",
+      "https://www.linkedin.com/company/syncorigin",
+      "https://twitter.com/syncorigin",
+      "https://www.facebook.com/syncorigin",
     ],
     contactPoint: {
       "@type": "ContactPoint",

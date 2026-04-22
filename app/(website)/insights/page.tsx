@@ -16,15 +16,15 @@ export async function generateMetadata({
   const data = await getBlogPage();
   const resolvedParams = await searchParams;
   const activeCategory = resolvedParams.category || "All";
-  const defaultTitle = `${activeCategory} Insights & AI Trends | Axiom AI`;
-  const defaultDesc = "Stay updated with AI trends, industry insights, and digital transformation strategies to drive innovation and smarter decision-making with Axiom AI.";
+  const defaultTitle = `${activeCategory} Insights & AI Trends | Sync Origin`;
+  const defaultDesc = "Stay updated with AI trends, industry insights, and digital transformation strategies to drive innovation and smarter decision-making with Sync Origin.";
   
   if (!data?.seo) return {
     title: defaultTitle,
     description: defaultDesc,
   };
   return {
-    title: activeCategory !== "All" ? `${activeCategory} | AI Insights | Axiom AI` : (data.seo.metaTitle || defaultTitle),
+    title: activeCategory !== "All" ? `${activeCategory} | AI Insights | Sync Origin` : (data.seo.metaTitle || defaultTitle),
     description: data.seo.metaDescription || defaultDesc,
   };
 }

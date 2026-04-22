@@ -19,10 +19,10 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   
-  if (!post) return { title: "Post Not Found | AxiomAI" };
+  if (!post) return { title: "Post Not Found | Sync Origin" };
   
   return {
-    title: `${post.title} | AxiomAI Insights`,
+    title: `${post.title} | Sync Origin Insights`,
     description: post.excerpt,
     openGraph: {
       title: post.title,
@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                         post.author?.toLowerCase().includes("senjaliya") || 
                         post.author?.toLowerCase().includes("xconcile") ||
                         !post.author) 
-                        ? "AxiomAI Team" 
+                        ? "Sync Origin Team" 
                         : post.author;
 
   const allPosts = await getAllPosts();

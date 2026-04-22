@@ -24,8 +24,8 @@ async function getTermsOfUsage() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getTermsOfUsage();
-  const defaultTitle = "Terms of Usage - Website Policies & Conditions | Axiom AI";
-  const defaultDesc = "Review Axiom AI’s terms of usage to understand website policies, user responsibilities, and conditions governing the use of our services.";
+  const defaultTitle = "Terms of Usage - Website Policies & Conditions | Sync Origin";
+  const defaultDesc = "Review Sync Origin’s terms of usage to understand website policies, user responsibilities, and conditions governing the use of our services.";
 
   if (page?.seo) {
     return genMeta({
@@ -113,7 +113,7 @@ const ptComponents = {
 const FALLBACK_SECTIONS = [
   {
     title: "1. Acceptance of Terms",
-    body: "By accessing or using AxiomAI's services, you confirm that you are at least 18 years old and agree to these Terms. If you do not agree, please discontinue use immediately.",
+    body: "By accessing or using Sync Origin's services, you confirm that you are at least 18 years old and agree to these Terms. If you do not agree, please discontinue use immediately.",
   },
   {
     title: "2. Use of Services",
@@ -121,7 +121,7 @@ const FALLBACK_SECTIONS = [
   },
   {
     title: "3. Intellectual Property",
-    body: "All content, trademarks, and technology on this platform are the property of AxiomAI or its licensors.",
+    body: "All content, trademarks, and technology on this platform are the property of Sync Origin or its licensors.",
   },
   {
     title: "4. Modifications",
@@ -168,7 +168,7 @@ export default async function TermsOfUsagePage() {
               <div className="space-y-12">
                 <div className="max-w-4xl">
                   <p className="text-neutral-600 text-lg leading-relaxed">
-                    Please read these Terms of Usage carefully before using the AxiomAI platform. By accessing our
+                    Please read these Terms of Usage carefully before using the Sync Origin platform. By accessing our
                     services, you agree to be bound by these terms.
                   </p>
                 </div>

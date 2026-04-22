@@ -14,8 +14,8 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getHomePage();
-  const defaultTitle = "AI & Digital Transformation Solutions for Businesses | Axiom AI";
-  const defaultDesc = "Drive growth with Axiom AI digital transformation solutions, including ERP transformation, managed delivery, and sustainable strategies to improve efficiency and performance.";
+  const defaultTitle = "AI & Digital Transformation Solutions for Businesses | Sync Origin";
+  const defaultDesc = "Drive growth with Sync Origin digital transformation solutions, including ERP transformation, managed delivery, and sustainable strategies to improve efficiency and performance.";
   
   if (!data?.seo) return {
     title: defaultTitle,

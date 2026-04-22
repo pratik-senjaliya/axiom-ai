@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 
@@ -134,12 +135,15 @@ export const Header: React.FC = () => {
           <div className="flex justify-between items-center h-24">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-[#00E5FF] to-[#1DA1F2] text-[#0A0F1F] font-bold text-xl shadow-[0_0_20px_rgba(0,229,255,0.4)]">
-                A
+              <div className="relative w-80 h-20">
+                <Image
+                  src="/SyncOrigin_Logo.png"
+                  alt="Sync Origin Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
-              <span className="font-bold text-[1.4rem] tracking-tight text-white">
-                Axiom<span className="bg-gradient-to-r from-[#00E5FF] to-[#66FCF1] bg-clip-text text-transparent">AI</span>
-              </span>
             </Link>
 
             {/* Desktop Nav */}

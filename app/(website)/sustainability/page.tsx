@@ -162,7 +162,7 @@ export default async function SustainabilityPage() {
         small={true}
       />
 
-      {/* ── Sync Origins Advantage (Roadmap) ── */}
+      {/* ── Sync Origin Advantage (Roadmap) ── */}
       <section className="py-24 relative overflow-hidden" style={{ background: '#14243A' }}>
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />

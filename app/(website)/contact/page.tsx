@@ -8,8 +8,8 @@ export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const sanityData = await getContactPage().catch(() => null);
-  const defaultTitle = "Contact Us for AI & Digital Solutions | Axiom AI";
-  const defaultDesc = "Get in touch with Axiom AI for expert AI, ERP, and data solutions. Let’s discuss how we can transform your business with tailored strategies.";
+  const defaultTitle = "Contact Us for AI & Digital Solutions | Sync Origin";
+  const defaultDesc = "Get in touch with Sync Origin for expert AI, ERP, and data solutions. Let’s discuss how we can transform your business with tailored strategies.";
 
   if (sanityData?.seo) {
     return genMeta({
