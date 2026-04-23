@@ -24,8 +24,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle || defaultTitle,
-    description: data.seo.metaDescription || defaultDesc,
+    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
   };
 }
 
@@ -162,7 +162,7 @@ export default async function SustainabilityPage() {
         small={true}
       />
 
-      {/* ── Sync Origin Advantage (Roadmap) ── */}
+      {/* ── SyncOrigins Advantage (Roadmap) ── */}
       <section className="py-24 relative overflow-hidden" style={{ background: '#14243A' }}>
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />

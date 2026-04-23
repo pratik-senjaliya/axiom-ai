@@ -8,13 +8,13 @@ export function Footer() {
   return (
     <footer className="bg-[#0D1B2A] text-[#C5D1E0] py-16 border-t border-[#00E5FF]/10">
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
-          <div className="md:col-span-5 lg:col-span-4 pr-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16 justify-items-start">
+          <div className="md:col-span-5 lg:col-span-4 pr-4 flex flex-col items-start text-left">
             <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="relative w-80 h-24">
+              <div className="relative w-80 h-20">
                 <Image
                   src="/SyncOrigin_Logo.png"
-                  alt="Sync Origin Logo"
+                  alt="SyncOrigins Logo"
                   fill
                   className="object-contain"
                 />
@@ -64,7 +64,7 @@ export function Footer() {
 
         <div className="border-t border-[#00E5FF]/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-[#8FA3BF]">
-            © 2026 Sync Origin. All rights reserved.
+            © 2026 SyncOrigins. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <Link href="/privacy-policy" className="text-sm text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">Privacy Policy</Link>

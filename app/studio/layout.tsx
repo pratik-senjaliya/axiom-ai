@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Sanity Studio",
-  description: "Sync Origin Content Management",
+  description: "SyncOrigins Content Management",
 };
 
 export default function StudioLayout({

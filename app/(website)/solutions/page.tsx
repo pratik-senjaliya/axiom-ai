@@ -18,16 +18,16 @@ export async function generateMetadata({
   const data = await getUseCasesPage();
   const resolvedParams = await searchParams;
   const tag = resolvedParams.tag;
-  const defaultTitle = "Enterprise AI Solutions Across Industries | Sync Origin";
+  const defaultTitle = "Enterprise AI Solutions Across Industries | SyncOrigins";
   const defaultDesc = "Explore high-impact AI solutions across industries, leveraging automation and objective execution to drive measurable ROI.";
   
   if (!data?.seo) return {
-    title: tag ? `${tag} Solutions | Sync Origin` : defaultTitle,
+    title: tag ? `${tag} Solutions | SyncOrigins` : defaultTitle,
     description: defaultDesc,
   };
   return {
-    title: tag ? `${tag} | ${data.seo.metaTitle || defaultTitle}` : (data.seo.metaTitle || defaultTitle),
-    description: data.seo.metaDescription || defaultDesc,
+    title: (tag ? `${tag} | ${data.seo.metaTitle || defaultTitle}` : (data.seo.metaTitle || defaultTitle)).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
   };
 }
 

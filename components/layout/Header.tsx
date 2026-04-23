@@ -138,7 +138,7 @@ export const Header: React.FC = () => {
               <div className="relative w-80 h-20">
                 <Image
                   src="/SyncOrigin_Logo.png"
-                  alt="Sync Origin Logo"
+                  alt="SyncOrigins Logo"
                   fill
                   className="object-contain"
                   priority

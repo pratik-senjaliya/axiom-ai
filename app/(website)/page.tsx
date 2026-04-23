@@ -14,16 +14,16 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getHomePage();
-  const defaultTitle = "AI & Digital Transformation Solutions for Businesses | Sync Origin";
-  const defaultDesc = "Drive growth with Sync Origin digital transformation solutions, including ERP transformation, managed delivery, and sustainable strategies to improve efficiency and performance.";
+  const defaultTitle = "AI & Digital Transformation Solutions for Businesses | SyncOrigins";
+  const defaultDesc = "Drive growth with SyncOrigins digital transformation solutions, including ERP transformation, managed delivery, and sustainable strategies to improve efficiency and performance.";
   
   if (!data?.seo) return {
     title: defaultTitle,
     description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle || defaultTitle,
-    description: data.seo.metaDescription || defaultDesc,
+    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
   };
 }
 

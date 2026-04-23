@@ -11,20 +11,20 @@ import { FadeIn } from "@/components/ui/animations/FadeIn";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getAboutPage();
-  const defaultTitle = "About Sync Origin - Driving Innovation with AI Solutions";
-  const defaultDesc = "Learn about Sync Origin, our mission, expertise, and commitment to delivering AI-driven solutions that transform businesses and accelerate growth.";
+  const defaultTitle = "About SyncOrigins - Driving Innovation with AI Solutions";
+  const defaultDesc = "Learn about SyncOrigins, our mission, expertise, and commitment to delivering AI-driven solutions that transform businesses and accelerate growth.";
 
   if (!data?.seo) return {
     title: defaultTitle,
     description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle || defaultTitle,
-    description: data.seo.metaDescription || defaultDesc,
+    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
     keywords: data.seo.metaKeywords,
     openGraph: {
-      title: data.seo.metaTitle || defaultTitle,
-      description: data.seo.metaDescription || defaultDesc,
+      title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+      description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
       images: data.seo.openGraphImage ? [{ url: data.seo.openGraphImage }] : [],
     },
   };

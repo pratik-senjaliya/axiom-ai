@@ -20,7 +20,7 @@ export interface SEOConfig {
 }
 
 const defaultSEO: Partial<SEOConfig> = {
-  author: "Sync Origin",
+  author: "SyncOrigins",
   ogType: "website",
   twitterCard: "summary_large_image",
   keywords: ["accounting", "financial services", "bookkeeping", "payroll", "tax preparation"],
@@ -41,9 +41,14 @@ export function generateMetadata(config: SEOConfig): Metadata {
     nofollow = false,
   } = { ...defaultSEO, ...config };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigin.ai";
-  // Don't add site name suffix here - Next.js will handle it via title template
-  const fullTitle = title;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.ai";
+  // Reinforce branding by replacing old brand names with the new one
+  const cleanedTitle = title
+    .replace(/Axiom AI/g, "SyncOrigins")
+    .replace(/AxiomAI/g, "SyncOrigins")
+    .replace(/Sync Origin/g, "SyncOrigins");
+  
+  const fullTitle = cleanedTitle;
 
   // Construct the current page URL
   // Priority: 1. canonicalUrl (explicit override) 2. siteUrl + slug 3. siteUrl (home)
@@ -78,7 +83,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
       title: fullTitle,
       description,
       url: currentUrl,
-      siteName: defaultSEO.author || "Sync Origin",
+      siteName: defaultSEO.author || "SyncOrigins",
       images: [
         {
           url: imageUrl,
@@ -158,7 +163,7 @@ export function generateArticleSchema(post: {
     },
     publisher: {
       "@type": "Organization",
-      name: "Sync Origin",
+      name: "SyncOrigins",
       logo: {
         "@type": "ImageObject",
         url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigin.ai"}/SyncOrigin_Logo.png`,
@@ -177,7 +182,7 @@ export function generateArticleSchema(post: {
 export function getOrganizationSchema() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigin.ai";
   return generateStructuredData("Organization", {
-    name: "Sync Origin",
+    name: "SyncOrigins",
     url: siteUrl,
     logo: `${siteUrl}/SyncOrigin_Logo.png`,
     sameAs: [

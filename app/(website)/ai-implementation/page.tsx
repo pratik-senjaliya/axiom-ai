@@ -22,8 +22,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description: defaultDesc,
   };
   return {
-    title: data.seo.metaTitle || defaultTitle,
-    description: data.seo.metaDescription || defaultDesc,
+    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
   };
 }
 

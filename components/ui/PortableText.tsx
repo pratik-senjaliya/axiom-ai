@@ -13,6 +13,26 @@ const slugify = (text: string) =>
         .replace(/[\s_-]+/g, '-')
         .replace(/^-+|-+$/g, '');
 
+const cleanBrandName = (val: any): any => {
+    if (typeof val === 'string') {
+        return val
+            .replace(/Axiom AI/g, "SyncOrigins")
+            .replace(/AxiomAI/g, "SyncOrigins")
+            .replace(/Sync Origin/g, "SyncOrigins");
+    }
+    if (Array.isArray(val)) {
+        return val.map(cleanBrandName);
+    }
+    if (val && typeof val === 'object') {
+        const cleaned: any = {};
+        for (const key in val) {
+            cleaned[key] = cleanBrandName(val[key]);
+        }
+        return cleaned;
+    }
+    return val;
+};
+
 const components = {
     block: {
         h1: ({ children }: any) => (
@@ -124,9 +144,11 @@ export function PortableText({ value, className = '' }: PortableTextProps) {
         )
     }
 
+    const cleanedValue = cleanBrandName(value);
+
     return (
         <div className={`prose-clean ${className}`}>
-            <PortableTextReact value={value} components={components} />
+            <PortableTextReact value={cleanedValue} components={components} />
         </div>
     )
 }

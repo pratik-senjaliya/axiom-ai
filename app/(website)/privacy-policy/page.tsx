@@ -24,8 +24,8 @@ async function getPrivacyPolicy() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPrivacyPolicy();
-  const defaultTitle = "Privacy Policy - Data Protection & Security | Sync Origin";
-  const defaultDesc = "Read Sync Origin’s privacy policy to understand how we collect, use, and protect your data while ensuring transparency and security.";
+  const defaultTitle = "Privacy Policy - Data Protection & Security | SyncOrigins";
+  const defaultDesc = "Read SyncOrigins’s privacy policy to understand how we collect, use, and protect your data while ensuring transparency and security.";
 
   if (page?.seo) {
     return genMeta({

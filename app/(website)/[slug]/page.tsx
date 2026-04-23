@@ -59,7 +59,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   }
 
   return genMeta({
-    title: "Service | Sync Origin",
+    title: "Service | SyncOrigins",
     description: "Detailed information about our professional advisory services.",
     slug: `/${params.slug}`
   });

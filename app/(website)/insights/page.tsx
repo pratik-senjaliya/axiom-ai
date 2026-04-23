@@ -16,16 +16,16 @@ export async function generateMetadata({
   const data = await getBlogPage();
   const resolvedParams = await searchParams;
   const activeCategory = resolvedParams.category || "All";
-  const defaultTitle = `${activeCategory} Insights & AI Trends | Sync Origin`;
-  const defaultDesc = "Stay updated with AI trends, industry insights, and digital transformation strategies to drive innovation and smarter decision-making with Sync Origin.";
+  const defaultTitle = `${activeCategory} Insights & AI Trends | SyncOrigins`;
+  const defaultDesc = "Stay updated with AI trends, industry insights, and digital transformation strategies to drive innovation and smarter decision-making with SyncOrigins.";
   
   if (!data?.seo) return {
     title: defaultTitle,
     description: defaultDesc,
   };
   return {
-    title: activeCategory !== "All" ? `${activeCategory} | AI Insights | Sync Origin` : (data.seo.metaTitle || defaultTitle),
-    description: data.seo.metaDescription || defaultDesc,
+    title: (activeCategory !== "All" ? `${activeCategory} | AI Insights | SyncOrigins` : (data.seo.metaTitle || defaultTitle)).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
   };
 }
 

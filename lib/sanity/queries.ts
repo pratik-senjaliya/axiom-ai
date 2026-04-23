@@ -22,7 +22,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     excerpt,
     "category": coalesce(category, "Insights"),
     "date": publishedAt,
-    "author": coalesce(author, "Sync Origin Team"),
+    "author": coalesce(author, "SyncOrigins Team"),
     "authorRole": coalesce(authorRole, "Contributor"),
     "image": coalesce(mainImage.asset->url, 
       select(
@@ -72,7 +72,7 @@ export async function getPostBySlug(slug: string): Promise<any> {
     excerpt,
     content,
     "date": publishedAt,
-    "author": coalesce(author, "Sync Origin Team"),
+    "author": coalesce(author, "SyncOrigins Team"),
     "authorRole": coalesce(authorRole, "Contributor"),
     "image": coalesce(mainImage.asset->url, 
       select(
@@ -626,7 +626,7 @@ export async function getLatestPostsByService(service: string, limit: number = 3
     excerpt,
     "category": coalesce(category, "Insights"),
     "date": publishedAt,
-    "author": coalesce(author, "Sync Origin Team"),
+    "author": coalesce(author, "SyncOrigins Team"),
     "image": coalesce(mainImage.asset->url, 
       select(
         relatedService == "ai" => select(

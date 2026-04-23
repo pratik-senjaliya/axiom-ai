@@ -19,10 +19,10 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   
-  if (!post) return { title: "Post Not Found | Sync Origin" };
+  if (!post) return { title: "Post Not Found | SyncOrigins" };
   
   return {
-    title: `${post.title} | Sync Origin Insights`,
+    title: `${post.title} | SyncOrigins Insights`,
     description: post.excerpt,
     openGraph: {
       title: post.title,
@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                         post.author?.toLowerCase().includes("senjaliya") || 
                         post.author?.toLowerCase().includes("xconcile") ||
                         !post.author) 
-                        ? "Sync Origin Team" 
+                        ? "SyncOrigins Team" 
                         : post.author;
 
   const allPosts = await getAllPosts();
