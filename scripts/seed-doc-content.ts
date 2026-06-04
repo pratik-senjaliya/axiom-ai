@@ -58,7 +58,7 @@ async function run() {
     problemConclusion: simpleBlock("The result? Slower decisions, missed opportunities, and inefficient operations."),
     
     approachHeadline: "We Build End-to-End Data Intelligence Systems",
-    approachBody: simpleBlock("At Sync Origins, we go beyond dashboards. We build scalable, AI-ready data architectures that power real business outcomes."),
+    approachBody: simpleBlock("At SyncOrigins, we go beyond dashboards. We build scalable, AI-ready data architectures that power real business outcomes."),
     approachCapabilities: [
       { _key: 'l1', title: "Data Engineering", description: simpleBlock("Build robust pipelines to unify data from ERP, CRM, IoT, and external sources") },
       { _key: 'l2', title: "Data Warehousing & Lakehouse", description: simpleBlock("Design centralized, scalable storage systems for structured and unstructured data") },
@@ -126,13 +126,13 @@ async function run() {
     hero: {
       title: "Where Enterprise Systems Become",
       titleHighlight: "Intelligent",
-      description: simpleBlock("Sync Origins is the transformation and data intelligence arm of Lashan Digital, focused on building AI-ready enterprises through integrated systems, scalable data architecture, and execution-driven consulting.")
+      description: simpleBlock("SyncOrigins is the transformation and data intelligence arm of Lashan Digital, focused on building AI-ready enterprises through integrated systems, scalable data architecture, and execution-driven consulting.")
     },
     
     whoWeAreHeadline: "Built for the Next Era of Enterprise",
     whoWeAreBody: [
-        ...simpleBlock("Sync Origins was founded on a simple belief — the future of business will be driven by connected, intelligent ecosystems, not fragmented systems."),
-        ...simpleBlock("Sync Origins is a part of Lashan Digital, which was founded to bridge advanced technology with sustainable business transformation."),
+        ...simpleBlock("SyncOrigins was founded on a simple belief — the future of business will be driven by connected, intelligent ecosystems, not fragmented systems."),
+        ...simpleBlock("SyncOrigins is a part of Lashan Digital, which was founded to bridge advanced technology with sustainable business transformation."),
         ...simpleBlock("We operate at the intersection of:"),
         ...bulletList([
             "Enterprise technology",
@@ -146,7 +146,7 @@ async function run() {
     philosophyHeadline: "From Systems to Intelligence",
     philosophyBody: [
         ...simpleBlock("Most transformation initiatives fail because they focus on tools rather than outcomes."),
-        ...simpleBlock("At Sync Origins, we take a different approach:"),
+        ...simpleBlock("At SyncOrigins, we take a different approach:"),
         ...bulletList([
             "We design business-aligned systems, not just implement software",
             "We build decision infrastructure, not just dashboards",
@@ -173,7 +173,7 @@ async function run() {
     ],
     visionStatement: [
         ...simpleBlock("We believe the next generation of enterprises will operate on real-time data, AI-driven decision systems, and fully integrated platforms."),
-        ...simpleBlock("Sync Origins exists to help organizations build this foundation — systematically, practically, and at scale.")
+        ...simpleBlock("SyncOrigins exists to help organizations build this foundation — systematically, practically, and at scale.")
     ],
     
     ctaHeadline: "Let’s Build What’s Next",
@@ -182,7 +182,7 @@ async function run() {
       { _key: 'c2', text: "Talk to Our Experts", link: "/contact" },
       { _key: 'c3', text: "Start Your Transformation", link: "/contact" }
     ],
-    ctaClosing: "The future belongs to organizations that turn systems into intelligence. Sync Origins helps you get there."
+    ctaClosing: "The future belongs to organizations that turn systems into intelligence. SyncOrigins helps you get there."
   }).commit({ autoGenerateArrayKeys: true });
   console.log("About Us fully structured and updated!");
   

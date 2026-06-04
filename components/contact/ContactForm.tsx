@@ -122,17 +122,19 @@ export function ContactForm({ data }: { data: any }) {
             {/* Contact info items */}
             <div className="space-y-4 mb-8">
               {data?.infoItems && data.infoItems.length > 0 ? (
-                data.infoItems.map((item: any, i: number) => (
-                  <div key={i} className="flex items-center gap-4 group">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
-                      {getIcon(item.icon)}
+                data.infoItems
+                  .filter((item: any) => item.icon !== 'phone' && !/phone/i.test(item.label || '') && !/phone/i.test(item.value || ''))
+                  .map((item: any, i: number) => (
+                    <div key={i} className="flex items-center gap-4 group">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
+                        {getIcon(item.icon)}
+                      </div>
+                      <div>
+                        <div className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold mb-0.5">{item.label}</div>
+                        <span className="text-base font-bold text-white tracking-wide">{item.value}</span>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold mb-0.5">{item.label}</div>
-                      <span className="text-base font-bold text-white tracking-wide">{item.value}</span>
-                    </div>
-                  </div>
-                ))
+                  ))
               ) : (
                 <>
                   <div className="flex items-center gap-4 group">
@@ -143,13 +145,6 @@ export function ContactForm({ data }: { data: any }) {
                   </div>
                 </>
               )}
-            </div>
-
-            {/* Social Icons */}
-            <div className="flex gap-3">
-              <a href="#" className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300" style={{ background: 'rgba(20,36,58,0.8)', color: '#8FA3BF', border: '1px solid rgba(0,229,255,0.2)' }}>
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              </a>
             </div>
           </SlideUp>
 

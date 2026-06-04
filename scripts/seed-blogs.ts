@@ -144,7 +144,7 @@ async function run() {
           "Data teams spend more time preparing data than using it"
         ]),
         ...simpleBlock("Our Approach", "h3"),
-        ...simpleBlock("At Sync Origins, we go beyond dashboards. We build scalable, AI-ready data architectures that power real business outcomes including Data Engineering, Warehousing, and Advanced Analytics."),
+        ...simpleBlock("At SyncOrigins, we go beyond dashboards. We build scalable, AI-ready data architectures that power real business outcomes including Data Engineering, Warehousing, and Advanced Analytics."),
       ]
     }
   ];

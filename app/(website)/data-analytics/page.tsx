@@ -28,8 +28,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 
   return {
-    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
+    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
     keywords: data.seo.metaKeywords,
     openGraph: {
       title: data.seo.metaTitle,

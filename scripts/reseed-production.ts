@@ -302,7 +302,7 @@ async function reseed() {
       { title: 'Emission Forecasting:', description: 'AI/ML models simulate the impact of operational decisions on future carbon footprint.', tasks: ['Data-driven sustainability planning and smarter investments.'] },
       { title: 'Green Supply Chain Insights:', description: 'Identify high-emission suppliers and optimize procurement decisions for sustainability.', tasks: ['Reduced supply chain emissions and stronger vendor accountability.'] }
     ]),
-    roadmapHeadline: 'The "Sync Origins Advantage"',
+    roadmapHeadline: 'The "SyncOrigins Advantage"',
     roadmap: addKeys([
       { step: '01', title: 'AI + Data-First Approach:', description: 'We combine deep data engineering with AI models to move sustainability from reporting to real-time optimization.' },
       { step: '02', title: 'ERP & Enterprise Integration:', description: 'Seamless integration with systems like SAP, Microsoft, and Oracle to extract accurate operational data.' },
@@ -354,7 +354,7 @@ async function reseed() {
       { title: 'End-to-End Delivery Ownership:', description: 'From planning to deployment and post-launch support, we take complete ownership of execution.', tasks: ['Predictable delivery timelines and measurable business outcomes.'] },
       { title: 'Agile Transformation & Delivery Advisory:', description: 'We redesign your delivery processes for speed, transparency, and scalability.', tasks: ['Improved velocity, better sprint predictability, and stronger team performance.'] }
     ]),
-    roadmapHeadline: 'The "Sync Origins Advantage"',
+    roadmapHeadline: 'The "SyncOrigins Advantage"',
     roadmap: addKeys([
       { step: '01', title: 'Pre-Vetted Talent Network:', description: 'We don’t source—we deliver ready-to-perform experts who are technically and culturally aligned.' },
       { step: '02', title: 'Outcome-First Engagement:', description: 'We align delivery with business KPIs, not just resource allocation or timelines.' },

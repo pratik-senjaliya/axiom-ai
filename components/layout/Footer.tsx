@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "./Container";
-import { Linkedin, Twitter, Mail } from "lucide-react";
+import { Linkedin } from "lucide-react";
 
 export function Footer() {
   return (
@@ -11,12 +11,12 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16 justify-items-start">
           <div className="md:col-span-5 lg:col-span-4 pr-4 flex flex-col items-start text-left">
             <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="relative w-80 h-20">
+              <div className="relative w-48 h-20">
                 <Image
                   src="/SyncOrigin_Logo.png"
                   alt="SyncOrigins Logo"
                   fill
-                  className="object-contain"
+                  className="object-contain object-left"
                 />
               </div>
             </Link>
@@ -28,14 +28,6 @@ export function Footer() {
               <a href="#" className="w-10 h-10 rounded-[12px] bg-[#14243A] border border-[#00E5FF]/15 flex items-center justify-center text-[#8FA3BF] hover:border-[#00E5FF]/40 hover:text-[#00E5FF] transition-all">
                 <Linkedin className="w-4 h-4" strokeWidth={1.5} />
                 <span className="sr-only">LinkedIn</span>
-              </a>
-              <a href="#" className="w-10 h-10 rounded-[12px] bg-[#14243A] border border-[#00E5FF]/15 flex items-center justify-center text-[#8FA3BF] hover:border-[#00E5FF]/40 hover:text-[#00E5FF] transition-all">
-                <Twitter className="w-4 h-4" strokeWidth={1.5} />
-                <span className="sr-only">Twitter</span>
-              </a>
-              <a href="#" className="w-10 h-10 rounded-[12px] bg-[#14243A] border border-[#00E5FF]/15 flex items-center justify-center text-[#8FA3BF] hover:border-[#00E5FF]/40 hover:text-[#00E5FF] transition-all">
-                <Mail className="w-4 h-4" strokeWidth={1.5} />
-                <span className="sr-only">Email</span>
               </a>
             </div>
           </div>
@@ -63,9 +55,23 @@ export function Footer() {
         </div>
 
         <div className="border-t border-[#00E5FF]/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-[#8FA3BF]">
-            © 2026 SyncOrigins. All rights reserved.
-          </p>
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+            <p className="text-sm text-[#8FA3BF]">
+              © 2026 SyncOrigins. All rights reserved.
+            </p>
+            <span className="hidden md:inline text-[#8FA3BF]/30">|</span>
+            <p className="text-sm text-[#8FA3BF]">
+              Design & Develop by{" "}
+              <a
+                href="https://ebranding.studio/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#00E5FF] hover:underline transition-colors"
+              >
+                eBranding Studio
+              </a>
+            </p>
+          </div>
           <div className="flex items-center gap-6">
             <Link href="/privacy-policy" className="text-sm text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">Privacy Policy</Link>
             <Link href="/terms-of-usage" className="text-sm text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">Terms of Service</Link>

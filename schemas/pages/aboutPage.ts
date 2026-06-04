@@ -9,7 +9,7 @@ export default defineType({
         { name: 'whoWeAre', title: 'Who We Are' },
         { name: 'philosophy', title: 'Our Philosophy' },
         { name: 'whatWeDo', title: 'What We Do' },
-        { name: 'whyUs', title: 'Why Sync Origins' },
+        { name: 'whyUs', title: 'Why SyncOrigins' },
         { name: 'cta', title: 'Call to Action' },
         { name: 'seo', title: 'SEO' },
     ],
@@ -83,7 +83,7 @@ export default defineType({
             group: 'whatWeDo',
         }),
 
-        // Section 5: Why Sync Origins
+        // Section 5: Why SyncOrigins
         defineField({
             name: 'whyUsHeadline',
             title: 'Why Us Headline',

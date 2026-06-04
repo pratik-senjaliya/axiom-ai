@@ -103,7 +103,7 @@ export default defineType({
             name: 'roadmapHeadline',
             title: 'Roadmap/Advantages Headline',
             type: 'string',
-            initialValue: 'The Sync Origins Advantage',
+            initialValue: 'The SyncOrigins Advantage',
             group: 'roadmap',
         }),
         defineField({

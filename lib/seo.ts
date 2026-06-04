@@ -46,6 +46,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
   const cleanedTitle = title
     .replace(/Axiom AI/g, "SyncOrigins")
     .replace(/AxiomAI/g, "SyncOrigins")
+    .replace(/Sync Origins/g, "SyncOrigins")
     .replace(/Sync Origin/g, "SyncOrigins");
   
   const fullTitle = cleanedTitle;

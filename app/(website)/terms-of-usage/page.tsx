@@ -9,7 +9,7 @@ export const revalidate = 60;
 async function getTermsOfUsage() {
   try {
     const data = await client.fetch(`
-      *[_type == "termsOfUsage"][0]{
+      *[_type == "termsOfUsage" && _id == "termsOfUsageSingleton"][0]{
         title,
         lastUpdated,
         content,

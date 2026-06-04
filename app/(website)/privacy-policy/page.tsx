@@ -9,7 +9,7 @@ export const revalidate = 60;
 async function getPrivacyPolicy() {
   try {
     const data = await client.fetch(`
-      *[_type == "privacyPolicy"][0]{
+      *[_type == "privacyPolicy" && _id == "privacyPolicySingleton"][0]{
         title,
         lastUpdated,
         content,

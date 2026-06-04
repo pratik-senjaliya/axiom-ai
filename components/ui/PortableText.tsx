@@ -18,6 +18,7 @@ const cleanBrandName = (val: any): any => {
         return val
             .replace(/Axiom AI/g, "SyncOrigins")
             .replace(/AxiomAI/g, "SyncOrigins")
+            .replace(/Sync Origins/g, "SyncOrigins")
             .replace(/Sync Origin/g, "SyncOrigins");
     }
     if (Array.isArray(val)) {

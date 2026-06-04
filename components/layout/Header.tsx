@@ -135,12 +135,12 @@ export const Header: React.FC = () => {
           <div className="flex justify-between items-center h-24">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3">
-              <div className="relative w-80 h-20">
+              <div className="relative w-48 h-20">
                 <Image
                   src="/SyncOrigin_Logo.png"
                   alt="SyncOrigins Logo"
                   fill
-                  className="object-contain"
+                  className="object-contain object-left"
                   priority
                 />
               </div>

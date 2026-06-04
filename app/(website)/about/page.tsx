@@ -9,6 +9,8 @@ import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { FadeIn } from "@/components/ui/animations/FadeIn";
 
+export const revalidate = 60;
+
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getAboutPage();
   const defaultTitle = "About SyncOrigins - Driving Innovation with AI Solutions";
@@ -19,12 +21,12 @@ export async function generateMetadata(): Promise<Metadata> {
     description: defaultDesc,
   };
   return {
-    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
+    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
     keywords: data.seo.metaKeywords,
     openGraph: {
-      title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
-      description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+      title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
+      description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
       images: data.seo.openGraphImage ? [{ url: data.seo.openGraphImage }] : [],
     },
   };

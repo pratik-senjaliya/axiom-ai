@@ -2,11 +2,11 @@ __Terms & Conditions__
 
 Please read these Terms and Conditions carefully before using this website\.
 
-The term __“Sync Origins”__ \(hereinafter referred to as “Sync Origins”, “we”, “us”, or “our”\) refers to Sync Origins and its affiliates\. This website is owned, operated, and maintained by Sync Origins\.
+The term __“SyncOrigins”__ \(hereinafter referred to as “SyncOrigins”, “we”, “us”, or “our”\) refers to SyncOrigins and its affiliates\. This website is owned, operated, and maintained by SyncOrigins\.
 
 By accessing or using this website, you agree to comply with and be bound by these Terms & Conditions \(“Terms”\)\. If you do not agree, please do not use this website\.
 
-Sync Origins reserves the right to update or modify these Terms at any time without prior notice\. Continued use of the website constitutes acceptance of any such changes\.
+SyncOrigins reserves the right to update or modify these Terms at any time without prior notice\. Continued use of the website constitutes acceptance of any such changes\.
 
 __1\. Eligibility & User Responsibility__
 
@@ -39,7 +39,7 @@ Whether for commercial purposes or otherwise, you agree __not to__:
 
 __4\. Intellectual Property Rights__
 
-All content, including text, graphics, logos, software, and design \(“Content”\), is owned by or licensed to Sync Origins and is protected under applicable intellectual property laws\.
+All content, including text, graphics, logos, software, and design \(“Content”\), is owned by or licensed to SyncOrigins and is protected under applicable intellectual property laws\.
 
 You may:
 
@@ -55,7 +55,7 @@ __5\. Third\-Party Links__
 
 This website may include links to third\-party websites for convenience\.
 
-Sync Origins:
+SyncOrigins:
 
 - Does not control or endorse such websites 
 - Is not responsible for their content, privacy practices, or accuracy 
@@ -66,7 +66,7 @@ __6\. Disclaimer__
 
 This website is provided on an __“as\-is” and “as\-available”__ basis\.
 
-While Sync Origins strives to keep information accurate and up to date, we make __no warranties or representations__, express or implied, regarding:
+While SyncOrigins strives to keep information accurate and up to date, we make __no warranties or representations__, express or implied, regarding:
 
 - Accuracy, completeness, or reliability of content 
 - Availability or uninterrupted access 
@@ -76,7 +76,7 @@ Information provided on this website is for __general informational purposes onl
 
 __7\. Limitation of Liability__
 
-To the maximum extent permitted by law, Sync Origins shall not be liable for:
+To the maximum extent permitted by law, SyncOrigins shall not be liable for:
 
 - Direct, indirect, incidental, or consequential damages 
 - Loss of data, revenue, or business opportunities 
@@ -90,7 +90,7 @@ This includes damages arising from:
 
 __8\. Indemnification__
 
-You agree to indemnify and hold harmless Sync Origins, its affiliates, employees, and partners from any claims, damages, or losses arising from:
+You agree to indemnify and hold harmless SyncOrigins, its affiliates, employees, and partners from any claims, damages, or losses arising from:
 
 - Your use of the website 
 - Violation of these Terms 
@@ -122,11 +122,11 @@ If any provision of these Terms is found to be invalid or unenforceable, the rem
 
 __13\. Entire Agreement__
 
-These Terms constitute the entire agreement between you and Sync Origins regarding the use of this website and supersede all prior agreements or understandings\.
+These Terms constitute the entire agreement between you and SyncOrigins regarding the use of this website and supersede all prior agreements or understandings\.
 
 __14\. Amendments__
 
-Sync Origins reserves the right to modify these Terms at any time\. Updated versions will be posted on this page\.
+SyncOrigins reserves the right to modify these Terms at any time\. Updated versions will be posted on this page\.
 
 We encourage you to review this page periodically\.
 

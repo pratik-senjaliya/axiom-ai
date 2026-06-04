@@ -26,8 +26,8 @@ export async function generateMetadata({
     description: defaultDesc,
   };
   return {
-    title: (tag ? `${tag} | ${data.seo.metaTitle || defaultTitle}` : (data.seo.metaTitle || defaultTitle)).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origin/g, "SyncOrigins"),
+    title: (tag ? `${tag} | ${data.seo.metaTitle || defaultTitle}` : (data.seo.metaTitle || defaultTitle)).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
+    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
   };
 }
 

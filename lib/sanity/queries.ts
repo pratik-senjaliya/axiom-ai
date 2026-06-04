@@ -232,7 +232,7 @@ export async function getAllServiceSlugs(): Promise<string[]> {
 
 // GROQ query to get home page data
 export async function getHomePage(): Promise<any> {
-    const query = `*[_type == "homePage"][0] {
+    const query = `*[_type == "homePage" && _id == "homePageSingleton"][0] {
     seo {
       metaTitle,
       metaDescription,
@@ -348,7 +348,7 @@ export async function getDataAnalyticsPage(): Promise<any> {
 // ==================== ABOUT US PAGE ====================
 
 export async function getAboutPage(): Promise<any> {
-  const query = `*[_type == "aboutPage"][0] {
+  const query = `*[_type == "aboutPage" && _id == "aboutPageSingleton"][0] {
     seo {
       metaTitle,
       metaDescription,
@@ -384,7 +384,7 @@ export async function getAboutPage(): Promise<any> {
 // ==================== CONTACT PAGE ====================
 
 export async function getContactPage(): Promise<any> {
-  const query = `*[_type == "contactPage"][0] {
+  const query = `*[_type == "contactPage" && _id == "contactPage"][0] {
       seo {
         metaTitle,
         metaDescription,
@@ -404,7 +404,7 @@ export async function getContactPage(): Promise<any> {
 }
 
 export async function getBlogPage(): Promise<any> {
-    const query = `*[_type == "blogPage"][0] {
+    const query = `*[_type == "blogPage" && _id == "blogPageSingleton"][0] {
       seo {
         metaTitle,
         metaDescription,
@@ -424,7 +424,7 @@ export async function getBlogPage(): Promise<any> {
 // ==================== SPECIALIZED SINGLETONS ====================
 
 export async function getUseCasesPage(): Promise<any> {
-    const query = `*[_type == "useCasesPage"][0] {
+    const query = `*[_type == "useCasesPage" && _id == "useCasesPageSingleton"][0] {
     seo,
     hero {
       badge,
@@ -462,7 +462,7 @@ export async function getUseCasesPage(): Promise<any> {
 }
 
 export async function getAIImplementationPage(): Promise<any> {
-    const query = `*[_type == "aiImplementationPage"][0] {
+    const query = `*[_type == "aiImplementationPage" && _id == "aiImplementationPageSingleton"][0] {
     seo,
     hero {
       badge,
@@ -503,7 +503,7 @@ export async function getAIImplementationPage(): Promise<any> {
 }
 
 export async function getSustainabilityPage(): Promise<any> {
-    const query = `*[_type == "sustainabilityPage"][0] {
+    const query = `*[_type == "sustainabilityPage" && _id == "sustainabilityPageSingleton"][0] {
     seo,
     hero {
       badge,
@@ -540,7 +540,7 @@ export async function getSustainabilityPage(): Promise<any> {
 }
 
 export async function getERPTransformationPage(): Promise<any> {
-    const query = `*[_type == "erpTransformationPage"][0] {
+    const query = `*[_type == "erpTransformationPage" && _id == "erpTransformationPageSingleton"][0] {
     seo,
     hero {
       badge,
@@ -579,7 +579,7 @@ export async function getERPTransformationPage(): Promise<any> {
 
 
 export async function getManagedDeliveryPage(): Promise<any> {
-    const query = `*[_type == "managedDeliveryPage"][0] {
+    const query = `*[_type == "managedDeliveryPage" && _id == "managedDeliveryPageSingleton"][0] {
     seo,
     hero {
       badge,
@@ -666,7 +666,7 @@ export async function getLatestPostsByService(service: string, limit: number = 3
 // ==================== SETTINGS ====================
 
 export async function getSettings(): Promise<any> {
-  const query = `*[_type == "settings"][0] {
+  const query = `*[_type == "settings" && _id == "settings"][0] {
     companyName,
     footerDescription,
     socialLinks[] {

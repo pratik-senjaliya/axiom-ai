@@ -34,7 +34,7 @@ __Business Impact:__ Predictable delivery timelines and measurable business outc
 We redesign your delivery processes for speed, transparency, and scalability\.  
 __Business Impact:__ Improved velocity, better sprint predictability, and stronger team performance\.
 
-__Section 3: The "Sync Origins Advantage"__
+__Section 3: The "SyncOrigins Advantage"__
 
 • __Pre\-Vetted Talent Network:__  
 We don’t source—we deliver ready\-to\-perform experts who are technically and culturally aligned\.

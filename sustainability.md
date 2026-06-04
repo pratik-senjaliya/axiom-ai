@@ -48,7 +48,7 @@ __Business Impact:__ Data\-driven sustainability planning and smarter investment
 Identify high\-emission suppliers and optimize procurement decisions for sustainability\.  
 __Business Impact:__ Reduced supply chain emissions and stronger vendor accountability\.
 
-__Section 4: The "Sync Origins Advantage"__
+__Section 4: The "SyncOrigins Advantage"__
 
 • __AI \+ Data\-First Approach:__  
 We combine deep data engineering with AI models to move sustainability from reporting to real\-time optimization\.
