@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/Button";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { User, Calendar, Clock, ChevronRight } from "lucide-react";
 
+import { generateMetadata as genMeta } from "@/lib/seo";
+
 export const dynamic = "force-dynamic";
 
 interface BlogPageProps {
@@ -19,17 +21,14 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   
-  if (!post) return { title: "Post Not Found | SyncOrigins" };
+  if (!post) return genMeta({ title: "Post Not Found | SyncOrigins", description: "", slug: `/insights/${slug}` });
   
-  return {
-    title: `${post.title} | SyncOrigins Insights`,
-    description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: post.image ? [post.image] : [],
-    }
-  };
+  return genMeta({
+    title: post.title,
+    description: post.excerpt || "",
+    ogImage: post.image || undefined,
+    slug: `/insights/${slug}`,
+  });
 }
 
 const slugify = (text: string) =>

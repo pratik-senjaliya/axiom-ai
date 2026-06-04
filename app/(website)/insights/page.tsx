@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@/components/ui/PortableText";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 
+import { generateMetadata as genMeta } from "@/lib/seo";
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ 
@@ -19,14 +21,18 @@ export async function generateMetadata({
   const defaultTitle = `${activeCategory} Insights & AI Trends | SyncOrigins`;
   const defaultDesc = "Stay updated with AI trends, industry insights, and digital transformation strategies to drive innovation and smarter decision-making with SyncOrigins.";
   
-  if (!data?.seo) return {
+  if (!data?.seo) return genMeta({
     title: defaultTitle,
     description: defaultDesc,
-  };
-  return {
-    title: (activeCategory !== "All" ? `${activeCategory} | AI Insights | SyncOrigins` : (data.seo.metaTitle || defaultTitle)).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-  };
+    slug: "/insights",
+  });
+  return genMeta({
+    title: activeCategory !== "All" ? `${activeCategory} | AI Insights | SyncOrigins` : (data.seo.metaTitle || defaultTitle),
+    description: data.seo.metaDescription || defaultDesc,
+    keywords: data.seo.metaKeywords,
+    ogImage: data.seo.openGraphImage,
+    slug: "/insights",
+  });
 }
 
 const SparkleIcon = () => (

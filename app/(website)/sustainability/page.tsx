@@ -12,6 +12,8 @@ import { notFound } from "next/navigation";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
 
+import { generateMetadata as genMeta } from "@/lib/seo";
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,14 +21,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const defaultTitle = "AI Sustainability Solutions | Carbon Tracking & ESG Automation";
   const defaultDesc = "Drive impact with sustainability solutions. Enable carbon tracking, automate ESG reporting, and optimize performance with data-driven insights.";
   
-  if (!data?.seo) return {
+  if (!data?.seo) return genMeta({
     title: defaultTitle,
     description: defaultDesc,
-  };
-  return {
-    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-  };
+    slug: "/sustainability",
+  });
+  return genMeta({
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
+    keywords: data.seo.metaKeywords,
+    ogImage: data.seo.openGraphImage,
+    slug: "/sustainability",
+  });
 }
 
 export default async function SustainabilityPage() {

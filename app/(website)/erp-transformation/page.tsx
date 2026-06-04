@@ -11,6 +11,8 @@ import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 
+import { generateMetadata as genMeta } from "@/lib/seo";
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -18,14 +20,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const defaultTitle = "ERP Transformation Services for Scalable Business Systems";
   const defaultDesc = "Modernize legacy systems with ERP transformation services. Improve efficiency, integrate processes & scale operations with advanced digital solutions.";
   
-  if (!data?.seo) return {
+  if (!data?.seo) return genMeta({
     title: defaultTitle,
     description: defaultDesc,
-  };
-  return {
-    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-  };
+    slug: "/erp-transformation",
+  });
+  return genMeta({
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
+    keywords: data.seo.metaKeywords,
+    ogImage: data.seo.openGraphImage,
+    slug: "/erp-transformation",
+  });
 }
 
 export default async function ERPTransformationPage() {

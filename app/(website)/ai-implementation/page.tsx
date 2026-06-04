@@ -8,6 +8,8 @@ import { getAIImplementationPage, getLatestPostsByService } from "@/lib/sanity/q
 import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 
+import { generateMetadata as genMeta } from "@/lib/seo";
+
 export const dynamic = "force-dynamic";
 import { FAQ } from "@/components/ui/FAQ";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
@@ -17,14 +19,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const defaultTitle = "AI Implementation Services for Business Automation & Growth";
   const defaultDesc = "Transform operations with AI implementation services. Automate workflows, improve efficiency, & smarter decision-making with tailored AI solutions.";
   
-  if (!data?.seo) return {
+  if (!data?.seo) return genMeta({
     title: defaultTitle,
     description: defaultDesc,
-  };
-  return {
-    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-  };
+    slug: "/ai-implementation",
+  });
+  return genMeta({
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
+    keywords: data.seo.metaKeywords,
+    ogImage: data.seo.openGraphImage,
+    slug: "/ai-implementation",
+  });
 }
 
 const BrainIcon = () => (

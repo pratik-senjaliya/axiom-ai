@@ -9,6 +9,7 @@ import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { FadeIn } from "@/components/ui/animations/FadeIn";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
+import { generateMetadata as genMeta } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -17,14 +18,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const defaultTitle = "AI & Digital Transformation Solutions for Businesses | SyncOrigins";
   const defaultDesc = "Drive growth with SyncOrigins digital transformation solutions, including ERP transformation, managed delivery, and sustainable strategies to improve efficiency and performance.";
   
-  if (!data?.seo) return {
+  if (!data?.seo) return genMeta({
     title: defaultTitle,
     description: defaultDesc,
-  };
-  return {
-    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-  };
+    slug: "/",
+  });
+  return genMeta({
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
+    keywords: data.seo.metaKeywords,
+    ogImage: data.seo.openGraphImage,
+    slug: "/",
+  });
 }
 
 const SparkleIcon = () => (

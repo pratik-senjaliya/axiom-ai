@@ -15,6 +15,8 @@ import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 
+import { generateMetadata as genMeta } from "@/lib/seo";
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,21 +24,19 @@ export async function generateMetadata(): Promise<Metadata> {
   const defaultTitle = "Data Analytics Services for Insights & Business Growth";
   const defaultDesc = "Unlock insights with data analytics services. Turn data into smarter decisions, improve performance, and drive business growth with AI-powered analytics.";
   
-  if (!data?.seo) return {
+  if (!data?.seo) return genMeta({
     title: defaultTitle,
     description: defaultDesc,
-  };
+    slug: "/data-analytics",
+  });
 
-  return {
-    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
+  return genMeta({
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
     keywords: data.seo.metaKeywords,
-    openGraph: {
-      title: data.seo.metaTitle,
-      description: data.seo.metaDescription,
-      images: data.seo.openGraphImage ? [{ url: data.seo.openGraphImage }] : [],
-    },
-  };
+    ogImage: data.seo.openGraphImage,
+    slug: "/data-analytics",
+  });
 }
 
 export default async function DataAnalyticsPage() {

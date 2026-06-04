@@ -42,14 +42,16 @@ export function generateMetadata(config: SEOConfig): Metadata {
   } = { ...defaultSEO, ...config };
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.ai";
-  // Reinforce branding by replacing old brand names with the new one
-  const cleanedTitle = title
-    .replace(/Axiom AI/g, "SyncOrigins")
-    .replace(/AxiomAI/g, "SyncOrigins")
-    .replace(/Sync Origins/g, "SyncOrigins")
-    .replace(/Sync Origin/g, "SyncOrigins");
-  
-  const fullTitle = cleanedTitle;
+  const cleanString = (val: string) => {
+    return val
+      .replace(/Axiom AI/g, "SyncOrigins")
+      .replace(/AxiomAI/g, "SyncOrigins")
+      .replace(/Sync Origins/g, "SyncOrigins")
+      .replace(/Sync Origin/g, "SyncOrigins");
+  };
+
+  const fullTitle = cleanString(title);
+  const cleanedDesc = description ? cleanString(description) : "";
 
   // Construct the current page URL
   // Priority: 1. canonicalUrl (explicit override) 2. siteUrl + slug 3. siteUrl (home)
@@ -63,7 +65,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
 
   return {
     title: fullTitle,
-    description,
+    description: cleanedDesc,
     keywords: (keywords || []).length > 0 ? (keywords || []).join(", ") : undefined,
     authors: author ? [{ name: author }] : undefined,
     creator: author,
@@ -82,7 +84,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
     openGraph: {
       type: ogType,
       title: fullTitle,
-      description,
+      description: cleanedDesc,
       url: currentUrl,
       siteName: defaultSEO.author || "SyncOrigins",
       images: [
@@ -98,7 +100,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
     twitter: {
       card: twitterCard,
       title: fullTitle,
-      description,
+      description: cleanedDesc,
       images: [imageUrl],
       creator: author ? `@${author}` : undefined,
     },
@@ -167,7 +169,7 @@ export function generateArticleSchema(post: {
       name: "SyncOrigins",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigin.ai"}/SyncOrigin_Logo.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.ai"}/SyncOrigin_Logo.png`,
       },
     },
     mainEntityOfPage: {
@@ -181,7 +183,7 @@ export function generateArticleSchema(post: {
  * Common organization structured data
  */
 export function getOrganizationSchema() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigin.ai";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.ai";
   return generateStructuredData("Organization", {
     name: "SyncOrigins",
     url: siteUrl,

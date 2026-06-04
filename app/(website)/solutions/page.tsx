@@ -8,6 +8,8 @@ import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { SolutionsGrid } from "@/components/solutions/SolutionsGrid";
 
+import { generateMetadata as genMeta } from "@/lib/seo";
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ 
@@ -21,14 +23,18 @@ export async function generateMetadata({
   const defaultTitle = "Enterprise AI Solutions Across Industries | SyncOrigins";
   const defaultDesc = "Explore high-impact AI solutions across industries, leveraging automation and objective execution to drive measurable ROI.";
   
-  if (!data?.seo) return {
+  if (!data?.seo) return genMeta({
     title: tag ? `${tag} Solutions | SyncOrigins` : defaultTitle,
     description: defaultDesc,
-  };
-  return {
-    title: (tag ? `${tag} | ${data.seo.metaTitle || defaultTitle}` : (data.seo.metaTitle || defaultTitle)).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-  };
+    slug: "/solutions",
+  });
+  return genMeta({
+    title: tag ? `${tag} | ${data.seo.metaTitle || defaultTitle}` : (data.seo.metaTitle || defaultTitle),
+    description: data.seo.metaDescription || defaultDesc,
+    keywords: data.seo.metaKeywords,
+    ogImage: data.seo.openGraphImage,
+    slug: "/solutions",
+  });
 }
 
 const SparkleIcon = () => (

@@ -9,6 +9,8 @@ import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { FadeIn } from "@/components/ui/animations/FadeIn";
 
+import { generateMetadata as genMeta } from "@/lib/seo";
+
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,20 +18,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const defaultTitle = "About SyncOrigins - Driving Innovation with AI Solutions";
   const defaultDesc = "Learn about SyncOrigins, our mission, expertise, and commitment to delivering AI-driven solutions that transform businesses and accelerate growth.";
 
-  if (!data?.seo) return {
+  if (!data?.seo) return genMeta({
     title: defaultTitle,
     description: defaultDesc,
-  };
-  return {
-    title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-    description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
+    slug: "/about",
+  });
+  return genMeta({
+    title: data.seo.metaTitle || defaultTitle,
+    description: data.seo.metaDescription || defaultDesc,
     keywords: data.seo.metaKeywords,
-    openGraph: {
-      title: (data.seo.metaTitle || defaultTitle).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-      description: (data.seo.metaDescription || defaultDesc).replace(/Axiom AI|AxiomAI|Sync Origins|Sync Origin|SyncOrigins/g, "SyncOrigins"),
-      images: data.seo.openGraphImage ? [{ url: data.seo.openGraphImage }] : [],
-    },
-  };
+    ogImage: data.seo.openGraphImage,
+    slug: "/about",
+  });
 }
 
 const SparkleIcon = () => (
