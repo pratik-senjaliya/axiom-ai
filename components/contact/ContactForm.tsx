@@ -121,30 +121,24 @@ export function ContactForm({ data }: { data: any }) {
 
             {/* Contact info items */}
             <div className="space-y-4 mb-8">
-              {data?.infoItems && data.infoItems.length > 0 ? (
-                data.infoItems
-                  .filter((item: any) => item.icon !== 'phone' && !/phone/i.test(item.label || '') && !/phone/i.test(item.value || ''))
-                  .map((item: any, i: number) => (
-                    <div key={i} className="flex items-center gap-4 group">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
-                        {getIcon(item.icon)}
-                      </div>
-                      <div>
-                        <div className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold mb-0.5">{item.label}</div>
-                        <span className="text-base font-bold text-white tracking-wide">{item.value}</span>
-                      </div>
-                    </div>
-                  ))
-              ) : (
-                <>
-                  <div className="flex items-center gap-4 group">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
-                      {getIcon('mail')}
-                    </div>
-                    <span className="text-base font-bold text-white tracking-wide">hello@syncorigin.ai</span>
-                  </div>
-                </>
-              )}
+              <a 
+                href="https://www.linkedin.com/company/syncorigins/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 group cursor-pointer"
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold mb-0.5">LinkedIn</div>
+                  <span className="text-base font-bold text-white tracking-wide group-hover:text-[#00E5FF] transition-colors">syncorigins</span>
+                </div>
+              </a>
             </div>
           </SlideUp>
 

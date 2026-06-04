@@ -25,7 +25,12 @@ export function Footer() {
               future of intelligent enterprise.
             </p>
             <div className="flex items-center gap-3">
-              <a href="#" className="w-10 h-10 rounded-[12px] bg-[#14243A] border border-[#00E5FF]/15 flex items-center justify-center text-[#8FA3BF] hover:border-[#00E5FF]/40 hover:text-[#00E5FF] transition-all">
+              <a 
+                href="https://www.linkedin.com/company/syncorigins/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-[12px] bg-[#14243A] border border-[#00E5FF]/15 flex items-center justify-center text-[#8FA3BF] hover:border-[#00E5FF]/40 hover:text-[#00E5FF] transition-all"
+              >
                 <Linkedin className="w-4 h-4" strokeWidth={1.5} />
                 <span className="sr-only">LinkedIn</span>
               </a>
@@ -61,7 +66,7 @@ export function Footer() {
             </p>
             <span className="hidden md:inline text-[#8FA3BF]/30">|</span>
             <p className="text-sm text-[#8FA3BF]">
-              Design & Develop by{" "}
+              Designed & Developed by{" "}
               <a
                 href="https://ebranding.studio/"
                 target="_blank"
