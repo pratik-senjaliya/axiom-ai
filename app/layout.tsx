@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   creator: "SyncOrigins",
   publisher: "SyncOrigins",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.ai"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com"
   ),
   formatDetection: {
     email: false,
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.ai",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com",
     siteName: "SyncOrigins",
     title: "SyncOrigins | Professional AI, ERP & Data Services",
     description:

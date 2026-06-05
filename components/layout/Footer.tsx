@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "./Container";
-import { Linkedin } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
 
 export function Footer() {
   return (
@@ -25,6 +25,13 @@ export function Footer() {
               future of intelligent enterprise.
             </p>
             <div className="flex items-center gap-3">
+              <a 
+                href="mailto:hello@syncorigins.com"
+                className="w-10 h-10 rounded-[12px] bg-[#14243A] border border-[#00E5FF]/15 flex items-center justify-center text-[#8FA3BF] hover:border-[#00E5FF]/40 hover:text-[#00E5FF] transition-all"
+              >
+                <Mail className="w-4 h-4" strokeWidth={1.5} />
+                <span className="sr-only">Email</span>
+              </a>
               <a 
                 href="https://www.linkedin.com/company/syncorigins/" 
                 target="_blank"

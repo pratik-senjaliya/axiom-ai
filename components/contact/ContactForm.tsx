@@ -122,6 +122,21 @@ export function ContactForm({ data }: { data: any }) {
             {/* Contact info items */}
             <div className="space-y-4 mb-8">
               <a 
+                href="mailto:hello@syncorigins.com"
+                className="flex items-center gap-4 group cursor-pointer"
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-all group-hover:scale-110" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.2)' }}>
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase tracking-widest text-[#8FA3BF] font-bold mb-0.5">Email</div>
+                  <span className="text-base font-bold text-white tracking-wide group-hover:text-[#00E5FF] transition-colors">hello@syncorigins.com</span>
+                </div>
+              </a>
+
+              <a 
                 href="https://www.linkedin.com/company/syncorigins/" 
                 target="_blank" 
                 rel="noopener noreferrer"

@@ -41,7 +41,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
     nofollow = false,
   } = { ...defaultSEO, ...config };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.ai";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com";
   const cleanString = (val: string) => {
     return val
       .replace(/Axiom AI/g, "SyncOrigins")
@@ -169,7 +169,7 @@ export function generateArticleSchema(post: {
       name: "SyncOrigins",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.ai"}/SyncOrigin_Logo.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com"}/SyncOrigin_Logo.png`,
       },
     },
     mainEntityOfPage: {
@@ -183,15 +183,15 @@ export function generateArticleSchema(post: {
  * Common organization structured data
  */
 export function getOrganizationSchema() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.ai";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com";
   return generateStructuredData("Organization", {
     name: "SyncOrigins",
     url: siteUrl,
     logo: `${siteUrl}/SyncOrigin_Logo.png`,
     sameAs: [
-      "https://www.linkedin.com/company/syncorigin",
-      "https://twitter.com/syncorigin",
-      "https://www.facebook.com/syncorigin",
+      "https://www.linkedin.com/company/syncorigins/",
+      "https://twitter.com/syncorigins",
+      "https://www.facebook.com/syncorigins",
     ],
     contactPoint: {
       "@type": "ContactPoint",
