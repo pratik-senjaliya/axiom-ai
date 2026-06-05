@@ -71,7 +71,7 @@ export function Footer() {
             <p className="text-sm text-[#8FA3BF]">
               © 2026 SyncOrigins. All rights reserved.
             </p>
-            <span className="hidden md:inline text-[#8FA3BF]/30">|</span>
+            {/* <span className="hidden md:inline text-[#8FA3BF]/30">|</span>
             <p className="text-sm text-[#8FA3BF]">
               Designed & Developed by{" "}
               <a
@@ -82,7 +82,7 @@ export function Footer() {
               >
                 eBranding Studio
               </a>
-            </p>
+            </p> */}
           </div>
           <div className="flex items-center gap-6">
             <Link href="/privacy-policy" className="text-sm text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">Privacy Policy</Link>
