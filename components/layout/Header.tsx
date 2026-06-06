@@ -6,6 +6,15 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
+import { CORE_SERVICE_PATHS } from "@/lib/core-services";
+import { DynamicServiceIcon } from "@/components/layout/DynamicServiceIcon";
+
+type DynamicNavService = {
+  title: string;
+  slug: string;
+  href: string;
+  navTags?: string[];
+};
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -15,15 +24,7 @@ const navigation = [
   { name: "About", href: "/about" },
 ];
 
-const servicePaths = [
-  "/ai-implementation",
-  "/erp-transformation",
-
-  "/data-analytics",
-  "/managed-delivery",
-  "/sustainability",
-  "/services"
-];
+const servicePaths = [...CORE_SERVICE_PATHS, "/services"];
 
 const serviceCategories = [
   {
@@ -93,7 +94,19 @@ export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [dynamicServices, setDynamicServices] = useState<DynamicNavService[]>([]);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    fetch("/api/navigation")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.services) {
+          setDynamicServices(data.services);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -116,7 +129,8 @@ export const Header: React.FC = () => {
 
   const isActive = (item: { name: string; href: string }) => {
     if (item.name === "Services") {
-      return servicePaths.some(path => pathname.startsWith(path));
+      const dynamicPaths = dynamicServices.map((s) => s.href);
+      return [...servicePaths, ...dynamicPaths].some((path) => pathname.startsWith(path));
     }
     return pathname === item.href;
   };
@@ -222,6 +236,32 @@ export const Header: React.FC = () => {
                             </div>
                           </Link>
                         ))}
+                        {dynamicServices.map((service) => (
+                          <Link
+                            key={service.slug}
+                            href={service.href}
+                            className="group/item flex gap-4 p-5 -m-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
+                          >
+                            <DynamicServiceIcon />
+                            <div>
+                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-2">
+                                {service.title}
+                              </h3>
+                              {(service.navTags?.length ?? 0) > 0 && (
+                                <div className="flex flex-wrap gap-2">
+                                  {service.navTags!.map((tag) => (
+                                    <span
+                                      key={tag}
+                                      className="px-3 py-1 bg-[#14243A] text-[#8FA3BF] text-[0.75rem] font-medium rounded-full cursor-default border border-[#00E5FF]/10"
+                                    >
+                                      {tag}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </Link>
+                        ))}
                       </div>
                     </div>
                   )}
@@ -293,6 +333,16 @@ export const Header: React.FC = () => {
                         className="text-[#8FA3BF] text-base hover:text-[#00E5FF] transition-colors"
                       >
                         {cat.title}
+                      </Link>
+                    ))}
+                    {dynamicServices.map((service) => (
+                      <Link
+                        key={service.slug}
+                        href={service.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-[#8FA3BF] text-base hover:text-[#00E5FF] transition-colors"
+                      >
+                        {service.title}
                       </Link>
                     ))}
                   </div>

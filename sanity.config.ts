@@ -10,13 +10,29 @@ import { structure } from './schemas/structure'
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from './lib/sanity/env'
 import { schema } from './schemas'
+import { serviceTemplates } from './schemas/serviceTemplates'
 
 export default defineConfig({
     basePath: '/studio',
     projectId: projectId || 'placeholder-id',
     dataset: dataset || 'production',
-    // Add and edit the content schema in the './sanity/schema' folder
-    schema,
+    schema: {
+        types: schema.types,
+        templates: (prev) => [
+            ...prev.filter((t) => t.schemaType !== 'service'),
+            ...serviceTemplates,
+        ],
+    },
+    document: {
+        newDocumentOptions: (prev, { creationContext }) => {
+            if (creationContext.type === 'structure' && creationContext.schemaType === 'service') {
+                return serviceTemplates.map((t) => ({
+                    templateId: t.id,
+                }))
+            }
+            return prev
+        },
+    },
     plugins: [
         structureTool({
             structure,

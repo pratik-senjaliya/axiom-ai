@@ -1,5 +1,6 @@
 import { client } from './client'
 import type { BlogPost } from '../blog'
+import { CORE_SERVICE_SLUGS } from '../core-services'
 
 async function safeFetch<T>(query: string, params: Record<string, any> = {}, defaultValue: T): Promise<T> {
   try {
@@ -137,33 +138,28 @@ export async function getAllCategories(): Promise<string[]> {
 
 // GROQ query to get all services
 export async function getAllServices(): Promise<any[]> {
-  const query = `*[_type == "service"] | order(title asc) {
+  const query = `*[_type == "service" && !(slug.current in $reserved)] | order(title asc) {
     "id": _id,
     title,
     "slug": slug.current,
-    description,
-    longDescription,
-    icon,
-    "heroBackgroundImage": heroBackgroundImage.asset->url,
-    "heroBackgroundImageAlt": heroBackgroundImage.alt,
-    "heroImage": heroImage.asset->url,
-    "heroImageAlt": heroImage.alt,
-    "image": image.asset->url,
-    "imageAlt": image.alt,
-    "intro": {
-      "title": introTitle,
-      "content": introContent,
-      "stats": introStats
-    },
-    features,
-    serviceAreas,
-    process,
-    whyChooseUs,
-    testimonial,
-    faqs
+    showInNavigation,
+    navTags,
+    tags
   }`
 
-  return safeFetch<any[]>(query, {}, [])
+  return safeFetch<any[]>(query, { reserved: CORE_SERVICE_SLUGS }, [])
+}
+
+/** Services that should appear in header/footer navigation */
+export async function getNavigationServices(): Promise<any[]> {
+  const query = `*[_type == "service" && showInNavigation != false && !(slug.current in $reserved)] | order(title asc) {
+    title,
+    "slug": slug.current,
+    navTags,
+    tags
+  }`
+
+  return safeFetch<any[]>(query, { reserved: CORE_SERVICE_SLUGS }, [])
 }
 
 // GROQ query to get a single service by slug
@@ -172,43 +168,37 @@ export async function getServiceBySlug(slug: string): Promise<any> {
     "id": _id,
     title,
     "slug": slug.current,
-    description,
-    longDescription,
-    icon,
-    "heroBackgroundImage": heroBackgroundImage.asset->url,
-    "heroBackgroundImageAlt": heroBackgroundImage.alt,
-    "heroImage": heroImage.asset->url,
-    "heroImageAlt": heroImage.alt,
-    "image": image.asset->url,
-    "imageAlt": image.alt,
-    "intro": {
-      "title": introTitle,
-      "content": introContent,
-      "stats": introStats
-    },
-    features,
-    serviceAreas,
-    process,
-    whyChooseUs,
-    "whyPartnerImage": whyPartnerImage.asset->url,
-    "whyPartnerImageAlt": whyPartnerImage.alt,
-    whyPartnerImageLabel,
-    whyPartnerImageTagline,
+    showInNavigation,
+    navTags,
+    tags,
     testimonialsTitle,
-    testimonialsDescription,
-    testimonials,
-    faqs,
-    heroCTA,
-    introCTA {
+    "testimonials": coalesce(testimonials, []),
+    "faqs": coalesce(faqs, []),
+    hero {
+      badge,
       title,
+      titleHighlight,
       description,
-      cta
+      "image": image.asset->url,
+      primaryCta { text, link },
+      secondaryCta { text, link }
     },
-    whyChooseCTA,
-    finalCTA {
+    pitfallsHeadline,
+    pitfalls[] { title, description },
+    layersHeadline,
+    layers[] { layer, title, outcome, description, tasks },
+    useCasesHeadline,
+    useCases[] { industry, title, description },
+    modelsHeadline,
+    models[] { model, title, description, tasks },
+    roadmapHeadline,
+    roadmap[] { step, title, description },
+    finalCta {
+      badgeText,
       title,
       description,
-      cta
+      buttonText,
+      buttonLink
     },
     seo {
       metaTitle,
@@ -224,8 +214,8 @@ export async function getServiceBySlug(slug: string): Promise<any> {
 
 // Get all service slugs for generateStaticParams
 export async function getAllServiceSlugs(): Promise<string[]> {
-  const query = `*[_type == "service"].slug.current`
-  return safeFetch<string[]>(query, {}, [])
+  const query = `*[_type == "service" && !(slug.current in $reserved)].slug.current`
+  return safeFetch<string[]>(query, { reserved: CORE_SERVICE_SLUGS }, [])
 }
 
 // ==================== HOME PAGE ====================

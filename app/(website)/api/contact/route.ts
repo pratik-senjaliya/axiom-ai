@@ -43,10 +43,11 @@ export async function POST(req: NextRequest) {
             )
         }
 
-        const token = process.env.NEXT_PUBLIC_SANITY_TOKEN
+        // Use server-only write token (never expose write tokens via NEXT_PUBLIC_*)
+        const token = process.env.SANITY_API_TOKEN
 
         if (!token) {
-            console.error('Missing SANITY_API_TOKEN')
+            console.error('Missing SANITY_API_TOKEN — add an Editor token from sanity.io/manage → API → Tokens')
             return NextResponse.json(
                 { error: 'Internal Server Error: Missing API configuration' },
                 { status: 500 }

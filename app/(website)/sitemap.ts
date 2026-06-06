@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { client } from '@/lib/sanity/client'
+import { CORE_SERVICE_SLUGS } from '@/lib/core-services'
 
 // Revalidate sitemap every hour
 export const revalidate = 60
@@ -13,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     try {
         const [s, p] = await Promise.all([
-            client.fetch<string[]>(`*[_type == "service"].slug.current`),
+            client.fetch<string[]>(`*[_type == "service" && !(slug.current in $reserved)].slug.current`, { reserved: CORE_SERVICE_SLUGS }),
             client.fetch<string[]>(`*[_type == "post"].slug.current`)
         ]);
         serviceSlugs = s || [];
