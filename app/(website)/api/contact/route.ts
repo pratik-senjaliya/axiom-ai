@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `secret=0x4AAAAAAC2Ad1U-f_mhS8x26kkW22XfTVE&response=${turnstileToken}`,
+                body: `secret=${process.env.TURNSTILE_SECRET_KEY || "0x4AAAAAAC2Ad1U-f_mhS8x26kkW22XfTVE"}&response=${turnstileToken}`,
             }
         )
 

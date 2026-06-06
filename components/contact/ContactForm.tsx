@@ -265,7 +265,7 @@ export function ContactForm({ data }: { data: any }) {
               <div className="mb-4 overflow-hidden rounded-xl border border-white/10 bg-white/5 flex justify-center py-2">
                 <div className="scale-[0.85] origin-center h-[65px] flex items-center justify-center">
                   <Turnstile 
-                    siteKey="0x4AAAAAAC2Ad-4TbaB5wHzQ" 
+                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAAC2Ad-4TbaB5wHzQ"} 
                     onSuccess={(token) => setTurnstileToken(token)}
                     onError={() => setTurnstileToken(null)}
                     onExpire={() => setTurnstileToken(null)}
