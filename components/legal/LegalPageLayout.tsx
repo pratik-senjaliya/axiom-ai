@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextComponents } from "@portabletext/react";
+import type { TypedObject } from "@portabletext/types";
 
 export const legalPtComponents: PortableTextComponents = {
   block: {
@@ -64,7 +65,7 @@ export const legalPtComponents: PortableTextComponents = {
 interface LegalPageLayoutProps {
   title: string;
   lastUpdated: string;
-  content: unknown[] | null;
+  content: TypedObject[] | null;
   fallback: React.ReactNode;
 }
 
