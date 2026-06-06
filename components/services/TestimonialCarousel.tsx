@@ -70,8 +70,8 @@ export function TestimonialCarousel({
                   className="flex-[0_0_100%] min-w-0 px-4 flex justify-center"
                 >
                   <div className="w-full max-w-5xl rounded-[2.5rem] p-10 md:p-16 flex flex-col items-center text-center relative" style={{ background: 'rgba(26,46,71,0.7)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(16px)', boxShadow: '0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,229,255,0.08) inset' }}>
-                    {/* Big quote icon */}
-                    <div className="absolute top-10 left-10 pointer-events-none" style={{ color: 'rgba(0,229,255,0.07)' }}>
+                    {/* Big quote icon — desktop only */}
+                    <div className="absolute top-10 left-10 pointer-events-none hidden md:block" style={{ color: 'rgba(0,229,255,0.07)' }}>
                       <Quote size={90} fill="currentColor" />
                     </div>
 

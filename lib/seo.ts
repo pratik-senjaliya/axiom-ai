@@ -26,6 +26,28 @@ const defaultSEO: Partial<SEOConfig> = {
   keywords: ["accounting", "financial services", "bookkeeping", "payroll", "tax preparation"],
 };
 
+export const DEFAULT_OG_IMAGE = "/og-image.png";
+export const DEFAULT_OG_IMAGE_WIDTH = 1024;
+export const DEFAULT_OG_IMAGE_HEIGHT = 1024;
+
+export function resolveOgImage(
+  siteUrl: string,
+  ...candidates: (string | null | undefined)[]
+): { url: string; isDefault: boolean } {
+  for (const candidate of candidates) {
+    const trimmed = candidate?.trim();
+    if (!trimmed) continue;
+
+    const url = trimmed.startsWith("http")
+      ? trimmed
+      : `${siteUrl}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
+
+    return { url, isDefault: false };
+  }
+
+  return { url: `${siteUrl}${DEFAULT_OG_IMAGE}`, isDefault: true };
+}
+
 export function generateMetadata(config: SEOConfig): Metadata {
   const {
     title,
@@ -57,11 +79,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
   // Priority: 1. canonicalUrl (explicit override) 2. siteUrl + slug 3. siteUrl (home)
   const currentUrl = canonicalUrl || (slug ? `${siteUrl}${slug.startsWith('/') ? slug : '/' + slug}` : siteUrl);
 
-  const imageUrl = ogImage
-    ? ogImage.startsWith("http")
-      ? ogImage
-      : `${siteUrl}${ogImage}`
-    : `${siteUrl}/og-image.png`;
+  const { url: imageUrl, isDefault: isDefaultOgImage } = resolveOgImage(siteUrl, ogImage);
 
   return {
     title: fullTitle,
@@ -90,8 +108,8 @@ export function generateMetadata(config: SEOConfig): Metadata {
       images: [
         {
           url: imageUrl,
-          width: 1200,
-          height: 630,
+          width: isDefaultOgImage ? DEFAULT_OG_IMAGE_WIDTH : 1200,
+          height: isDefaultOgImage ? DEFAULT_OG_IMAGE_HEIGHT : 630,
           alt: title,
         },
       ],
@@ -154,10 +172,13 @@ export function generateArticleSchema(post: {
   authorName: string;
   url: string;
 }) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com";
+  const { url: imageUrl } = resolveOgImage(siteUrl, post.image);
+
   return generateStructuredData("Article", {
     headline: post.title,
     description: post.description,
-    image: post.image,
+    image: imageUrl,
     datePublished: post.datePublished,
     dateModified: post.dateModified || post.datePublished,
     author: {

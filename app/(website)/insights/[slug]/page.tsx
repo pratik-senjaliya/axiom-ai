@@ -7,6 +7,7 @@ import { PortableText } from "@/components/ui/PortableText";
 import { FAQ } from "@/components/ui/FAQ";
 import { Button } from "@/components/ui/Button";
 import { DarkCTA } from "@/components/services/DarkCTA";
+import { AuthorAvatar } from "@/components/blog/AuthorAvatar";
 import { User, Calendar, Clock, ChevronRight } from "lucide-react";
 
 import { generateMetadata as genMeta } from "@/lib/seo";
@@ -24,9 +25,11 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
   if (!post) return genMeta({ title: "Post Not Found | SyncOrigins", description: "", slug: `/insights/${slug}` });
   
   return genMeta({
-    title: post.title,
-    description: post.excerpt || "",
-    ogImage: post.image || undefined,
+    title: post.seo?.metaTitle || post.title,
+    description: post.seo?.metaDescription || post.excerpt || "",
+    keywords: post.seo?.metaKeywords,
+    ogImage: post.seo?.openGraphImage || post.mainImage,
+    ogType: "article",
     slug: `/insights/${slug}`,
   });
 }
@@ -89,8 +92,10 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                         post.author?.toLowerCase().includes("senjaliya") || 
                         post.author?.toLowerCase().includes("xconcile") ||
                         !post.author) 
-                        ? "SyncOrigins Team" 
+                        ? "SyncOrigins" 
                         : post.author;
+
+  const displayAuthorRole = post.authorRole || "Admin";
 
   const allPosts = await getAllPosts();
   const relatedPosts = allPosts
@@ -151,9 +156,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         <div className="container-custom px-4 max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-10">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-[10px] border" style={{ background: 'rgba(0,229,255,0.1)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF' }}>
-                {displayAuthor.charAt(0)}
-              </div>
+              <AuthorAvatar author={displayAuthor} size="sm" />
               <span className="text-xs font-bold text-white">{displayAuthor}</span>
             </div>
             <div className="h-4 w-[1px]" style={{ background: 'rgba(0,229,255,0.15)' }} />
@@ -243,14 +246,12 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
 
             {/* Author Footer Card */}
             <div className="mt-16 p-8 md:p-12 rounded-[2rem] border flex flex-col md:flex-row gap-8 items-center text-center md:text-left" style={{ background: '#0D1B2A', borderColor: 'rgba(0,229,255,0.15)' }}>
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center font-bold text-3xl border" style={{ background: 'rgba(0,229,255,0.1)', borderColor: 'rgba(0,229,255,0.25)', color: '#00E5FF' }}>
-                {displayAuthor.charAt(0)}
-              </div>
+              <AuthorAvatar author={displayAuthor} size="lg" />
               <div className="flex-grow">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                    <div>
                      <h4 className="text-xl font-bold text-white mb-1">{displayAuthor}</h4>
-                     <span className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: '#00E5FF' }}>Contributor</span>
+                     <span className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: '#00E5FF' }}>{displayAuthorRole}</span>
                    </div>
                    <Link href="/insights">
                     <Button variant="outline" className="rounded-xl font-bold text-[10px] h-9 hover:text-[#00E5FF] transition-colors" style={{ borderColor: 'rgba(0,229,255,0.3)', color: '#C5D1E0', background: 'rgba(20,36,58,0.6)' }}>
@@ -259,7 +260,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                    </Link>
                 </div>
                 <p className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
-                  The {displayAuthor} brings expertise from over a decade of enterprise technology leadership. Focusing on bridging the gap between strategic intent and technical delivery for global organizations.
+                  {displayAuthor} brings expertise from over a decade of enterprise technology leadership. Focusing on bridging the gap between strategic intent and technical delivery for global organizations.
                 </p>
               </div>
             </div>

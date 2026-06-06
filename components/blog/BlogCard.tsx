@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { BlogPost } from "@/lib/blog";
+import { AuthorAvatar } from "@/components/blog/AuthorAvatar";
 
 interface BlogCardProps {
   post: BlogPost;
@@ -26,7 +27,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
     post.author?.toLowerCase().includes("senjaliya") ||
     post.author?.toLowerCase().includes("xconcile") ||
     !post.author)
-    ? "SyncOrigins Team"
+    ? "SyncOrigins"
     : post.author;
 
   if (featured) {
@@ -72,9 +73,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
             </p>
 
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border" style={{ background: 'rgba(0,229,255,0.1)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF' }}>
-                {displayAuthor.charAt(0)}
-              </div>
+              <AuthorAvatar author={displayAuthor} size="md" />
               <div className="flex flex-col">
                 <span className="text-white text-sm font-bold">{displayAuthor}</span>
                 <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#8FA3BF' }}>{post.date}</span>
@@ -132,9 +131,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
 
           <div className="flex items-center justify-between pt-5 border-t" style={{ borderColor: 'rgba(0,229,255,0.1)' }}>
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-[10px] border" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.2)', color: '#00E5FF' }}>
-                {displayAuthor.charAt(0)}
-              </div>
+              <AuthorAvatar author={displayAuthor} size="xs" />
               <span className="text-xs font-bold text-white">{displayAuthor}</span>
             </div>
 

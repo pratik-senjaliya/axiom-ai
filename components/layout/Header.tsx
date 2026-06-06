@@ -135,6 +135,15 @@ export const Header: React.FC = () => {
     return pathname === item.href;
   };
 
+  const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setIsMobileMenuOpen(false);
+      setIsServicesOpen(false);
+    }
+  };
+
   return (
     <>
       <header
@@ -148,7 +157,7 @@ export const Header: React.FC = () => {
         <div className="container-custom">
           <div className="flex justify-between items-center h-24">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/" onClick={handleHomeClick} className="flex items-center gap-3">
               <div className="relative w-48 h-20">
                 <Image
                   src="/SyncOrigin_Logo.png"
@@ -188,6 +197,7 @@ export const Header: React.FC = () => {
                   ) : (
                     <Link
                       href={item.href}
+                      onClick={item.href === "/" ? handleHomeClick : undefined}
                       className={cn(
                         "px-6 py-2.5 text-base font-medium rounded-full transition-all flex items-center gap-1.5 tracking-tight",
                         isActive(item)
@@ -313,7 +323,10 @@ export const Header: React.FC = () => {
                 ) : (
                   <Link
                     href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={(e) => {
+                      if (item.href === "/") handleHomeClick(e);
+                      else setIsMobileMenuOpen(false);
+                    }}
                     className={cn(
                       "border-b border-[#00E5FF]/10 pb-4 flex justify-between items-center",
                       isActive(item) ? "text-[#00E5FF]" : "text-[#C5D1E0]"

@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Sora } from "next/font/google";
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_HEIGHT,
+  DEFAULT_OG_IMAGE_WIDTH,
+} from "@/lib/seo";
 import "./globals.css";
 
 const sora = Sora({
@@ -42,9 +47,9 @@ export const metadata: Metadata = {
       "Strategic B2B partnerships and professional solutions for your business. We deliver expert guidance, global expertise, and innovative strategies for growth.",
     images: [
       {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
+        url: DEFAULT_OG_IMAGE,
+        width: DEFAULT_OG_IMAGE_WIDTH,
+        height: DEFAULT_OG_IMAGE_HEIGHT,
         alt: "SyncOrigins - Professional Services",
       },
     ],
@@ -54,7 +59,7 @@ export const metadata: Metadata = {
     title: "SyncOrigins | Professional AI, ERP & Data Services",
     description:
       "Strategic B2B partnerships and professional solutions for your business. We deliver expert guidance, global expertise, and innovative strategies for growth.",
-    images: ["/og-image.png"],
+    images: [DEFAULT_OG_IMAGE],
     creator: "@syncorigin",
   },
   robots: {
