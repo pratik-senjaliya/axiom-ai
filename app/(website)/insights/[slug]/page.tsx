@@ -8,6 +8,7 @@ import { FAQ } from "@/components/ui/FAQ";
 import { Button } from "@/components/ui/Button";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { AuthorAvatar } from "@/components/blog/AuthorAvatar";
+import { ArticleShareLinks } from "@/components/blog/ArticleShareLinks";
 import { User, Calendar, Clock, ChevronRight } from "lucide-react";
 
 import { generateMetadata as genMeta } from "@/lib/seo";
@@ -104,6 +105,9 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
   
   const finalRelated = relatedPosts.length > 0 ? relatedPosts : allPosts.filter(p => p.slug !== slug).slice(0, 3);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com";
+  const articleUrl = `${siteUrl}/insights/${slug}`;
+
   const headings = (post.content || [])
     .filter((block: any) => block._type === "block" && ["h2", "h3"].includes(block.style))
     .map((block: any) => ({
@@ -163,8 +167,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
             <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest" style={{ color: '#8FA3BF' }}>
                <span>Share:</span>
                <div className="flex items-center gap-3 ml-1">
-                 <button className="hover:text-[#00E5FF] transition-colors">Twitter</button>
-                 <button className="hover:text-[#00E5FF] transition-colors">LinkedIn</button>
+                 <ArticleShareLinks title={post.title} url={articleUrl} />
                </div>
             </div>
           </div>
