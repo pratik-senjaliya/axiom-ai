@@ -2,9 +2,27 @@ import { client } from './client'
 import type { BlogPost } from '../blog'
 import { CORE_SERVICE_SLUGS } from '../core-services'
 
-async function safeFetch<T>(query: string, params: Record<string, any> = {}, defaultValue: T): Promise<T> {
+const SEO_FIELDS = `
+  metaTitle,
+  metaDescription,
+  metaKeywords,
+  "openGraphImage": openGraphImage.asset->url,
+  "openGraphImageAlt": openGraphImage.alt,
+  structuredData {
+    schemaType,
+    schemaDescription,
+    includeFaqSchema
+  }
+`
+
+async function safeFetch<T>(
+  query: string,
+  params: Record<string, any> = {},
+  defaultValue: T,
+  options?: { cache?: RequestCache }
+): Promise<T> {
   try {
-    const result = await client.fetch(query, params);
+    const result = await client.fetch(query, params, options as any);
     console.log(`DEBUG: GROQ result for query:`, query.substring(0, 50), "...", !!result);
     if (result && result.testimonials) console.log("DEBUG: Testimonials found:", result.testimonials.length);
     return result || defaultValue;
@@ -111,13 +129,7 @@ export async function getPostBySlug(slug: string): Promise<any> {
     "readTime": coalesce(readTime, "5 min read"),
     "category": coalesce(category, "Insights"),
     faqs,
-    seo {
-      metaTitle,
-      metaDescription,
-      metaKeywords,
-      "openGraphImage": openGraphImage.asset->url,
-      "openGraphImageAlt": openGraphImage.alt
-    }
+    seo { ${SEO_FIELDS} }
   }`
 
   return safeFetch<any>(query, { slug }, null)
@@ -201,13 +213,7 @@ export async function getServiceBySlug(slug: string): Promise<any> {
       buttonText,
       buttonLink
     },
-    seo {
-      metaTitle,
-      metaDescription,
-      metaKeywords,
-      "openGraphImage": openGraphImage.asset->url,
-      "openGraphImageAlt": openGraphImage.alt
-    }
+    seo { ${SEO_FIELDS} }
   }`
 
   return safeFetch<any>(query, { slug }, null)
@@ -449,7 +455,7 @@ export async function getUseCasesPage(): Promise<any> {
       company
     }
   }`
-    return safeFetch<any>(query, {}, null)
+    return safeFetch<any>(query, {}, null, { cache: 'no-store' })
 }
 
 export async function getAIImplementationPage(): Promise<any> {
@@ -660,10 +666,11 @@ export async function getSettings(): Promise<any> {
   const query = `*[_type == "settings" && _id == "settings"][0] {
     companyName,
     footerDescription,
+    copyrightText,
     socialLinks[] {
       platform,
       url
     }
   }`
-  return safeFetch<any>(query, {}, null)
+  return safeFetch<any>(query, {}, null, { cache: 'no-store' })
 }

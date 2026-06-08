@@ -11,7 +11,8 @@ import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
+import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
 
 export const dynamic = "force-dynamic";
 
@@ -113,7 +114,15 @@ export default async function ERPTransformationPage() {
 
   return (
     <div className="pt-0 pb-0">
-      <ServiceHero 
+      <ServicePageSchemas
+        title={data?.seo?.metaTitle || data?.hero?.title || "ERP Transformation"}
+        description={portableTextToPlain(data?.hero?.description)}
+        url={`${getSiteUrl()}/erp-transformation`}
+        image={data?.seo?.openGraphImage || data?.hero?.image}
+        seo={data?.seo}
+        faqs={data?.faqs}
+      />
+      <ServiceHero
         backLink={{ href: "/services", label: "Back to Services" }}
         pills={["Dynamics 365 BC", "Dynamics 365 F&O", "ERP Migration", "Process Advisory"]}
         badgeText={data?.hero?.badge}

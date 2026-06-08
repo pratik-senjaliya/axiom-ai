@@ -77,15 +77,20 @@ export function SolutionsGrid({ cases, allTags, initialTag, heroData }: Solution
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[40rem] rounded-full blur-[130px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
         
         <SlideUp className="container-custom relative z-10 px-4 flex flex-col items-center">
-          <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)' }}>
-            <SparkleIcon />
-            <span className="tracking-wide uppercase text-xs font-semibold" style={{ color: '#00E5FF' }}>
-              Strategic Solutions
-            </span>
-          </div>
+          {(heroData?.badge || heroData?.title) && (
+            <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)' }}>
+              <SparkleIcon />
+              <span className="tracking-wide uppercase text-xs font-semibold" style={{ color: '#00E5FF' }}>
+                {heroData?.badge || "Strategic Solutions"}
+              </span>
+            </div>
+          )}
           
           <h1 className="type-hero-title text-white mb-6 max-w-5xl mx-auto">
-             World-Class Impact through <span className="gradient-text">Objective AI</span>
+            {heroData?.title || "World-Class Impact through"}{" "}
+            {heroData?.titleHighlight && (
+              <span className="gradient-text">{heroData.titleHighlight}</span>
+            )}
           </h1>
 
           <div className="type-body-large max-w-3xl mx-auto mb-10 text-[#8FA3BF] [&>p]:text-lg [&>p]:leading-relaxed" style={{ color: '#8FA3BF' }}>

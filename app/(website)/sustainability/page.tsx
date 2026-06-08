@@ -12,7 +12,8 @@ import { notFound } from "next/navigation";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
 
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
+import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
 
 export const dynamic = "force-dynamic";
 
@@ -145,7 +146,15 @@ export default async function SustainabilityPage() {
 
   return (
     <div className="pt-0 pb-0">
-      <ServiceHero 
+      <ServicePageSchemas
+        title={data?.seo?.metaTitle || data?.hero?.title || "Sustainability"}
+        description={portableTextToPlain(data?.hero?.description)}
+        url={`${getSiteUrl()}/sustainability`}
+        image={data?.seo?.openGraphImage || data?.hero?.image}
+        seo={data?.seo}
+        faqs={data?.faqs}
+      />
+      <ServiceHero
         badgeText={data?.hero?.badge}
         title={data?.hero?.title}
         gradientTitlePart={data?.hero?.titleHighlight}

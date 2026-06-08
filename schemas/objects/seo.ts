@@ -42,5 +42,44 @@ export default defineType({
                 }
             ],
         }),
+        defineField({
+            name: 'structuredData',
+            title: 'Structured Data (Schema.org)',
+            type: 'object',
+            description: 'JSON-LD settings for search engines (Google rich results).',
+            fields: [
+                defineField({
+                    name: 'schemaType',
+                    title: 'Schema Type',
+                    type: 'string',
+                    options: {
+                        list: [
+                            { title: 'Auto (recommended)', value: 'auto' },
+                            { title: 'Service', value: 'Service' },
+                            { title: 'Professional Service', value: 'ProfessionalService' },
+                            { title: 'Blog Posting', value: 'BlogPosting' },
+                            { title: 'Article', value: 'Article' },
+                            { title: 'Web Page', value: 'WebPage' },
+                        ],
+                        layout: 'dropdown',
+                    },
+                    initialValue: 'auto',
+                }),
+                defineField({
+                    name: 'schemaDescription',
+                    title: 'Schema Description',
+                    type: 'text',
+                    rows: 3,
+                    description: 'Optional. Used in JSON-LD only. Falls back to meta description.',
+                }),
+                defineField({
+                    name: 'includeFaqSchema',
+                    title: 'Include FAQ Schema',
+                    type: 'boolean',
+                    description: 'Output FAQPage structured data when FAQs exist on the page.',
+                    initialValue: true,
+                }),
+            ],
+        }),
     ],
 })

@@ -8,7 +8,8 @@ import { getAIImplementationPage, getLatestPostsByService } from "@/lib/sanity/q
 import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
+import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
 
 export const dynamic = "force-dynamic";
 import { FAQ } from "@/components/ui/FAQ";
@@ -148,6 +149,14 @@ export default async function AIImplementationPage() {
 
   return (
     <div className="pt-0 pb-0">
+      <ServicePageSchemas
+        title={data?.seo?.metaTitle || data?.hero?.title || "AI Implementation"}
+        description={portableTextToPlain(data?.hero?.description)}
+        url={`${getSiteUrl()}/ai-implementation`}
+        image={data?.seo?.openGraphImage || data?.hero?.image}
+        seo={data?.seo}
+        faqs={data?.faqs}
+      />
       <ServiceHero 
         badgeText={data?.hero?.badge}
         badgeIcon={<BrainIcon />}

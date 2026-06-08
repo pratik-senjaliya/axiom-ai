@@ -305,12 +305,12 @@ export default async function HomePage() {
         <section className="py-24 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
           <div className="absolute top-0 w-full h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent)' }} />
           <FadeIn className="container-custom max-w-5xl mx-auto text-center relative z-10 px-4">
-            <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border" style={{ background: 'rgba(0,229,255,0.05)', borderColor: 'rgba(0,229,255,0.2)' }}>
+            {data?.affiliationHeadline && <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border" style={{ background: 'rgba(0,229,255,0.05)', borderColor: 'rgba(0,229,255,0.2)' }}>
               <SparkleIcon />
               <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: '#00E5FF' }}>
-                {data?.affiliationHeadline || "Backed By"}
+                {data?.affiliationHeadline}
               </span>
-            </div>
+            </div>}
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 tracking-tight">
               {data.affiliationTitle}
             </h2>

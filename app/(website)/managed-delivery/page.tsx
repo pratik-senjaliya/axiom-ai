@@ -11,7 +11,8 @@ import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
+import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
 
 export const dynamic = "force-dynamic";
 
@@ -104,7 +105,15 @@ export default async function ManagedDeliveryPage() {
 
   return (
     <div className="pt-0 pb-0">
-      <ServiceHero 
+      <ServicePageSchemas
+        title={data?.seo?.metaTitle || data?.hero?.title || "Managed Delivery"}
+        description={portableTextToPlain(data?.hero?.description)}
+        url={`${getSiteUrl()}/managed-delivery`}
+        image={data?.seo?.openGraphImage || data?.hero?.image}
+        seo={data?.seo}
+        faqs={data?.faqs}
+      />
+      <ServiceHero
         backLink={{ href: "/services", label: "Back to Services" }}
         badgeText={data?.hero?.badge}
         title={data?.hero?.title}

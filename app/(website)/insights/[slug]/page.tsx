@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { AuthorAvatar } from "@/components/blog/AuthorAvatar";
 import { ArticleShareLinks } from "@/components/blog/ArticleShareLinks";
+import { BlogPageSchemas } from "@/components/seo/BlogPageSchemas";
 import { User, Calendar, Clock, ChevronRight } from "lucide-react";
 
 import { generateMetadata as genMeta } from "@/lib/seo";
@@ -118,6 +119,16 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
 
   return (
     <div className="pt-24" style={{ background: '#0A0F1F' }}>
+      <BlogPageSchemas
+        title={post.title}
+        description={post.excerpt || ""}
+        url={articleUrl}
+        image={post.seo?.openGraphImage || post.mainImage}
+        datePublished={post.date}
+        authorName={displayAuthor}
+        seo={post.seo}
+        faqs={post.faqs}
+      />
       {/* 1. Hero Section - Title Left, Image Right */}
       <section className="py-8 md:py-12 border-b" style={{ background: '#0D1B2A', borderColor: 'rgba(0,229,255,0.1)' }}>
         <div className="container-custom px-4 max-w-7xl mx-auto">

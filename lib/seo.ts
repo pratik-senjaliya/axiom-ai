@@ -160,8 +160,58 @@ export function generateBreadcrumbSchema(items: { name: string; item: string }[]
   });
 }
 
+export interface StructuredDataSeo {
+  schemaType?: string;
+  schemaDescription?: string;
+  includeFaqSchema?: boolean;
+}
+
+export interface FaqSchemaItem {
+  question: string;
+  answer: unknown;
+}
+
+export function getSiteUrl() {
+  return process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com";
+}
+
+export function portableTextToPlain(value: unknown): string {
+  if (!value) return "";
+  if (typeof value === "string") return value.trim();
+  if (!Array.isArray(value)) return "";
+
+  return value
+    .filter((block: { _type?: string }) => block._type === "block")
+    .map((block: { children?: { text?: string }[] }) =>
+      block.children?.map((child) => child.text || "").join("") || ""
+    )
+    .join(" ")
+    .trim();
+}
+
+function getPublisherSchema(siteUrl: string) {
+  return {
+    "@type": "Organization",
+    name: "SyncOrigins",
+    url: siteUrl,
+    logo: {
+      "@type": "ImageObject",
+      url: `${siteUrl}/SyncOrigin_Logo.png`,
+    },
+  };
+}
+
+export function resolveSchemaType(
+  pageKind: "service" | "blog",
+  structuredData?: StructuredDataSeo
+): string {
+  const type = structuredData?.schemaType || "auto";
+  if (type && type !== "auto") return type;
+  return pageKind === "blog" ? "BlogPosting" : "Service";
+}
+
 /**
- * Generate Article Schema for Blog Posts
+ * Generate Article / BlogPosting Schema for Blog Posts
  */
 export function generateArticleSchema(post: {
   title: string;
@@ -171,11 +221,13 @@ export function generateArticleSchema(post: {
   dateModified?: string;
   authorName: string;
   url: string;
+  schemaType?: string;
 }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com";
+  const siteUrl = getSiteUrl();
   const { url: imageUrl } = resolveOgImage(siteUrl, post.image);
+  const schemaType = post.schemaType || "BlogPosting";
 
-  return generateStructuredData("Article", {
+  return generateStructuredData(schemaType, {
     headline: post.title,
     description: post.description,
     image: imageUrl,
@@ -185,19 +237,137 @@ export function generateArticleSchema(post: {
       "@type": "Person",
       name: post.authorName,
     },
-    publisher: {
-      "@type": "Organization",
-      name: "SyncOrigins",
-      logo: {
-        "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com"}/SyncOrigin_Logo.png`,
-      },
-    },
+    publisher: getPublisherSchema(siteUrl),
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": post.url,
     },
   });
+}
+
+export function generateServiceSchema(service: {
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  schemaType?: string;
+}) {
+  const siteUrl = getSiteUrl();
+  const { url: imageUrl } = resolveOgImage(siteUrl, service.image);
+  const schemaType = service.schemaType || "Service";
+
+  return generateStructuredData(schemaType, {
+    name: service.title,
+    description: service.description,
+    url: service.url,
+    image: imageUrl,
+    provider: getPublisherSchema(siteUrl),
+  });
+}
+
+export function generateFAQPageSchema(faqs: FaqSchemaItem[]) {
+  const items = faqs
+    .filter((faq) => faq.question)
+    .map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: portableTextToPlain(faq.answer),
+      },
+    }))
+    .filter((faq) => faq.acceptedAnswer.text);
+
+  if (items.length === 0) return null;
+
+  return generateStructuredData("FAQPage", {
+    mainEntity: items,
+  });
+}
+
+export function buildBlogPageSchemas(input: {
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  datePublished?: string;
+  authorName: string;
+  seo?: {
+    metaDescription?: string;
+    structuredData?: StructuredDataSeo;
+  };
+  faqs?: FaqSchemaItem[];
+}) {
+  const siteUrl = getSiteUrl();
+  const structuredData = input.seo?.structuredData;
+  const schemaDescription =
+    structuredData?.schemaDescription ||
+    input.seo?.metaDescription ||
+    input.description;
+
+  const schemas: Record<string, unknown>[] = [
+    generateBreadcrumbSchema([
+      { name: "Home", item: siteUrl },
+      { name: "Insights", item: `${siteUrl}/insights` },
+      { name: input.title, item: input.url },
+    ]),
+    generateArticleSchema({
+      title: input.title,
+      description: schemaDescription,
+      image: input.image,
+      datePublished: input.datePublished || new Date().toISOString(),
+      authorName: input.authorName,
+      url: input.url,
+      schemaType: resolveSchemaType("blog", structuredData),
+    }),
+  ];
+
+  if (structuredData?.includeFaqSchema !== false && input.faqs?.length) {
+    const faqSchema = generateFAQPageSchema(input.faqs);
+    if (faqSchema) schemas.push(faqSchema);
+  }
+
+  return schemas;
+}
+
+export function buildServicePageSchemas(input: {
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  seo?: {
+    metaDescription?: string;
+    structuredData?: StructuredDataSeo;
+  };
+  faqs?: FaqSchemaItem[];
+}) {
+  const siteUrl = getSiteUrl();
+  const structuredData = input.seo?.structuredData;
+  const schemaDescription =
+    structuredData?.schemaDescription ||
+    input.seo?.metaDescription ||
+    input.description;
+
+  const schemas: Record<string, unknown>[] = [
+    generateBreadcrumbSchema([
+      { name: "Home", item: siteUrl },
+      { name: input.title, item: input.url },
+    ]),
+    generateServiceSchema({
+      title: input.title,
+      description: schemaDescription,
+      url: input.url,
+      image: input.image,
+      schemaType: resolveSchemaType("service", structuredData),
+    }),
+  ];
+
+  if (structuredData?.includeFaqSchema !== false && input.faqs?.length) {
+    const faqSchema = generateFAQPageSchema(input.faqs);
+    if (faqSchema) schemas.push(faqSchema);
+  }
+
+  return schemas;
 }
 
 /**

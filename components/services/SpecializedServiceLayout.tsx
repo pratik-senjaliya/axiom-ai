@@ -7,6 +7,8 @@ import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 import { PortableText } from "@/components/ui/PortableText";
+import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
+import { getSiteUrl, portableTextToPlain } from "@/lib/seo";
 import type { BlogPost } from "@/lib/blog";
 
 interface SpecializedServiceLayoutProps {
@@ -112,8 +114,18 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
 
   const finalCta = data?.finalCta;
 
+  const serviceUrl = `${getSiteUrl()}/${data?.slug}`;
+
   return (
     <div className="pt-0 pb-0">
+      <ServicePageSchemas
+        title={data?.seo?.metaTitle || data?.hero?.title || data?.title}
+        description={portableTextToPlain(data?.hero?.description)}
+        url={serviceUrl}
+        image={data?.seo?.openGraphImage || data?.hero?.image}
+        seo={data?.seo}
+        faqs={data?.faqs}
+      />
       <ServiceHero
         backLink={{ href: "/", label: "Back to Home" }}
         badgeText={data?.hero?.badge}

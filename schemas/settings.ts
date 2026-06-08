@@ -14,8 +14,15 @@ export default defineType({
         defineField({
             name: 'footerDescription',
             title: 'Footer Description',
-            type: 'simpleBlockContent',
-            description: 'Short description appearing in the footer',
+            type: 'text',
+            rows: 4,
+            description: 'Short company description shown in the footer.',
+        }),
+        defineField({
+            name: 'copyrightText',
+            title: 'Copyright Text',
+            type: 'string',
+            description: 'Bottom bar copyright line. Leave empty to use the default.',
         }),
         defineField({
             name: 'socialLinks',
@@ -31,6 +38,7 @@ export default defineType({
                             type: 'string',
                             options: {
                                 list: [
+                                    { title: 'Email', value: 'email' },
                                     { title: 'LinkedIn', value: 'linkedin' },
                                     { title: 'Twitter / X', value: 'twitter' },
                                     { title: 'Facebook', value: 'facebook' },

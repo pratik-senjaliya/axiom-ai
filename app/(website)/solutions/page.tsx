@@ -54,7 +54,7 @@ export default async function SolutionsPage({
   ]);
   const activeTag = resolvedParams.tag || null;
 
-  const allTags = [
+  const defaultTags = [
     "AI Agents",
     "Machine Learning",
     "Data Engineering",
@@ -63,8 +63,9 @@ export default async function SolutionsPage({
     "Data Platforms",
     "Business Intelligence",
     "Workflow Automation",
-    "ERP"
+    "ERP",
   ];
+  const allTags = data?.tabs?.length ? data.tabs : defaultTags;
 
   return (
     <div className="pt-24 pb-0" style={{ background: '#0A0F1F' }}>
