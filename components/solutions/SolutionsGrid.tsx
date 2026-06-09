@@ -11,9 +11,13 @@ import { SlideUp } from "@/components/ui/animations/SlideUp";
 
 interface SolutionsGridProps {
   cases: any[];
-  allTags: string[];
-  initialTag?: string | null;
+  categories: string[];
+  initialCategory?: string | null;
   heroData: any;
+}
+
+function normalizeCategory(value: string | null | undefined): string {
+  return (value ?? "").trim().toLowerCase();
 }
 
 const SparkleIcon = () => (
@@ -22,52 +26,41 @@ const SparkleIcon = () => (
   </svg>
 );
 
-export function SolutionsGrid({ cases, allTags, initialTag, heroData }: SolutionsGridProps) {
+export function SolutionsGrid({ cases, categories, initialCategory, heroData }: SolutionsGridProps) {
   const searchParams = useSearchParams();
-  const [activeTag, setActiveTag] = useState<string | null>(initialTag || null);
+  const [activeCategory, setActiveCategory] = useState<string | null>(initialCategory || null);
 
   // Sync state with URL without full page refresh
   useEffect(() => {
-    const currentTag = searchParams.get('tag');
-    if (currentTag !== activeTag) {
-      setActiveTag(currentTag);
+    const currentCategory = searchParams.get('category') || searchParams.get('tag');
+    if (currentCategory !== activeCategory) {
+      setActiveCategory(currentCategory);
     }
-  }, [searchParams, activeTag]);
+  }, [searchParams, activeCategory]);
 
-  const handleTagClick = (tag: string | null) => {
-    setActiveTag(tag);
+  const handleCategoryClick = (category: string | null) => {
+    setActiveCategory(category);
     
     // SILENT URL UPDATE: Avoids Next.js Re-render Blink
     const url = new URL(window.location.href);
-    if (tag) {
-      url.searchParams.set('tag', tag);
+    url.searchParams.delete('tag');
+    if (category) {
+      url.searchParams.set('category', category);
     } else {
-      url.searchParams.delete('tag');
+      url.searchParams.delete('category');
     }
     window.history.pushState({}, '', url);
   };
 
   const filteredCases = useMemo(() => {
-    if (!activeTag) return cases;
-    
-    const searchStr = activeTag.toLowerCase();
-    
-    return cases.filter((item: any) => {
-      // 1. Check Title
-      const titleMatch = item.title?.toLowerCase().includes(searchStr);
-      
-      // 2. Check Tools/Tags
-      const itemTools = Array.isArray(item.tools) 
-        ? item.tools 
-        : item.tools ? [item.tools] : [];
-        
-      const toolsMatch = itemTools.some((t: string) => 
-        t.toLowerCase().includes(searchStr)
-      );
+    if (!activeCategory) return cases;
 
-      return titleMatch || toolsMatch;
-    });
-  }, [cases, activeTag]);
+    const searchStr = normalizeCategory(activeCategory);
+
+    return cases.filter((item: any) =>
+      normalizeCategory(item.category) === searchStr
+    );
+  }, [cases, activeCategory]);
 
   return (
     <div className="w-full">
@@ -100,32 +93,32 @@ export function SolutionsGrid({ cases, allTags, initialTag, heroData }: Solution
           {/* ── Filter Bar (Moved into Hero) ── */}
           <div className="flex flex-wrap justify-center gap-3 relative z-20">
             <button 
-              onClick={() => handleTagClick(null)}
+              onClick={() => handleCategoryClick(null)}
               className="px-6 py-2 rounded-full text-[0.7rem] font-bold uppercase tracking-widest shadow-sm border transition-all duration-500" 
               style={{ 
-                background: !activeTag ? 'linear-gradient(135deg, #1DA1F2, #00E5FF)' : 'rgba(26,46,71,0.6)', 
-                color: !activeTag ? '#0A0F1F' : '#C5D1E0', 
-                borderColor: !activeTag ? 'transparent' : 'rgba(0,229,255,0.15)',
-                boxShadow: !activeTag ? '0 0 25px rgba(0,229,255,0.35)' : 'none',
-                transform: !activeTag ? 'scale(1.05)' : 'scale(1)'
+                background: !activeCategory ? 'linear-gradient(135deg, #1DA1F2, #00E5FF)' : 'rgba(26,46,71,0.6)', 
+                color: !activeCategory ? '#0A0F1F' : '#C5D1E0', 
+                borderColor: !activeCategory ? 'transparent' : 'rgba(0,229,255,0.15)',
+                boxShadow: !activeCategory ? '0 0 25px rgba(0,229,255,0.35)' : 'none',
+                transform: !activeCategory ? 'scale(1.05)' : 'scale(1)'
               }}
             >
               All Solutions
             </button>
-            {allTags.map((tag, idx) => (
+            {categories.map((category, idx) => (
               <button 
                 key={idx} 
-                onClick={() => handleTagClick(tag)}
+                onClick={() => handleCategoryClick(category)}
                 className="px-6 py-2 rounded-full text-[0.7rem] font-bold uppercase tracking-widest shadow-sm transition-all duration-500 border" 
                 style={{ 
-                  background: activeTag === tag ? 'linear-gradient(135deg, #1DA1F2, #00E5FF)' : 'rgba(26,46,71,0.6)', 
-                  color: activeTag === tag ? '#0A0F1F' : '#C5D1E0', 
-                  borderColor: activeTag === tag ? 'transparent' : 'rgba(0,229,255,0.15)',
-                  boxShadow: activeTag === tag ? '0 0 25px rgba(0,229,255,0.35)' : 'none',
-                  transform: activeTag === tag ? 'scale(1.05)' : 'scale(1)'
+                  background: activeCategory === category ? 'linear-gradient(135deg, #1DA1F2, #00E5FF)' : 'rgba(26,46,71,0.6)', 
+                  color: activeCategory === category ? '#0A0F1F' : '#C5D1E0', 
+                  borderColor: activeCategory === category ? 'transparent' : 'rgba(0,229,255,0.15)',
+                  boxShadow: activeCategory === category ? '0 0 25px rgba(0,229,255,0.35)' : 'none',
+                  transform: activeCategory === category ? 'scale(1.05)' : 'scale(1)'
                 }}
               >
-                {tag}
+                {category}
               </button>
             ))}
           </div>
@@ -187,7 +180,7 @@ export function SolutionsGrid({ cases, allTags, initialTag, heroData }: Solution
                             <div className="w-5 h-[2px] bg-[#00E5FF]/40" />
                             <h4 className="text-[0.65rem] font-bold tracking-[0.2em] uppercase" style={{ color: '#00E5FF' }}>STRATEGIC APPROACH</h4>
                           </div>
-                          <div className="text-sm md:text-base leading-snug text-white font-light opacity-85">
+                          <div className="text-sm md:text-base leading-snug text-white font-normal">
                             <PortableText value={item.approach} />
                           </div>
                         </div>
@@ -196,17 +189,12 @@ export function SolutionsGrid({ cases, allTags, initialTag, heroData }: Solution
                            {item.tools && (
                             <div className="flex flex-wrap gap-2">
                               {(Array.isArray(item.tools) ? item.tools : [item.tools]).map((tool: string, i: number) => (
-                                <button 
+                                <span 
                                   key={i} 
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    handleTagClick(tool);
-                                    window.scrollTo({ top: 300, behavior: 'smooth' });
-                                  }}
-                                  className={`text-[0.6rem] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg border transition-all ${activeTag === tool ? 'bg-[#00E5FF] text-black border-[#00E5FF]' : 'border-[#00E5FF]/10 bg-white/5 text-white/70 hover:bg-[#00E5FF]/20 hover:text-white hover:border-[#00E5FF]/30'}`}
+                                  className="text-[0.6rem] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg border border-[#00E5FF]/10 bg-white/5 text-white/70"
                                 >
                                   {tool}
-                                </button>
+                                </span>
                               ))}
                             </div>
                           )}

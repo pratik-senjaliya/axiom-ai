@@ -13,6 +13,8 @@ import cta from './objects/cta'
 import finalCtaSection from './objects/finalCtaSection'
 import hero from './objects/hero'
 import simpleBlockContent from './objects/simpleBlockContent'
+import htmlTable from './objects/htmlTable'
+import blogBlockContent from './objects/blogBlockContent'
 
 // Document Types (Collections)
 import post from './pages/post'
@@ -51,6 +53,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         finalCtaSection,
         hero,
         simpleBlockContent,
+        htmlTable,
+        blogBlockContent,
 
         // Settings & Meta
         settings,

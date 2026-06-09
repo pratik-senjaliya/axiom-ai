@@ -15,21 +15,21 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ 
   searchParams 
 }: { 
-  searchParams: Promise<{ tag?: string }> 
+  searchParams: Promise<{ category?: string; tag?: string }> 
 }): Promise<Metadata> {
   const data = await getUseCasesPage();
   const resolvedParams = await searchParams;
-  const tag = resolvedParams.tag;
+  const category = resolvedParams.category || resolvedParams.tag;
   const defaultTitle = "Enterprise AI Solutions Across Industries | SyncOrigins";
   const defaultDesc = "Explore high-impact AI solutions across industries, leveraging automation and objective execution to drive measurable ROI.";
   
   if (!data?.seo) return genMeta({
-    title: tag ? `${tag} Solutions | SyncOrigins` : defaultTitle,
+    title: category ? `${category} Solutions | SyncOrigins` : defaultTitle,
     description: defaultDesc,
     slug: "/solutions",
   });
   return genMeta({
-    title: tag ? `${tag} | ${data.seo.metaTitle || defaultTitle}` : (data.seo.metaTitle || defaultTitle),
+    title: category ? `${category} | ${data.seo.metaTitle || defaultTitle}` : (data.seo.metaTitle || defaultTitle),
     description: data.seo.metaDescription || defaultDesc,
     keywords: data.seo.metaKeywords,
     ogImage: data.seo.openGraphImage,
@@ -46,26 +46,20 @@ const SparkleIcon = () => (
 export default async function SolutionsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tag?: string }>;
+  searchParams: Promise<{ category?: string; tag?: string }>;
 }) {
   const [data, resolvedParams] = await Promise.all([
     getUseCasesPage(),
     searchParams
   ]);
-  const activeTag = resolvedParams.tag || null;
+  const activeCategory = resolvedParams.category || resolvedParams.tag || null;
 
-  const defaultTags = [
-    "AI Agents",
-    "Machine Learning",
-    "Data Engineering",
-    "Advanced Analytics",
-    "Azure OpenAI",
-    "Data Platforms",
-    "Business Intelligence",
-    "Workflow Automation",
-    "ERP",
+  const defaultCategories = [
+    "Cost Optimization",
+    "Growth & Revenue",
+    "Operational Excellence",
   ];
-  const allTags = data?.tabs?.length ? data.tabs : defaultTags;
+  const categories = data?.tabs?.length ? data.tabs : defaultCategories;
 
   return (
     <div className="pt-24 pb-0" style={{ background: '#0A0F1F' }}>
@@ -73,8 +67,8 @@ export default async function SolutionsPage({
       {/* ── Interactive Grid & Hero Section (Hybrid) ── */}
       <SolutionsGrid 
         cases={data?.cases || []} 
-        allTags={allTags} 
-        initialTag={activeTag} 
+        categories={categories} 
+        initialCategory={activeCategory} 
         heroData={data?.hero} 
       />
 

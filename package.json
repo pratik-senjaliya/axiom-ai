@@ -20,6 +20,8 @@
     "@marsidev/react-turnstile": "^1.5.0",
     "@portabletext/react": "^6.0.2",
     "@sanity/image-url": "^2.0.2",
+    "@sanity/table": "^2.0.1",
+    "@sanity/uuid": "^3.0.2",
     "@sanity/vision": "^5.3.0",
     "@types/node": "^25.0.3",
     "@types/react": "^19.2.7",

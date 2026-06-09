@@ -398,6 +398,44 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  .prose-clean .blog-table-wrapper table,
+  .prose-clean table.blog-table {
+    width: 100%;
+    min-width: 520px;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .prose-clean .blog-table-wrapper th,
+  .prose-clean .blog-table-wrapper td,
+  .prose-clean .blog-table th,
+  .prose-clean .blog-table td {
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(0, 229, 255, 0.12);
+    vertical-align: top;
+    color: #C5D1E0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .prose-clean .blog-table-wrapper th,
+  .prose-clean .blog-table th {
+    background: rgba(0, 229, 255, 0.08);
+    color: #FFFFFF;
+    font-weight: 700;
+    text-transform: none;
+  }
+
+  .prose-clean .blog-table-wrapper tbody tr:nth-child(even),
+  .prose-clean .blog-table tbody tr:nth-child(even) {
+    background: rgba(20, 36, 58, 0.45);
+  }
+
+  .prose-clean .blog-table-wrapper tbody tr:hover,
+  .prose-clean .blog-table tbody tr:hover {
+    background: rgba(0, 229, 255, 0.05);
+  }
+
   .prose-tight p {
       margin-bottom: 1rem !important;
   }

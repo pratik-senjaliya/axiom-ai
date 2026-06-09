@@ -433,6 +433,7 @@ export async function getUseCasesPage(): Promise<any> {
     tabs,
     cases[] {
       caseNumber,
+      category,
       title,
       problem,
       tools,

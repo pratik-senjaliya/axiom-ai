@@ -52,8 +52,7 @@ export default defineType({
         defineField({
             name: 'content',
             title: 'Content',
-            type: 'array',
-            of: [{ type: 'block' }],
+            type: 'blogBlockContent',
         }),
         defineField({
             name: 'category',

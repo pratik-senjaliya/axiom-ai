@@ -20,12 +20,13 @@ export default defineType({
             group: 'hero',
         }),
 
-        // Section 2: Filters/Tabs
+        // Section 2: Category Filters
         defineField({
             name: 'tabs',
-            title: 'Filters / Tabs',
+            title: 'Category Filters',
             type: 'array',
             of: [{ type: 'string' }],
+            description: 'Category names shown as filter buttons (e.g. Cost Optimization, Growth & Revenue). Each use case must use one of these exact names.',
             group: 'content',
         }),
 
@@ -38,6 +39,7 @@ export default defineType({
                 type: 'object',
                 fields: [
                     { name: 'caseNumber', type: 'string', title: 'Case Number (e.g. Case 01)' },
+                    { name: 'category', type: 'string', title: 'Category', description: 'Must match one of the category filter names above exactly (e.g. Cost Optimization).' },
                     { name: 'title', type: 'string', title: 'Case Title' },
                     { name: 'problem', type: 'simpleBlockContent', title: 'The Problem' },
                     { name: 'tools', type: 'array', of: [{ type: 'string' }], title: 'Tools & Tech' },

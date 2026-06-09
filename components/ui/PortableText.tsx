@@ -1,9 +1,33 @@
 import { PortableText as PortableTextReact } from '@portabletext/react'
 import Link from 'next/link'
+import { HtmlTable } from '@/components/ui/HtmlTable'
 
 interface PortableTextProps {
     value: any
     className?: string
+}
+
+function serializeLegacyTable(value: any): string | undefined {
+    const rows = value?.table?.rows
+    if (!rows?.length) return undefined
+
+    const htmlRows = rows
+        .map((row: any, rowIndex: number) => {
+            const tag = rowIndex === 0 ? 'th' : 'td'
+            const cells = (row.cells || [])
+                .map((cell: string) => {
+                    const safe = String(cell)
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                    return `<${tag}>${safe}</${tag}>`
+                })
+                .join('')
+            return `<tr>${cells}</tr>`
+        })
+        .join('')
+
+    return `<table class="blog-table"><tbody>${htmlRows}</tbody></table>`
 }
 
 const slugify = (text: string) =>
@@ -130,6 +154,10 @@ const components = {
     list: {
         bullet: ({ children }: any) => <ul className="list-disc list-outside ml-5 mb-4 space-y-2 leading-relaxed">{children}</ul>,
         number: ({ children }: any) => <ol className="list-decimal list-outside ml-5 mb-4 space-y-2 leading-relaxed">{children}</ol>,
+    },
+    types: {
+        htmlTable: ({ value }: any) => <HtmlTable value={value} />,
+        blogTable: ({ value }: any) => <HtmlTable value={{ html: serializeLegacyTable(value) }} />,
     },
 }
 
