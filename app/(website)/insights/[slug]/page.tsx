@@ -254,8 +254,8 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
 
           {/* Core Article Body */}
           <article className="lg:w-2/3 flex-grow">
-            <div className="prose-clean max-w-4xl mx-auto lg:mx-0">
-              <PortableText value={post.content} className="max-w-none" />
+            <div className="max-w-4xl mx-auto lg:mx-0">
+              <PortableText value={post.content} className="max-w-none prose-blog" />
             </div>
 
             {/* Author Footer Card */}

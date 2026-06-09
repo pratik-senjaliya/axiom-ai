@@ -14,9 +14,13 @@ function sanitizeNode(node: Element) {
     const parent = node.parentNode
     if (!parent) return
 
-    while (node.firstChild) {
-      parent.insertBefore(node.firstChild, node)
-    }
+    const children = Array.from(node.childNodes)
+    children.forEach((child) => {
+      parent.insertBefore(child, node)
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        sanitizeNode(child as Element)
+      }
+    })
     parent.removeChild(node)
     return
   }
@@ -41,6 +45,22 @@ export function extractTableHtml(html: string) {
   const table = doc.querySelector('table')
   if (!table) return null
   return sanitizeTableElement(table)
+}
+
+/** Strip pasted Office/Excel artifacts so dark-theme table styles apply on the site. */
+export function prepareTableHtmlForDisplay(html: string): string {
+  if (!html?.trim()) return ''
+
+  if (typeof DOMParser !== 'undefined') {
+    const doc = new DOMParser().parseFromString(html, 'text/html')
+    const table = doc.querySelector('table')
+    if (table) return sanitizeTableElement(table)
+  }
+
+  return html
+    .replace(/\s(?:style|class|bgcolor|color|width|height|valign|align)=("[^"]*"|'[^']*')/gi, '')
+    .replace(/<\/?(?:span|font|o:p|meta|link|style|div|p)[^>]*>/gi, '')
+    .replace(/<table(?![^>]*class=)/i, '<table class="blog-table"')
 }
 
 export function plainTextToTableHtml(text: string) {

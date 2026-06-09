@@ -48,6 +48,6 @@ export default defineType({
     defineArrayMember({ type: 'htmlTable' }),
   ],
   components: {
-    input: BlogPortableTextInput,
+    input: BlogPortableTextInput as any,
   },
 })
