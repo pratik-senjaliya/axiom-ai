@@ -3,7 +3,7 @@ import { HorizontalFeature, HorizontalFeatureItem } from "@/components/services/
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 import { PortableText } from "@/components/ui/PortableText";
@@ -219,13 +219,7 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
         />
       )}
 
-      {(data?.testimonials?.length ?? 0) > 0 && (
-        <TestimonialCarousel
-          testimonials={data.testimonials}
-          subtitle="CLIENT SUCCESS"
-          title={data?.testimonialsTitle || "Powered by Innovation, Proven by Clients"}
-        />
-      )}
+      <CaseStudySliderSection />
 
       {relatedPosts.length > 0 && (
         <RelatedInsights posts={relatedPosts} serviceName={data?.title || "Service"} />

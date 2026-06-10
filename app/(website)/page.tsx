@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 import { getHomePage } from "@/lib/sanity/queries";
-import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { FadeIn } from "@/components/ui/animations/FadeIn";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
@@ -322,13 +322,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* 5.75 Testimonials */}
-      <TestimonialCarousel
-        testimonials={data?.testimonials}
-        subtitle="AI SUCCESS"
-        title="Powered by AI, Proven by Clients"
-      />
-
       {/* 6. Contact CTA */}
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0F1F 0%, #0D1B2A 50%, #14243A 100%)' }}>
         {/* Glow */}
@@ -357,6 +350,8 @@ export default async function HomePage() {
           </div>
         </SlideUp>
       </section>
+
+      <CaseStudySliderSection />
     </>
   );
 }

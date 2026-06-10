@@ -10,7 +10,6 @@ export default defineType({
         { name: 'solutions', title: 'What We Do' },
         { name: 'roadmap', title: 'Phases to Production' },
         { name: 'personas', title: 'Target Audience' },
-        { name: 'testimonials', title: 'Testimonials' },
         { name: 'affiliation', title: 'Corporate Affiliation' },
         { name: 'seo', title: 'SEO' },
     ],
@@ -138,15 +137,7 @@ export default defineType({
             ]
         }),
 
-        // Section 7: Testimonials
-        defineField({
-            name: 'testimonials',
-            title: 'Testimonials',
-            type: 'array',
-            of: [{ type: 'testimonial' }],
-            group: 'testimonials',
-        }),
-        // Section 8: Corporate Affiliation
+        // Section 7: Corporate Affiliation
         defineField({
             name: 'affiliationHeadline',
             title: 'Affiliation Headline',

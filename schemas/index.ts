@@ -5,6 +5,7 @@ import faq from './objects/faq'
 import feature from './objects/feature'
 import featureCard from './objects/featureCard'
 import testimonial from './objects/testimonial'
+import caseStudySpotlight from './objects/caseStudySpotlight'
 import processStep from './objects/processStep'
 import advantage from './objects/advantage'
 import stat from './objects/stat'
@@ -34,6 +35,7 @@ import erpTransformationPage from './pages/erpTransformationPage'
 import dataAnalyticsPage from './pages/dataAnalyticsPage'
 import managedDeliveryPage from './pages/managedDeliveryPage'
 import sustainabilityPage from './pages/sustainabilityPage'
+import caseStudies from './pages/caseStudies'
 import privacyPolicy from './pages/privacyPolicy'
 import termsOfUsage from './pages/termsOfUsage'
 import settings from './settings'
@@ -45,6 +47,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         feature,
         featureCard,
         testimonial,
+        caseStudySpotlight,
         processStep,
         advantage,
         stat,
@@ -70,6 +73,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         dataAnalyticsPage,
         managedDeliveryPage,
         sustainabilityPage,
+        caseStudies,
         privacyPolicy,
         termsOfUsage,
 

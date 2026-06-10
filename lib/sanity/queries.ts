@@ -15,6 +15,15 @@ const SEO_FIELDS = `
   }
 `
 
+const CASE_STUDY_ITEM_FIELDS = `
+  headline,
+  subline,
+  ctaText,
+  ctaLink,
+  "image": image.asset->url,
+  "imageAlt": image.alt
+`
+
 async function safeFetch<T>(
   query: string,
   params: Record<string, any> = {},
@@ -24,7 +33,6 @@ async function safeFetch<T>(
   try {
     const result = await client.fetch(query, params, options as any);
     console.log(`DEBUG: GROQ result for query:`, query.substring(0, 50), "...", !!result);
-    if (result && result.testimonials) console.log("DEBUG: Testimonials found:", result.testimonials.length);
     return result || defaultValue;
   } catch (error) {
     console.error("Sanity fetch error:", error);
@@ -42,7 +50,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     "category": coalesce(category, "Insights"),
     "date": publishedAt,
     "author": coalesce(author, "SyncOrigins"),
-    "authorRole": coalesce(authorRole, "Admin"),
+    authorRole,
     "image": coalesce(mainImage.asset->url, 
       select(
         relatedService == "ai" => select(
@@ -92,7 +100,7 @@ export async function getPostBySlug(slug: string): Promise<any> {
     content,
     "date": publishedAt,
     "author": coalesce(author, "SyncOrigins"),
-    "authorRole": coalesce(authorRole, "Admin"),
+    authorRole,
     "mainImage": mainImage.asset->url,
     "image": coalesce(mainImage.asset->url, 
       select(
@@ -184,8 +192,6 @@ export async function getServiceBySlug(slug: string): Promise<any> {
     showInNavigation,
     navTags,
     tags,
-    testimonialsTitle,
-    "testimonials": coalesce(testimonials, []),
     "faqs": coalesce(faqs, []),
     hero {
       badge,
@@ -223,6 +229,20 @@ export async function getServiceBySlug(slug: string): Promise<any> {
 export async function getAllServiceSlugs(): Promise<string[]> {
   const query = `*[_type == "service" && !(slug.current in $reserved)].slug.current`
   return safeFetch<string[]>(query, { reserved: CORE_SERVICE_SLUGS }, [])
+}
+
+// ==================== CASE STUDIES (GLOBAL) ====================
+
+export async function getCaseStudies(): Promise<any> {
+  const query = `*[_type == "caseStudies" && _id == "caseStudiesSingleton"][0] {
+    sectionTitle,
+    sectionSubtitle,
+    items[] {
+      ${CASE_STUDY_ITEM_FIELDS}
+    }
+  }`
+
+  return safeFetch<any>(query, {}, null, { cache: 'no-store' })
 }
 
 // ==================== HOME PAGE ====================
@@ -278,12 +298,6 @@ export async function getHomePage(): Promise<any> {
       description,
       primaryCta { text, link }
     },
-    testimonials[] {
-      quote,
-      author,
-      role,
-      company
-    },
     affiliationHeadline,
     affiliationTitle,
     affiliationBody
@@ -331,13 +345,7 @@ export async function getDataAnalyticsPage(): Promise<any> {
     engagementSteps[] { title, description },
     ctaHeadline,
     ctaOptions[] { text, link },
-    ctaClosing,
-    testimonials[] {
-      quote,
-      author,
-      role,
-      company
-    }
+    ctaClosing
   }`
     return safeFetch<any>(query, {}, null)
 }
@@ -449,12 +457,6 @@ export async function getUseCasesPage(): Promise<any> {
       title,
       description
     },
-    testimonials[] {
-      quote,
-      author,
-      role,
-      company
-    }
   }`
     return safeFetch<any>(query, {}, null, { cache: 'no-store' })
 }
@@ -490,12 +492,6 @@ export async function getAIImplementationPage(): Promise<any> {
       buttonText,
       buttonLink
     },
-    testimonials[] {
-      quote,
-      author,
-      role,
-      company
-    }
   }`
     return safeFetch<any>(query, {}, null)
 }
@@ -527,12 +523,6 @@ export async function getSustainabilityPage(): Promise<any> {
       buttonText,
       buttonLink
     },
-    testimonials[] {
-      quote,
-      author,
-      role,
-      company
-    }
   }`
     return safeFetch<any>(query, {}, null)
 }
@@ -564,12 +554,6 @@ export async function getERPTransformationPage(): Promise<any> {
       buttonText,
       buttonLink
     },
-    testimonials[] {
-      quote,
-      author,
-      role,
-      company
-    }
   }`
     return safeFetch<any>(query, {}, null)
 }
@@ -604,12 +588,6 @@ export async function getManagedDeliveryPage(): Promise<any> {
       buttonText,
       buttonLink
     },
-    testimonials[] {
-      quote,
-      author,
-      role,
-      company
-    }
   }`
     return safeFetch<any>(query, {}, null)
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { getAIImplementationPage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { PortableText } from "@/components/ui/PortableText";
@@ -243,11 +243,7 @@ export default async function AIImplementationPage() {
         small={true}
       />
 
-      <TestimonialCarousel 
-        testimonials={data?.testimonials} 
-        subtitle="AI SUCCESS"
-        title="Powered by AI, Proven by Clients"
-      />
+      <CaseStudySliderSection />
 
       <RelatedInsights posts={relatedPosts} serviceName="AI Implementation" />
 

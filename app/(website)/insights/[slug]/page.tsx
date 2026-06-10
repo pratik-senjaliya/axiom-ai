@@ -97,7 +97,10 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                         ? "SyncOrigins" 
                         : post.author;
 
-  const displayAuthorRole = post.authorRole || "Admin";
+  const displayAuthorRole =
+    post.authorRole && post.authorRole.toLowerCase() !== 'admin'
+      ? post.authorRole
+      : null;
 
   const allPosts = await getAllPosts();
   const relatedPosts = allPosts
@@ -265,7 +268,11 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                    <div>
                      <h4 className="text-xl font-bold text-white mb-1">{displayAuthor}</h4>
-                     <span className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: '#00E5FF' }}>{displayAuthorRole}</span>
+                     {displayAuthorRole && (
+                       <span className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: '#00E5FF' }}>
+                         {displayAuthorRole}
+                       </span>
+                     )}
                    </div>
                    <Link href="/insights">
                     <Button variant="outline" className="rounded-xl font-bold text-[10px] h-9 hover:text-[#00E5FF] transition-colors" style={{ borderColor: 'rgba(0,229,255,0.3)', color: '#C5D1E0', background: 'rgba(20,36,58,0.6)' }}>

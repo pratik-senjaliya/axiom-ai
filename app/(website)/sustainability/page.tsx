@@ -3,7 +3,7 @@ import { ServiceHero } from "@/components/services/ServiceHero";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { getSustainabilityPage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { PortableText } from "@/components/ui/PortableText";
@@ -218,11 +218,7 @@ export default async function SustainabilityPage() {
         </div>
       </section>
 
-      <TestimonialCarousel 
-        testimonials={data?.testimonials} 
-        subtitle="AI SUCCESS"
-        title="Powered by AI, Proven by Clients"
-      />
+      <CaseStudySliderSection />
 
       <RelatedInsights posts={relatedPosts} serviceName="Sustainability" />
 

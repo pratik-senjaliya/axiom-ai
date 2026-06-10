@@ -12,7 +12,6 @@ export default defineType({
         { name: 'useCases', title: 'Use Cases' },
         { name: 'techEcosystem', title: 'Technology Ecosystem' },
         { name: 'engagement', title: 'Engagement Model' },
-        { name: 'testimonials', title: 'Testimonials' },
         { name: 'cta', title: 'Call to Action' },
         { name: 'seo', title: 'SEO' },
     ],
@@ -191,14 +190,6 @@ export default defineType({
             group: 'cta',
         }),
         
-        defineField({
-            name: 'testimonials',
-            title: 'Testimonials',
-            type: 'array',
-            of: [{ type: 'testimonial' }],
-            group: 'testimonials',
-        }),
-
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
     ],
 })

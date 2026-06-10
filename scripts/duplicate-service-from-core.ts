@@ -104,7 +104,6 @@ async function main() {
     roadmapHeadline: sourceDoc.roadmapHeadline,
     roadmap: sourceDoc.roadmap,
     faqs: sourceDoc.faqs,
-    testimonials: sourceDoc.testimonials,
     finalCta: sourceDoc.finalCta,
   }
 

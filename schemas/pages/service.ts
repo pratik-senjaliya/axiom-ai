@@ -14,7 +14,6 @@ export default defineType({
         { name: 'models', title: 'Engagement Models' },
         { name: 'roadmap', title: 'Roadmap' },
         { name: 'faqs', title: 'FAQs & CTA' },
-        { name: 'testimonials', title: 'Testimonials' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -196,21 +195,6 @@ export default defineType({
                 { name: 'buttonText', type: 'string', title: 'Button Text' },
                 { name: 'buttonLink', type: 'string', title: 'Button Link' },
             ],
-        }),
-
-        defineField({
-            name: 'testimonialsTitle',
-            title: 'Testimonials Section Title',
-            type: 'string',
-            initialValue: 'Powered by Innovation, Proven by Clients',
-            group: 'testimonials',
-        }),
-        defineField({
-            name: 'testimonials',
-            title: 'Testimonials',
-            type: 'array',
-            of: [{ type: 'testimonial' }],
-            group: 'testimonials',
         }),
 
         defineField({

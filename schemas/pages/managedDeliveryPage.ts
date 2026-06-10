@@ -11,7 +11,6 @@ export default defineType({
         { name: 'models', title: 'Engagement Models' },
         { name: 'roadmap', title: 'Advantages / Steps' },
         { name: 'faqs', title: 'FAQs' },
-        { name: 'testimonials', title: 'Testimonials' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -139,14 +138,6 @@ export default defineType({
         }),
 
         // Testimonials Section
-        defineField({
-            name: 'testimonials',
-            title: 'Testimonials',
-            type: 'array',
-            of: [{ type: 'testimonial' }],
-            group: 'testimonials',
-        }),
-
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
     ],
 })

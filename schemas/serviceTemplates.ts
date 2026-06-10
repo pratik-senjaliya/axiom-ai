@@ -13,7 +13,6 @@ const baseService = {
         buttonText: 'Book a Call',
         buttonLink: '/contact',
     },
-    testimonialsTitle: 'Powered by Innovation, Proven by Clients',
 }
 
 export const serviceTemplates: Template[] = [

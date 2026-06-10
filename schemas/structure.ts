@@ -44,6 +44,7 @@ export const structure = (S: StructureBuilder) =>
         .title('Website Content')
         .items([
             singletonListItem(S, 'settings', 'Site Settings', 'settings'),
+            singletonListItem(S, 'caseStudies', 'Case Studies', 'caseStudiesSingleton'),
             S.divider(),
 
             singletonListItem(S, 'homePage', 'Home Page'),

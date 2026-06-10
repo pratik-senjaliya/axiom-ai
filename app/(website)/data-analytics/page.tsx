@@ -13,7 +13,7 @@ import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
-import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
 
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
 import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
@@ -304,11 +304,7 @@ export default async function DataAnalyticsPage() {
         />
       )}
 
-      <TestimonialCarousel 
-        testimonials={data?.testimonials} 
-        subtitle="AI SUCCESS"
-        title="Powered by AI, Proven by Clients"
-      />
+      <CaseStudySliderSection />
 
       <RelatedInsights posts={relatedPosts} serviceName="Data & Analytics" />
 

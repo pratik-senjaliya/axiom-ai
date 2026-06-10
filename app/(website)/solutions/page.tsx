@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { PortableText } from "@/components/ui/PortableText";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { getUseCasesPage } from "@/lib/sanity/queries";
-import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { SolutionsGrid } from "@/components/solutions/SolutionsGrid";
 
@@ -72,12 +72,7 @@ export default async function SolutionsPage({
         heroData={data?.hero} 
       />
 
-      {/* ── Testimonials ── */}
-      <TestimonialCarousel 
-        testimonials={data?.testimonials} 
-        subtitle="AI SUCCESS"
-        title="Powered by AI, Proven by Clients"
-      />
+      <CaseStudySliderSection />
 
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #0A0F1F 100%)' }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '100px 100px' }} />
