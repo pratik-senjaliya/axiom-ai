@@ -300,6 +300,8 @@ export default async function HomePage() {
         </div>
       </section>
 
+            <CaseStudySliderSection />
+
       {/* 5.5 Corporate Affiliation */}
       {data?.affiliationTitle && data?.affiliationBody && (
         <section className="py-24 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
@@ -350,8 +352,6 @@ export default async function HomePage() {
           </div>
         </SlideUp>
       </section>
-
-      <CaseStudySliderSection />
     </>
   );
 }
