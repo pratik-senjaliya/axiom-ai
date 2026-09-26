@@ -89,7 +89,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={sora.variable}>
+    <html lang="en-IN" className={sora.variable}>
       <head>
         <script
           dangerouslySetInnerHTML={{

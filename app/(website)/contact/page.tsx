@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, getSiteUrl } from "@/lib/seo";
 import { getContactPage } from "@/lib/sanity/queries";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { InnerPageSchemas } from "@/components/seo/PageSchemas";
 
 // Enable into ISR
 export const revalidate = 60;
@@ -37,7 +38,23 @@ export default async function ContactPage() {
   };
 
   return (
-    <ContactForm data={data} />
+    <>
+      <InnerPageSchemas
+        title={sanityData?.seo?.metaTitle || data.title || "Contact Us for AI & Digital Solutions | SyncOrigins"}
+        description={
+          sanityData?.seo?.metaDescription ||
+          (typeof data.description === "string"
+            ? data.description
+            : "Get in touch with SyncOrigins for expert AI, ERP, and data solutions.")
+        }
+        url={`${getSiteUrl()}/contact`}
+        breadcrumbs={[
+          { name: "Home", item: `${getSiteUrl()}/` },
+          { name: "Contact", item: `${getSiteUrl()}/contact` },
+        ]}
+      />
+      <ContactForm data={data} />
+    </>
   )
 }
 

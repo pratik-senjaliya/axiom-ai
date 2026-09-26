@@ -9,8 +9,9 @@ import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { FadeIn } from "@/components/ui/animations/FadeIn";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain, SITE_SCHEMA_DESCRIPTION } from "@/lib/seo";
 import { FAQ } from "@/components/ui/FAQ";
+import { HomePageSchemas } from "@/components/seo/PageSchemas";
 
 export const dynamic = "force-dynamic";
 
@@ -91,8 +92,22 @@ export default async function HomePage() {
     answer: data?.faqs?.length ? <PortableText value={faq.answer} /> : faq.answer,
   }));
 
+  const faqSchemaItems = (data?.faqs?.length ? data.faqs : fallbackFaqs).map((faq: any) => ({
+    question: faq.question,
+    answer: data?.faqs?.length ? faq.answer : faq.answer,
+  }));
+
+  const pageTitle = data?.seo?.metaTitle || "AI & Digital Transformation Solutions for Businesses | SyncOrigins";
+  const pageDescription = data?.seo?.metaDescription || SITE_SCHEMA_DESCRIPTION;
+
   return (
     <>
+      <HomePageSchemas
+        title={pageTitle}
+        description={pageDescription}
+        url={`${getSiteUrl()}/`}
+        faqs={faqSchemaItems}
+      />
       {/* 1. Hero Section */}
       <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-12 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
         <div className="bg-grid opacity-60 z-0" />

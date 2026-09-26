@@ -6,7 +6,8 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@/components/ui/PortableText";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, getSiteUrl } from "@/lib/seo";
+import { InnerPageSchemas } from "@/components/seo/PageSchemas";
 
 export const dynamic = "force-dynamic";
 
@@ -76,6 +77,15 @@ export default async function InsightsPage({
 
   return (
     <div className="pt-24 pb-0" style={{ background: '#0A0F1F' }}>
+      <InnerPageSchemas
+        title={pageData?.seo?.metaTitle || "Insights & AI Trends | SyncOrigins"}
+        description={pageData?.seo?.metaDescription || "Stay updated with AI trends, industry insights, and digital transformation strategies to drive innovation and smarter decision-making with SyncOrigins."}
+        url={`${getSiteUrl()}/insights`}
+        breadcrumbs={[
+          { name: "Home", item: `${getSiteUrl()}/` },
+          { name: "Insights", item: `${getSiteUrl()}/insights` },
+        ]}
+      />
       
       {/* ── Interactive Grid & Hero Section (Hybrid) ── */}
       <BlogGrid 

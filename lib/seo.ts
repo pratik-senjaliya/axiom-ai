@@ -132,9 +132,6 @@ export function generateMetadata(config: SEOConfig): Metadata {
 /**
  * Generate structured data (JSON-LD) for better SEO
  */
-/**
- * Generate structured data (JSON-LD) for better SEO
- */
 export function generateStructuredData(
   type: string,
   data: Record<string, any>
@@ -150,13 +147,20 @@ export function generateStructuredData(
  * Generate Breadcrumb List Schema
  */
 export function generateBreadcrumbSchema(items: { name: string; item: string }[]) {
+  const siteUrl = getSiteUrl();
   return generateStructuredData("BreadcrumbList", {
-    itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: item.name,
-      item: item.item,
-    })),
+    itemListElement: items.map((item, index) => {
+      const url =
+        item.item === siteUrl || item.item === `${siteUrl}/`
+          ? `${siteUrl}/`
+          : item.item;
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        item: url,
+      };
+    }),
   });
 }
 
@@ -172,8 +176,11 @@ export interface FaqSchemaItem {
 }
 
 export function getSiteUrl() {
-  return process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com";
+  return (process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com").replace(/\/$/, "");
 }
+
+export const SITE_SCHEMA_DESCRIPTION =
+  "Drive growth with SyncOrigins digital transformation solutions, including ERP transformation, managed delivery, and sustainable strategies to improve efficiency and performance.";
 
 export function portableTextToPlain(value: unknown): string {
   if (!value) return "";
@@ -189,16 +196,83 @@ export function portableTextToPlain(value: unknown): string {
     .trim();
 }
 
-function getPublisherSchema(siteUrl: string) {
-  return {
-    "@type": "Organization",
+function organizationId(siteUrl: string) {
+  return `${siteUrl}/#organization`;
+}
+
+function websiteId(siteUrl: string) {
+  return `${siteUrl}/#website`;
+}
+
+/**
+ * Organization — fixed, all pages
+ * Spec: SyncOrigins Schema doc
+ */
+export function getOrganizationSchema() {
+  const siteUrl = getSiteUrl();
+  return generateStructuredData("Organization", {
+    "@id": organizationId(siteUrl),
     name: "SyncOrigins",
-    url: siteUrl,
+    url: `${siteUrl}/`,
     logo: {
       "@type": "ImageObject",
       url: `${siteUrl}/SyncOrigin_Logo.png`,
     },
-  };
+    description: SITE_SCHEMA_DESCRIPTION,
+    email: "hello@syncorigins.com",
+    areaServed: {
+      "@type": "Place",
+      name: "Worldwide",
+    },
+    sameAs: ["https://www.linkedin.com/company/syncorigins/"],
+  });
+}
+
+/**
+ * WebSite — fixed, home page only
+ */
+export function getWebSiteSchema() {
+  const siteUrl = getSiteUrl();
+  return generateStructuredData("WebSite", {
+    "@id": websiteId(siteUrl),
+    url: `${siteUrl}/`,
+    name: "SyncOrigins",
+    description: SITE_SCHEMA_DESCRIPTION,
+    inLanguage: "en-IN",
+    publisher: {
+      "@id": organizationId(siteUrl),
+    },
+  });
+}
+
+/**
+ * WebPage — dynamic, all pages
+ */
+export function generateWebPageSchema(input: {
+  title: string;
+  description: string;
+  url: string;
+  datePublished?: string;
+  dateModified?: string;
+}) {
+  const siteUrl = getSiteUrl();
+  const pageUrl = input.url || `${siteUrl}/`;
+
+  return generateStructuredData("WebPage", {
+    "@id": `${pageUrl.replace(/\/$/, "")}/#webpage`,
+    url: pageUrl,
+    name: input.title,
+    description: input.description,
+    inLanguage: "en-IN",
+    isPartOf: {
+      "@id": websiteId(siteUrl),
+    },
+    publisher: {
+      "@id": organizationId(siteUrl),
+    },
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
+  });
 }
 
 export function resolveSchemaType(
@@ -211,7 +285,7 @@ export function resolveSchemaType(
 }
 
 /**
- * Generate Article / BlogPosting Schema for Blog Posts
+ * BlogPosting — blog detail pages
  */
 export function generateArticleSchema(post: {
   title: string;
@@ -220,6 +294,7 @@ export function generateArticleSchema(post: {
   datePublished: string;
   dateModified?: string;
   authorName: string;
+  authorUrl?: string;
   url: string;
   schemaType?: string;
 }) {
@@ -231,13 +306,17 @@ export function generateArticleSchema(post: {
     headline: post.title,
     description: post.description,
     image: imageUrl,
-    datePublished: post.datePublished,
-    dateModified: post.dateModified || post.datePublished,
+    url: post.url,
     author: {
       "@type": "Person",
       name: post.authorName,
+      ...(post.authorUrl ? { url: post.authorUrl } : {}),
     },
-    publisher: getPublisherSchema(siteUrl),
+    publisher: {
+      "@id": organizationId(siteUrl),
+    },
+    datePublished: post.datePublished,
+    dateModified: post.dateModified || post.datePublished,
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": post.url,
@@ -261,7 +340,9 @@ export function generateServiceSchema(service: {
     description: service.description,
     url: service.url,
     image: imageUrl,
-    provider: getPublisherSchema(siteUrl),
+    provider: {
+      "@id": organizationId(siteUrl),
+    },
   });
 }
 
@@ -273,7 +354,7 @@ export function generateFAQPageSchema(faqs: FaqSchemaItem[]) {
       name: faq.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: portableTextToPlain(faq.answer),
+        text: portableTextToPlain(faq.answer) || String(faq.answer || "").trim(),
       },
     }))
     .filter((faq) => faq.acceptedAnswer.text);
@@ -285,13 +366,44 @@ export function generateFAQPageSchema(faqs: FaqSchemaItem[]) {
   });
 }
 
+export function buildHomePageSchemas(input: {
+  title: string;
+  description: string;
+  url?: string;
+  faqs?: FaqSchemaItem[];
+  datePublished?: string;
+  dateModified?: string;
+}) {
+  const siteUrl = getSiteUrl();
+  const pageUrl = input.url || `${siteUrl}/`;
+  const schemas: Record<string, unknown>[] = [
+    getWebSiteSchema(),
+    generateWebPageSchema({
+      title: input.title,
+      description: input.description,
+      url: pageUrl,
+      datePublished: input.datePublished,
+      dateModified: input.dateModified,
+    }),
+  ];
+
+  if (input.faqs?.length) {
+    const faqSchema = generateFAQPageSchema(input.faqs);
+    if (faqSchema) schemas.push(faqSchema);
+  }
+
+  return schemas;
+}
+
 export function buildBlogPageSchemas(input: {
   title: string;
   description: string;
   url: string;
   image?: string;
   datePublished?: string;
+  dateModified?: string;
   authorName: string;
+  authorUrl?: string;
   seo?: {
     metaDescription?: string;
     structuredData?: StructuredDataSeo;
@@ -304,10 +416,19 @@ export function buildBlogPageSchemas(input: {
     structuredData?.schemaDescription ||
     input.seo?.metaDescription ||
     input.description;
+  const published = input.datePublished || new Date().toISOString();
+  const modified = input.dateModified || published;
 
   const schemas: Record<string, unknown>[] = [
+    generateWebPageSchema({
+      title: input.title,
+      description: schemaDescription,
+      url: input.url,
+      datePublished: published,
+      dateModified: modified,
+    }),
     generateBreadcrumbSchema([
-      { name: "Home", item: siteUrl },
+      { name: "Home", item: `${siteUrl}/` },
       { name: "Insights", item: `${siteUrl}/insights` },
       { name: input.title, item: input.url },
     ]),
@@ -315,8 +436,10 @@ export function buildBlogPageSchemas(input: {
       title: input.title,
       description: schemaDescription,
       image: input.image,
-      datePublished: input.datePublished || new Date().toISOString(),
+      datePublished: published,
+      dateModified: modified,
       authorName: input.authorName,
+      authorUrl: input.authorUrl,
       url: input.url,
       schemaType: resolveSchemaType("blog", structuredData),
     }),
@@ -335,6 +458,8 @@ export function buildServicePageSchemas(input: {
   description: string;
   url: string;
   image?: string;
+  datePublished?: string;
+  dateModified?: string;
   seo?: {
     metaDescription?: string;
     structuredData?: StructuredDataSeo;
@@ -349,8 +474,15 @@ export function buildServicePageSchemas(input: {
     input.description;
 
   const schemas: Record<string, unknown>[] = [
+    generateWebPageSchema({
+      title: input.title,
+      description: schemaDescription,
+      url: input.url,
+      datePublished: input.datePublished,
+      dateModified: input.dateModified,
+    }),
     generateBreadcrumbSchema([
-      { name: "Home", item: siteUrl },
+      { name: "Home", item: `${siteUrl}/` },
       { name: input.title, item: input.url },
     ]),
     generateServiceSchema({
@@ -371,35 +503,39 @@ export function buildServicePageSchemas(input: {
 }
 
 /**
- * Common organization structured data
+ * Generic inner-page schemas (listing / contact / about, etc.)
  */
-export function getOrganizationSchema() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://syncorigins.com";
-  return generateStructuredData("Organization", {
-    name: "SyncOrigins",
-    url: siteUrl,
-    logo: `${siteUrl}/SyncOrigin_Logo.png`,
-    sameAs: [
-      "https://www.linkedin.com/company/syncorigins/",
-      "https://twitter.com/syncorigins",
-      "https://www.facebook.com/syncorigins",
-    ],
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+1-555-0123-4567",
-      contactType: "customer service",
-      contactOption: "TollFree",
-      areaServed: "US",
-      availableLanguage: "en",
-    },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "123 Business Avenue, Suite 100",
-      addressLocality: "New York",
-      addressRegion: "NY",
-      postalCode: "10001",
-      addressCountry: "US",
-    },
-  });
+export function buildInnerPageSchemas(input: {
+  title: string;
+  description: string;
+  url: string;
+  breadcrumbs?: { name: string; item: string }[];
+  faqs?: FaqSchemaItem[];
+  datePublished?: string;
+  dateModified?: string;
+}) {
+  const siteUrl = getSiteUrl();
+  const schemas: Record<string, unknown>[] = [
+    generateWebPageSchema({
+      title: input.title,
+      description: input.description,
+      url: input.url,
+      datePublished: input.datePublished,
+      dateModified: input.dateModified,
+    }),
+    generateBreadcrumbSchema(
+      input.breadcrumbs || [
+        { name: "Home", item: `${siteUrl}/` },
+        { name: input.title, item: input.url },
+      ]
+    ),
+  ];
+
+  if (input.faqs?.length) {
+    const faqSchema = generateFAQPageSchema(input.faqs);
+    if (faqSchema) schemas.push(faqSchema);
+  }
+
+  return schemas;
 }
 
