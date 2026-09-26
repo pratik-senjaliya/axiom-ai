@@ -10,6 +10,7 @@ import { FadeIn } from "@/components/ui/animations/FadeIn";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { generateMetadata as genMeta } from "@/lib/seo";
+import { FAQ } from "@/components/ui/FAQ";
 
 export const dynamic = "force-dynamic";
 
@@ -61,6 +62,34 @@ export default async function HomePage() {
     'linear-gradient(135deg, #66FCF1, #1DA1F2)',
     'linear-gradient(135deg, #1DA1F2, #66FCF1)',
   ];
+
+  const fallbackFaqs = [
+    {
+      question: "What does SyncOrigins specialize in?",
+      answer: "We help enterprises turn AI, data, and ERP initiatives into production-ready systems—with governance, measurable ROI, and clear execution paths beyond pilots.",
+    },
+    {
+      question: "How is SyncOrigins different from typical AI consultancies?",
+      answer: "We focus on outcomes, not demos. Our work spans strategy through delivery—integrating GenAI, data platforms, and ERP so solutions scale in real operating environments.",
+    },
+    {
+      question: "Who do you typically work with?",
+      answer: "We partner with CXOs, transformation leaders, and delivery teams who need reliable execution across AI implementation, ERP transformation, data & analytics, and managed delivery.",
+    },
+    {
+      question: "How do engagements usually start?",
+      answer: "Most clients begin with a focused pilot or assessment to define scope, risks, and success metrics—then move into a phased roadmap toward production.",
+    },
+    {
+      question: "Can you work with our existing ERP and data stack?",
+      answer: "Yes. We design and deliver within your current systems and processes so new capabilities integrate cleanly instead of creating parallel silos.",
+    },
+  ];
+
+  const faqs = (data?.faqs?.length ? data.faqs : fallbackFaqs).map((faq: any) => ({
+    question: faq.question,
+    answer: data?.faqs?.length ? <PortableText value={faq.answer} /> : faq.answer,
+  }));
 
   return (
     <>
@@ -321,6 +350,15 @@ export default async function HomePage() {
             </div>
           </FadeIn>
           <div className="absolute bottom-0 w-full h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.1), transparent)' }} />
+        </section>
+      )}
+
+      {/* FAQ */}
+      {faqs.length > 0 && (
+        <section className="py-24 relative z-10" style={{ background: '#0A0F1F' }}>
+          <div className="container-custom px-4 max-w-4xl mx-auto">
+            <FAQ items={faqs} title="Frequently Asked Questions" />
+          </div>
         </section>
       )}
 

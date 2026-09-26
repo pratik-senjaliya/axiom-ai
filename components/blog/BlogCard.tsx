@@ -107,18 +107,16 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
           )}
           {/* Cyan shimmer overlay on hover */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to bottom, transparent 60%, rgba(0,229,255,0.15) 100%)' }} />
-          <div className="absolute top-4 left-4">
-            <span className="px-2.5 py-1 rounded-full text-[9px] font-bold tracking-wider uppercase" style={{ background: 'rgba(0,229,255,0.12)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.3)', backdropFilter: 'blur(8px)' }}>
-              {displayCategory}
-            </span>
-          </div>
         </div>
 
         <div className="p-6 flex flex-col flex-grow">
-          <div className="flex items-center gap-2 mb-3 text-[9px] font-bold uppercase tracking-widest" style={{ color: '#8FA3BF' }}>
-            <span>{post.date}</span>
-            <span className="w-1 h-1 rounded-full" style={{ background: '#14243A' }} />
-            <span>{post.readTime}</span>
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            <span className="px-2.5 py-1 rounded-full text-[9px] font-bold tracking-wider uppercase" style={{ background: 'rgba(0,229,255,0.12)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.3)' }}>
+              {displayCategory}
+            </span>
+            <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: '#8FA3BF' }}>
+              {post.readTime}
+            </span>
           </div>
 
           <h3 className="text-base md:text-lg font-bold text-white mb-3 group-hover:text-[#00E5FF] transition-colors line-clamp-2 leading-snug">

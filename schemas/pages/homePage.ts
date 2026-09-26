@@ -11,6 +11,7 @@ export default defineType({
         { name: 'roadmap', title: 'Phases to Production' },
         { name: 'personas', title: 'Target Audience' },
         { name: 'affiliation', title: 'Corporate Affiliation' },
+        { name: 'faqs', title: 'FAQs' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -157,6 +158,15 @@ export default defineType({
             title: 'Affiliation Description',
             type: 'simpleBlockContent',
             group: 'affiliation',
+        }),
+
+        // FAQ Section
+        defineField({
+            name: 'faqs',
+            title: 'Frequently Asked Questions',
+            type: 'array',
+            of: [{ type: 'faq' }],
+            group: 'faqs',
         }),
 
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),

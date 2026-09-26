@@ -223,19 +223,6 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                 </nav>
               </div>
 
-              {/* Related Reads Sidebar Widget */}
-              <div className="p-8 rounded-[2rem] border" style={{ background: 'rgba(13,27,42,0.4)', borderColor: 'rgba(0,229,255,0.15)' }}>
-                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-8" style={{ color: '#8FA3BF' }}>Related Reads</h4>
-                <div className="space-y-8">
-                  {finalRelated.slice(0, 2).map((rp, i) => (
-                    <Link key={i} href={`/insights/${rp.slug || ""}`} className="group block">
-                      <div className="text-[10px] uppercase tracking-widest font-bold mb-2 transition-colors group-hover:text-[#00E5FF]" style={{ color: '#00E5FF' }}>{rp.category}</div>
-                      <h5 className="text-sm font-bold text-white group-hover:text-[#00E5FF] transition-colors line-clamp-2 leading-snug">{rp.title}</h5>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
               {/* CTA Widget */}
               {(() => {
                 const cta = (post.relatedService && SERVICE_CTAS[post.relatedService]) || DEFAULT_CTA;

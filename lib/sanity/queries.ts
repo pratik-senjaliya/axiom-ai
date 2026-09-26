@@ -300,7 +300,8 @@ export async function getHomePage(): Promise<any> {
     },
     affiliationHeadline,
     affiliationTitle,
-    affiliationBody
+    affiliationBody,
+    faqs[] { question, answer }
   }`
 
     return safeFetch<any>(query, {}, null)
