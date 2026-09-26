@@ -161,6 +161,10 @@ export default async function SustainabilityPage() {
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Sustainability" },
+        ]}
       />
 
       {/* Obstacles Section */}
@@ -175,6 +179,8 @@ export default async function SustainabilityPage() {
         items={serviceItems.length > 0 ? serviceItems : []}
         bgWhite={true}
         small={true}
+        ctaText={data?.layersCta?.text || "Talk to a Sustainability Expert"}
+        ctaHref={data?.layersCta?.link || "/contact"}
       />
 
       {/* ── SyncOrigins Advantage (Roadmap) ── */}

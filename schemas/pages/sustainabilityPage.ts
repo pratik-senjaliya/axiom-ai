@@ -72,6 +72,13 @@ export default defineType({
             }],
             group: 'layers',
         }),
+        defineField({
+            name: 'layersCta',
+            title: 'Modules Section CTA',
+            type: 'cta',
+            group: 'layers',
+            initialValue: { text: 'Talk to a Sustainability Expert', link: '/contact', variant: 'primary' },
+        }),
 
         // Section 4: Roadmap Methodology
         defineField({

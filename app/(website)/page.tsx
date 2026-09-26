@@ -250,6 +250,17 @@ export default async function HomePage() {
               </StaggerItem>
             ))}
           </StaggerGroup>
+
+          <div className="flex justify-center mt-16 md:mt-20">
+            <Link href={data?.solutionsCta?.link || "/contact"}>
+              <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
+                {data?.solutionsCta?.text || "Talk to Our AI Expert"}
+                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -326,6 +337,17 @@ export default async function HomePage() {
               );
             })}
           </StaggerGroup>
+
+          <div className="flex justify-center mt-16 md:mt-20">
+            <Link href={data?.personasCta?.link || "/contact"}>
+              <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
+                {data?.personasCta?.text || "Build Your AI-Ready Roadmap"}
+                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 

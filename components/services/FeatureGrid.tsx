@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { PortableText } from "@/components/ui/PortableText";
+import { Button } from "@/components/ui/Button";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
 
@@ -39,6 +41,8 @@ interface FeatureGridProps {
   bgWhite?: boolean;
   isRoadmap?: boolean;
   small?: boolean;
+  ctaText?: string;
+  ctaHref?: string;
 }
 
 const Checkmark = () => (
@@ -54,7 +58,9 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
   columns = 2,
   bgWhite = false,
   isRoadmap = false,
-  small = false
+  small = false,
+  ctaText,
+  ctaHref = "/contact",
 }) => {
   const gridClass = cn(
     "gap-6 lg:gap-8 justify-center",
@@ -205,6 +211,19 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
           );
         })}
         </StaggerGroup>
+
+        {ctaText && (
+          <div className="flex justify-center mt-16 md:mt-20">
+            <Link href={ctaHref}>
+              <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
+                {ctaText}
+                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

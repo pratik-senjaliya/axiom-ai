@@ -84,6 +84,13 @@ export default defineType({
             }],
             group: 'approach',
         }),
+        defineField({
+            name: 'approachCta',
+            title: 'Approach Section CTA',
+            type: 'cta',
+            group: 'approach',
+            initialValue: { text: 'Plan Your Data Architecture', link: '/contact', variant: 'primary' },
+        }),
 
         // Section 4: What Makes Us Different
         defineField({
@@ -152,6 +159,13 @@ export default defineType({
                 ]
             }],
             group: 'techEcosystem',
+        }),
+        defineField({
+            name: 'techCta',
+            title: 'Technology Section CTA',
+            type: 'cta',
+            group: 'techEcosystem',
+            initialValue: { text: 'Build Your Data Stack', link: '/contact', variant: 'primary' },
         }),
 
         // Section 7: Engagement Model

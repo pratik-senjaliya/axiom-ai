@@ -131,6 +131,10 @@ export default async function ERPTransformationPage() {
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "ERP Transformation" },
+        ]}
       />
 
       <ObstacleSection 
@@ -142,6 +146,8 @@ export default async function ERPTransformationPage() {
         <HorizontalFeature 
           items={erpLayers}
           bgWhite={true}
+          ctaText={data?.layersCta?.text || "Talk to Our ERP Expert"}
+          ctaHref={data?.layersCta?.link || "/contact"}
         />
       )}
 

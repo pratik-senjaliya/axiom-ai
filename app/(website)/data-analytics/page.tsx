@@ -9,6 +9,7 @@ import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 import Link from 'next/link';
+import { Button } from "@/components/ui/Button";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
@@ -180,6 +181,10 @@ export default async function DataAnalyticsPage() {
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Data & Analytics" },
+        ]}
       />
 
       {/* The Problem We Solve */}
@@ -211,6 +216,8 @@ export default async function DataAnalyticsPage() {
                 outcomeTitle: "KEY OUTCOME",
                 outcomeDescription: item.outcome
               }))}
+              ctaText={data?.approachCta?.text || "Plan Your Data Architecture"}
+              ctaHref={data?.approachCta?.link || "/contact"}
             />
           </div>
         </section>
@@ -290,6 +297,17 @@ export default async function DataAnalyticsPage() {
                 </StaggerItem>
               ))}
             </StaggerGroup>
+
+            <div className="flex justify-center mt-16 md:mt-20">
+              <Link href={data?.techCta?.link || "/contact"}>
+                <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
+                  {data?.techCta?.text || "Build Your Data Stack"}
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
       )}

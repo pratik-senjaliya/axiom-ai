@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { DarkCTA } from "@/components/services/DarkCTA";
@@ -6,6 +7,7 @@ import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderS
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { getAIImplementationPage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { PortableText } from "@/components/ui/PortableText";
+import { Button } from "@/components/ui/Button";
 import { notFound } from "next/navigation";
 
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
@@ -165,6 +167,10 @@ export default async function AIImplementationPage() {
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "AI Implementation" },
+        ]}
       />
 
       {/* Why AI Initiatives Stall Section */}
@@ -216,6 +222,17 @@ export default async function AIImplementationPage() {
               </div>
             ))}
           </div>
+
+          <div className="flex justify-center mt-16 md:mt-20">
+            <Link href={data?.layersCta?.link || "/contact"}>
+              <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
+                {data?.layersCta?.text || "Talk to Our AI Expert"}
+                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -233,6 +250,8 @@ export default async function AIImplementationPage() {
         isRoadmap={true}
         bgWhite={true}
         small={true}
+        ctaText={data?.roadmapCta?.text || "Start Your AI Pilot"}
+        ctaHref={data?.roadmapCta?.link || "/contact"}
       />
 
       <FeatureGrid 

@@ -121,6 +121,10 @@ export default async function ManagedDeliveryPage() {
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Managed Delivery" },
+        ]}
       />
 
       <ObstacleSection 
@@ -132,6 +136,8 @@ export default async function ManagedDeliveryPage() {
         <HorizontalFeature 
           items={deliveryServices}
           bgWhite={true}
+          ctaText={data?.layersCta?.text || "Talk to Our Delivery Expert"}
+          ctaHref={data?.layersCta?.link || "/contact"}
         />
       )}
 

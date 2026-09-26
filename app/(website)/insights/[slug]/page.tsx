@@ -11,6 +11,7 @@ import { AuthorAvatar } from "@/components/blog/AuthorAvatar";
 import { ArticleShareLinks } from "@/components/blog/ArticleShareLinks";
 import { BlogPageSchemas } from "@/components/seo/BlogPageSchemas";
 import { User, Calendar, Clock, ChevronRight } from "lucide-react";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 import { generateMetadata as genMeta } from "@/lib/seo";
 
@@ -135,6 +136,14 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
       {/* 1. Hero Section - Title Left, Image Right */}
       <section className="py-8 md:py-12 border-b" style={{ background: '#0D1B2A', borderColor: 'rgba(0,229,255,0.1)' }}>
         <div className="container-custom px-4 max-w-7xl mx-auto">
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Insights", href: "/insights" },
+              { label: post.title },
+            ]}
+            className="mb-6"
+          />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="animate-fade-in-left">
               <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border" style={{ background: 'rgba(0,229,255,0.1)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF' }}>

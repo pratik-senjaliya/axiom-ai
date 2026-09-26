@@ -72,6 +72,13 @@ export default defineType({
             }],
             group: 'layers',
         }),
+        defineField({
+            name: 'layersCta',
+            title: 'Services Section CTA',
+            type: 'cta',
+            group: 'layers',
+            initialValue: { text: 'Talk to Our ERP Expert', link: '/contact', variant: 'primary' },
+        }),
 
         // Section 4: Methodology Roadmap
         defineField({

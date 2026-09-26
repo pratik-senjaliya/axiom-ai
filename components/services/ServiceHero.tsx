@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
 import { PortableText } from "@/components/ui/PortableText";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
+import { Breadcrumb, type BreadcrumbItem } from "@/components/ui/Breadcrumb";
 
 interface ServiceHeroProps {
   badgeText?: string;
@@ -15,6 +15,7 @@ interface ServiceHeroProps {
   primaryButtonText?: string;
   primaryButtonLink?: string;
   backLink?: { href: string; label: string };
+  breadcrumbs?: BreadcrumbItem[];
 }
 
 export const SparkleIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
@@ -32,7 +33,8 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
   description,
   primaryButtonText,
   primaryButtonLink,
-  backLink
+  backLink,
+  breadcrumbs,
 }) => {
   return (
     <section className="relative min-h-[70vh] pt-32 pb-16 flex flex-col items-center justify-center overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
@@ -44,6 +46,10 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
       <div className="absolute top-[30%] right-[10%] w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.08) 0%, transparent 70%)' }} />
 
       <SlideUp key={title} className="container-custom relative z-10 px-6 max-w-6xl mx-auto flex flex-col items-center">
+        {breadcrumbs && breadcrumbs.length > 0 && (
+          <Breadcrumb items={breadcrumbs} className="mb-6 justify-center" />
+        )}
+
         {/* Navigation & Badge Row - Single Line Constraint */}
         {(badgeText || (pills && pills.length > 0)) && (
           <div className="flex flex-col items-center mb-8 w-full">

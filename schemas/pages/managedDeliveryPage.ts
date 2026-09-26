@@ -73,6 +73,13 @@ export default defineType({
             }],
             group: 'layers',
         }),
+        defineField({
+            name: 'layersCta',
+            title: 'Delivery Layers Section CTA',
+            type: 'cta',
+            group: 'layers',
+            initialValue: { text: 'Talk to Our Delivery Expert', link: '/contact', variant: 'primary' },
+        }),
 
         // Section 4: Managed Delivery Models
         defineField({

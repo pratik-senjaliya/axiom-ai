@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { PortableText } from "@/components/ui/PortableText";
+import { Button } from "@/components/ui/Button";
 
 export interface HorizontalFeatureItem {
   title: string;
@@ -17,13 +18,17 @@ interface HorizontalFeatureProps {
   description?: string | any[];
   items: HorizontalFeatureItem[];
   bgWhite?: boolean;
+  ctaText?: string;
+  ctaHref?: string;
 }
 
 export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
   title,
   description,
   items,
-  bgWhite = false
+  bgWhite = false,
+  ctaText,
+  ctaHref = "/contact",
 }) => {
   return (
     <section className="py-16" style={{ background: bgWhite ? '#0A0F1F' : '#14243A' }}>
@@ -77,6 +82,19 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
             </div>
           ))}
         </div>
+
+        {ctaText && (
+          <div className="flex justify-center mt-16 md:mt-20">
+            <Link href={ctaHref}>
+              <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
+                {ctaText}
+                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

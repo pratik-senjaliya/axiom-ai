@@ -86,6 +86,13 @@ export default defineType({
           }],
           group: 'solutions',
         }),
+        defineField({
+            name: 'solutionsCta',
+            title: 'Solutions Section CTA',
+            type: 'cta',
+            group: 'solutions',
+            initialValue: { text: 'Talk to Our AI Expert', link: '/contact', variant: 'primary' },
+        }),
 
         // Section 4: Three Phases to Transformation
         defineField({
@@ -123,6 +130,13 @@ export default defineType({
                 ]
             }],
             group: 'personas',
+        }),
+        defineField({
+            name: 'personasCta',
+            title: 'Personas Section CTA',
+            type: 'cta',
+            group: 'personas',
+            initialValue: { text: 'Build Your AI-Ready Roadmap', link: '/contact', variant: 'primary' },
         }),
 
         // Section 6: Final CTA

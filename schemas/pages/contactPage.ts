@@ -49,7 +49,13 @@ export default defineType({
 
         defineField({ name: 'phone', title: 'Phone Number (Fallback)', type: 'string', group: 'contactInfo' }),
         defineField({ name: 'email', title: 'Email Address (Fallback)', type: 'string', group: 'contactInfo' }),
-        defineField({ name: 'address', title: 'Address (Fallback)', type: 'text', group: 'contactInfo' }),
+        defineField({
+            name: 'address',
+            title: 'Address (Fallback)',
+            type: 'text',
+            group: 'contactInfo',
+            initialValue: '7-98, Kodanda Rama Puram, Manubolu,\nSPSR Nellore District,\nAndhra Pradesh - 524405, India.',
+        }),
         defineField({
             name: 'businessHours',
             title: 'Business Hours',

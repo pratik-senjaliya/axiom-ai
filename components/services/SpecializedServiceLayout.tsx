@@ -134,6 +134,10 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link || "/contact"}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: data?.hero?.title || data?.title || "Service" },
+        ]}
       />
 
       {pitfallItems.length > 0 && (

@@ -9,6 +9,7 @@ import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGro
 
 import { PortableText } from "@/components/ui/PortableText";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 interface BlogGridProps {
   posts: BlogPost[];
@@ -75,6 +76,13 @@ export function BlogGrid({ posts, categories, initialCategory = "All", pageData 
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[40rem] rounded-full blur-[130px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
         
         <SlideUp className="container-custom relative z-10 px-4 flex flex-col items-center">
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Insights" },
+            ]}
+            className="mb-6 justify-center"
+          />
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-8" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)', backdropFilter: 'blur(8px)' }}>
             <SparkleIcon />
             <span className="tracking-wide uppercase text-xs font-semibold" style={{ color: '#00E5FF' }}>

@@ -75,6 +75,13 @@ export default defineType({
             }],
             group: 'layers',
         }),
+        defineField({
+            name: 'layersCta',
+            title: 'AI Stack Section CTA',
+            type: 'cta',
+            group: 'layers',
+            initialValue: { text: 'Talk to Our AI Expert', link: '/contact', variant: 'primary' },
+        }),
 
         // Section 4: Industry Use Cases with POC Model
         defineField({
@@ -113,6 +120,13 @@ export default defineType({
             type: 'array',
             of: [{ type: 'processStep' }],
             group: 'roadmap',
+        }),
+        defineField({
+            name: 'roadmapCta',
+            title: 'Roadmap Section CTA',
+            type: 'cta',
+            group: 'roadmap',
+            initialValue: { text: 'Start Your AI Pilot', link: '/contact', variant: 'primary' },
         }),
 
         // Section 6: Deployment Models
