@@ -183,6 +183,7 @@ export default async function DataAnalyticsPage() {
         primaryButtonLink={data?.hero?.primaryCta?.link}
         breadcrumbs={[
           { label: "Home", href: "/" },
+          { label: "Services" },
           { label: "Data & Analytics" },
         ]}
       />

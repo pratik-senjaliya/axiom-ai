@@ -483,6 +483,7 @@ export function buildServicePageSchemas(input: {
     }),
     generateBreadcrumbSchema([
       { name: "Home", item: `${siteUrl}/` },
+      { name: "Services", item: `${siteUrl}/services` },
       { name: input.title, item: input.url },
     ]),
     generateServiceSchema({

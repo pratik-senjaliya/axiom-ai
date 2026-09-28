@@ -169,6 +169,7 @@ export default async function AIImplementationPage() {
         primaryButtonLink={data?.hero?.primaryCta?.link}
         breadcrumbs={[
           { label: "Home", href: "/" },
+          { label: "Services" },
           { label: "AI Implementation" },
         ]}
       />

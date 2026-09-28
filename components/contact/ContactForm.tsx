@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PortableText } from "@/components/ui/PortableText";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Turnstile } from "@marsidev/react-turnstile";
 
 const SERVICES = [
@@ -102,6 +103,13 @@ export function ContactForm({ data }: { data: any }) {
 
           {/* Left Column: Information */}
           <SlideUp delay={0.1} className="max-w-xl">
+            <Breadcrumb
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Contact" },
+              ]}
+              className="mb-6"
+            />
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-6" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF' }}>
               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" /></svg>

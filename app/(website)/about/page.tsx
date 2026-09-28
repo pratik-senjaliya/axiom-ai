@@ -9,7 +9,9 @@ import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { FadeIn } from "@/components/ui/animations/FadeIn";
 
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, getSiteUrl } from "@/lib/seo";
+import { InnerPageSchemas } from "@/components/seo/PageSchemas";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 export const revalidate = 60;
 
@@ -54,6 +56,15 @@ export default async function AboutPage() {
 
   return (
     <div className="pt-24 pb-0" style={{ background: '#0A0F1F' }}>
+      <InnerPageSchemas
+        title={data?.seo?.metaTitle || "About SyncOrigins - Driving Innovation with AI Solutions"}
+        description={data?.seo?.metaDescription || "Learn about SyncOrigins, our mission, expertise, and commitment to delivering AI-driven solutions that transform businesses and accelerate growth."}
+        url={`${getSiteUrl()}/about`}
+        breadcrumbs={[
+          { name: "Home", item: `${getSiteUrl()}/` },
+          { name: "About", item: `${getSiteUrl()}/about` },
+        ]}
+      />
 
       {/* ── Hero Section ── */}
       <section className="relative pt-20 pb-32 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
@@ -63,6 +74,13 @@ export default async function AboutPage() {
         <div className="absolute top-[20%] right-[5%] w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.07) 0%, transparent 70%)' }} />
 
         <SlideUp className="container-custom px-4 relative z-10 flex flex-col items-center">
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "About" },
+            ]}
+            className="mb-6 justify-center"
+          />
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-8" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)' }}>
             <SparkleIcon />
             <span className="tracking-wide uppercase text-xs font-semibold" style={{ color: '#00E5FF' }}>

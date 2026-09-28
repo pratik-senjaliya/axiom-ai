@@ -136,6 +136,7 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
         primaryButtonLink={data?.hero?.primaryCta?.link || "/contact"}
         breadcrumbs={[
           { label: "Home", href: "/" },
+          { label: "Services" },
           { label: data?.hero?.title || data?.title || "Service" },
         ]}
       />
