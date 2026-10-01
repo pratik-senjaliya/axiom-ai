@@ -140,11 +140,14 @@ export default async function ERPTransformationPage() {
 
       <ObstacleSection 
         title={data?.pitfallsHeadline}
+        subtitle={data?.pitfallsDescription ? <PortableText value={data.pitfallsDescription} /> : undefined}
         items={pitfallItems}
       />
 
       {erpLayers.length > 0 && (
         <HorizontalFeature 
+          title={data?.layersHeadline}
+          description={data?.layersDescription}
           items={erpLayers}
           bgWhite={true}
           ctaText={data?.layersCta?.text || "Talk to Our ERP Expert"}
@@ -155,6 +158,7 @@ export default async function ERPTransformationPage() {
       {roadmapSteps.length > 0 && (
         <FeatureGrid 
           title={data?.roadmapHeadline}
+          description={data?.roadmapDescription}
           items={roadmapSteps}
           isRoadmap={true}
           bgWhite={false}

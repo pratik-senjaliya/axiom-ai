@@ -37,6 +37,13 @@ export default defineType({
             group: 'pitfalls',
         }),
         defineField({
+            name: 'pitfallsDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'pitfalls',
+            description: 'Optional text shown under the section headline.',
+        }),
+        defineField({
             name: 'pitfalls',
             title: 'Struggles / Pitfalls',
             type: 'array',
@@ -57,6 +64,13 @@ export default defineType({
             type: 'string',
             initialValue: 'Sustainable AI Modules & Capabilities',
             group: 'layers',
+        }),
+        defineField({
+            name: 'layersDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'layers',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'layers',
@@ -87,6 +101,13 @@ export default defineType({
             type: 'string',
             initialValue: 'Our Sustainability Transformation Roadmap',
             group: 'roadmap',
+        }),
+        defineField({
+            name: 'roadmapDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'roadmap',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'roadmap',

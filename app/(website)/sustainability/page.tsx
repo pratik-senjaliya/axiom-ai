@@ -171,11 +171,13 @@ export default async function SustainabilityPage() {
       {/* Obstacles Section */}
       <ObstacleSection 
         title={data?.pitfallsHeadline}
+        subtitle={data?.pitfallsDescription ? <PortableText value={data.pitfallsDescription} /> : undefined}
         items={obstacleItems}
       />
 
       <FeatureGrid 
         title={data?.layersHeadline}
+        description={data?.layersDescription}
         columns={2}
         items={serviceItems.length > 0 ? serviceItems : []}
         bgWhite={true}
@@ -191,9 +193,14 @@ export default async function SustainabilityPage() {
 
         <div className="container-custom px-4 relative z-10 max-w-[90rem] mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
-             <h2 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem]">
+             <h2 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem] mb-6">
               {data?.roadmapHeadline}
             </h2>
+            {data?.roadmapDescription && (
+              <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
+                <PortableText value={data.roadmapDescription} />
+              </div>
+            )}
           </div>
 
           <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">

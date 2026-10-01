@@ -130,11 +130,14 @@ export default async function ManagedDeliveryPage() {
 
       <ObstacleSection 
         title={data?.pitfallsHeadline}
+        subtitle={data?.pitfallsDescription ? <PortableText value={data.pitfallsDescription} /> : undefined}
         items={pitfallItems}
       />
 
       {deliveryServices.length > 0 && (
         <HorizontalFeature 
+          title={data?.layersHeadline}
+          description={data?.layersDescription}
           items={deliveryServices}
           bgWhite={true}
           ctaText={data?.layersCta?.text || "Talk to Our Delivery Expert"}
@@ -145,6 +148,7 @@ export default async function ManagedDeliveryPage() {
       {data?.models && data.models.length > 0 && (
         <FeatureGrid 
           title={data?.modelsHeadline}
+          description={data?.modelsDescription}
           columns={3}
           items={data.models.map((m: any) => ({
             title: m.title,
@@ -160,6 +164,7 @@ export default async function ManagedDeliveryPage() {
       {roadmapSteps.length > 0 && (
         <FeatureGrid 
           title={data?.roadmapHeadline}
+          description={data?.roadmapDescription}
           items={roadmapSteps}
           isRoadmap={true}
           bgWhite={true}

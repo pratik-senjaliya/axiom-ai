@@ -39,6 +39,13 @@ export default defineType({
             group: 'pitfalls',
         }),
         defineField({
+            name: 'pitfallsDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'pitfalls',
+            description: 'Optional text shown under the section headline.',
+        }),
+        defineField({
             name: 'pitfalls',
             title: 'Pitfall Bullets',
             type: 'array',
@@ -59,6 +66,13 @@ export default defineType({
             type: 'string',
             initialValue: 'Our Enterprise AI Stack (The 4 Layers)',
             group: 'layers',
+        }),
+        defineField({
+            name: 'layersDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'layers',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'layers',
@@ -92,6 +106,13 @@ export default defineType({
             group: 'useCases',
         }),
         defineField({
+            name: 'useCasesDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'useCases',
+            description: 'Optional text shown under the section headline.',
+        }),
+        defineField({
             name: 'useCases',
             title: 'Use Cases',
             type: 'array',
@@ -115,6 +136,13 @@ export default defineType({
             group: 'roadmap',
         }),
         defineField({
+            name: 'roadmapDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'roadmap',
+            description: 'Optional text shown under the section headline.',
+        }),
+        defineField({
             name: 'roadmap',
             title: 'Roadmap Steps',
             type: 'array',
@@ -136,6 +164,13 @@ export default defineType({
             type: 'string',
             initialValue: 'Deployment Models',
             group: 'models',
+        }),
+        defineField({
+            name: 'modelsDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'models',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'models',

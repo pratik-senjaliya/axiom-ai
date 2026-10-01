@@ -38,6 +38,13 @@ export default defineType({
             group: 'pitfalls',
         }),
         defineField({
+            name: 'pitfallsDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'pitfalls',
+            description: 'Optional text shown under the section headline.',
+        }),
+        defineField({
             name: 'pitfalls',
             title: 'Failure Points',
             type: 'array',
@@ -58,6 +65,13 @@ export default defineType({
             type: 'string',
             initialValue: 'Integrated Delivery Layers',
             group: 'layers',
+        }),
+        defineField({
+            name: 'layersDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'layers',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'layers',
@@ -90,6 +104,13 @@ export default defineType({
             group: 'models',
         }),
         defineField({
+            name: 'modelsDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'models',
+            description: 'Optional text shown under the section headline.',
+        }),
+        defineField({
             name: 'models',
             title: 'Service Models',
             type: 'array',
@@ -111,6 +132,13 @@ export default defineType({
             type: 'string',
             initialValue: 'The SyncOrigins Advantage',
             group: 'roadmap',
+        }),
+        defineField({
+            name: 'roadmapDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'roadmap',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'roadmap',

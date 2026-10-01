@@ -7,9 +7,11 @@ import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderS
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 import { PortableText } from "@/components/ui/PortableText";
+import { Button } from "@/components/ui/Button";
 import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
 import { getSiteUrl, portableTextToPlain } from "@/lib/seo";
 import type { BlogPost } from "@/lib/blog";
+import Link from "next/link";
 
 interface SpecializedServiceLayoutProps {
   data: any;
@@ -142,7 +144,11 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
       />
 
       {pitfallItems.length > 0 && (
-        <ObstacleSection title={data?.pitfallsHeadline} items={pitfallItems} />
+        <ObstacleSection
+          title={data?.pitfallsHeadline}
+          subtitle={data?.pitfallsDescription ? <PortableText value={data.pitfallsDescription} /> : undefined}
+          items={pitfallItems}
+        />
       )}
 
       {layers.length > 0 && useAiLayerGrid && (
@@ -153,6 +159,11 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
               <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
                 {data?.layersHeadline}
               </h2>
+              {data?.layersDescription && (
+                <div className="text-lg leading-relaxed" style={{ color: "#8FA3BF" }}>
+                  <PortableText value={data.layersDescription} />
+                </div>
+              )}
             </div>
             <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
               {aiLayers.map((item: FeatureItem, index: number) => (
@@ -186,17 +197,38 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
                 </div>
               ))}
             </div>
+
+            {data?.layersCta?.text && (
+              <div className="flex justify-center mt-16 md:mt-20">
+                <Link href={data.layersCta.link || "/contact"}>
+                  <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
+                    {data.layersCta.text}
+                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </section>
       )}
 
       {layers.length > 0 && !useAiLayerGrid && (
-        <HorizontalFeature items={horizontalLayers} bgWhite={true} />
+        <HorizontalFeature
+          title={data?.layersHeadline}
+          description={data?.layersDescription}
+          items={horizontalLayers}
+          bgWhite={true}
+          ctaText={data?.layersCta?.text}
+          ctaHref={data?.layersCta?.link || "/contact"}
+        />
       )}
 
       {useCases.length > 0 && (
         <FeatureGrid
           title={data?.useCasesHeadline}
+          description={data?.useCasesDescription}
           columns={2}
           items={useCases}
           bgWhite={false}
@@ -207,16 +239,20 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
       {roadmapSteps.length > 0 && (
         <FeatureGrid
           title={data?.roadmapHeadline}
+          description={data?.roadmapDescription}
           items={roadmapSteps}
           isRoadmap={true}
           bgWhite={true}
           small={true}
+          ctaText={data?.roadmapCta?.text}
+          ctaHref={data?.roadmapCta?.link || "/contact"}
         />
       )}
 
       {engagementModels.length > 0 && (
         <FeatureGrid
           title={data?.modelsHeadline}
+          description={data?.modelsDescription}
           items={engagementModels}
           columns={engagementModels.length >= 3 ? 3 : 2}
           bgWhite={true}

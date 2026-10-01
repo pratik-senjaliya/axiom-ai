@@ -33,9 +33,10 @@ export default defineType({
         }),
         defineField({
             name: 'problemIntro',
-            title: 'Problem Intro (Body Copy)',
+            title: 'Description',
             type: 'simpleBlockContent',
             group: 'problem',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'problems',
@@ -66,9 +67,10 @@ export default defineType({
         }),
         defineField({
             name: 'approachBody',
-            title: 'Approach Body Copy',
+            title: 'Description',
             type: 'simpleBlockContent',
             group: 'approach',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'approachCapabilities',
@@ -100,6 +102,13 @@ export default defineType({
             group: 'differentiators',
         }),
         defineField({
+            name: 'differentiatorsDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'differentiators',
+            description: 'Optional text shown under the section headline.',
+        }),
+        defineField({
             name: 'differentiators',
             title: 'Differentiators',
             type: 'array',
@@ -119,6 +128,13 @@ export default defineType({
             title: 'Use Cases Headline',
             type: 'string',
             group: 'useCases',
+        }),
+        defineField({
+            name: 'useCasesDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'useCases',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'useCases',
@@ -143,9 +159,10 @@ export default defineType({
         }),
         defineField({
             name: 'techBody',
-            title: 'Technology Body Copy',
+            title: 'Description',
             type: 'simpleBlockContent',
             group: 'techEcosystem',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'technologies',
@@ -174,6 +191,13 @@ export default defineType({
             title: 'Engagement Headline',
             type: 'string',
             group: 'engagement',
+        }),
+        defineField({
+            name: 'engagementDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'engagement',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'engagementSteps',

@@ -79,6 +79,13 @@ export default defineType({
             group: 'pitfalls',
         }),
         defineField({
+            name: 'pitfallsDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'pitfalls',
+            description: 'Optional text shown under the section headline.',
+        }),
+        defineField({
             name: 'pitfalls',
             title: 'Challenge Points',
             type: 'array',
@@ -100,6 +107,13 @@ export default defineType({
             group: 'layers',
         }),
         defineField({
+            name: 'layersDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'layers',
+            description: 'Optional text shown under the section headline.',
+        }),
+        defineField({
             name: 'layers',
             title: 'Capability Layers',
             type: 'array',
@@ -115,6 +129,13 @@ export default defineType({
             }],
             group: 'layers',
         }),
+        defineField({
+            name: 'layersCta',
+            title: 'Layers Section CTA',
+            type: 'cta',
+            group: 'layers',
+            description: 'Optional button shown below the capability layers (e.g. "Talk to a Retail Data Expert").',
+        }),
 
         defineField({
             name: 'useCasesHeadline',
@@ -122,6 +143,13 @@ export default defineType({
             type: 'string',
             initialValue: 'Industry Use Cases',
             group: 'useCases',
+        }),
+        defineField({
+            name: 'useCasesDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'useCases',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'useCases',
@@ -146,11 +174,25 @@ export default defineType({
             group: 'roadmap',
         }),
         defineField({
+            name: 'roadmapDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'roadmap',
+            description: 'Optional text shown under the section headline.',
+        }),
+        defineField({
             name: 'roadmap',
             title: 'Roadmap Steps',
             type: 'array',
             of: [{ type: 'processStep' }],
             group: 'roadmap',
+        }),
+        defineField({
+            name: 'roadmapCta',
+            title: 'Roadmap Section CTA',
+            type: 'cta',
+            group: 'roadmap',
+            description: 'Optional button shown below the roadmap (e.g. "Talk to Our AI Expert").',
         }),
 
         defineField({
@@ -159,6 +201,13 @@ export default defineType({
             type: 'string',
             initialValue: 'Engagement Models',
             group: 'models',
+        }),
+        defineField({
+            name: 'modelsDescription',
+            title: 'Description',
+            type: 'simpleBlockContent',
+            group: 'models',
+            description: 'Optional text shown under the section headline.',
         }),
         defineField({
             name: 'models',

@@ -227,6 +227,7 @@ export default async function DataAnalyticsPage() {
       {differentiatorItems.length > 0 && (
         <FeatureGrid 
           title={data?.differentiatorsHeadline}
+          description={data?.differentiatorsDescription}
           items={differentiatorItems}
           columns={2}
           bgWhite={false}
@@ -240,9 +241,14 @@ export default async function DataAnalyticsPage() {
 
           <div className="container-custom px-4 relative z-10 max-w-[90rem] mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem]">
+              <h2 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem] mb-6">
                 {data?.useCasesHeadline}
               </h2>
+              {data?.useCasesDescription && (
+                <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
+                  <PortableText value={data.useCasesDescription} />
+                </div>
+              )}
             </div>
 
             <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
@@ -316,6 +322,7 @@ export default async function DataAnalyticsPage() {
       {engagementSteps.length > 0 && (
         <FeatureGrid 
           title={data?.engagementHeadline}
+          description={data?.engagementDescription}
           items={engagementSteps}
           columns={4}
           bgWhite={false}

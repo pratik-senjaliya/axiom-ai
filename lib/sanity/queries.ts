@@ -165,7 +165,8 @@ export async function getAllServices(): Promise<any[]> {
     "slug": slug.current,
     showInNavigation,
     navTags,
-    tags
+    tags,
+    "description": coalesce(seo.metaDescription, hero.description, "")
   }`
 
   return safeFetch<any[]>(query, { reserved: CORE_SERVICE_SLUGS }, [])
@@ -203,15 +204,22 @@ export async function getServiceBySlug(slug: string): Promise<any> {
       secondaryCta { text, link }
     },
     pitfallsHeadline,
+    pitfallsDescription,
     pitfalls[] { title, description },
     layersHeadline,
+    layersDescription,
     layers[] { layer, title, outcome, description, tasks },
+    layersCta { text, link },
     useCasesHeadline,
+    useCasesDescription,
     useCases[] { industry, title, description },
     modelsHeadline,
+    modelsDescription,
     models[] { model, title, description, tasks },
     roadmapHeadline,
+    roadmapDescription,
     roadmap[] { step, title, description },
+    roadmapCta { text, link },
     finalCta {
       badgeText,
       title,
@@ -339,14 +347,17 @@ export async function getDataAnalyticsPage(): Promise<any> {
     approachCapabilities[] { title, description, outcome },
     approachCta { text, link },
     differentiatorsHeadline,
+    differentiatorsDescription,
     differentiators[] { title, description },
     useCasesHeadline,
+    useCasesDescription,
     useCases[] { title, description },
     techHeadline,
     techBody,
     technologies[] { title, technologiesList },
     techCta { text, link },
     engagementHeadline,
+    engagementDescription,
     engagementSteps[] { title, description },
     ctaHeadline,
     ctaOptions[] { text, link },
@@ -480,16 +491,21 @@ export async function getAIImplementationPage(): Promise<any> {
     },
     tags,
     pitfallsHeadline,
+    pitfallsDescription,
     pitfalls[] { title, description },
     layersHeadline,
+    layersDescription,
     layers[] { layer, title, outcome, description },
     layersCta { text, link },
     useCasesHeadline,
+    useCasesDescription,
     useCases[] { industry, title, description },
     roadmapHeadline,
+    roadmapDescription,
     roadmap[] { step, title, description },
     roadmapCta { text, link },
     modelsHeadline,
+    modelsDescription,
     models[] { model, title, description },
     faqs[] { question, answer },
     finalCta {
@@ -517,11 +533,14 @@ export async function getSustainabilityPage(): Promise<any> {
     },
     tags,
     pitfallsHeadline,
+    pitfallsDescription,
     pitfalls[] { title, description },
     layersHeadline,
+    layersDescription,
     layers[] { title, description, tasks },
     layersCta { text, link },
     roadmapHeadline,
+    roadmapDescription,
     roadmap[] { step, title, description },
     faqs[] { question, answer },
     finalCta {
@@ -549,11 +568,14 @@ export async function getERPTransformationPage(): Promise<any> {
     },
     tags,
     pitfallsHeadline,
+    pitfallsDescription,
     pitfalls[] { title, description },
     layersHeadline,
+    layersDescription,
     layers[] { title, description, tasks },
     layersCta { text, link },
     roadmapHeadline,
+    roadmapDescription,
     roadmap[] { step, title, description },
     faqs[] { question, answer },
     finalCta {
@@ -566,8 +588,6 @@ export async function getERPTransformationPage(): Promise<any> {
   }`
     return safeFetch<any>(query, {}, null)
 }
-
-
 
 export async function getManagedDeliveryPage(): Promise<any> {
     const query = `*[_type == "managedDeliveryPage" && _id == "managedDeliveryPageSingleton"][0] {
@@ -582,13 +602,17 @@ export async function getManagedDeliveryPage(): Promise<any> {
       secondaryCta { text, link }
     },
     pitfallsHeadline,
+    pitfallsDescription,
     pitfalls[] { title, description },
     layersHeadline,
+    layersDescription,
     layers[] { title, description, tasks },
     layersCta { text, link },
     modelsHeadline,
+    modelsDescription,
     models[] { title, description, tasks },
     roadmapHeadline,
+    roadmapDescription,
     roadmap[] { step, title, description },
     faqs[] { question, answer },
     finalCta {

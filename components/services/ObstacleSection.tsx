@@ -52,9 +52,9 @@ export const ObstacleSection: React.FC<ObstacleSectionProps> = ({
             {title}
           </h2>
           {subtitle && (
-            <p className="text-lg md:text-xl font-medium leading-relaxed" style={{ color: '#8FA3BF' }}>
+            <div className="text-lg md:text-xl font-medium leading-relaxed" style={{ color: '#8FA3BF' }}>
               {subtitle}
-            </p>
+            </div>
           )}
         </SlideUp>
         

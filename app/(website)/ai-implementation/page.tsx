@@ -177,6 +177,7 @@ export default async function AIImplementationPage() {
       {/* Why AI Initiatives Stall Section */}
       <ObstacleSection 
         title={data?.pitfallsHeadline}
+        subtitle={data?.pitfallsDescription ? <PortableText value={data.pitfallsDescription} /> : undefined}
         items={pitfallItems}
       />
 
@@ -188,6 +189,11 @@ export default async function AIImplementationPage() {
             <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
               {data?.layersHeadline}
             </h2>
+            {data?.layersDescription && (
+              <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
+                <PortableText value={data.layersDescription} />
+              </div>
+            )}
           </div>
 
           <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
@@ -239,6 +245,7 @@ export default async function AIImplementationPage() {
 
       <FeatureGrid 
         title={data?.useCasesHeadline}
+        description={data?.useCasesDescription}
         columns={2}
         items={useCases.length > 0 ? useCases : []}
         bgWhite={false}
@@ -247,6 +254,7 @@ export default async function AIImplementationPage() {
 
       <FeatureGrid 
         title={data?.roadmapHeadline}
+        description={data?.roadmapDescription}
         items={roadmapSteps.length > 0 ? roadmapSteps : []}
         isRoadmap={true}
         bgWhite={true}
@@ -257,6 +265,7 @@ export default async function AIImplementationPage() {
 
       <FeatureGrid 
         title={data?.modelsHeadline}
+        description={data?.modelsDescription}
         items={engagementModels.length > 0 ? engagementModels : []}
         columns={2}
         bgWhite={true}
