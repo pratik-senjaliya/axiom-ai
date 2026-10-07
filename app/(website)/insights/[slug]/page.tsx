@@ -201,8 +201,8 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
       </section>
 
       {/* 3. Main Content Area */}
-      <section className="py-12 md:py-20" id="article-start" style={{ background: '#0A0F1F' }}>
-        <div className="container-custom px-4 max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20">
+      <section className="py-10 md:py-14" id="article-start" style={{ background: '#0A0F1F' }}>
+        <div className="container-custom px-4 max-w-7xl mx-auto flex flex-col lg:flex-row gap-10 lg:gap-14">
           
           {/* Sticky Sidebar Left */}
           <aside className="lg:w-[320px] hidden lg:block flex-shrink-0">

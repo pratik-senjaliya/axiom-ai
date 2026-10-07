@@ -185,7 +185,7 @@ export default async function AIImplementationPage() {
       <section className="py-24 relative overflow-hidden" style={{ background: '#0D1B2A' }}>
         <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
         <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-5xl mx-auto mb-16">
             <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
               {data?.layersHeadline}
             </h2>

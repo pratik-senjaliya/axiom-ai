@@ -34,7 +34,7 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
     <section className="py-16" style={{ background: bgWhite ? '#0A0F1F' : '#14243A' }}>
       <div className="container-custom px-4">
         {(title || description) && (
-          <div className="max-w-3xl mb-16">
+          <div className="max-w-5xl mb-16">
             {title && <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{title}</h2>}
             {description && (
               <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>

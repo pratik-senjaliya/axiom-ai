@@ -61,24 +61,24 @@ const cleanBrandName = (val: any): any => {
 const components = {
     block: {
         h1: ({ children }: any) => (
-            <h1 className="text-4xl font-bold mb-4">{children}</h1>
+            <h1 className="text-4xl font-bold mb-3 mt-6 text-white">{children}</h1>
         ),
         h2: ({ children, value }: any) => {
-            const id = slugify(value.children[0].text);
-            return <h2 id={id} className="text-3xl font-bold mb-3 mt-12 scroll-mt-24">{children}</h2>
+            const id = slugify(value.children?.[0]?.text || '');
+            return <h2 id={id} className="text-3xl font-bold mb-2 mt-8 scroll-mt-24 text-white">{children}</h2>
         },
         h3: ({ children, value }: any) => {
-            const id = slugify(value.children[0].text);
-            return <h3 id={id} className="text-2xl font-bold mb-3 mt-8 scroll-mt-24">{children}</h3>
+            const id = slugify(value.children?.[0]?.text || '');
+            return <h3 id={id} className="text-2xl font-bold mb-2 mt-6 scroll-mt-24 text-white">{children}</h3>
         },
         h4: ({ children }: any) => (
-            <h4 className="text-xl font-bold mb-2 mt-4">{children}</h4>
+            <h4 className="text-xl font-bold mb-2 mt-4 text-white">{children}</h4>
         ),
         h5: ({ children }: any) => (
-            <h5 className="text-lg font-bold mb-2 mt-4">{children}</h5>
+            <h5 className="text-lg font-bold mb-2 mt-3 text-white">{children}</h5>
         ),
         h6: ({ children }: any) => (
-            <h6 className="text-base font-bold mb-2 mt-4">{children}</h6>
+            <h6 className="text-base font-bold mb-2 mt-3 text-white">{children}</h6>
         ),
         blockquote: ({ children }: any) => (
             <blockquote className="border-l-4 border-primary-500 pl-4 py-1 my-4 bg-neutral-50 italic text-neutral-700 rounded-r">
@@ -86,7 +86,7 @@ const components = {
             </blockquote>
         ),
         normal: ({ children }: any) => (
-            <p className="mb-4 last:mb-0">{children}</p>
+            <p className="mb-3 last:mb-0">{children}</p>
         ),
     },
     marks: {
@@ -152,8 +152,8 @@ const components = {
         },
     },
     list: {
-        bullet: ({ children }: any) => <ul className="list-disc list-outside ml-5 mb-4 space-y-2 leading-relaxed">{children}</ul>,
-        number: ({ children }: any) => <ol className="list-decimal list-outside ml-5 mb-4 space-y-2 leading-relaxed">{children}</ol>,
+        bullet: ({ children }: any) => <ul className="list-disc list-outside ml-5 mb-3 space-y-1.5 leading-relaxed">{children}</ul>,
+        number: ({ children }: any) => <ol className="list-decimal list-outside ml-5 mb-3 space-y-1.5 leading-relaxed">{children}</ol>,
     },
     types: {
         htmlTable: ({ value }: any) => <HtmlTable value={value} />,

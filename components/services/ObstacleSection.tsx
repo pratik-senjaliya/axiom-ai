@@ -47,12 +47,12 @@ export const ObstacleSection: React.FC<ObstacleSectionProps> = ({
       <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
       
       <div className="container-custom px-4 relative z-10">
-        <SlideUp className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+        <SlideUp className="text-center max-w-5xl mx-auto mb-16 md:mb-20">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">
             {title}
           </h2>
           {subtitle && (
-            <div className="text-lg md:text-xl font-medium leading-relaxed" style={{ color: '#8FA3BF' }}>
+            <div className="text-lg md:text-xl font-medium leading-relaxed max-w-5xl mx-auto" style={{ color: '#8FA3BF' }}>
               {subtitle}
             </div>
           )}

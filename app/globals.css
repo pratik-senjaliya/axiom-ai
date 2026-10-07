@@ -312,7 +312,7 @@
   }
 
   .prose-clean p {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.25rem;
     line-height: 1.75;
     color: #8FA3BF;
   }
@@ -320,8 +320,8 @@
   .prose-clean h2 {
     font-size: 2.25rem;
     font-weight: 800;
-    margin-top: 5rem;
-    margin-bottom: 2rem;
+    margin-top: 2.75rem;
+    margin-bottom: 1rem;
     line-height: 1.25;
     color: #FFFFFF;
     letter-spacing: -0.02em;
@@ -331,10 +331,10 @@
   .prose-clean h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-top: 4rem;
-    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
     line-height: 1.25;
-    color: #00E5FF;
+    color: #FFFFFF;
     letter-spacing: -0.01em;
     scroll-margin-top: 8rem;
   }
@@ -342,18 +342,18 @@
   .prose-clean h4 {
     font-size: 1.125rem;
     font-weight: 700;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.625rem;
     color: #FFFFFF;
   }
 
   .prose-clean ul, .prose-clean ol {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     margin-left: 1.5rem;
   }
 
   .prose-clean li {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     padding-left: 0.5rem;
     color: #8FA3BF;
   }
@@ -398,19 +398,56 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  /* Blog article body — brighter body copy for long-form reading */
+  /* Blog article body — tighter spacing, consistent heading color */
   .prose-clean.prose-blog {
     color: #D4DEE8;
+    font-size: 1.0625rem;
+    line-height: 1.7;
   }
 
   .prose-clean.prose-blog p {
     color: #D4DEE8;
-    line-height: 1.8;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .prose-clean.prose-blog h1,
+  .prose-clean.prose-blog h2,
+  .prose-clean.prose-blog h3,
+  .prose-clean.prose-blog h4,
+  .prose-clean.prose-blog h5,
+  .prose-clean.prose-blog h6 {
+    color: #FFFFFF !important;
+  }
+
+  .prose-clean.prose-blog h2 {
+    font-size: 1.75rem;
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose-clean.prose-blog h3 {
+    font-size: 1.35rem;
+    margin-top: 1.75rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .prose-clean.prose-blog h4 {
+    font-size: 1.125rem;
+    margin-top: 1.35rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose-clean.prose-blog ul,
+  .prose-clean.prose-blog ol {
+    margin-bottom: 1.15rem;
+    margin-top: 0.25rem;
   }
 
   .prose-clean.prose-blog li {
     color: #D4DEE8;
-    line-height: 1.75;
+    margin-bottom: 0.4rem;
+    line-height: 1.65;
   }
 
   .prose-clean.prose-blog strong {
@@ -422,9 +459,19 @@
     color: #E8EEF4;
   }
 
+  .prose-clean.prose-blog blockquote {
+    margin: 1.75rem 0;
+    padding: 0.75rem 0 0.75rem 1.25rem;
+    font-size: 1.1rem;
+  }
+
   .prose-clean.prose-blog blockquote,
   .prose-clean.prose-blog blockquote p {
     color: #D4DEE8;
+  }
+
+  .prose-clean.prose-blog hr {
+    margin: 2rem 0;
   }
 
   .blog-table-wrapper table,

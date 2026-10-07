@@ -76,10 +76,10 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
       <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
 
         {(title || description) && (
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-5xl mx-auto mb-16">
             {title && <h2 className={cn("tracking-tight font-bold text-white mb-6", small ? "text-2xl md:text-3xl" : "text-3xl md:text-[2.5rem]")}>{title}</h2>}
             {description && (
-              <div className={cn("leading-relaxed", small ? "text-base" : "text-lg")} style={{ color: '#8FA3BF' }}>
+              <div className={cn("leading-relaxed max-w-5xl mx-auto", small ? "text-base" : "text-lg")} style={{ color: '#8FA3BF' }}>
                 <PortableText value={description} />
               </div>
             )}
