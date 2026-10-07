@@ -122,7 +122,7 @@ export async function Footer() {
           </div>
 
           <div className="md:col-start-7 lg:col-start-7 md:col-span-3">
-            <h3 className="text-[#8FA3BF] font-semibold mb-6 text-[13px] uppercase tracking-wider">Services</h3>
+            <p className="text-[#8FA3BF] font-semibold mb-6 text-[13px] uppercase tracking-wider">Services</p>
             <ul className="space-y-4">
               <li><Link href="/ai-implementation" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">AI Implementation</Link></li>
               <li><Link href="/erp-transformation" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">ERP Transformation</Link></li>
@@ -140,7 +140,7 @@ export async function Footer() {
           </div>
 
           <div className="md:col-start-10 lg:col-start-10 md:col-span-3">
-            <h3 className="text-[#8FA3BF] font-semibold mb-6 text-[13px] uppercase tracking-wider">Company</h3>
+            <p className="text-[#8FA3BF] font-semibold mb-6 text-[13px] uppercase tracking-wider">Company</p>
             <ul className="space-y-4">
               <li><Link href="/about" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">About</Link></li>
               <li><Link href="/solutions" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Solutions</Link></li>

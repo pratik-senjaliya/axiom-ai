@@ -202,9 +202,9 @@ export default async function DataAnalyticsPage() {
         <section className="py-24 relative z-10" style={{ background: '#14243A' }}>
           <div className="container-custom">
             <div className="max-w-4xl text-left">
-              <h2 className="type-section-title text-white mb-6">
+              <h3 className="type-section-title text-white mb-6">
                 {data?.approachHeadline || "Core Capabilities"}
-              </h2>
+              </h3>
               {data.approachBody && (
                 <div className="type-lead" style={{ color: '#8FA3BF' }}>
                   <PortableText value={data.approachBody} />
@@ -231,6 +231,7 @@ export default async function DataAnalyticsPage() {
           items={differentiatorItems}
           columns={2}
           bgWhite={false}
+          titleAs="h3"
         />
       )}
 
@@ -241,9 +242,9 @@ export default async function DataAnalyticsPage() {
 
           <div className="container-custom px-4 relative z-10 max-w-[90rem] mx-auto">
             <div className="text-center max-w-5xl mx-auto mb-16">
-              <h2 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem] mb-6">
+              <h3 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem] mb-6">
                 {data?.useCasesHeadline}
-              </h2>
+              </h3>
               {data?.useCasesDescription && (
                 <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
                   <PortableText value={data.useCasesDescription} />
@@ -266,9 +267,9 @@ export default async function DataAnalyticsPage() {
                       </div>
                     )}
                     <div className="min-h-[3.5rem] mb-3">
-                      <h3 className="text-lg font-bold text-white leading-snug group-hover:text-[#00E5FF] transition-colors">
+                      <p className="text-lg font-bold text-white leading-snug group-hover:text-[#00E5FF] transition-colors">
                         {item.title}
-                      </h3>
+                      </p>
                     </div>
                     <div className="text-[0.9rem] leading-relaxed text-[#8FA3BF] flex-grow">
                       <PortableText value={item.description} />
@@ -285,7 +286,7 @@ export default async function DataAnalyticsPage() {
         <section className="py-24 relative z-10" style={{ background: '#0D1B2A' }}>
           <div className="container-custom px-4">
             <div className="text-center max-w-4xl mx-auto mb-16">
-              <h2 className="type-section-title tracking-tight text-white mb-6">{data.techHeadline}</h2>
+              <h4 className="type-section-title tracking-tight text-white mb-6">{data.techHeadline}</h4>
               {data.techBody && (
                 <div className="text-lg max-w-5xl mx-auto" style={{ color: '#8FA3BF' }}>
                     <PortableText value={data.techBody} />
@@ -296,7 +297,7 @@ export default async function DataAnalyticsPage() {
               {data.technologies.map((tech: any, i: number) => (
                 <StaggerItem key={i} className="h-full">
                   <HoverCard className="card p-8 rounded-3xl flex flex-col items-center text-center shadow-sm h-full" style={{ background: 'rgba(26,46,71,0.5)', border: '1px solid rgba(0,229,255,0.12)' }}>
-                    <h3 className="text-xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors">{tech.title}</h3>
+                    <p className="text-xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors">{tech.title}</p>
                     <div className="font-medium" style={{ color: '#C5D1E0' }}>
                       {tech.technologiesList}
                     </div>
@@ -327,6 +328,7 @@ export default async function DataAnalyticsPage() {
           columns={4}
           bgWhite={false}
           small={false}
+          titleAs="p"
         />
       )}
 
@@ -346,9 +348,9 @@ export default async function DataAnalyticsPage() {
           
           <SlideUp className="container-custom px-4 relative z-10 text-center flex flex-col items-center">
             
-            <h2 className="type-section-title text-white mb-10 max-w-3xl">
+            <h5 className="type-section-title text-white mb-10 max-w-3xl">
               {data.ctaHeadline}
-            </h2>
+            </h5>
             
             {data.ctaOptions && data.ctaOptions.length > 0 && (
               <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mb-12">

@@ -125,7 +125,7 @@ export default async function AboutPage() {
         <section className="py-24 relative z-10" style={{ background: '#0A0F1F' }}>
           <SlideUp className="container-custom px-4 max-w-5xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="type-section-title text-white mb-6">{data.philosophyHeadline}</h2>
+              <h3 className="type-section-title text-white mb-6">{data.philosophyHeadline}</h3>
               <div className="max-w-3xl mx-auto text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
                 <style>{`
                   .philosophy-body p {
@@ -176,6 +176,7 @@ export default async function AboutPage() {
           items={capabilitiesItems}
           columns={2}
           bgWhite={true}
+          titleAs="h3"
         />
       )}
 
@@ -188,6 +189,7 @@ export default async function AboutPage() {
               items={whyUsItems}
               columns={2}
               bgWhite={false}
+              titleAs="h4"
             />
           )}
 
@@ -220,9 +222,9 @@ export default async function AboutPage() {
           <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(0,229,255,0.4), transparent)' }} />
 
           <SlideUp className="container-custom px-4 relative z-10 text-center flex flex-col items-center">
-            <h2 className="type-section-title text-white mb-10 max-w-3xl">
+            <h5 className="type-section-title text-white mb-10 max-w-3xl">
               {data.ctaHeadline}
-            </h2>
+            </h5>
 
             {data.ctaOptions && data.ctaOptions.length > 0 && (
               <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mb-12">

@@ -156,9 +156,9 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
           <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
           <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
             <div className="text-center max-w-5xl mx-auto mb-16">
-              <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
+              <h3 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
                 {data?.layersHeadline}
-              </h2>
+              </h3>
               {data?.layersDescription && (
                 <div className="text-lg leading-relaxed" style={{ color: "#8FA3BF" }}>
                   <PortableText value={data.layersDescription} />
@@ -176,9 +176,9 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
                     style={{ background: "rgba(26,46,71,0.6)", borderColor: "rgba(0,229,255,0.12)", backdropFilter: "blur(10px)" }}
                   >
                     <div className="flex-grow">
-                      <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-[#00E5FF] transition-colors">
+                      <p className="text-2xl font-bold text-white mb-6 group-hover:text-[#00E5FF] transition-colors">
                         {item.title}
-                      </h3>
+                      </p>
                       <div className="text-base leading-relaxed mb-8" style={{ color: "#8FA3BF" }}>
                         <PortableText value={item.outcomeDescription} />
                       </div>
@@ -222,6 +222,7 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
           bgWhite={true}
           ctaText={data?.layersCta?.text}
           ctaHref={data?.layersCta?.link || "/contact"}
+          titleAs="h3"
         />
       )}
 
@@ -233,6 +234,7 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
           items={useCases}
           bgWhite={false}
           small={true}
+          titleAs="h3"
         />
       )}
 
@@ -246,6 +248,7 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
           small={true}
           ctaText={data?.roadmapCta?.text}
           ctaHref={data?.roadmapCta?.link || "/contact"}
+          titleAs="h4"
         />
       )}
 
@@ -257,6 +260,7 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
           columns={engagementModels.length >= 3 ? 3 : 2}
           bgWhite={true}
           small={true}
+          titleAs="p"
         />
       )}
 

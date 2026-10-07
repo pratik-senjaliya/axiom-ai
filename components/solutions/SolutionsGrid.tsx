@@ -128,6 +128,9 @@ export function SolutionsGrid({ cases, categories, initialCategory, heroData }: 
       {/* ── Animated Grid section ── */}
       <section className="pb-32 pt-8 relative z-10" style={{ background: '#0A0F1F' }}>
         <div className="container-custom px-4 max-w-[95rem] mx-auto">
+          <h2 className="type-section-title text-white text-center mb-12 max-w-4xl mx-auto">
+            AI Use Cases Built for Real-World Business Challenges
+          </h2>
           <motion.div 
             layout
             className="flex flex-wrap justify-center gap-10 lg:gap-12 min-h-[600px]"
@@ -168,7 +171,7 @@ export function SolutionsGrid({ cases, categories, initialCategory, heroData }: 
                         <div className="relative min-h-[50px]">
                           <div className="flex items-center gap-2.5 mb-2 group/label">
                             <div className="w-5 h-[2px] bg-[#00E5FF]" />
-                            <h4 className="text-[0.65rem] font-black tracking-[0.2em] uppercase" style={{ color: '#00E5FF' }}>THE CHALLENGE</h4>
+                            <p className="text-[0.65rem] font-black tracking-[0.2em] uppercase" style={{ color: '#00E5FF' }}>THE CHALLENGE</p>
                           </div>
                           <div className="text-sm md:text-base leading-snug text-white font-normal">
                             <PortableText value={item.problem} />
@@ -178,7 +181,7 @@ export function SolutionsGrid({ cases, categories, initialCategory, heroData }: 
                         <div className="relative min-h-[40px]">
                           <div className="flex items-center gap-2.5 mb-2 group/label">
                             <div className="w-5 h-[2px] bg-[#00E5FF]/40" />
-                            <h4 className="text-[0.65rem] font-bold tracking-[0.2em] uppercase" style={{ color: '#00E5FF' }}>STRATEGIC APPROACH</h4>
+                            <p className="text-[0.65rem] font-bold tracking-[0.2em] uppercase" style={{ color: '#00E5FF' }}>STRATEGIC APPROACH</p>
                           </div>
                           <div className="text-sm md:text-base leading-snug text-white font-normal">
                             <PortableText value={item.approach} />
@@ -207,7 +210,7 @@ export function SolutionsGrid({ cases, categories, initialCategory, heroData }: 
                           <div className="relative z-10 flex flex-col justify-between gap-2.5">
                               <div className="items-center flex gap-2 mb-0.5">
                                 <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]" />
-                                <h4 className="text-[0.6rem] font-bold tracking-[0.2em] uppercase" style={{ color: '#00E5FF' }}>VALUE DELIVERED</h4>
+                                <p className="text-[0.6rem] font-bold tracking-[0.2em] uppercase" style={{ color: '#00E5FF' }}>VALUE DELIVERED</p>
                               </div>
                               <div className="text-base md:text-lg font-bold text-white leading-tight">
                                 <PortableText value={item.impact} />

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { SparkleIcon } from './ServiceHero';
 import { PortableText } from '@/components/ui/PortableText';
 import { SlideUp } from '@/components/ui/animations/SlideUp';
+import { SectionHeading, type HeadingTag } from '@/components/ui/SectionHeading';
 
 interface DarkCTAProps {
   badgeText?: string;
@@ -12,6 +13,7 @@ interface DarkCTAProps {
   buttonText?: string;
   buttonHref?: string;
   useWhiteButton?: boolean;
+  titleAs?: HeadingTag;
 }
 
 export function DarkCTA({
@@ -20,7 +22,8 @@ export function DarkCTA({
   description,
   buttonText,
   buttonHref,
-  useWhiteButton = false
+  useWhiteButton = false,
+  titleAs = 'h5',
 }: DarkCTAProps) {
   return (
     <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #0A0F1F 50%, #14243A 100%)' }}>
@@ -42,9 +45,9 @@ export function DarkCTA({
           </div>
         )}
 
-        <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
+        <SectionHeading as={titleAs} className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
           {title}
-        </h2>
+        </SectionHeading>
 
         <div className="text-lg max-w-2xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
           <PortableText value={description} />

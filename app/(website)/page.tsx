@@ -207,9 +207,9 @@ export default async function HomePage() {
                     {/* Bottom Section: Title and Description */}
                     <div className="flex flex-col flex-grow">
                       <div className="min-h-[4rem] flex flex-col justify-end mb-4">
-                        <h3 className="text-xl font-bold text-white leading-tight group-hover:text-[#00E5FF] transition-colors">
+                        <p className="text-xl font-bold text-white leading-tight group-hover:text-[#00E5FF] transition-colors">
                           {card.title}
-                        </h3>
+                        </p>
                       </div>
                       <div className="leading-relaxed text-sm opacity-80" style={{ color: '#8FA3BF' }}>
                         <PortableText value={card.description} />
@@ -231,9 +231,9 @@ export default async function HomePage() {
               <SparkleIcon />
               <span className="text-sm font-medium uppercase tracking-widest">{data?.solutionsSubtitle || "What We Do"}</span>
             </div>
-            <h2 className="type-section-title text-white mb-6">
+            <h3 className="type-section-title text-white mb-6">
               {data?.solutionsHeadline || "What We Build & Deliver"}
-            </h2>
+            </h3>
             {data?.solutionsBody && (
               <div className="type-lead text-[#8FA3BF] max-w-2xl mx-auto">
                 <PortableText value={data.solutionsBody} />
@@ -248,7 +248,7 @@ export default async function HomePage() {
                   <div className="flex items-center gap-2 mb-8 font-semibold text-[0.95rem]" style={{ color: '#00E5FF' }}>
                     <SparkleIcon />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 leading-tight group-hover:text-[#00E5FF] transition-colors">{card.title}</h3>
+                  <p className="text-xl sm:text-2xl font-bold text-white mb-4 leading-tight group-hover:text-[#00E5FF] transition-colors">{card.title}</p>
                   <div className="leading-relaxed text-sm sm:text-[0.95rem] mb-8" style={{ color: '#8FA3BF' }}>
                     <PortableText value={card.description} />
                   </div>
@@ -288,9 +288,9 @@ export default async function HomePage() {
               <SparkleIcon />
               <span className="text-sm font-medium">Our Approach</span>
             </div>
-            <h2 className="type-section-title text-white mb-4">
+            <h3 className="type-section-title text-white mb-4">
               {data?.roadmapHeadline}
-            </h2>
+            </h3>
           </div>
 
           {data?.roadmap && data.roadmap.length > 0 && (
@@ -306,7 +306,7 @@ export default async function HomePage() {
                       <div className="text-[4.25rem] font-black mb-3 leading-none select-none" style={{ color: style.num }}>
                         {phase.step || `0${index + 1}`}
                       </div>
-                      <h3 className="text-xl font-bold text-white mb-2">{phase.title}</h3>
+                      <p className="text-xl font-bold text-white mb-2">{phase.title}</p>
                       <div className="leading-relaxed text-sm" style={{ color: '#8FA3BF' }}>
                         <PortableText value={phase.description} />
                       </div>
@@ -323,9 +323,9 @@ export default async function HomePage() {
       <section className="py-24 relative" style={{ background: '#14243A' }}>
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-4">
+            <p className="text-3xl md:text-[2.5rem] font-bold text-white mb-4">
               {data?.personasHeadline}
-            </h2>
+            </p>
           </div>
 
           <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -343,7 +343,7 @@ export default async function HomePage() {
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 text-[#0A0F1F]" style={{ background: gradient, boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
                       {personaIcon}
                     </div>
-                    <h3 className="text-lg font-bold text-white mb-3">{persona.role}</h3>
+                    <p className="text-lg font-bold text-white mb-3">{persona.role}</p>
                     <div className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
                       <PortableText value={persona.description} />
                     </div>
@@ -379,9 +379,9 @@ export default async function HomePage() {
                 {data?.affiliationHeadline}
               </span>
             </div>}
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 tracking-tight">
+            <h5 className="text-3xl md:text-4xl font-bold text-white mb-8 tracking-tight">
               {data.affiliationTitle}
-            </h2>
+            </h5>
             <div className="text-lg md:text-xl leading-relaxed max-w-4xl mx-auto font-light" style={{ color: '#8FA3BF' }}>
               <PortableText value={data.affiliationBody} />
             </div>
@@ -407,9 +407,9 @@ export default async function HomePage() {
         <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(0,229,255,0.4), transparent)' }} />
 
         <SlideUp className="container-custom text-center relative z-10">
-          <h2 className="type-section-title text-white mb-6">
+          <h5 className="type-section-title text-white mb-6">
             {data?.finalCta?.title}
-          </h2>
+          </h5>
           <div className="text-lg max-w-2xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
             <PortableText value={data?.finalCta?.description} />
           </div>

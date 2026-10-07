@@ -152,6 +152,7 @@ export default async function ERPTransformationPage() {
           bgWhite={true}
           ctaText={data?.layersCta?.text || "Talk to Our ERP Expert"}
           ctaHref={data?.layersCta?.link || "/contact"}
+          titleAs="h3"
         />
       )}
 
@@ -163,6 +164,7 @@ export default async function ERPTransformationPage() {
           isRoadmap={true}
           bgWhite={false}
           small={true}
+          titleAs="h4"
         />
       )}
 

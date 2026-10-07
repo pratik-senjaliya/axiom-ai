@@ -7,6 +7,7 @@ import { PortableText } from "@/components/ui/PortableText";
 import { Button } from "@/components/ui/Button";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
+import { SectionHeading, type HeadingTag } from "@/components/ui/SectionHeading";
 
 export interface FeatureItem {
   /* Common */
@@ -43,6 +44,8 @@ interface FeatureGridProps {
   small?: boolean;
   ctaText?: string;
   ctaHref?: string;
+  /** Semantic tag for the section title (visual style unchanged). */
+  titleAs?: HeadingTag;
 }
 
 const Checkmark = () => (
@@ -61,6 +64,7 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
   small = false,
   ctaText,
   ctaHref = "/contact",
+  titleAs = "h2",
 }) => {
   const gridClass = cn(
     "gap-6 lg:gap-8 justify-center",
@@ -77,7 +81,14 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
 
         {(title || description) && (
           <div className="text-center max-w-5xl mx-auto mb-16">
-            {title && <h2 className={cn("tracking-tight font-bold text-white mb-6", small ? "text-2xl md:text-3xl" : "text-3xl md:text-[2.5rem]")}>{title}</h2>}
+            {title && (
+              <SectionHeading
+                as={titleAs}
+                className={cn("tracking-tight font-bold text-white mb-6", small ? "text-2xl md:text-3xl" : "text-3xl md:text-[2.5rem]")}
+              >
+                {title}
+              </SectionHeading>
+            )}
             {description && (
               <div className={cn("leading-relaxed max-w-5xl mx-auto", small ? "text-base" : "text-lg")} style={{ color: '#8FA3BF' }}>
                 <PortableText value={description} />
@@ -96,7 +107,7 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
                   </div>
                   <HoverCard className={cn("w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] rounded-[2rem] border h-full", small ? "p-6" : "p-8")} style={{ background: 'rgba(26,46,71,0.7)', borderColor: 'rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
                     {item.badge && <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full mb-4" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.25)' }}>{item.badge}</span>}
-                    <h3 className={cn("font-bold text-white mb-4", small ? "text-xl" : "text-2xl")}>{item.title}</h3>
+                    <p className={cn("font-bold text-white mb-4", small ? "text-xl" : "text-2xl")}>{item.title}</p>
                     {item.description && (
                       <div className="leading-relaxed text-sm" style={{ color: '#8FA3BF' }}>
                         <PortableText value={item.description} />
@@ -146,7 +157,7 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
                 </div>
 
                 {/* Title and Description */}
-                {(!item.metricValue || item.title) && <h3 className={cn("font-bold text-white mb-4", small ? "text-xl" : "text-2xl")}>{item.title}</h3>}
+                {(!item.metricValue || item.title) && <p className={cn("font-bold text-white mb-4", small ? "text-xl" : "text-2xl")}>{item.title}</p>}
                 {item.description && (
                   <div className={cn("leading-relaxed mb-6", small ? "text-sm sm:text-base" : "text-base sm:text-lg")} style={{ color: '#8FA3BF' }}>
                     <PortableText value={item.description} />

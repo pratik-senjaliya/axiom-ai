@@ -142,6 +142,7 @@ export default async function ManagedDeliveryPage() {
           bgWhite={true}
           ctaText={data?.layersCta?.text || "Talk to Our Delivery Expert"}
           ctaHref={data?.layersCta?.link || "/contact"}
+          titleAs="h3"
         />
       )}
 
@@ -158,6 +159,7 @@ export default async function ManagedDeliveryPage() {
           }))}
           bgWhite={false}
           small={true}
+          titleAs="p"
         />
       )}
 
@@ -168,6 +170,7 @@ export default async function ManagedDeliveryPage() {
           items={roadmapSteps}
           isRoadmap={true}
           bgWhite={true}
+          titleAs="h4"
         />
       )}
 

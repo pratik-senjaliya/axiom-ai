@@ -36,9 +36,9 @@ export const FAQ: React.FC<FAQProps> = ({
       {(title || showMoreLink) && (
         <SlideUp className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
           {title && (
-            <h2 className="type-section-title text-white mb-4 sm:mb-0">
+            <h5 className="type-section-title text-white mb-4 sm:mb-0">
               {title}
-            </h2>
+            </h5>
           )}
           {showMoreLink && (
             <a

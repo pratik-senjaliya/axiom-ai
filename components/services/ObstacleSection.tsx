@@ -22,7 +22,7 @@ const ObstacleItem: React.FC<ObstacleItemProps> = ({ title, description, icon })
         </svg>
       )}
     </div>
-    <h3 className="text-xl font-bold text-white mb-4 tracking-tight group-hover:text-[#00E5FF] transition-colors">{title}</h3>
+    <p className="text-xl font-bold text-white mb-4 tracking-tight group-hover:text-[#00E5FF] transition-colors">{title}</p>
     <div className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
       <PortableText value={description} />
     </div>

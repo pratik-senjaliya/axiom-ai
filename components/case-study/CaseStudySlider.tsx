@@ -53,7 +53,7 @@ export function CaseStudySlider({ data }: CaseStudySliderProps) {
             <span className="text-xl leading-none font-light block -mt-1">+</span>
             <span>{sectionSubtitle}</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">{sectionTitle}</h2>
+          <h4 className="text-3xl md:text-4xl font-bold text-white tracking-tight">{sectionTitle}</h4>
         </SlideUp>
 
         <SlideUp delay={0.15} className="relative w-full">
@@ -61,7 +61,7 @@ export function CaseStudySlider({ data }: CaseStudySliderProps) {
             <div className="flex">
               {items.map((item, index) => (
                 <div key={index} className="flex-[0_0_100%] min-w-0 px-1 md:px-2">
-                  <CaseStudyCard item={item} />
+                  <CaseStudyCard item={item} index={index} />
                 </div>
               ))}
             </div>

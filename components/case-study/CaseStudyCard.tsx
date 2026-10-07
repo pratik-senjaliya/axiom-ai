@@ -5,10 +5,13 @@ import type { CaseStudySpotlightData } from './types'
 
 interface CaseStudyCardProps {
   item: CaseStudySpotlightData
+  /** First spotlight uses h4; subsequent use h5 per SEO hierarchy. */
+  index?: number
 }
 
-export function CaseStudyCard({ item }: CaseStudyCardProps) {
+export function CaseStudyCard({ item, index = 0 }: CaseStudyCardProps) {
   const ctaText = item.ctaText?.trim() || 'Read case study'
+  const TitleTag = index === 0 ? 'h4' : 'h5'
 
   return (
     <div
@@ -20,9 +23,9 @@ export function CaseStudyCard({ item }: CaseStudyCardProps) {
       }}
     >
       <div className="order-2 lg:order-1 flex flex-col justify-center px-8 py-10 md:px-12 md:py-14 lg:w-[58%]">
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight mb-5">
+        <TitleTag className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight mb-5">
           {item.headline}
-        </h2>
+        </TitleTag>
 
         {item.subline && (
           <p className="text-base md:text-lg leading-relaxed mb-8 max-w-2xl" style={{ color: '#D4DEE8' }}>

@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { PortableText } from "@/components/ui/PortableText";
 import { Button } from "@/components/ui/Button";
+import { SectionHeading, type HeadingTag } from "@/components/ui/SectionHeading";
 
 export interface HorizontalFeatureItem {
   title: string;
@@ -20,6 +21,7 @@ interface HorizontalFeatureProps {
   bgWhite?: boolean;
   ctaText?: string;
   ctaHref?: string;
+  titleAs?: HeadingTag;
 }
 
 export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
@@ -29,13 +31,18 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
   bgWhite = false,
   ctaText,
   ctaHref = "/contact",
+  titleAs = "h2",
 }) => {
   return (
     <section className="py-16" style={{ background: bgWhite ? '#0A0F1F' : '#14243A' }}>
       <div className="container-custom px-4">
         {(title || description) && (
           <div className="max-w-5xl mb-16">
-            {title && <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{title}</h2>}
+            {title && (
+              <SectionHeading as={titleAs} className="text-3xl md:text-4xl font-bold text-white mb-6">
+                {title}
+              </SectionHeading>
+            )}
             {description && (
               <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
                 <PortableText value={description} />
@@ -60,9 +67,9 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
  
               {/* Content */}
               <div className="flex-grow flex flex-col">
-                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors">
+                <p className="text-2xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors">
                   {item.title}
-                </h3>
+                </p>
                 <div className="text-base md:text-lg leading-relaxed mb-6 flex-grow" style={{ color: '#8FA3BF' }}>
                   <PortableText value={item.description} />
                 </div>

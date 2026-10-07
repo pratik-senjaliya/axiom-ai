@@ -27,9 +27,9 @@ export function RelatedInsights({ posts, serviceName }: RelatedInsightsProps) {
               <span className="text-xl leading-none font-light block -mt-1">+</span>
               <span>Related Insights</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+            <h5 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
               Expertise In {serviceName}
-            </h2>
+            </h5>
           </div>
 
           <Link
@@ -64,9 +64,9 @@ export function RelatedInsights({ posts, serviceName }: RelatedInsightsProps) {
                   </span>
                 </div>
 
-                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors leading-snug">
+                <p className="text-xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors leading-snug">
                   {post.title}
-                </h3>
+                </p>
 
                 <p className="text-sm leading-relaxed mb-8 flex-grow line-clamp-3" style={{ color: '#8FA3BF' }}>
                   {post.excerpt}

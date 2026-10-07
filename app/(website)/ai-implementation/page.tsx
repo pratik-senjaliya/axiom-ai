@@ -186,9 +186,9 @@ export default async function AIImplementationPage() {
         <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
         <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
           <div className="text-center max-w-5xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
+            <h3 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
               {data?.layersHeadline}
-            </h2>
+            </h3>
             {data?.layersDescription && (
               <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
                 <PortableText value={data.layersDescription} />
@@ -207,9 +207,9 @@ export default async function AIImplementationPage() {
                   style={{ background: 'rgba(26,46,71,0.6)', borderColor: 'rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}
                 >
                   <div className="flex-grow">
-                    <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-[#00E5FF] transition-colors">
+                    <p className="text-2xl font-bold text-white mb-6 group-hover:text-[#00E5FF] transition-colors">
                       {item.title}
-                    </h3>
+                    </p>
                     <div className="text-base leading-relaxed mb-8" style={{ color: '#8FA3BF' }}>
                       <PortableText value={item.outcomeDescription} />
                     </div>
@@ -250,6 +250,7 @@ export default async function AIImplementationPage() {
         items={useCases.length > 0 ? useCases : []}
         bgWhite={false}
         small={true}
+        titleAs="h3"
       />
 
       <FeatureGrid 
@@ -261,6 +262,7 @@ export default async function AIImplementationPage() {
         small={true}
         ctaText={data?.roadmapCta?.text || "Start Your AI Pilot"}
         ctaHref={data?.roadmapCta?.link || "/contact"}
+        titleAs="h4"
       />
 
       <FeatureGrid 
@@ -270,6 +272,7 @@ export default async function AIImplementationPage() {
         columns={2}
         bgWhite={true}
         small={true}
+        titleAs="p"
       />
 
       <CaseStudySliderSection />

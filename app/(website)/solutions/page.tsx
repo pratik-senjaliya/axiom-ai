@@ -79,9 +79,9 @@ export default async function SolutionsPage({
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[30rem] rounded-full blur-[100px] pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
 
         <SlideUp className="container-custom relative z-10 text-center flex flex-col items-center">
-          <h2 className="type-section-title text-white mb-6">
+          <h4 className="type-section-title text-white mb-6">
             {data?.midPageCta?.title}
-          </h2>
+          </h4>
           <div className="text-lg max-w-2xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
             <PortableText value={data?.midPageCta?.description} />
           </div>
@@ -106,6 +106,7 @@ export default async function SolutionsPage({
             description={data.pocOffer.description}
             buttonText="Start Your Pilot"
             buttonHref="/contact"
+            titleAs="h4"
         />
       )}
     </div>

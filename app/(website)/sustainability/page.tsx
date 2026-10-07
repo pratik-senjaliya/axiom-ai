@@ -184,6 +184,7 @@ export default async function SustainabilityPage() {
         small={true}
         ctaText={data?.layersCta?.text || "Talk to a Sustainability Expert"}
         ctaHref={data?.layersCta?.link || "/contact"}
+        titleAs="h3"
       />
 
       {/* ── SyncOrigins Advantage (Roadmap) ── */}
@@ -193,9 +194,9 @@ export default async function SustainabilityPage() {
 
         <div className="container-custom px-4 relative z-10 max-w-[90rem] mx-auto">
           <div className="text-center max-w-5xl mx-auto mb-16">
-             <h2 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem] mb-6">
+             <h4 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem] mb-6">
               {data?.roadmapHeadline}
-            </h2>
+            </h4>
             {data?.roadmapDescription && (
               <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
                 <PortableText value={data.roadmapDescription} />
@@ -218,9 +219,9 @@ export default async function SustainabilityPage() {
                     )}
                   </div>
                   <div className="min-h-[3.5rem] mb-3">
-                    <h3 className="text-lg font-bold text-white leading-snug">
+                    <p className="text-lg font-bold text-white leading-snug">
                       {item.title}
-                    </h3>
+                    </p>
                   </div>
                   <div className="text-[0.9rem] leading-relaxed mb-6 flex-grow text-[#8FA3BF]">
                     <PortableText value={item.description} />
