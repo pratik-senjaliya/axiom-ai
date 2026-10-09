@@ -14,6 +14,8 @@ interface ServiceHeroProps {
   description: string | any[];
   primaryButtonText?: string;
   primaryButtonLink?: string;
+  secondaryButtonText?: string;
+  secondaryButtonLink?: string;
   backLink?: { href: string; label: string };
   breadcrumbs?: BreadcrumbItem[];
 }
@@ -33,6 +35,8 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
   description,
   primaryButtonText,
   primaryButtonLink,
+  secondaryButtonText,
+  secondaryButtonLink,
   backLink,
   breadcrumbs,
 }) => {
@@ -131,16 +135,30 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
         </div>
 
         {/* Buttons */}
-        {primaryButtonText && (
+        {(primaryButtonText || secondaryButtonText) && (
           <div className="flex flex-col sm:flex-row gap-4 mt-10 md:mt-12 justify-center">
-            <Link href={primaryButtonLink || "/contact"} className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full flex items-center justify-center gap-2 text-[#0A0F1F] font-bold group border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 0 25px rgba(0,229,255,0.4)' }}>
-                {primaryButtonText}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Button>
-            </Link>
+            {primaryButtonText && (
+              <Link href={primaryButtonLink || "/contact"} className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full flex items-center justify-center gap-2 text-[#0A0F1F] font-bold group border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 0 25px rgba(0,229,255,0.4)' }}>
+                  {primaryButtonText}
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Button>
+              </Link>
+            )}
+            {secondaryButtonText && (
+              <Link href={secondaryButtonLink || "#"} className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full flex items-center justify-center gap-2 font-bold transition-all hover:scale-105"
+                  style={{ borderColor: "rgba(0,229,255,0.35)", color: "#C5D1E0", background: "rgba(20,36,58,0.6)" }}
+                >
+                  {secondaryButtonText}
+                </Button>
+              </Link>
+            )}
           </div>
         )}
       </SlideUp>

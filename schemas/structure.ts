@@ -66,6 +66,7 @@ export const structure = (S: StructureBuilder) =>
                             singletonListItem(S, 'dataAnalyticsPage', 'Data & Analytics'),
                             singletonListItem(S, 'managedDeliveryPage', 'Managed Delivery'),
                             singletonListItem(S, 'sustainabilityPage', 'Sustainability'),
+                            singletonListItem(S, 'financePage', 'Finance'),
                         ])
                 ),
 
@@ -82,6 +83,7 @@ export const structure = (S: StructureBuilder) =>
                 ),
 
             S.documentTypeListItem('post').title('Blog Posts'),
+            S.documentTypeListItem('caseStudy').title('Case Study Pages'),
             S.documentTypeListItem('teamMember').title('Team Members'),
 
             S.divider(),

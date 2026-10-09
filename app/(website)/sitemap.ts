@@ -11,14 +11,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch all dynamic content slugs from Sanity
     let serviceSlugs: string[] = [];
     let postSlugs: string[] = [];
+    let caseStudySlugs: string[] = [];
 
     try {
-        const [s, p] = await Promise.all([
+        const [s, p, cs] = await Promise.all([
             client.fetch<string[]>(`*[_type == "service" && !(slug.current in $reserved)].slug.current`, { reserved: CORE_SERVICE_SLUGS }),
-            client.fetch<string[]>(`*[_type == "post"].slug.current`)
+            client.fetch<string[]>(`*[_type == "post"].slug.current`),
+            client.fetch<string[]>(`*[_type == "caseStudy"].slug.current`),
         ]);
         serviceSlugs = s || [];
         postSlugs = p || [];
+        caseStudySlugs = cs || [];
     } catch (e) {
         console.error("Error fetching sitemap slugs:", e);
     }
@@ -86,6 +89,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.8,
         },
         {
+            url: `${baseUrl}/finance`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
             url: `${baseUrl}/privacy-policy`,
             lastModified: new Date(),
             changeFrequency: 'yearly',
@@ -115,6 +124,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
     }))
 
+    // Case study detail pages
+    const caseStudyRoutes: MetadataRoute.Sitemap = caseStudySlugs.map((slug) => ({
+        url: `${baseUrl}/case-studies/${slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+    }))
+
     // Combine all routes
-    return [...staticRoutes, ...serviceRoutes, ...postRoutes]
+    return [...staticRoutes, ...serviceRoutes, ...postRoutes, ...caseStudyRoutes]
 }

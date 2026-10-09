@@ -71,6 +71,7 @@ export default defineType({
                     { title: 'Data & Analytics', value: 'data' },
                     { title: 'Managed Delivery', value: 'managed' },
                     { title: 'Sustainability', value: 'sustainability' },
+                    { title: 'Finance', value: 'finance' },
                 ],
             },
             description: 'Select which service page this blog should appear on.',

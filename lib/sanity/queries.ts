@@ -626,6 +626,109 @@ export async function getManagedDeliveryPage(): Promise<any> {
     return safeFetch<any>(query, {}, null)
 }
 
+// ==================== FINANCE PAGE ====================
+
+export async function getFinancePage(): Promise<any> {
+  const query = `*[_type == "financePage" && _id == "financePageSingleton"][0] {
+    seo,
+    hero {
+      badge,
+      title,
+      titleHighlight,
+      description,
+      "image": image.asset->url,
+      primaryCta { text, link },
+      secondaryCta { text, link }
+    },
+    challengesHeadline,
+    challengesDescription,
+    challenges[] { title, description },
+    solutionsHeadline,
+    solutionsDescription,
+    solutions[] { title, description },
+    outcomesHeadline,
+    outcomesDescription,
+    outcomes[] { title, description },
+    successStoriesHeadline,
+    successStories[] {
+      title,
+      clientChallenge,
+      solutionDelivered,
+      keyTransformation,
+      businessOutcomes,
+      ctaText,
+      ctaLink
+    },
+    processHeadline,
+    processDescription,
+    process[] { step, title, description },
+    whyUsHeadline,
+    whyUsDescription,
+    whyUs[] { title, description },
+    faqs[] { question, answer },
+    finalCta {
+      badgeText,
+      title,
+      description,
+      buttonText,
+      buttonLink
+    }
+  }`
+  return safeFetch<any>(query, {}, null)
+}
+
+// ==================== CASE STUDIES (DETAIL PAGES) ====================
+
+const CASE_STUDY_CARD_FIELDS = `
+  "id": _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  "image": mainImage.asset->url,
+  "imageAlt": mainImage.alt,
+  publishedAt,
+  relatedService
+`
+
+export async function getAllCaseStudies(): Promise<any[]> {
+  const query = `*[_type == "caseStudy"] | order(publishedAt desc) {
+    ${CASE_STUDY_CARD_FIELDS}
+  }`
+  return safeFetch<any[]>(query, {}, [])
+}
+
+export async function getAllCaseStudySlugs(): Promise<string[]> {
+  const query = `*[_type == "caseStudy"].slug.current`
+  return safeFetch<string[]>(query, {}, [])
+}
+
+export async function getCaseStudyBySlug(slug: string): Promise<any> {
+  const query = `*[_type == "caseStudy" && slug.current == $slug][0] {
+    ${CASE_STUDY_CARD_FIELDS},
+    heroBadge,
+    aboutClientHeadline,
+    aboutClient,
+    challengeHeadline,
+    challenge,
+    approachHeadline,
+    approach,
+    outcomesHeadline,
+    outcomes,
+    outcomeMetrics[] { value, label },
+    testimonialsHeadline,
+    testimonials[] { quote, author, role, company },
+    seo { ${SEO_FIELDS} }
+  }`
+  return safeFetch<any>(query, { slug }, null)
+}
+
+export async function getRelatedCaseStudies(slug: string, limit: number = 3): Promise<any[]> {
+  const query = `*[_type == "caseStudy" && slug.current != $slug] | order(publishedAt desc) [0...$limit] {
+    ${CASE_STUDY_CARD_FIELDS}
+  }`
+  return safeFetch<any[]>(query, { slug, limit }, [])
+}
+
 // ==================== BLOG FILTERING ====================
 
 export async function getLatestPostsByService(service: string, limit: number = 3): Promise<BlogPost[]> {

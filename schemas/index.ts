@@ -35,7 +35,9 @@ import erpTransformationPage from './pages/erpTransformationPage'
 import dataAnalyticsPage from './pages/dataAnalyticsPage'
 import managedDeliveryPage from './pages/managedDeliveryPage'
 import sustainabilityPage from './pages/sustainabilityPage'
+import financePage from './pages/financePage'
 import caseStudies from './pages/caseStudies'
+import caseStudy from './pages/caseStudy'
 import privacyPolicy from './pages/privacyPolicy'
 import termsOfUsage from './pages/termsOfUsage'
 import settings from './settings'
@@ -73,6 +75,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         dataAnalyticsPage,
         managedDeliveryPage,
         sustainabilityPage,
+        financePage,
         caseStudies,
         privacyPolicy,
         termsOfUsage,
@@ -80,6 +83,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         // Collections
         service,
         post,
+        caseStudy,
         teamMember,
 
         // Forms & Subscriptions

@@ -5,6 +5,7 @@ export const CORE_SERVICE_SLUGS = [
   'data-analytics',
   'managed-delivery',
   'sustainability',
+  'finance',
 ] as const
 
 export const CORE_SERVICE_PATHS = CORE_SERVICE_SLUGS.map((slug) => `/${slug}`)
