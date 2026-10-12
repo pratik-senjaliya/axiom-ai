@@ -19,7 +19,10 @@ const CASE_STUDY_ITEM_FIELDS = `
   headline,
   subline,
   ctaText,
-  ctaLink,
+  "ctaLink": select(
+    defined(caseStudy->slug.current) => "/case-studies/" + caseStudy->slug.current,
+    ctaLink
+  ),
   "image": image.asset->url,
   "imageAlt": image.alt
 `

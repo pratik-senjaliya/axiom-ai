@@ -26,11 +26,26 @@ export default defineType({
       initialValue: 'Read case study',
     }),
     defineField({
+      name: 'caseStudy',
+      title: 'Case Study Page',
+      type: 'reference',
+      to: [{ type: 'caseStudy' }],
+      description:
+        'Link this spotlight to a Case Study document. Preferred — opens /case-studies/{slug}.',
+    }),
+    defineField({
       name: 'ctaLink',
-      title: 'CTA Link',
+      title: 'CTA Link (optional override)',
       type: 'string',
-      description: 'Usually a blog post URL, e.g. /insights/your-article-slug',
-      validation: (Rule) => Rule.required(),
+      description:
+        'Only needed if no Case Study Page is selected. Use /case-studies/your-slug (not /insights/...).',
+      hidden: ({ parent }) => Boolean(parent?.caseStudy),
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as { caseStudy?: unknown } | undefined
+          if (parent?.caseStudy || (value && String(value).trim())) return true
+          return 'Select a Case Study Page or provide a CTA Link'
+        }),
     }),
     defineField({
       name: 'image',

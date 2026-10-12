@@ -12,6 +12,7 @@ interface CaseStudyCardProps {
 export function CaseStudyCard({ item, index = 0 }: CaseStudyCardProps) {
   const ctaText = item.ctaText?.trim() || 'Read case study'
   const TitleTag = index === 0 ? 'h4' : 'h5'
+  const href = item.ctaLink?.trim() || '/contact'
 
   return (
     <div
@@ -35,7 +36,7 @@ export function CaseStudyCard({ item, index = 0 }: CaseStudyCardProps) {
 
         <div className="mt-auto">
           <Link
-            href={item.ctaLink!}
+            href={href}
             className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-all hover:scale-[1.02]"
             style={{
               background: '#FFFFFF',
