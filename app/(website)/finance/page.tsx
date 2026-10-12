@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { DarkCTA } from "@/components/services/DarkCTA";
@@ -16,6 +15,71 @@ import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 
 export const dynamic = "force-dynamic";
+
+/** Fallback when the financePageSingleton has not been created/published in Studio yet */
+const FINANCE_FALLBACK = {
+  hero: {
+    badge: "Finance Transformation",
+    title: "Transform Finance Through AI, Data &",
+    titleHighlight: "Intelligent Enterprise Systems",
+    description:
+      "Modernize finance operations with AI, data platforms, and intelligent enterprise systems — from process transformation to ERP, automation, and compliance.",
+    primaryCta: { text: "Talk to Our Finance Experts", link: "/contact" },
+    secondaryCta: { text: "Explore Finance Solutions", link: "#solutions" },
+  },
+  challengesHeadline: "Finance Industry Challenges",
+  challenges: [
+    { title: "Legacy finance systems" },
+    { title: "Fragmented financial data" },
+    { title: "Manual and inefficient processes" },
+    { title: "Delayed financial insights" },
+    { title: "Increasing compliance requirements" },
+    { title: "Difficulty scaling AI initiatives" },
+  ],
+  solutionsHeadline: "Our Finance Transformation Solutions",
+  solutions: [
+    { title: "Finance Process Transformation" },
+    { title: "AI-Powered Finance Operations" },
+    { title: "Financial Data & Analytics" },
+    { title: "ERP Modernisation & Integration" },
+    { title: "Intelligent Automation" },
+    { title: "Risk, Compliance & Reporting" },
+  ],
+  outcomesHeadline: "Business Outcomes",
+  outcomes: [
+    { title: "Faster financial decision-making" },
+    { title: "Improved data visibility" },
+    { title: "Reduced manual effort" },
+    { title: "More accurate forecasting" },
+    { title: "Greater operational efficiency" },
+    { title: "Scalable, AI-ready finance operations" },
+  ],
+  successStoriesHeadline: "Finance Transformation Success Stories",
+  successStories: [] as any[],
+  processHeadline: "Finance Transformation Process & Delivery",
+  process: [
+    { title: "Discover & Assess" },
+    { title: "Define Transformation Priorities" },
+    { title: "Design the Solution" },
+    { title: "Implement & Integrate" },
+    { title: "Validate & Optimise" },
+    { title: "Scale & Continuously Improve" },
+  ],
+  whyUsHeadline: "Why Choose SyncOrigins for Finance",
+  whyUs: [
+    { title: "AI, Data & ERP expertise" },
+    { title: "Finance-focused transformation" },
+    { title: "Business-first approach" },
+    { title: "Production-focused execution" },
+    { title: "Scalable enterprise solutions" },
+  ],
+  faqs: [] as any[],
+  finalCta: {
+    title: "Ready to Transform Your Finance Operations?",
+    buttonText: "Talk to Our Finance Experts",
+    buttonLink: "/contact",
+  },
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getFinancePage();
@@ -41,8 +105,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FinancePage() {
-  const data = await getFinancePage();
-  if (!data) notFound();
+  const cms = await getFinancePage();
+  const data = cms ? { ...FINANCE_FALLBACK, ...cms } : FINANCE_FALLBACK;
 
   let relatedPosts = await getLatestPostsByService("finance");
   if (!relatedPosts?.length) {
@@ -50,7 +114,7 @@ export default async function FinancePage() {
     relatedPosts = (all || []).slice(0, 3);
   }
 
-  const challengeItems = (data?.challenges || []).map((item: any, index: number) => ({
+  const challengeItems = (data.challenges || []).map((item: any) => ({
     title: item.title,
     description: item.description || item.title,
     icon: (
@@ -60,54 +124,56 @@ export default async function FinancePage() {
     ),
   }));
 
-  const solutions: FeatureItem[] = (data?.solutions || []).map((item: any) => ({
+  const solutions: FeatureItem[] = (data.solutions || []).map((item: any) => ({
     title: item.title,
     description: item.description,
   }));
 
-  const outcomes: FeatureItem[] = (data?.outcomes || []).map((item: any) => ({
+  const outcomes: FeatureItem[] = (data.outcomes || []).map((item: any) => ({
     title: item.title,
     description: item.description,
   }));
 
-  const processSteps: FeatureItem[] = (data?.process || []).map((step: any, index: number) => ({
+  const processSteps: FeatureItem[] = (data.process || []).map((step: any, index: number) => ({
     stepNumber: index + 1,
     title: step.title,
     description: step.description,
   }));
 
-  const whyUs: FeatureItem[] = (data?.whyUs || []).map((item: any) => ({
+  const whyUs: FeatureItem[] = (data.whyUs || []).map((item: any) => ({
     title: item.title,
     description: item.description,
   }));
 
-  const faqs = (data?.faqs || []).map((faq: any) => ({
+  const faqs = (data.faqs || []).map((faq: any) => ({
     question: faq.question,
     answer: <PortableText value={faq.answer} />,
   }));
 
-  const stories = data?.successStories || [];
+  const stories = data.successStories || [];
+  const hero = data.hero || FINANCE_FALLBACK.hero;
+  const finalCta = data.finalCta || FINANCE_FALLBACK.finalCta;
 
   return (
     <div className="pt-0 pb-0">
       <ServicePageSchemas
-        title={data?.seo?.metaTitle || data?.hero?.title || "Finance Transformation"}
-        description={portableTextToPlain(data?.hero?.description)}
+        title={data?.seo?.metaTitle || hero?.title || "Finance Transformation"}
+        description={portableTextToPlain(hero?.description) || String(hero?.description || "")}
         url={`${getSiteUrl()}/finance`}
-        image={data?.seo?.openGraphImage || data?.hero?.image}
+        image={data?.seo?.openGraphImage || hero?.image}
         seo={data?.seo}
         faqs={data?.faqs}
       />
 
       <ServiceHero
-        badgeText={data?.hero?.badge}
-        title={data?.hero?.title}
-        gradientTitlePart={data?.hero?.titleHighlight}
-        description={data?.hero?.description}
-        primaryButtonText={data?.hero?.primaryCta?.text || "Talk to Our Finance Experts"}
-        primaryButtonLink={data?.hero?.primaryCta?.link || "/contact"}
-        secondaryButtonText={data?.hero?.secondaryCta?.text}
-        secondaryButtonLink={data?.hero?.secondaryCta?.link}
+        badgeText={hero?.badge}
+        title={hero?.title}
+        gradientTitlePart={hero?.titleHighlight}
+        description={hero?.description}
+        primaryButtonText={hero?.primaryCta?.text || "Talk to Our Finance Experts"}
+        primaryButtonLink={hero?.primaryCta?.link || "/contact"}
+        secondaryButtonText={hero?.secondaryCta?.text || "Explore Finance Solutions"}
+        secondaryButtonLink={hero?.secondaryCta?.link || "#solutions"}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Services" },
@@ -117,9 +183,9 @@ export default async function FinancePage() {
 
       {challengeItems.length > 0 && (
         <ObstacleSection
-          title={data?.challengesHeadline || "Finance Industry Challenges"}
+          title={data.challengesHeadline || "Finance Industry Challenges"}
           subtitle={
-            data?.challengesDescription ? (
+            data.challengesDescription ? (
               <PortableText value={data.challengesDescription} />
             ) : undefined
           }
@@ -129,8 +195,8 @@ export default async function FinancePage() {
 
       <div id="solutions">
         <FeatureGrid
-          title={data?.solutionsHeadline || "Our Finance Transformation Solutions"}
-          description={data?.solutionsDescription}
+          title={data.solutionsHeadline || "Our Finance Transformation Solutions"}
+          description={data.solutionsDescription}
           items={solutions}
           columns={3}
           bgWhite={true}
@@ -140,8 +206,8 @@ export default async function FinancePage() {
       </div>
 
       <FeatureGrid
-        title={data?.outcomesHeadline || "Business Outcomes"}
-        description={data?.outcomesDescription}
+        title={data.outcomesHeadline || "Business Outcomes"}
+        description={data.outcomesDescription}
         items={outcomes}
         columns={3}
         bgWhite={false}
@@ -155,7 +221,7 @@ export default async function FinancePage() {
           <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
             <div className="text-center max-w-5xl mx-auto mb-16">
               <h3 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
-                {data?.successStoriesHeadline || "Finance Transformation Success Stories"}
+                {data.successStoriesHeadline || "Finance Transformation Success Stories"}
               </h3>
             </div>
 
@@ -243,8 +309,8 @@ export default async function FinancePage() {
       )}
 
       <FeatureGrid
-        title={data?.processHeadline || "Finance Transformation Process & Delivery"}
-        description={data?.processDescription}
+        title={data.processHeadline || "Finance Transformation Process & Delivery"}
+        description={data.processDescription}
         items={processSteps}
         isRoadmap={true}
         bgWhite={true}
@@ -253,8 +319,8 @@ export default async function FinancePage() {
       />
 
       <FeatureGrid
-        title={data?.whyUsHeadline || "Why Choose SyncOrigins for Finance"}
-        description={data?.whyUsDescription}
+        title={data.whyUsHeadline || "Why Choose SyncOrigins for Finance"}
+        description={data.whyUsDescription}
         items={whyUs}
         columns={whyUs.length >= 3 ? 3 : 2}
         bgWhite={false}
@@ -272,15 +338,13 @@ export default async function FinancePage() {
         </section>
       )}
 
-      {data?.finalCta && (
-        <DarkCTA
-          badgeText={data.finalCta.badgeText}
-          title={data.finalCta.title || "Ready to Transform Your Finance Operations?"}
-          description={data.finalCta.description}
-          buttonText={data.finalCta.buttonText || "Talk to Our Finance Experts"}
-          buttonHref={data.finalCta.buttonLink || "/contact"}
-        />
-      )}
+      <DarkCTA
+        badgeText={finalCta.badgeText}
+        title={finalCta.title || "Ready to Transform Your Finance Operations?"}
+        description={finalCta.description}
+        buttonText={finalCta.buttonText || "Talk to Our Finance Experts"}
+        buttonHref={finalCta.buttonLink || "/contact"}
+      />
     </div>
   );
 }
