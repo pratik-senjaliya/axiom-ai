@@ -16,15 +16,28 @@ type DynamicNavService = {
   navTags?: string[];
 };
 
-const navigation = [
+type NavItem = {
+  name: string;
+  href: string;
+  hasDropdown?: boolean;
+  dropdownKey?: "services" | "industries";
+};
+
+const navigation: NavItem[] = [
   { name: "Home", href: "/" },
-  { name: "Services", href: "#services", hasDropdown: true },
+  { name: "Services", href: "#services", hasDropdown: true, dropdownKey: "services" },
+  { name: "Industries", href: "#industries", hasDropdown: true, dropdownKey: "industries" },
   { name: "Solutions", href: "/solutions" },
   { name: "Insights", href: "/insights" },
   { name: "About", href: "/about" },
 ];
 
-const servicePaths = [...CORE_SERVICE_PATHS, "/services"];
+const industryPaths = ["/finance"];
+
+const servicePaths = [
+  ...CORE_SERVICE_PATHS.filter((path) => !industryPaths.includes(path)),
+  "/services",
+];
 
 const serviceCategories = [
   {
@@ -87,6 +100,9 @@ const serviceCategories = [
     ),
     tags: ["Carbon Dashboard", "ESG Reporting", "Emission Forecasting", "Green Supply Chain"]
   },
+];
+
+const industryCategories = [
   {
     title: "Finance",
     href: "/finance",
@@ -98,14 +114,15 @@ const serviceCategories = [
       </div>
     ),
     tags: ["Finance Process Transformation", "AI-Powered Finance", "Financial Analytics", "ERP Modernisation", "Compliance & Reporting"]
-  }
+  },
 ];
 
 export const Header: React.FC = () => {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<"services" | "industries" | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<"services" | "industries" | null>(null);
   const [dynamicServices, setDynamicServices] = useState<DynamicNavService[]>([]);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -128,21 +145,24 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (key: "services" | "industries") => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setIsServicesOpen(true);
+    setOpenDropdown(key);
   };
 
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
-      setIsServicesOpen(false);
+      setOpenDropdown(null);
     }, 150);
   };
 
-  const isActive = (item: { name: string; href: string }) => {
-    if (item.name === "Services") {
+  const isActive = (item: NavItem) => {
+    if (item.dropdownKey === "services") {
       const dynamicPaths = dynamicServices.map((s) => s.href);
       return [...servicePaths, ...dynamicPaths].some((path) => pathname.startsWith(path));
+    }
+    if (item.dropdownKey === "industries") {
+      return industryPaths.some((path) => pathname.startsWith(path));
     }
     return pathname === item.href;
   };
@@ -152,16 +172,18 @@ export const Header: React.FC = () => {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
       setIsMobileMenuOpen(false);
-      setIsServicesOpen(false);
+      setOpenDropdown(null);
     }
   };
+
+  const dropdownOpen = openDropdown !== null;
 
   return (
     <>
       <header
         className={cn(
           "fixed top-0 z-50 w-full transition-all duration-300",
-          (isScrolled || isServicesOpen)
+          (isScrolled || dropdownOpen)
             ? "bg-[#0A0F1F]/95 border-b border-[#00E5FF]/15 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
             : "bg-transparent border-b border-transparent"
         )}
@@ -187,10 +209,10 @@ export const Header: React.FC = () => {
                 <div
                   key={item.name}
                   className="relative"
-                  onMouseEnter={item.hasDropdown ? handleMouseEnter : undefined}
+                  onMouseEnter={item.dropdownKey ? () => handleMouseEnter(item.dropdownKey!) : undefined}
                   onMouseLeave={item.hasDropdown ? handleMouseLeave : undefined}
                 >
-                  {item.name === "Services" ? (
+                  {item.hasDropdown ? (
                     <div
                       className={cn(
                         "px-6 py-2.5 text-base font-medium rounded-full transition-all flex items-center gap-1.5 tracking-tight cursor-pointer",
@@ -200,11 +222,17 @@ export const Header: React.FC = () => {
                       )}
                     >
                       {item.name}
-                      {item.hasDropdown && (
-                        <svg className={cn("w-3.5 h-3.5 text-[#8FA3BF] transition-transform duration-200", isServicesOpen && "rotate-180")} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      )}
+                      <svg
+                        className={cn(
+                          "w-3.5 h-3.5 text-[#8FA3BF] transition-transform duration-200",
+                          openDropdown === item.dropdownKey && "rotate-180"
+                        )}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                      </svg>
                     </div>
                   ) : (
                     <Link
@@ -218,19 +246,14 @@ export const Header: React.FC = () => {
                       )}
                     >
                       {item.name}
-                      {item.hasDropdown && (
-                        <svg className={cn("w-3.5 h-3.5 text-[#8FA3BF] transition-transform duration-200", isServicesOpen && "rotate-180")} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      )}
                     </Link>
                   )}
 
-                  {/* Mega Menu */}
-                  {item.hasDropdown && isServicesOpen && (
+                  {/* Services mega menu */}
+                  {item.dropdownKey === "services" && openDropdown === "services" && (
                     <div
                       className="absolute top-full left-0 pt-4 w-max animate-scale-in"
-                      onMouseEnter={handleMouseEnter}
+                      onMouseEnter={() => handleMouseEnter("services")}
                       onMouseLeave={handleMouseLeave}
                     >
                       <div className="bg-[#0D1B2A]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#00E5FF]/15 p-10 grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 relative z-[60] w-[900px]">
@@ -287,6 +310,42 @@ export const Header: React.FC = () => {
                       </div>
                     </div>
                   )}
+
+                  {/* Industries dropdown */}
+                  {item.dropdownKey === "industries" && openDropdown === "industries" && (
+                    <div
+                      className="absolute top-full left-0 pt-4 w-max animate-scale-in"
+                      onMouseEnter={() => handleMouseEnter("industries")}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <div className="bg-[#0D1B2A]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#00E5FF]/15 p-6 relative z-[60] w-[360px]">
+                        {industryCategories.map((category) => (
+                          <Link
+                            key={category.title}
+                            href={category.href}
+                            className="group/item flex gap-4 p-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
+                          >
+                            {category.icon}
+                            <div>
+                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-2">
+                                {category.title}
+                              </h3>
+                              <div className="flex flex-wrap gap-2">
+                                {category.tags.map((tag) => (
+                                  <span
+                                    key={tag}
+                                    className="px-3 py-1 bg-[#14243A] text-[#8FA3BF] text-[0.75rem] font-medium rounded-full cursor-default border border-[#00E5FF]/10"
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </nav>
@@ -322,16 +381,57 @@ export const Header: React.FC = () => {
           <nav className="flex flex-col gap-6 text-lg font-medium">
             {navigation.map((item) => (
               <React.Fragment key={item.name}>
-                {item.name === "Services" ? (
-                  <div
-                    className={cn(
-                      "border-b border-[#00E5FF]/10 pb-4 flex justify-between items-center cursor-pointer",
-                      isActive(item) ? "text-[#00E5FF]" : "text-[#C5D1E0]"
+                {item.hasDropdown && item.dropdownKey ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setMobileExpanded((prev) => (prev === item.dropdownKey ? null : item.dropdownKey!))
+                      }
+                      className={cn(
+                        "border-b border-[#00E5FF]/10 pb-4 flex justify-between items-center w-full text-left",
+                        isActive(item) ? "text-[#00E5FF]" : "text-[#C5D1E0]"
+                      )}
+                    >
+                      {item.name}
+                      <svg
+                        className={cn(
+                          "w-5 h-5 text-[#8FA3BF] transition-transform",
+                          mobileExpanded === item.dropdownKey && "rotate-180"
+                        )}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {mobileExpanded === item.dropdownKey && (
+                      <div className="pl-4 flex flex-col gap-4 -mt-2">
+                        {(item.dropdownKey === "services" ? serviceCategories : industryCategories).map((cat) => (
+                          <Link
+                            key={cat.title}
+                            href={cat.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="text-[#8FA3BF] text-base hover:text-[#00E5FF] transition-colors"
+                          >
+                            {cat.title}
+                          </Link>
+                        ))}
+                        {item.dropdownKey === "services" &&
+                          dynamicServices.map((service) => (
+                            <Link
+                              key={service.slug}
+                              href={service.href}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="text-[#8FA3BF] text-base hover:text-[#00E5FF] transition-colors"
+                            >
+                              {service.title}
+                            </Link>
+                          ))}
+                      </div>
                     )}
-                  >
-                    {item.name}
-                    {item.hasDropdown && <svg className="w-5 h-5 text-[#8FA3BF]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>}
-                  </div>
+                  </>
                 ) : (
                   <Link
                     href={item.href}
@@ -345,32 +445,7 @@ export const Header: React.FC = () => {
                     )}
                   >
                     {item.name}
-                    {item.hasDropdown && <svg className="w-5 h-5 text-[#8FA3BF]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>}
                   </Link>
-                )}
-                {item.hasDropdown && (
-                  <div className="pl-4 flex flex-col gap-4 -mt-2">
-                    {serviceCategories.map((cat) => (
-                      <Link
-                        key={cat.title}
-                        href={cat.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-[#8FA3BF] text-base hover:text-[#00E5FF] transition-colors"
-                      >
-                        {cat.title}
-                      </Link>
-                    ))}
-                    {dynamicServices.map((service) => (
-                      <Link
-                        key={service.slug}
-                        href={service.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-[#8FA3BF] text-base hover:text-[#00E5FF] transition-colors"
-                      >
-                        {service.title}
-                      </Link>
-                    ))}
-                  </div>
                 )}
               </React.Fragment>
             ))}

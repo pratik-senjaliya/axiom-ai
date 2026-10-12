@@ -129,7 +129,6 @@ export async function Footer() {
               <li><Link href="/data-analytics" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Data & Analytics</Link></li>
               <li><Link href="/managed-delivery" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Managed Delivery</Link></li>
               <li><Link href="/sustainability" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">AI for Sustainable Operations</Link></li>
-              <li><Link href="/finance" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Finance Transformation</Link></li>
               {dynamicServices.map((service) => (
                 <li key={service.slug}>
                   <Link href={`/${service.slug}`} className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">
@@ -137,6 +136,10 @@ export async function Footer() {
                   </Link>
                 </li>
               ))}
+            </ul>
+            <p className="text-[#8FA3BF] font-semibold mb-4 mt-8 text-[13px] uppercase tracking-wider">Industries</p>
+            <ul className="space-y-4">
+              <li><Link href="/finance" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Finance</Link></li>
             </ul>
           </div>
 

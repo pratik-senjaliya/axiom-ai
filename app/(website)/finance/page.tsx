@@ -176,7 +176,7 @@ export default async function FinancePage() {
         secondaryButtonLink={hero?.secondaryCta?.link || "#solutions"}
         breadcrumbs={[
           { label: "Home", href: "/" },
-          { label: "Services" },
+          { label: "Industries" },
           { label: "Finance" },
         ]}
       />
