@@ -17,7 +17,6 @@ export const DEMO_FINANCE_PAGE = {
   },
   heroMetrics: [
     { value: "Faster close", label: "Reduced cycle time with automation" },
-    { value: "70+", label: "Finance & enterprise programs supported" },
     { value: "Audit-ready", label: "Controls built into every delivery" },
   ],
 

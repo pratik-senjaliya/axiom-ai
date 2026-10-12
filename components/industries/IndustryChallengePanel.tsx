@@ -21,9 +21,9 @@ export function IndustryChallengePanel({
   const current = items[active] || items[0];
 
   return (
-    <section className="pt-8 pb-12 md:pt-10 md:pb-14" style={{ background: "#0A0F1F" }}>
+    <section className="py-16 md:py-20" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-6 tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-8 tracking-tight">
           {title}
         </h2>
 

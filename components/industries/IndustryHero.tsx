@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { PortableText } from "@/components/ui/PortableText";
+import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { Breadcrumb, type BreadcrumbItem } from "@/components/ui/Breadcrumb";
 
 interface Metric {
@@ -22,6 +23,7 @@ interface IndustryHeroProps {
   metrics?: Metric[];
 }
 
+/** Industry hero — matches service page centered layout + metrics bar */
 export function IndustryHero({
   industryLabel = "Industries · Finance",
   title,
@@ -30,36 +32,35 @@ export function IndustryHero({
   primaryButtonText,
   primaryButtonLink = "/contact",
   secondaryButtonText,
-  secondaryButtonLink = "#solutions",
+  secondaryButtonLink = "#services",
   breadcrumbs,
   metrics = [],
 }: IndustryHeroProps) {
   return (
-    <section className="relative overflow-hidden pt-24 md:pt-28">
+    <section
+      className="relative min-h-[70vh] pt-32 pb-14 flex flex-col items-center justify-center overflow-hidden text-center"
+      style={{ background: "linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)" }}
+    >
+      <div className="bg-grid opacity-60 z-0" />
       <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at 70% 40%, rgba(0,229,255,0.18) 0%, transparent 55%), linear-gradient(135deg, #07101f 0%, #0D1B2A 45%, #14243A 100%)",
-        }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] rounded-full blur-[120px] pointer-events-none z-0"
+        style={{ background: "radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%)" }}
       />
-      <div className="absolute inset-0 bg-grid opacity-40 pointer-events-none" />
       <div
-        className="absolute -right-20 top-10 w-[28rem] h-[28rem] rounded-full blur-[100px] pointer-events-none opacity-40"
-        style={{ background: "rgba(29,161,242,0.35)" }}
+        className="absolute top-[30%] right-[10%] w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0"
+        style={{ background: "radial-gradient(circle, rgba(29,161,242,0.08) 0%, transparent 70%)" }}
       />
 
-      <div className="container-custom px-4 relative z-10 max-w-7xl mx-auto pb-6 md:pb-8">
-        {breadcrumbs && <Breadcrumb items={breadcrumbs} className="mb-5" />}
+      <SlideUp className="container-custom relative z-10 px-6 max-w-6xl mx-auto flex flex-col items-center w-full">
+        {breadcrumbs && breadcrumbs.length > 0 && (
+          <Breadcrumb items={breadcrumbs} className="mb-6 justify-center" />
+        )}
 
-        <p
-          className="text-[11px] font-bold uppercase tracking-[0.28em] mb-3"
-          style={{ color: "#00E5FF" }}
-        >
+        <p className="text-sm font-semibold uppercase tracking-wide mb-6" style={{ color: "#00E5FF" }}>
           {industryLabel}
         </p>
 
-        <h1 className="max-w-4xl text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3.15rem] font-extrabold text-white leading-[1.1] tracking-tight mb-4">
+        <h1 className="type-hero text-white mb-6 mx-auto">
           {title}
           {titleHighlight ? (
             <>
@@ -70,51 +71,62 @@ export function IndustryHero({
         </h1>
 
         {description && (
-          <div
-            className="max-w-2xl text-sm md:text-base leading-relaxed mb-6"
-            style={{ color: "#C5D1E0" }}
-          >
+          <div className="type-lead mb-10 max-w-4xl mx-auto" style={{ color: "#C5D1E0" }}>
             <PortableText value={description} className="text-inherit" />
           </div>
         )}
 
-        <div className="flex flex-col sm:flex-row gap-3 mb-8">
-          {primaryButtonText && (
-            <Link href={primaryButtonLink} className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                className="w-full sm:w-auto px-7 h-11 text-[14px] rounded-full font-bold border-none hover:scale-105 transition-all"
-                style={{
-                  background: "linear-gradient(135deg, #1DA1F2, #00E5FF)",
-                  color: "#0A0F1F",
-                  boxShadow: "0 0 24px rgba(0,229,255,0.35)",
-                }}
-              >
-                {primaryButtonText}
-              </Button>
-            </Link>
-          )}
-          {secondaryButtonText && (
-            <Link href={secondaryButtonLink} className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full sm:w-auto px-7 h-11 text-[14px] rounded-full font-bold"
-                style={{
-                  borderColor: "rgba(0,229,255,0.4)",
-                  color: "#C5D1E0",
-                  background: "rgba(20,36,58,0.45)",
-                }}
-              >
-                {secondaryButtonText}
-              </Button>
-            </Link>
-          )}
-        </div>
+        {(primaryButtonText || secondaryButtonText) && (
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+            {primaryButtonText && (
+              <Link href={primaryButtonLink} className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full flex items-center justify-center gap-2 text-[#0A0F1F] font-bold group border-none hover:scale-105 transition-all"
+                  style={{
+                    background: "linear-gradient(135deg, #1DA1F2, #00E5FF)",
+                    boxShadow: "0 0 25px rgba(0,229,255,0.4)",
+                  }}
+                >
+                  {primaryButtonText}
+                  <svg
+                    className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </Button>
+              </Link>
+            )}
+            {secondaryButtonText && (
+              <Link href={secondaryButtonLink} className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full font-bold transition-all hover:scale-105"
+                  style={{
+                    borderColor: "rgba(0,229,255,0.35)",
+                    color: "#C5D1E0",
+                    background: "rgba(20,36,58,0.6)",
+                  }}
+                >
+                  {secondaryButtonText}
+                </Button>
+              </Link>
+            )}
+          </div>
+        )}
 
         {metrics.length > 0 && (
           <div
-            className="grid sm:grid-cols-3 gap-3 md:gap-4 rounded-2xl border p-4 md:p-5"
+            className="w-full grid sm:grid-cols-2 gap-3 md:gap-4 rounded-2xl border p-4 md:p-5 text-left"
             style={{
               background: "rgba(10,15,31,0.55)",
               borderColor: "rgba(0,229,255,0.2)",
@@ -122,12 +134,12 @@ export function IndustryHero({
             }}
           >
             {metrics.map((metric) => (
-              <div key={metric.label} className="flex items-start gap-2.5">
+              <div key={metric.label} className="flex items-start gap-3">
                 <div
-                  className="mt-0.5 h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
+                  className="mt-0.5 h-9 w-9 rounded-lg flex items-center justify-center shrink-0"
                   style={{ background: "rgba(0,229,255,0.12)", color: "#00E5FF" }}
                 >
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -137,8 +149,8 @@ export function IndustryHero({
                   </svg>
                 </div>
                 <div>
-                  <p className="text-base font-extrabold text-white leading-tight">{metric.value}</p>
-                  <p className="text-xs mt-0.5" style={{ color: "#8FA3BF" }}>
+                  <p className="text-lg font-extrabold text-white leading-tight">{metric.value}</p>
+                  <p className="text-sm mt-0.5" style={{ color: "#8FA3BF" }}>
                     {metric.label}
                   </p>
                 </div>
@@ -146,7 +158,7 @@ export function IndustryHero({
             ))}
           </div>
         )}
-      </div>
+      </SlideUp>
     </section>
   );
 }

@@ -61,21 +61,42 @@ const IconBox = ({
   </div>
 );
 
-/** Mockup: 3 service cards (Consulting / Custom / Modernization) */
+const ContactCta = ({ href = "/contact" }: { href?: string }) => (
+  <div className="flex justify-center mt-10">
+    <Link href={href}>
+      <Button
+        className="rounded-full px-8 h-11 text-[15px] font-bold border-none hover:scale-105 transition-all"
+        style={{
+          background: "linear-gradient(135deg, #1DA1F2, #00E5FF)",
+          color: "#0A0F1F",
+          boxShadow: "0 0 22px rgba(0,229,255,0.3)",
+        }}
+      >
+        Contact us
+      </Button>
+    </Link>
+  </div>
+);
+
+/** Services section: 3 cards + solutions list + Contact CTA (solutions is part of services) */
 export function IndustryServiceCards({
   title,
   items,
+  solutionsTitle,
+  solutions,
 }: {
   title: string;
   items: Item[];
+  solutionsTitle?: string;
+  solutions?: Item[];
 }) {
   return (
-    <section className="py-12 md:py-16" style={{ background: "#0D1B2A" }}>
+    <section id="services" className="py-16 md:py-20 scroll-mt-24" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-8 tracking-tight max-w-3xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10 tracking-tight max-w-3xl mx-auto">
           {title}
         </h2>
-        <StaggerGroup className="grid md:grid-cols-3 gap-4 md:gap-5">
+        <StaggerGroup className="grid md:grid-cols-3 gap-5 md:gap-6">
           {items.slice(0, 3).map((item, index) => {
             const Icon = SERVICE_ICONS[index % SERVICE_ICONS.length];
             return (
@@ -87,9 +108,7 @@ export function IndustryServiceCards({
                   <IconBox className="mb-4 mx-auto">
                     <Icon className="w-5 h-5" strokeWidth={1.75} />
                   </IconBox>
-                  <p className="text-base md:text-lg font-bold text-white mb-3 leading-snug">
-                    {item.title}
-                  </p>
+                  <p className="text-lg font-bold text-white mb-3 leading-snug">{item.title}</p>
                   {item.description && (
                     <div className="text-sm leading-relaxed" style={{ color: "#8FA3BF" }}>
                       <PortableText value={item.description} />
@@ -100,51 +119,54 @@ export function IndustryServiceCards({
             );
           })}
         </StaggerGroup>
+
+        {solutions && solutions.length > 0 && (
+          <div className="mt-12 md:mt-14">
+            {solutionsTitle && (
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-6 tracking-tight">
+                {solutionsTitle}
+              </h3>
+            )}
+            <div className="grid sm:grid-cols-2 gap-x-10 gap-y-4">
+              {solutions.map((item) => (
+                <div key={item.title} className="flex items-start gap-3 py-2 border-b border-white/5">
+                  <span
+                    className="mt-2 h-1.5 w-1.5 rounded-full shrink-0"
+                    style={{ background: "#00E5FF" }}
+                  />
+                  <div>
+                    <p className="font-bold text-white text-base" style={{ color: "#00E5FF" }}>
+                      {item.title}
+                    </p>
+                    {item.description && (
+                      <div className="text-sm mt-1 leading-relaxed" style={{ color: "#C5D1E0" }}>
+                        <PortableText value={item.description} />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <ContactCta />
       </div>
     </section>
   );
 }
 
-/** Mockup: Solutions as compact 2-col checklist (not oversized cards) */
-export function IndustrySolutionsList({
-  id,
-  title,
-  items,
-}: {
-  id?: string;
-  title: string;
-  items: Item[];
-}) {
-  return (
-    <section id={id} className="py-12 md:py-14 scroll-mt-24" style={{ background: "#0A0F1F" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 tracking-tight">{title}</h2>
-        <div className="grid sm:grid-cols-2 gap-x-10 gap-y-3">
-          {items.map((item) => (
-            <div key={item.title} className="flex items-start gap-3 py-2 border-b border-white/5">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "#00E5FF" }} />
-              <div>
-                <p className="font-bold text-white text-sm md:text-base">{item.title}</p>
-                {item.description && (
-                  <div className="text-sm mt-1 leading-relaxed" style={{ color: "#8FA3BF" }}>
-                    <PortableText value={item.description} />
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+/** @deprecated — solutions now live inside IndustryServiceCards */
+export function IndustrySolutionsList() {
+  return null;
 }
 
 /** Mockup: 3x3 clients grid with filled cards + distinct icons */
 export function IndustryClientsGrid({ title, items }: { title: string; items: Item[] }) {
   return (
-    <section id="clients" className="py-12 md:py-14 scroll-mt-24" style={{ background: "#0D1B2A" }}>
+    <section id="clients" className="py-16 md:py-20 scroll-mt-24" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-7 tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-8 tracking-tight">
           {title}
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
@@ -175,23 +197,27 @@ export function IndustryClientsGrid({ title, items }: { title: string; items: It
   );
 }
 
-/** Mockup: 3 centered pillars with icons */
+/** Pillars + Business Outcomes (outcomes is part of this section, not separate) + Contact CTA */
 export function IndustryPillars({
   title,
   description,
   items,
+  outcomesTitle,
+  outcomes,
 }: {
   title: string;
   description?: any;
   items: Item[];
+  outcomesTitle?: string;
+  outcomes?: Item[];
 }) {
   return (
-    <section className="py-12 md:py-16" style={{ background: "#0A0F1F" }}>
+    <section className="py-16 md:py-20" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">{title}</h2>
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">{title}</h2>
           {description && (
-            <div className="text-sm md:text-base leading-relaxed" style={{ color: "#8FA3BF" }}>
+            <div className="text-base leading-relaxed" style={{ color: "#8FA3BF" }}>
               <PortableText value={description} />
             </div>
           )}
@@ -200,10 +226,10 @@ export function IndustryPillars({
           {items.map((item) => (
             <StaggerItem key={item.title}>
               <div className="text-center px-2">
-                <IconBox className="mb-3 mx-auto">
+                <IconBox className="mb-4 mx-auto">
                   <Shield className="w-5 h-5" strokeWidth={1.75} />
                 </IconBox>
-                <p className="text-base font-bold text-white mb-2">{item.title}</p>
+                <p className="text-lg font-bold text-white mb-2">{item.title}</p>
                 {item.description && (
                   <div className="text-sm leading-relaxed" style={{ color: "#8FA3BF" }}>
                     <PortableText value={item.description} />
@@ -213,28 +239,35 @@ export function IndustryPillars({
             </StaggerItem>
           ))}
         </StaggerGroup>
+
+        {outcomes && outcomes.length > 0 && (
+          <div className="mt-12 md:mt-14 max-w-4xl mx-auto">
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-5 tracking-tight">
+              {outcomesTitle || "Business Outcomes"}
+            </h3>
+            <ul className="grid sm:grid-cols-2 gap-x-10 gap-y-3">
+              {outcomes.map((item) => (
+                <li key={item.title} className="flex items-start gap-3">
+                  <span
+                    className="mt-2 h-1.5 w-1.5 rounded-full shrink-0"
+                    style={{ background: "#00E5FF" }}
+                  />
+                  <span className="text-base font-medium text-white leading-snug">{item.title}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <ContactCta />
       </div>
     </section>
   );
 }
 
-/** Mockup: Business Outcomes as simple bullet list */
-export function IndustryOutcomes({ title, items }: { title: string; items: Item[] }) {
-  return (
-    <section className="py-12 md:py-14" style={{ background: "#0D1B2A" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 tracking-tight">{title}</h2>
-        <ul className="grid sm:grid-cols-2 gap-x-10 gap-y-3 max-w-4xl">
-          {items.map((item) => (
-            <li key={item.title} className="flex items-start gap-3">
-              <span className="mt-2 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "#00E5FF" }} />
-              <span className="text-sm md:text-base font-medium text-white leading-snug">{item.title}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
+/** @deprecated — outcomes now live inside IndustryPillars */
+export function IndustryOutcomes() {
+  return null;
 }
 
 /** Mockup: Project cards with visual header, Challenge / Solution, CTA */
@@ -247,9 +280,9 @@ export function IndustrySuccessStories({
 }) {
   if (!stories?.length) return null;
   return (
-    <section className="py-12 md:py-16" style={{ background: "#0A0F1F" }}>
+    <section className="py-16 md:py-20" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-8 tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10 tracking-tight">
           {title}
         </h2>
         <StaggerGroup className={`grid gap-5 ${stories.length === 1 ? "max-w-xl mx-auto" : "lg:grid-cols-2"}`}>
@@ -352,9 +385,9 @@ export function IndustrySuccessStories({
 /** Mockup: 5-stage lifecycle with circular icons */
 export function IndustryLifecycle({ title, items }: { title: string; items: Item[] }) {
   return (
-    <section className="py-12 md:py-16" style={{ background: "#0D1B2A" }}>
+    <section className="py-16 md:py-20" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-10 tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10 tracking-tight">
           {title}
         </h2>
         <div className="relative">
@@ -397,9 +430,9 @@ export function IndustryLifecycle({ title, items }: { title: string; items: Item
 /** Mockup: Process as numbered vertical/compact steps list */
 export function IndustryProcess({ title, items }: { title: string; items: Item[] }) {
   return (
-    <section className="py-12 md:py-14" style={{ background: "#0A0F1F" }}>
+    <section className="py-16 md:py-20" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 tracking-tight">{title}</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 tracking-tight">{title}</h2>
         <ol className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           {items.map((item, index) => (
             <li
@@ -437,9 +470,9 @@ export function IndustryWhyUs({
   items: Item[];
 }) {
   return (
-    <section className="py-12 md:py-16" style={{ background: "#14243A" }}>
+    <section className="py-16 md:py-20" style={{ background: "#14243A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3 max-w-3xl">
+        <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-3 max-w-3xl">
           {title}
         </h2>
         {description && (

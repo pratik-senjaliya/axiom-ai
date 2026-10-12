@@ -18,11 +18,11 @@ export function CaseStudyHero({
   badge?: string;
 }) {
   return (
-    <section className="pt-24 md:pt-28 pb-8 md:pb-10" style={{ background: "#0A0F1F" }}>
+    <section className="pt-24 md:pt-28 pb-10 md:pb-14" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <Breadcrumb
           items={[{ label: "Home", href: "/" }, { label: "Case Studies" }, { label: title }]}
-          className="mb-5"
+          className="mb-6"
         />
         <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           <div className="lg:col-span-7">
@@ -72,11 +72,11 @@ export function CaseStudyHero({
 /** Mockup: title + icon left, description right */
 export function CaseStudyAbout({ title, content }: { title: string; content: any }) {
   return (
-    <section className="py-10 md:py-12" style={{ background: "#0D1B2A" }}>
+    <section className="py-14 md:py-16" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-[220px_1fr] lg:grid-cols-[260px_1fr] gap-5 md:gap-8 items-start">
           <div>
-            <h2 className="text-xl md:text-2xl font-bold text-white mb-4">{title}</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{title}</h2>
             <div
               className="h-12 w-12 rounded-xl flex items-center justify-center"
               style={{ background: "rgba(0,229,255,0.12)", color: "#00E5FF" }}
@@ -104,9 +104,9 @@ export function CaseStudyAbout({ title, content }: { title: string; content: any
 export function CaseStudyChallengeGrid({ title, items }: { title: string; items: string[] }) {
   if (!items?.length) return null;
   return (
-    <section className="py-10 md:py-12" style={{ background: "#0A0F1F" }}>
+    <section className="py-14 md:py-16" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-xl md:text-2xl font-bold text-white mb-5">{title}</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">{title}</h2>
         <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
           {items.map((text, index) => (
             <div
@@ -138,13 +138,13 @@ export function CaseStudyChallengeGrid({ title, items }: { title: string; items:
 export function CaseStudySolutionsGrid({ title, items }: { title: string; items: string[] }) {
   if (!items?.length) return null;
   return (
-    <section className="py-10 md:py-12" style={{ background: "#050910" }}>
+    <section className="py-14 md:py-16" style={{ background: "#050910" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <div
           className="rounded-2xl border p-5 md:p-8"
           style={{ background: "#0A0F1F", borderColor: "rgba(0,229,255,0.15)" }}
         >
-          <h2 className="text-xl md:text-2xl font-bold text-white mb-6">{title}</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">{title}</h2>
           <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
             {items.map((text, index) => (
               <div
@@ -172,9 +172,9 @@ export function CaseStudySolutionsGrid({ title, items }: { title: string; items:
 export function CaseStudyTechnologies({ items }: { items: string[] }) {
   if (!items?.length) return null;
   return (
-    <section className="py-8 md:py-10" style={{ background: "#0D1B2A" }}>
+    <section className="py-12 md:py-14" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-xl md:text-2xl font-bold text-white mb-6 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
           Technologies Used
         </h2>
         <div className="flex flex-wrap justify-center gap-3 md:gap-4">
@@ -202,9 +202,9 @@ export function CaseStudyTechnologies({ items }: { items: string[] }) {
 export function CaseStudyOutcomesGrid({ title, items }: { title: string; items: string[] }) {
   if (!items?.length) return null;
   return (
-    <section className="py-10 md:py-12" style={{ background: "#0A0F1F" }}>
+    <section className="py-14 md:py-16" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-xl md:text-2xl font-bold text-white mb-5">{title}</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">{title}</h2>
         <div
           className="rounded-2xl p-5 md:p-7 border"
           style={{
@@ -246,7 +246,7 @@ export function CaseStudyFeedback({
 }) {
   if (!quote) return null;
   return (
-    <section className="py-10 md:py-12" style={{ background: "#0D1B2A" }}>
+    <section className="py-14 md:py-16" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <div
           className="rounded-2xl border grid md:grid-cols-[240px_1fr] overflow-hidden"
@@ -265,7 +265,7 @@ export function CaseStudyFeedback({
             </span>
           </div>
           <div className="p-6 md:p-7">
-            <div className="text-sm md:text-base leading-relaxed mb-5" style={{ color: "#C5D1E0" }}>
+            <div className="text-sm md:text-base leading-relaxed mb-6" style={{ color: "#C5D1E0" }}>
               {typeof quote === "string" ? <p>{quote}</p> : <PortableText value={quote} />}
             </div>
             {author && (
@@ -293,9 +293,9 @@ export function CaseStudyMore({
 }) {
   if (!items?.length) return null;
   return (
-    <section className="py-10 md:py-14" style={{ background: "#0A0F1F" }}>
+    <section className="py-14 md:py-20" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-7">
+        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-8">
           Explore More Case Studies
         </h2>
         <div className="grid md:grid-cols-3 gap-4">

@@ -35,8 +35,7 @@ const financePage = {
   },
   heroMetrics: [
     { _key: "m1", value: "Faster close", label: "Reduced cycle time with automation" },
-    { _key: "m2", value: "70+", label: "Finance & enterprise programs supported" },
-    { _key: "m3", value: "Audit-ready", label: "Controls built into every delivery" },
+    { _key: "m2", value: "Audit-ready", label: "Controls built into every delivery" },
   ],
   challengesHeadline: "Finance Challenges We Solve",
   challenges: [

@@ -8,10 +8,8 @@ import { IndustryHero } from "@/components/industries/IndustryHero";
 import { IndustryChallengePanel } from "@/components/industries/IndustryChallengePanel";
 import {
   IndustryServiceCards,
-  IndustrySolutionsList,
   IndustryClientsGrid,
   IndustryPillars,
-  IndustryOutcomes,
   IndustrySuccessStories,
   IndustryLifecycle,
   IndustryProcess,
@@ -38,6 +36,12 @@ function mergeFinanceData(cms: any) {
   if (!merged.hero.secondaryCta) merged.hero.secondaryCta = fallback.hero.secondaryCta;
   merged.finalCta = { ...fallback.finalCta, ...(cms.finalCta || {}) };
   if (!merged.seo) merged.seo = fallback.seo;
+  // Always drop the removed "70+" metric if present in CMS
+  if (Array.isArray(merged.heroMetrics)) {
+    merged.heroMetrics = merged.heroMetrics.filter(
+      (m: any) => !String(m?.value || "").includes("70") && !/programs supported/i.test(m?.label || "")
+    );
+  }
   return merged;
 }
 
@@ -82,7 +86,6 @@ export default async function FinancePage() {
         faqs={data?.faqs}
       />
 
-      {/* 1. Hero + metrics + dual CTAs */}
       <IndustryHero
         industryLabel="Industries · Finance"
         title={hero?.title || "Transform Finance Through AI, Data &"}
@@ -91,7 +94,7 @@ export default async function FinancePage() {
         primaryButtonText={hero?.primaryCta?.text || "Talk to Our Finance Experts"}
         primaryButtonLink={hero?.primaryCta?.link || "/contact"}
         secondaryButtonText={hero?.secondaryCta?.text || "Explore Finance Solutions"}
-        secondaryButtonLink={hero?.secondaryCta?.link || "#solutions"}
+        secondaryButtonLink={hero?.secondaryCta?.link || "#services"}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Industries" },
@@ -100,75 +103,58 @@ export default async function FinancePage() {
         metrics={data.heroMetrics || DEMO_FINANCE_PAGE.heroMetrics}
       />
 
-      {/* 2. Challenges — interactive list + detail panel */}
       <IndustryChallengePanel
         title={data.challengesHeadline || "Finance Challenges We Solve"}
         items={mapItems(data.challenges)}
       />
 
-      {/* 3a. Custom services — 3 cards */}
+      {/* Services includes solutions list + Contact us CTA */}
       <IndustryServiceCards
         title={data.servicesHeadline || "Our Custom Finance Software Development Services"}
         items={mapItems(data.services?.length ? data.services : DEMO_FINANCE_PAGE.services)}
+        solutionsTitle={data.solutionsHeadline || "Our Finance Transformation Solutions"}
+        solutions={mapItems(data.solutions)}
       />
 
-      {/* 3b. Transformation solutions — checklist */}
-      <IndustrySolutionsList
-        id="solutions"
-        title={data.solutionsHeadline || "Our Finance Transformation Solutions"}
-        items={mapItems(data.solutions)}
-      />
-
-      {/* Clients we serve — 3x3 */}
       <IndustryClientsGrid
         title={data.clientsHeadline || "Finance Clients We Serve"}
         items={mapItems(data.clients)}
       />
 
-      {/* How we drive success — 3 pillars */}
+      {/* Pillars includes Business Outcomes + Contact us CTA */}
       <IndustryPillars
         title={data.pillarsHeadline || "How We Drive the Success of Your Finance Transformation"}
         description={data.pillarsDescription}
         items={mapItems(data.pillars?.length ? data.pillars : DEMO_FINANCE_PAGE.pillars)}
+        outcomesTitle={data.outcomesHeadline || "Business Outcomes"}
+        outcomes={mapItems(data.outcomes)}
       />
 
-      {/* Business Outcomes — bullet list */}
-      <IndustryOutcomes
-        title={data.outcomesHeadline || "Business Outcomes"}
-        items={mapItems(data.outcomes)}
-      />
-
-      {/* Success Stories — project cards */}
       <IndustrySuccessStories
         title={data.successStoriesHeadline || "Finance Transformation Success Stories"}
         stories={data.successStories || []}
       />
 
-      {/* Lifecycle — 5 circular stages */}
       <IndustryLifecycle
         title={data.lifecycleHeadline || "Our Finance Lifecycle and Delivery Model"}
         items={mapItems(data.lifecycle?.length ? data.lifecycle : DEMO_FINANCE_PAGE.lifecycle)}
       />
 
-      {/* Process — 6 numbered steps */}
       <IndustryProcess
         title={data.processHeadline || "Finance Transformation Process & Delivery"}
         items={mapItems(data.process)}
       />
 
-      {/* Why Choose — visual + benefits */}
       <IndustryWhyUs
         title={data.whyUsHeadline || "Why Choose SyncOrigins for Finance"}
         description={data.whyUsDescription}
         items={mapItems(data.whyUs)}
       />
 
-      {/* Blogs & Insights */}
       <RelatedInsights posts={relatedPosts} serviceName="Finance" compact />
 
-      {/* FAQs + Final CTA */}
       {faqs.length > 0 && (
-        <section className="py-12 md:py-14" style={{ background: "#0A0F1F" }}>
+        <section className="py-16 md:py-20" style={{ background: "#0A0F1F" }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">
             <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>
