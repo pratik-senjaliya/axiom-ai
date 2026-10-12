@@ -7,12 +7,13 @@ const titledDescription = [
 
 export default defineType({
   name: 'financePage',
-  title: 'Finance Page',
+  title: 'Finance (Industry)',
   type: 'document',
   groups: [
     { name: 'hero', title: 'Hero Section' },
     { name: 'challenges', title: 'Finance Industry Challenges' },
     { name: 'solutions', title: 'Finance Transformation Solutions' },
+    { name: 'clients', title: 'Clients We Serve' },
     { name: 'outcomes', title: 'Business Outcomes' },
     { name: 'successStories', title: 'Success Stories' },
     { name: 'process', title: 'Process & Delivery' },
@@ -91,6 +92,33 @@ export default defineType({
         { title: 'ERP Modernisation & Integration' },
         { title: 'Intelligent Automation' },
         { title: 'Risk, Compliance & Reporting' },
+      ],
+    }),
+
+    defineField({
+      name: 'clientsHeadline',
+      title: 'Clients Headline',
+      type: 'string',
+      group: 'clients',
+      initialValue: 'Clients We Serve',
+    }),
+    defineField({
+      name: 'clientsDescription',
+      title: 'Description',
+      type: 'simpleBlockContent',
+      group: 'clients',
+    }),
+    defineField({
+      name: 'clients',
+      title: 'Client Segments',
+      type: 'array',
+      group: 'clients',
+      of: [{ type: 'object', fields: [...titledDescription] }],
+      initialValue: [
+        { title: 'Enterprise CFOs & Controllers' },
+        { title: 'Banks & Financial Services' },
+        { title: 'Fintech & Digital Finance' },
+        { title: 'Shared Service Centers' },
       ],
     }),
 

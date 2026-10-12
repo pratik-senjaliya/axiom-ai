@@ -13,100 +13,48 @@ import { getFinancePage, getLatestPostsByService, getAllPosts } from "@/lib/sani
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
+import { DEMO_FINANCE_PAGE } from "@/lib/demo/financePage";
 
 export const dynamic = "force-dynamic";
 
-/** Fallback when the financePageSingleton has not been created/published in Studio yet */
-const FINANCE_FALLBACK = {
-  hero: {
-    badge: "Finance Transformation",
-    title: "Transform Finance Through AI, Data &",
-    titleHighlight: "Intelligent Enterprise Systems",
-    description:
-      "Modernize finance operations with AI, data platforms, and intelligent enterprise systems — from process transformation to ERP, automation, and compliance.",
-    primaryCta: { text: "Talk to Our Finance Experts", link: "/contact" },
-    secondaryCta: { text: "Explore Finance Solutions", link: "#solutions" },
-  },
-  challengesHeadline: "Finance Industry Challenges",
-  challenges: [
-    { title: "Legacy finance systems" },
-    { title: "Fragmented financial data" },
-    { title: "Manual and inefficient processes" },
-    { title: "Delayed financial insights" },
-    { title: "Increasing compliance requirements" },
-    { title: "Difficulty scaling AI initiatives" },
-  ],
-  solutionsHeadline: "Our Finance Transformation Solutions",
-  solutions: [
-    { title: "Finance Process Transformation" },
-    { title: "AI-Powered Finance Operations" },
-    { title: "Financial Data & Analytics" },
-    { title: "ERP Modernisation & Integration" },
-    { title: "Intelligent Automation" },
-    { title: "Risk, Compliance & Reporting" },
-  ],
-  outcomesHeadline: "Business Outcomes",
-  outcomes: [
-    { title: "Faster financial decision-making" },
-    { title: "Improved data visibility" },
-    { title: "Reduced manual effort" },
-    { title: "More accurate forecasting" },
-    { title: "Greater operational efficiency" },
-    { title: "Scalable, AI-ready finance operations" },
-  ],
-  successStoriesHeadline: "Finance Transformation Success Stories",
-  successStories: [] as any[],
-  processHeadline: "Finance Transformation Process & Delivery",
-  process: [
-    { title: "Discover & Assess" },
-    { title: "Define Transformation Priorities" },
-    { title: "Design the Solution" },
-    { title: "Implement & Integrate" },
-    { title: "Validate & Optimise" },
-    { title: "Scale & Continuously Improve" },
-  ],
-  whyUsHeadline: "Why Choose SyncOrigins for Finance",
-  whyUs: [
-    { title: "AI, Data & ERP expertise" },
-    { title: "Finance-focused transformation" },
-    { title: "Business-first approach" },
-    { title: "Production-focused execution" },
-    { title: "Scalable enterprise solutions" },
-  ],
-  faqs: [] as any[],
-  finalCta: {
-    title: "Ready to Transform Your Finance Operations?",
-    buttonText: "Talk to Our Finance Experts",
-    buttonLink: "/contact",
-  },
-};
+function mergeFinanceData(cms: any) {
+  const fallback = DEMO_FINANCE_PAGE;
+  if (!cms) return fallback;
+
+  const merged: any = { ...fallback, ...cms };
+  for (const key of Object.keys(fallback)) {
+    if (Array.isArray((fallback as any)[key]) && (!cms[key] || cms[key].length === 0)) {
+      merged[key] = (fallback as any)[key];
+    }
+  }
+  merged.hero = { ...fallback.hero, ...(cms.hero || {}) };
+  if (!merged.hero.description) merged.hero.description = fallback.hero.description;
+  if (!merged.hero.primaryCta) merged.hero.primaryCta = fallback.hero.primaryCta;
+  if (!merged.hero.secondaryCta) merged.hero.secondaryCta = fallback.hero.secondaryCta;
+  merged.finalCta = { ...fallback.finalCta, ...(cms.finalCta || {}) };
+  if (!merged.seo) merged.seo = fallback.seo;
+  return merged;
+}
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await getFinancePage();
+  const cms = await getFinancePage();
+  const data = mergeFinanceData(cms);
   const defaultTitle = "Finance Transformation Services | SyncOrigins";
   const defaultDesc =
     "Transform finance through AI, data & intelligent enterprise systems. Process transformation, ERP modernisation, automation, and compliance.";
 
-  if (!data?.seo) {
-    return genMeta({
-      title: defaultTitle,
-      description: defaultDesc,
-      slug: "/finance",
-    });
-  }
-
   return genMeta({
-    title: data.seo.metaTitle || defaultTitle,
-    description: data.seo.metaDescription || defaultDesc,
-    keywords: data.seo.metaKeywords,
-    ogImage: data.seo.openGraphImage,
+    title: data.seo?.metaTitle || defaultTitle,
+    description: data.seo?.metaDescription || defaultDesc,
+    keywords: data.seo?.metaKeywords,
+    ogImage: data.seo?.openGraphImage,
     slug: "/finance",
   });
 }
 
 export default async function FinancePage() {
   const cms = await getFinancePage();
-  const data = cms ? { ...FINANCE_FALLBACK, ...cms } : FINANCE_FALLBACK;
+  const data = mergeFinanceData(cms);
 
   let relatedPosts = await getLatestPostsByService("finance");
   if (!relatedPosts?.length) {
@@ -124,26 +72,21 @@ export default async function FinancePage() {
     ),
   }));
 
-  const solutions: FeatureItem[] = (data.solutions || []).map((item: any) => ({
-    title: item.title,
-    description: item.description,
-  }));
+  const toFeatures = (items: any[]): FeatureItem[] =>
+    (items || []).map((item: any) => ({
+      title: item.title,
+      description: item.description,
+    }));
 
-  const outcomes: FeatureItem[] = (data.outcomes || []).map((item: any) => ({
-    title: item.title,
-    description: item.description,
-  }));
-
+  const solutions = toFeatures(data.solutions);
+  const clients = toFeatures(data.clients);
+  const outcomes = toFeatures(data.outcomes);
   const processSteps: FeatureItem[] = (data.process || []).map((step: any, index: number) => ({
     stepNumber: index + 1,
     title: step.title,
     description: step.description,
   }));
-
-  const whyUs: FeatureItem[] = (data.whyUs || []).map((item: any) => ({
-    title: item.title,
-    description: item.description,
-  }));
+  const whyUs = toFeatures(data.whyUs);
 
   const faqs = (data.faqs || []).map((faq: any) => ({
     question: faq.question,
@@ -151,13 +94,13 @@ export default async function FinancePage() {
   }));
 
   const stories = data.successStories || [];
-  const hero = data.hero || FINANCE_FALLBACK.hero;
-  const finalCta = data.finalCta || FINANCE_FALLBACK.finalCta;
+  const hero = data.hero;
+  const finalCta = data.finalCta;
 
   return (
     <div className="pt-0 pb-0">
       <ServicePageSchemas
-        title={data?.seo?.metaTitle || hero?.title || "Finance Transformation"}
+        title={data?.seo?.metaTitle || `${hero?.title || ""} ${hero?.titleHighlight || ""}`.trim() || "Finance Transformation"}
         description={portableTextToPlain(hero?.description) || String(hero?.description || "")}
         url={`${getSiteUrl()}/finance`}
         image={data?.seo?.openGraphImage || hero?.image}
@@ -165,6 +108,7 @@ export default async function FinancePage() {
         faqs={data?.faqs}
       />
 
+      {/* 1. Hero */}
       <ServiceHero
         badgeText={hero?.badge}
         title={hero?.title}
@@ -181,6 +125,7 @@ export default async function FinancePage() {
         ]}
       />
 
+      {/* 2. Finance Industry Challenges */}
       {challengeItems.length > 0 && (
         <ObstacleSection
           title={data.challengesHeadline || "Finance Industry Challenges"}
@@ -193,6 +138,7 @@ export default async function FinancePage() {
         />
       )}
 
+      {/* 3. Our Finance Transformation Solutions */}
       <div id="solutions">
         <FeatureGrid
           title={data.solutionsHeadline || "Our Finance Transformation Solutions"}
@@ -201,33 +147,48 @@ export default async function FinancePage() {
           columns={3}
           bgWhite={true}
           small={true}
-          titleAs="h3"
+          titleAs="h2"
         />
       </div>
 
+      {/* 3b. Clients We Serve */}
+      {clients.length > 0 && (
+        <FeatureGrid
+          title={data.clientsHeadline || "Clients We Serve"}
+          description={data.clientsDescription}
+          items={clients}
+          columns={2}
+          bgWhite={false}
+          small={true}
+          titleAs="h2"
+        />
+      )}
+
+      {/* 5. Business Outcomes */}
       <FeatureGrid
         title={data.outcomesHeadline || "Business Outcomes"}
         description={data.outcomesDescription}
         items={outcomes}
         columns={3}
-        bgWhite={false}
+        bgWhite={true}
         small={true}
-        titleAs="h3"
+        titleAs="h2"
       />
 
+      {/* 6. Finance Transformation Success Stories */}
       {stories.length > 0 && (
         <section className="py-24 relative overflow-hidden" style={{ background: "#0D1B2A" }}>
           <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
           <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
             <div className="text-center max-w-5xl mx-auto mb-16">
-              <h3 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
+              <h2 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
                 {data.successStoriesHeadline || "Finance Transformation Success Stories"}
-              </h3>
+              </h2>
             </div>
 
             <StaggerGroup className="grid md:grid-cols-2 gap-8">
               {stories.map((story: any, index: number) => (
-                <StaggerItem key={index} className="h-full">
+                <StaggerItem key={story._key || index} className="h-full">
                   <HoverCard
                     className="rounded-[2rem] p-8 md:p-10 h-full flex flex-col border"
                     style={{
@@ -308,6 +269,7 @@ export default async function FinancePage() {
         </section>
       )}
 
+      {/* 7. Process & Delivery */}
       <FeatureGrid
         title={data.processHeadline || "Finance Transformation Process & Delivery"}
         description={data.processDescription}
@@ -315,9 +277,10 @@ export default async function FinancePage() {
         isRoadmap={true}
         bgWhite={true}
         small={true}
-        titleAs="h4"
+        titleAs="h2"
       />
 
+      {/* 8. Why Choose SyncOrigins for Finance */}
       <FeatureGrid
         title={data.whyUsHeadline || "Why Choose SyncOrigins for Finance"}
         description={data.whyUsDescription}
@@ -325,11 +288,13 @@ export default async function FinancePage() {
         columns={whyUs.length >= 3 ? 3 : 2}
         bgWhite={false}
         small={true}
-        titleAs="h4"
+        titleAs="h2"
       />
 
+      {/* 9. Blogs & Insights */}
       <RelatedInsights posts={relatedPosts} serviceName="Finance" />
 
+      {/* 10. FAQs + Final CTA */}
       {faqs.length > 0 && (
         <section className="py-24 relative z-10" style={{ background: "#0A0F1F" }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">

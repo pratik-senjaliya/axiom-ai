@@ -66,6 +66,15 @@ export const structure = (S: StructureBuilder) =>
                             singletonListItem(S, 'dataAnalyticsPage', 'Data & Analytics'),
                             singletonListItem(S, 'managedDeliveryPage', 'Managed Delivery'),
                             singletonListItem(S, 'sustainabilityPage', 'Sustainability'),
+                        ])
+                ),
+
+            S.listItem()
+                .title('Industries')
+                .child(
+                    S.list()
+                        .title('Industry Pages')
+                        .items([
                             singletonListItem(S, 'financePage', 'Finance'),
                         ])
                 ),
