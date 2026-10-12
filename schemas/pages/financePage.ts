@@ -12,10 +12,13 @@ export default defineType({
   groups: [
     { name: 'hero', title: 'Hero Section' },
     { name: 'challenges', title: 'Finance Industry Challenges' },
+    { name: 'services', title: 'Custom Finance Services' },
     { name: 'solutions', title: 'Finance Transformation Solutions' },
     { name: 'clients', title: 'Clients We Serve' },
+    { name: 'pillars', title: 'How We Drive Success' },
     { name: 'outcomes', title: 'Business Outcomes' },
     { name: 'successStories', title: 'Success Stories' },
+    { name: 'lifecycle', title: 'Lifecycle & Delivery Model' },
     { name: 'process', title: 'Process & Delivery' },
     { name: 'whyUs', title: 'Why Choose SyncOrigins' },
     { name: 'faqs', title: 'FAQs & CTA' },
@@ -34,6 +37,19 @@ export default defineType({
         primaryCta: { text: 'Talk to Our Finance Experts', link: '/contact', variant: 'primary' },
         secondaryCta: { text: 'Explore Finance Solutions', link: '#solutions', variant: 'secondary' },
       },
+    }),
+    defineField({
+      name: 'heroMetrics',
+      title: 'Hero Metrics Bar',
+      type: 'array',
+      group: 'hero',
+      of: [{
+        type: 'object',
+        fields: [
+          { name: 'value', type: 'string', title: 'Value' },
+          { name: 'label', type: 'string', title: 'Label' },
+        ],
+      }],
     }),
 
     defineField({
@@ -63,6 +79,26 @@ export default defineType({
         { title: 'Delayed financial insights' },
         { title: 'Increasing compliance requirements' },
         { title: 'Difficulty scaling AI initiatives' },
+      ],
+    }),
+
+    defineField({
+      name: 'servicesHeadline',
+      title: 'Services Headline',
+      type: 'string',
+      group: 'services',
+      initialValue: 'Our Custom Finance Software Development Services',
+    }),
+    defineField({
+      name: 'services',
+      title: 'Service Cards',
+      type: 'array',
+      group: 'services',
+      of: [{ type: 'object', fields: [...titledDescription] }],
+      initialValue: [
+        { title: 'Finance Consulting & Product Strategy' },
+        { title: 'Custom Finance Software Development' },
+        { title: 'Finance Modernization & Re-Architecture' },
       ],
     }),
 
@@ -120,6 +156,27 @@ export default defineType({
         { title: 'Fintech & Digital Finance' },
         { title: 'Shared Service Centers' },
       ],
+    }),
+
+    defineField({
+      name: 'pillarsHeadline',
+      title: 'Pillars Headline',
+      type: 'string',
+      group: 'pillars',
+      initialValue: 'How We Drive the Success of Your Finance Transformation',
+    }),
+    defineField({
+      name: 'pillarsDescription',
+      title: 'Pillars Description',
+      type: 'simpleBlockContent',
+      group: 'pillars',
+    }),
+    defineField({
+      name: 'pillars',
+      title: 'Delivery Pillars',
+      type: 'array',
+      group: 'pillars',
+      of: [{ type: 'object', fields: [...titledDescription] }],
     }),
 
     defineField({
@@ -181,6 +238,28 @@ export default defineType({
           },
         },
       }],
+    }),
+
+    defineField({
+      name: 'lifecycleHeadline',
+      title: 'Lifecycle Headline',
+      type: 'string',
+      group: 'lifecycle',
+      initialValue: 'Our Finance Lifecycle and Delivery Model',
+    }),
+    defineField({
+      name: 'lifecycle',
+      title: 'Lifecycle Stages',
+      type: 'array',
+      group: 'lifecycle',
+      of: [{ type: 'object', fields: [...titledDescription] }],
+      initialValue: [
+        { title: 'Discovery & Planning' },
+        { title: 'Design & Prototyping' },
+        { title: 'Development & Integration' },
+        { title: 'Testing & Compliance' },
+        { title: 'Launch & Optimization' },
+      ],
     }),
 
     defineField({

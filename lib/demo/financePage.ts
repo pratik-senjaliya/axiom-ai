@@ -2,10 +2,6 @@ import { pt, titledItem } from "./portableText";
 
 export const DEMO_CASE_STUDY_SLUG = "finance-close-automation";
 
-/**
- * Demo Finance page content mapped 1:1 to the SyncOrigins Google Doc section list.
- * Used as runtime fallback and as Sanity seed source.
- */
 export const DEMO_FINANCE_PAGE = {
   _id: "financePageSingleton",
   _type: "financePage",
@@ -19,11 +15,13 @@ export const DEMO_FINANCE_PAGE = {
     primaryCta: { text: "Talk to Our Finance Experts", link: "/contact", variant: "primary" },
     secondaryCta: { text: "Explore Finance Solutions", link: "#solutions", variant: "secondary" },
   },
+  heroMetrics: [
+    { value: "Faster close", label: "Reduced cycle time with automation" },
+    { value: "70+", label: "Finance & enterprise programs supported" },
+    { value: "Audit-ready", label: "Controls built into every delivery" },
+  ],
 
-  challengesHeadline: "Finance Industry Challenges",
-  challengesDescription: pt(
-    "Finance teams are under pressure to move faster with greater accuracy — while legacy systems, fragmented data, and manual work slow every close cycle."
-  ),
+  challengesHeadline: "Finance Challenges We Solve",
   challenges: [
     titledItem(
       "Legacy finance systems",
@@ -51,10 +49,23 @@ export const DEMO_FINANCE_PAGE = {
     ),
   ],
 
+  servicesHeadline: "Our Custom Finance Software Development Services",
+  services: [
+    titledItem(
+      "Finance Consulting & Product Strategy",
+      "Define transformation roadmap, prioritize value cases, and align finance, IT, and business stakeholders."
+    ),
+    titledItem(
+      "Custom Finance Software Development",
+      "Build secure, scalable finance applications and workflows tailored to your operating model."
+    ),
+    titledItem(
+      "Finance Modernization & Re-Architecture",
+      "Upgrade legacy finance systems, simplify integrations, and prepare platforms for AI and automation."
+    ),
+  ],
+
   solutionsHeadline: "Our Finance Transformation Solutions",
-  solutionsDescription: pt(
-    "End-to-end capabilities that redesign finance processes, modernize platforms, and operationalize AI where it creates measurable value."
-  ),
   solutions: [
     titledItem(
       "Finance Process Transformation",
@@ -82,58 +93,46 @@ export const DEMO_FINANCE_PAGE = {
     ),
   ],
 
-  clientsHeadline: "Clients We Serve",
-  clientsDescription: pt(
-    "We partner with finance organizations that need production-grade transformation — not slideware."
-  ),
+  clientsHeadline: "Finance Clients We Serve",
   clients: [
+    { title: "Banking" },
+    { title: "Payments" },
+    { title: "Lending" },
+    { title: "Mortgage" },
+    { title: "Insurance" },
+    { title: "Investment & Wealth" },
+    { title: "Corporate Finance" },
+    { title: "Shared Services" },
+    { title: "Fintech Platforms" },
+  ],
+
+  pillarsHeadline: "How We Drive the Success of Your Finance Transformation",
+  pillarsDescription: pt(
+    "A practical delivery model that reduces risk, protects timelines, and keeps finance stakeholders aligned from discovery to scale."
+  ),
+  pillars: [
     titledItem(
-      "Enterprise CFOs & Controllers",
-      "Global and mid-market finance leadership teams modernizing close, reporting, and decision support."
+      "Risk Identification and Management",
+      "We surface process, data, and control risks early — then build mitigation into the transformation plan."
     ),
     titledItem(
-      "Banks & Financial Services",
-      "Institutions improving operational finance, risk reporting, and customer-facing finance platforms."
+      "Accurate Time and Budget Estimation",
+      "Clear scoping and phased delivery keep finance programs predictable and outcome-focused."
     ),
     titledItem(
-      "Fintech & Digital Finance",
-      "Product and ops teams scaling secure, compliant, data-driven finance capabilities."
-    ),
-    titledItem(
-      "Shared Service Centers",
-      "Captive and outsourced finance hubs seeking automation, standardization, and quality at scale."
+      "Teamwork and Knowledge Management",
+      "Shared ownership, documentation, and enablement so finance teams can run what we build."
     ),
   ],
 
   outcomesHeadline: "Business Outcomes",
-  outcomesDescription: pt(
-    "Transformation measured in cycle time, visibility, accuracy, and a finance operating model ready for AI."
-  ),
   outcomes: [
-    titledItem(
-      "Faster financial decision-making",
-      "Leaders get timely, trusted numbers to act with confidence."
-    ),
-    titledItem(
-      "Improved data visibility",
-      "One coherent view across entities, systems, and operational drivers."
-    ),
-    titledItem(
-      "Reduced manual effort",
-      "Teams spend less time on repetitive close and reporting work."
-    ),
-    titledItem(
-      "More accurate forecasting",
-      "Planning grounded in cleaner data and smarter predictive models."
-    ),
-    titledItem(
-      "Greater operational efficiency",
-      "Leaner finance processes with stronger controls and fewer bottlenecks."
-    ),
-    titledItem(
-      "Scalable, AI-ready finance operations",
-      "A foundation that supports automation and intelligent systems as you grow."
-    ),
+    titledItem("Faster financial decision-making", "Leaders get timely, trusted numbers to act with confidence."),
+    titledItem("Improved data visibility", "One coherent view across entities, systems, and operational drivers."),
+    titledItem("Reduced manual effort", "Teams spend less time on repetitive close and reporting work."),
+    titledItem("More accurate forecasting", "Planning grounded in cleaner data and smarter predictive models."),
+    titledItem("Greater operational efficiency", "Leaner finance processes with stronger controls and fewer bottlenecks."),
+    titledItem("Scalable, AI-ready finance operations", "A foundation that supports automation and intelligent systems as you grow."),
   ],
 
   successStoriesHeadline: "Finance Transformation Success Stories",
@@ -153,64 +152,28 @@ export const DEMO_FINANCE_PAGE = {
       businessOutcomes: pt(
         "Close cycle reduced by ~40%, reconciliation effort cut significantly, and leadership reporting available days earlier each month."
       ),
-      ctaText: "Read Case Study",
+      ctaText: "View the Case Study",
       ctaLink: `/case-studies/${DEMO_CASE_STUDY_SLUG}`,
     },
   ],
 
+  lifecycleHeadline: "Our Finance Lifecycle and Delivery Model",
+  lifecycle: [
+    titledItem("Discovery & Planning", "Define goals, analyze needs, and create a comprehensive transformation plan."),
+    titledItem("Design & Prototyping", "Create process designs, data models, wireframes, and prototypes."),
+    titledItem("Development & Integration", "Build features and connect ERP, data, and partner systems."),
+    titledItem("Testing & Compliance", "Quality audits, user validation, and regulatory control checks."),
+    titledItem("Launch & Optimization", "Deployment, enablement, and continuous performance monitoring."),
+  ],
+
   processHeadline: "Finance Transformation Process & Delivery",
-  processDescription: pt(
-    "A practical delivery model from discovery to scale — focused on outcomes, not activity."
-  ),
   process: [
-    {
-      _key: "step1",
-      step: "01",
-      title: "Discover & Assess",
-      description: pt(
-        "Map current processes, systems, data quality, and pain points across finance operations."
-      ),
-    },
-    {
-      _key: "step2",
-      step: "02",
-      title: "Define Transformation Priorities",
-      description: pt(
-        "Align on value cases, sequencing, and success metrics with finance and IT stakeholders."
-      ),
-    },
-    {
-      _key: "step3",
-      step: "03",
-      title: "Design the Solution",
-      description: pt(
-        "Architect target processes, data models, integrations, and AI/automation opportunities."
-      ),
-    },
-    {
-      _key: "step4",
-      step: "04",
-      title: "Implement & Integrate",
-      description: pt(
-        "Build and integrate platforms, workflows, and analytics with production-grade quality."
-      ),
-    },
-    {
-      _key: "step5",
-      step: "05",
-      title: "Validate & Optimise",
-      description: pt(
-        "Test controls, measure outcomes, and refine processes with finance users in the loop."
-      ),
-    },
-    {
-      _key: "step6",
-      step: "06",
-      title: "Scale & Continuously Improve",
-      description: pt(
-        "Roll out across entities and expand AI use cases with sustained governance and support."
-      ),
-    },
+    { _key: "s1", title: "Discover & Assess", description: pt("Map processes, systems, data quality, and pain points.") },
+    { _key: "s2", title: "Define Priorities", description: pt("Align value cases, sequencing, and success metrics.") },
+    { _key: "s3", title: "Design the Solution", description: pt("Architect processes, data models, and AI opportunities.") },
+    { _key: "s4", title: "Implement & Integrate", description: pt("Build platforms, workflows, and analytics for production.") },
+    { _key: "s5", title: "Validate & Optimise", description: pt("Test controls and refine with finance users.") },
+    { _key: "s6", title: "Scale & Improve", description: pt("Roll out across entities and expand AI use cases.") },
   ],
 
   whyUsHeadline: "Why Choose SyncOrigins for Finance",
@@ -218,79 +181,26 @@ export const DEMO_FINANCE_PAGE = {
     "We combine AI, data, and ERP expertise with a finance-first mindset and production delivery discipline."
   ),
   whyUs: [
-    titledItem(
-      "AI, Data & ERP expertise",
-      "One team that connects intelligent systems, trusted data, and enterprise platforms."
-    ),
-    titledItem(
-      "Finance-focused transformation",
-      "We speak CFO language — close, controls, forecast quality, and operating leverage."
-    ),
-    titledItem(
-      "Business-first approach",
-      "Technology follows value cases and process redesign, not the other way around."
-    ),
-    titledItem(
-      "Production-focused execution",
-      "We ship durable solutions that finance teams can run day-to-day."
-    ),
-    titledItem(
-      "Scalable enterprise solutions",
-      "Architected for multi-entity growth, compliance, and ongoing AI adoption."
-    ),
+    titledItem("AI, Data & ERP expertise", "One team connecting intelligent systems, trusted data, and enterprise platforms."),
+    titledItem("Finance-focused transformation", "We speak CFO language — close, controls, forecast quality, and operating leverage."),
+    titledItem("Business-first approach", "Technology follows value cases and process redesign."),
+    titledItem("Production-focused execution", "Durable solutions finance teams can run day-to-day."),
+    titledItem("Scalable enterprise solutions", "Built for multi-entity growth, compliance, and ongoing AI adoption."),
   ],
 
   faqs: [
-    {
-      _key: "faq1",
-      question: "What does SyncOrigins mean by finance transformation?",
-      answer: pt(
-        "We redesign finance processes, data foundations, and enterprise systems so close, reporting, planning, and compliance become faster, more accurate, and AI-ready."
-      ),
-    },
-    {
-      _key: "faq2",
-      question: "Do you work with existing ERP platforms?",
-      answer: pt(
-        "Yes. We modernize and integrate platforms such as Dynamics 365 and adjacent finance systems, improving processes and data quality without unnecessary rip-and-replace."
-      ),
-    },
-    {
-      _key: "faq3",
-      question: "Where does AI create the most value in finance?",
-      answer: pt(
-        "High-impact areas include reconciliations, anomaly detection, forecasting support, narrative reporting, and exception handling — once data and controls are ready."
-      ),
-    },
-    {
-      _key: "faq4",
-      question: "How do you keep transformation audit-ready?",
-      answer: pt(
-        "Controls, evidence trails, and clear ownership are designed into processes and systems from day one, so speed does not come at the cost of compliance."
-      ),
-    },
-    {
-      _key: "faq5",
-      question: "How long does a typical engagement take?",
-      answer: pt(
-        "Discovery and prioritization can start quickly. Delivery timelines depend on scope — from focused automation waves to multi-workstream ERP and data programs."
-      ),
-    },
-    {
-      _key: "faq6",
-      question: "Can you support shared service and multi-entity models?",
-      answer: pt(
-        "Yes. We design for standardization across entities and shared service centers while allowing local variations where they are required."
-      ),
-    },
+    { _key: "f1", question: "What does SyncOrigins mean by finance transformation?", answer: pt("We redesign finance processes, data foundations, and enterprise systems so close, reporting, planning, and compliance become faster, more accurate, and AI-ready.") },
+    { _key: "f2", question: "Do you work with existing ERP platforms?", answer: pt("Yes. We modernize and integrate platforms such as Dynamics 365 and adjacent finance systems without unnecessary rip-and-replace.") },
+    { _key: "f3", question: "Where does AI create the most value in finance?", answer: pt("Reconciliations, anomaly detection, forecasting support, narrative reporting, and exception handling — once data and controls are ready.") },
+    { _key: "f4", question: "How do you keep transformation audit-ready?", answer: pt("Controls, evidence trails, and clear ownership are designed into processes and systems from day one.") },
+    { _key: "f5", question: "How long does a typical engagement take?", answer: pt("Discovery can start quickly. Delivery timelines depend on scope — from focused automation waves to multi-workstream programs.") },
+    { _key: "f6", question: "Can you support shared service and multi-entity models?", answer: pt("Yes. We design for standardization across entities and shared service centers with local variation where required.") },
   ],
 
   finalCta: {
     badgeText: "Finance Transformation",
     title: "Ready to Transform Your Finance Operations?",
-    description: pt(
-      "Talk with our finance experts about accelerating close, unlocking insights, and building AI-ready finance operations."
-    ),
+    description: pt("Talk with our finance experts about accelerating close, unlocking insights, and building AI-ready finance operations."),
     buttonText: "Talk to Our Finance Experts",
     buttonLink: "/contact",
   },

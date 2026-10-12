@@ -7,10 +7,11 @@ export default defineType({
   groups: [
     { name: 'hero', title: 'Hero' },
     { name: 'about', title: 'About the Client' },
-    { name: 'challenge', title: 'The Challenge' },
+    { name: 'challenge', title: 'The Challenges' },
     { name: 'approach', title: 'Solutions / Approach' },
+    { name: 'tech', title: 'Technologies' },
     { name: 'outcomes', title: 'Outcomes / Result' },
-    { name: 'testimonials', title: 'Testimonials' },
+    { name: 'testimonials', title: 'Client Feedback' },
     { name: 'seo', title: 'SEO' },
   ],
   fields: [
@@ -80,6 +81,19 @@ export default defineType({
       group: 'hero',
       initialValue: 'Case Study',
     }),
+    defineField({
+      name: 'heroStats',
+      title: 'Hero Stats (right card)',
+      type: 'array',
+      group: 'hero',
+      of: [{
+        type: 'object',
+        fields: [
+          { name: 'value', type: 'string', title: 'Value' },
+          { name: 'label', type: 'string', title: 'Label' },
+        ],
+      }],
+    }),
 
     defineField({
       name: 'aboutClientHeadline',
@@ -100,13 +114,21 @@ export default defineType({
       title: 'Challenge Headline',
       type: 'string',
       group: 'challenge',
-      initialValue: 'The Challenge',
+      initialValue: 'The Challenges',
+    }),
+    defineField({
+      name: 'challengeItems',
+      title: 'Challenge Cards (2x2 grid)',
+      type: 'array',
+      group: 'challenge',
+      of: [{ type: 'string' }],
     }),
     defineField({
       name: 'challenge',
-      title: 'The Challenge',
+      title: 'The Challenge (legacy long-form)',
       type: 'simpleBlockContent',
       group: 'challenge',
+      hidden: true,
     }),
 
     defineField({
@@ -117,10 +139,26 @@ export default defineType({
       initialValue: 'Our Solutions / Approach',
     }),
     defineField({
+      name: 'approachItems',
+      title: 'Solution Cards (dark numbered grid)',
+      type: 'array',
+      group: 'approach',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
       name: 'approach',
-      title: 'Our Solutions / Approach',
+      title: 'Approach (legacy long-form)',
       type: 'simpleBlockContent',
       group: 'approach',
+      hidden: true,
+    }),
+
+    defineField({
+      name: 'technologies',
+      title: 'Technologies Used',
+      type: 'array',
+      group: 'tech',
+      of: [{ type: 'string' }],
     }),
 
     defineField({
@@ -131,10 +169,18 @@ export default defineType({
       initialValue: 'Outcomes / Result',
     }),
     defineField({
+      name: 'outcomeCards',
+      title: 'Outcome Cards',
+      type: 'array',
+      group: 'outcomes',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
       name: 'outcomes',
-      title: 'Outcomes / Result',
+      title: 'Outcomes (legacy long-form)',
       type: 'simpleBlockContent',
       group: 'outcomes',
+      hidden: true,
     }),
     defineField({
       name: 'outcomeMetrics',
@@ -148,18 +194,19 @@ export default defineType({
           { name: 'label', type: 'string', title: 'Label' },
         ],
       }],
+      hidden: true,
     }),
 
     defineField({
       name: 'testimonialsHeadline',
-      title: 'Testimonials Headline',
+      title: 'Feedback Headline',
       type: 'string',
       group: 'testimonials',
-      initialValue: 'Testimonials',
+      initialValue: 'Client Feedback',
     }),
     defineField({
       name: 'testimonials',
-      title: 'Testimonials',
+      title: 'Client Feedback',
       type: 'array',
       of: [{ type: 'testimonial' }],
       group: 'testimonials',

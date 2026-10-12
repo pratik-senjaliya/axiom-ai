@@ -10,24 +10,28 @@ import { StaggerGroup, StaggerItem } from '@/components/ui/animations/StaggerGro
 interface RelatedInsightsProps {
   posts: BlogPost[];
   serviceName: string;
+  compact?: boolean;
 }
 
-export function RelatedInsights({ posts, serviceName }: RelatedInsightsProps) {
+export function RelatedInsights({ posts, serviceName, compact = false }: RelatedInsightsProps) {
   if (!posts || posts.length === 0) return null;
 
   return (
-    <section className="py-24 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
+    <section
+      className={`relative overflow-hidden ${compact ? "py-12 md:py-14" : "py-24"}`}
+      style={{ background: '#0A0F1F' }}
+    >
       {/* Glow */}
       <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] rounded-full blur-[100px] -ml-20 -mb-20 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%)' }} />
 
       <div className="container-custom px-4 relative z-10">
-        <SlideUp className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <SlideUp className={`flex flex-col md:flex-row md:items-end justify-between gap-4 ${compact ? "mb-7" : "mb-12 gap-6"}`}>
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 mb-4 font-semibold text-xs tracking-wide uppercase" style={{ color: '#00E5FF' }}>
+            <div className={`inline-flex items-center gap-2 font-semibold text-xs tracking-wide uppercase ${compact ? "mb-2" : "mb-4"}`} style={{ color: '#00E5FF' }}>
               <span className="text-xl leading-none font-light block -mt-1">+</span>
               <span>Related Insights</span>
             </div>
-            <h5 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+            <h5 className={`font-bold text-white tracking-tight ${compact ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"}`}>
               Expertise In {serviceName}
             </h5>
           </div>

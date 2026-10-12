@@ -1,10 +1,6 @@
 import { pt } from "./portableText";
 import { DEMO_CASE_STUDY_SLUG } from "./financePage";
 
-/**
- * One demo case study aligned to the Google Doc case-study template:
- * Hero → About the Client → Challenge → Solutions/Approach → Outcomes → Testimonials → More Case Studies
- */
 export const DEMO_CASE_STUDY = {
   _id: `caseStudy.${DEMO_CASE_STUDY_SLUG}`,
   _type: "caseStudy",
@@ -15,33 +11,40 @@ export const DEMO_CASE_STUDY = {
   publishedAt: "2025-11-12T10:00:00.000Z",
   relatedService: "finance",
   heroBadge: "Case Study · Finance",
+  heroStats: [
+    { value: "~40%", label: "Faster close cycle" },
+    { value: "Days earlier", label: "Management reporting" },
+    { value: "Fewer", label: "Manual reconciliations" },
+  ],
   aboutClientHeadline: "About the Client",
   aboutClient: pt(
-    "A multi-entity enterprise with regional finance teams and a shared service center supporting close, consolidations, and management reporting.",
-    "Leadership needed a faster, more controlled close without disrupting ERP investments already in place."
+    "A multi-entity enterprise with regional finance teams and a shared service center supporting close, consolidations, and management reporting. Leadership needed a faster, more controlled close without disrupting ERP investments already in place."
   ),
-  challengeHeadline: "The Challenge",
-  challenge: pt(
-    "Month-end close routinely stretched beyond 12 days. Reconciliations lived in spreadsheets, ownership was unclear, and exceptions surfaced late.",
-    "Fragmented finance data across entities delayed management packs and made it difficult to introduce AI safely into production processes."
-  ),
-  approachHeadline: "Our Solutions / Approach",
-  approach: pt(
-    "We assessed close activities end-to-end, then redesigned the close calendar with clear owners, SLAs, and control checkpoints.",
-    "Next we built a governed finance data layer, automated high-volume reconciliations, and introduced AI-assisted exception detection with human-in-the-loop review.",
-    "Finance users were trained on exception queues and dashboards so the new operating model could stick beyond go-live."
-  ),
-  outcomesHeadline: "Outcomes / Result",
-  outcomes: pt(
-    "The organization moved from reactive, spreadsheet-driven close work to continuous close readiness with earlier visibility for leadership.",
-    "Finance capacity shifted from manual compilation toward analysis, controls, and decision support."
-  ),
-  outcomeMetrics: [
-    { _key: "m1", value: "~40%", label: "Faster close cycle" },
-    { _key: "m2", value: "Days earlier", label: "Management reporting" },
-    { _key: "m3", value: "Fewer", label: "Manual reconciliations" },
+  challengeHeadline: "The Challenges",
+  challengeItems: [
+    "Month-end close routinely stretched beyond 12 days with unclear ownership across entities.",
+    "Reconciliations lived in spreadsheets, making exceptions hard to detect early.",
+    "Fragmented finance data delayed management packs and forecasting quality.",
+    "AI pilots could not move to production without governed data and control frameworks.",
   ],
-  testimonialsHeadline: "Testimonials",
+  approachHeadline: "Our Solutions / Approach",
+  approachItems: [
+    "Redesigned the close calendar with clear owners, SLAs, and control checkpoints.",
+    "Built a governed finance data layer connecting GL, subledgers, and operational sources.",
+    "Automated high-volume reconciliations with AI-assisted exception detection.",
+    "Enabled finance users with dashboards and training so the operating model stuck after go-live.",
+  ],
+  technologies: ["Dynamics 365", "Power BI", "Azure", "Python", "Automation"],
+  outcomesHeadline: "Outcomes / Result",
+  outcomeCards: [
+    "~40% faster close cycle",
+    "Management reporting available days earlier",
+    "Significant reduction in manual reconciliations",
+    "Clearer ownership and audit trail across entities",
+    "Continuous close readiness instead of fire drills",
+    "Foundation ready for additional finance AI use cases",
+  ],
+  testimonialsHeadline: "Client Feedback",
   testimonials: [
     {
       _key: "t1",
@@ -60,7 +63,6 @@ export const DEMO_CASE_STUDY = {
   },
 };
 
-/** Shape returned by getCaseStudyBySlug for local/demo fallback rendering */
 export const DEMO_CASE_STUDY_VIEW = {
   id: DEMO_CASE_STUDY._id,
   title: DEMO_CASE_STUDY.title,
@@ -71,15 +73,16 @@ export const DEMO_CASE_STUDY_VIEW = {
   publishedAt: DEMO_CASE_STUDY.publishedAt,
   relatedService: DEMO_CASE_STUDY.relatedService,
   heroBadge: DEMO_CASE_STUDY.heroBadge,
+  heroStats: DEMO_CASE_STUDY.heroStats,
   aboutClientHeadline: DEMO_CASE_STUDY.aboutClientHeadline,
   aboutClient: DEMO_CASE_STUDY.aboutClient,
   challengeHeadline: DEMO_CASE_STUDY.challengeHeadline,
-  challenge: DEMO_CASE_STUDY.challenge,
+  challengeItems: DEMO_CASE_STUDY.challengeItems,
   approachHeadline: DEMO_CASE_STUDY.approachHeadline,
-  approach: DEMO_CASE_STUDY.approach,
+  approachItems: DEMO_CASE_STUDY.approachItems,
+  technologies: DEMO_CASE_STUDY.technologies,
   outcomesHeadline: DEMO_CASE_STUDY.outcomesHeadline,
-  outcomes: DEMO_CASE_STUDY.outcomes,
-  outcomeMetrics: DEMO_CASE_STUDY.outcomeMetrics,
+  outcomeCards: DEMO_CASE_STUDY.outcomeCards,
   testimonialsHeadline: DEMO_CASE_STUDY.testimonialsHeadline,
   testimonials: DEMO_CASE_STUDY.testimonials,
   seo: DEMO_CASE_STUDY.seo,
