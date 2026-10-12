@@ -1,13 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { cn } from "@/lib/utils";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
+import { PortableText } from "@/components/ui/PortableText";
 
 interface FAQItem {
   question: string;
   answer: React.ReactNode;
+}
+
+function renderAnswer(answer: React.ReactNode) {
+  // Sanity simpleBlockContent arrives as an array/object — never render it raw
+  if (Array.isArray(answer) || (answer && typeof answer === "object" && !React.isValidElement(answer))) {
+    return <PortableText value={answer} />;
+  }
+  return answer;
 }
 
 interface FAQProps {
@@ -93,7 +101,7 @@ export const FAQ: React.FC<FAQProps> = ({
             {openIndex === index && (
               <div className="px-6 py-5 border-t" style={{ borderColor: 'rgba(0,229,255,0.1)', background: 'rgba(10,15,31,0.3)' }}>
                 <div className="text-[15px] leading-relaxed" style={{ color: '#8FA3BF' }}>
-                  {item.answer}
+                  {renderAnswer(item.answer)}
                 </div>
               </div>
             )}

@@ -158,13 +158,16 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                 <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {post.readTime}</span>
               </div>
             </div>
-            <div className="relative aspect-[16/9] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg animate-fade-in-right">
+            <div
+              className="relative aspect-[16/10] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg animate-fade-in-right"
+              style={{ background: "rgba(13,27,42,0.8)" }}
+            >
               {post.image ? (
                 <Image 
                   src={post.image} 
                   alt={post.imageAlt || post.title} 
                   fill 
-                  className="object-cover"
+                  className="object-contain"
                   priority
                   unoptimized
                 />
@@ -285,7 +288,18 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
             {/* FAQs */}
             {post.faqs && post.faqs.length > 0 && (
               <div className="mt-20 scroll-mt-40" id="faqs">
-                <FAQ items={post.faqs.map((f: any) => ({ question: f.question, answer: f.answer }))} title="Frequently Asked Questions" />
+                <FAQ
+                  items={post.faqs.map((f: any) => ({
+                    question: f.question,
+                    answer:
+                      typeof f.answer === "string" ? (
+                        f.answer
+                      ) : (
+                        <PortableText value={f.answer} />
+                      ),
+                  }))}
+                  title="Frequently Asked Questions"
+                />
               </div>
             )}
           </article>
@@ -323,13 +337,13 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
             {finalRelated.map((rp, i) => (
               <Link key={i} href={`/insights/${rp.slug || ""}`} className="group flex flex-col h-full rounded-[1.5rem] overflow-hidden transition-all hover:[border-color:rgba(0,229,255,0.35)]" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)' }}
               >
-                <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative aspect-[16/10] overflow-hidden" style={{ background: "rgba(13,27,42,0.9)" }}>
                   {rp.image ? (
                     <Image
                       src={rp.image}
                       alt={rp.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain p-1.5 transition-transform duration-700 group-hover:scale-[1.02]"
                       unoptimized
                     />
                   ) : (
