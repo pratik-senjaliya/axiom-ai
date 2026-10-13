@@ -10,14 +10,18 @@ import {
   Briefcase,
   Users,
   Landmark,
+  Workflow,
+  Bot,
+  BarChart3,
+  Database,
+  Cog,
+  FileCheck,
   Search,
+  ListChecks,
   PenTool,
-  Code2,
-  ClipboardCheck,
+  Blocks,
+  TestTube2,
   Rocket,
-  Lightbulb,
-  MonitorSmartphone,
-  RefreshCw,
   type LucideIcon,
 } from "lucide-react";
 import { PortableText } from "@/components/ui/PortableText";
@@ -39,23 +43,23 @@ const CLIENT_ICONS: { match: RegExp; icon: LucideIcon }[] = [
   { match: /fintech|defi|platform/i, icon: Landmark },
 ];
 
-const SERVICE_ICONS = [Lightbulb, MonitorSmartphone, RefreshCw];
-const LIFECYCLE_ICONS = [Search, PenTool, Code2, ClipboardCheck, Rocket];
+const SOLUTION_ICONS = [Workflow, Bot, BarChart3, Database, Cog, FileCheck];
+const PILLAR_ICONS = [Shield, ListChecks, BarChart3, Cog, LineChart, Rocket];
+const PROCESS_ICONS = [Search, ListChecks, PenTool, Blocks, TestTube2, Rocket];
 
 function clientIcon(title: string): LucideIcon {
   return CLIENT_ICONS.find((entry) => entry.match.test(title))?.icon || Building2;
 }
 
-const IconBox = ({
-  children,
-  className = "mb-4",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
+const IconBox = ({ children }: { children: React.ReactNode }) => (
   <div
-    className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${className}`}
-    style={{ background: "rgba(0,229,255,0.12)", color: "#00E5FF" }}
+    className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border"
+    style={{
+      background: "rgba(0,229,255,0.1)",
+      color: "#00E5FF",
+      borderColor: "rgba(0,229,255,0.35)",
+      boxShadow: "0 0 16px rgba(0,229,255,0.18)",
+    }}
   >
     {children}
   </div>
@@ -78,12 +82,13 @@ const ContactCta = ({ href = "/contact" }: { href?: string }) => (
   </div>
 );
 
-/** Services section: 3 cards + solutions list + Contact CTA (solutions is part of services) */
+/**
+ * Doc design: vertical service cards (icon + title + details)
+ * SyncOrigins content: Finance Transformation Solutions
+ */
 export function IndustryServiceCards({
   title,
   items,
-  solutionsTitle,
-  solutions,
 }: {
   title: string;
   items: Item[];
@@ -96,21 +101,21 @@ export function IndustryServiceCards({
         <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10 tracking-tight max-w-3xl mx-auto">
           {title}
         </h2>
-        <StaggerGroup className="grid md:grid-cols-3 gap-5 md:gap-6">
-          {items.slice(0, 3).map((item, index) => {
-            const Icon = SERVICE_ICONS[index % SERVICE_ICONS.length];
+        <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          {items.map((item, index) => {
+            const Icon = SOLUTION_ICONS[index % SOLUTION_ICONS.length];
             return (
               <StaggerItem key={item.title}>
                 <HoverCard
-                  className="h-full rounded-2xl border p-6 md:p-7 text-center"
-                  style={{ background: "rgba(26,46,71,0.65)", borderColor: "rgba(0,229,255,0.14)" }}
+                  className="h-full rounded-2xl border p-6 md:p-7 text-left flex flex-col"
+                  style={{ background: "rgba(26,46,71,0.7)", borderColor: "rgba(0,229,255,0.16)" }}
                 >
-                  <IconBox className="mb-4 mx-auto">
-                    <Icon className="w-5 h-5" strokeWidth={1.75} />
+                  <IconBox>
+                    <Icon className="w-6 h-6" strokeWidth={1.75} />
                   </IconBox>
                   <p className="text-lg font-bold text-white mb-3 leading-snug">{item.title}</p>
                   {item.description && (
-                    <div className="text-sm leading-relaxed" style={{ color: "#8FA3BF" }}>
+                    <div className="text-sm leading-relaxed flex-grow" style={{ color: "#8FA3BF" }}>
                       <PortableText value={item.description} />
                     </div>
                   )}
@@ -119,44 +124,13 @@ export function IndustryServiceCards({
             );
           })}
         </StaggerGroup>
-
-        {solutions && solutions.length > 0 && (
-          <div className="mt-12 md:mt-14">
-            {solutionsTitle && (
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-6 tracking-tight">
-                {solutionsTitle}
-              </h3>
-            )}
-            <div className="grid sm:grid-cols-2 gap-x-10 gap-y-4">
-              {solutions.map((item) => (
-                <div key={item.title} className="flex items-start gap-3 py-2 border-b border-white/5">
-                  <span
-                    className="mt-2 h-1.5 w-1.5 rounded-full shrink-0"
-                    style={{ background: "#00E5FF" }}
-                  />
-                  <div>
-                    <p className="font-bold text-white text-base" style={{ color: "#00E5FF" }}>
-                      {item.title}
-                    </p>
-                    {item.description && (
-                      <div className="text-sm mt-1 leading-relaxed" style={{ color: "#C5D1E0" }}>
-                        <PortableText value={item.description} />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
         <ContactCta />
       </div>
     </section>
   );
 }
 
-/** @deprecated — solutions now live inside IndustryServiceCards */
+/** @deprecated */
 export function IndustrySolutionsList() {
   return null;
 }
@@ -197,13 +171,14 @@ export function IndustryClientsGrid({ title, items }: { title: string; items: It
   );
 }
 
-/** Pillars + Business Outcomes (outcomes is part of this section, not separate) + Contact CTA */
+/**
+ * Doc design: How We Drive Success — vertical cards with details
+ * SyncOrigins content: Business Outcomes
+ */
 export function IndustryPillars({
   title,
   description,
   items,
-  outcomesTitle,
-  outcomes,
 }: {
   title: string;
   description?: any;
@@ -222,50 +197,36 @@ export function IndustryPillars({
             </div>
           )}
         </div>
-        <StaggerGroup className="grid md:grid-cols-3 gap-6 md:gap-8">
-          {items.map((item) => (
-            <StaggerItem key={item.title}>
-              <div className="text-center px-2">
-                <IconBox className="mb-4 mx-auto">
-                  <Shield className="w-5 h-5" strokeWidth={1.75} />
-                </IconBox>
-                <p className="text-lg font-bold text-white mb-2">{item.title}</p>
-                {item.description && (
-                  <div className="text-sm leading-relaxed" style={{ color: "#8FA3BF" }}>
-                    <PortableText value={item.description} />
-                  </div>
-                )}
-              </div>
-            </StaggerItem>
-          ))}
+        <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          {items.map((item, index) => {
+            const Icon = PILLAR_ICONS[index % PILLAR_ICONS.length];
+            return (
+              <StaggerItem key={item.title}>
+                <HoverCard
+                  className="h-full rounded-2xl border p-6 md:p-7 text-left flex flex-col"
+                  style={{ background: "rgba(26,46,71,0.7)", borderColor: "rgba(0,229,255,0.16)" }}
+                >
+                  <IconBox>
+                    <Icon className="w-6 h-6" strokeWidth={1.75} />
+                  </IconBox>
+                  <p className="text-lg font-bold text-white mb-3 leading-snug">{item.title}</p>
+                  {item.description && (
+                    <div className="text-sm leading-relaxed flex-grow" style={{ color: "#8FA3BF" }}>
+                      <PortableText value={item.description} />
+                    </div>
+                  )}
+                </HoverCard>
+              </StaggerItem>
+            );
+          })}
         </StaggerGroup>
-
-        {outcomes && outcomes.length > 0 && (
-          <div className="mt-12 md:mt-14 max-w-4xl mx-auto">
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-5 tracking-tight">
-              {outcomesTitle || "Business Outcomes"}
-            </h3>
-            <ul className="grid sm:grid-cols-2 gap-x-10 gap-y-3">
-              {outcomes.map((item) => (
-                <li key={item.title} className="flex items-start gap-3">
-                  <span
-                    className="mt-2 h-1.5 w-1.5 rounded-full shrink-0"
-                    style={{ background: "#00E5FF" }}
-                  />
-                  <span className="text-base font-medium text-white leading-snug">{item.title}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
         <ContactCta />
       </div>
     </section>
   );
 }
 
-/** @deprecated — outcomes now live inside IndustryPillars */
+/** @deprecated */
 export function IndustryOutcomes() {
   return null;
 }
@@ -382,8 +343,19 @@ export function IndustrySuccessStories({
   );
 }
 
-/** Mockup: 5-stage lifecycle with circular icons */
-export function IndustryLifecycle({ title, items }: { title: string; items: Item[] }) {
+/**
+ * Doc design: Lifecycle circular stages
+ * SyncOrigins content: Process & Delivery steps (fills that design)
+ */
+export function IndustryLifecycle({
+  title,
+  items,
+}: {
+  title: string;
+  items: Item[];
+  processTitle?: string;
+  process?: Item[];
+}) {
   return (
     <section className="py-16 md:py-20" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
@@ -392,16 +364,16 @@ export function IndustryLifecycle({ title, items }: { title: string; items: Item
         </h2>
         <div className="relative">
           <div
-            className="hidden lg:block absolute top-7 left-[8%] right-[8%] h-px"
+            className="hidden lg:block absolute top-8 left-[6%] right-[6%] h-px"
             style={{ background: "rgba(0,229,255,0.25)" }}
           />
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 md:gap-4">
-            {items.slice(0, 5).map((item, index) => {
-              const Icon = LIFECYCLE_ICONS[index % LIFECYCLE_ICONS.length];
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+            {items.map((item, index) => {
+              const Icon = PROCESS_ICONS[index % PROCESS_ICONS.length];
               return (
                 <div key={item.title} className="text-center relative z-10">
                   <div
-                    className="mx-auto mb-3 h-14 w-14 rounded-full flex items-center justify-center border-2"
+                    className="mx-auto mb-3 h-16 w-16 rounded-full flex items-center justify-center border-2"
                     style={{
                       background: "#0A0F1F",
                       borderColor: "#00E5FF",
@@ -409,8 +381,11 @@ export function IndustryLifecycle({ title, items }: { title: string; items: Item
                       boxShadow: "0 0 18px rgba(0,229,255,0.2)",
                     }}
                   >
-                    <Icon className="w-5 h-5" strokeWidth={1.75} />
+                    <Icon className="w-6 h-6" strokeWidth={1.75} />
                   </div>
+                  <p className="text-[11px] font-extrabold mb-1" style={{ color: "#00E5FF" }}>
+                    {String(index + 1).padStart(2, "0")}
+                  </p>
                   <p className="text-sm font-bold text-white mb-1.5 leading-snug">{item.title}</p>
                   {item.description && (
                     <div className="text-[11px] leading-relaxed px-1" style={{ color: "#8FA3BF" }}>
@@ -427,36 +402,9 @@ export function IndustryLifecycle({ title, items }: { title: string; items: Item
   );
 }
 
-/** Mockup: Process as numbered vertical/compact steps list */
-export function IndustryProcess({ title, items }: { title: string; items: Item[] }) {
-  return (
-    <section className="py-16 md:py-20" style={{ background: "#0A0F1F" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 tracking-tight">{title}</h2>
-        <ol className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-          {items.map((item, index) => (
-            <li
-              key={item.title}
-              className="rounded-xl border px-4 py-4 flex gap-3"
-              style={{ background: "rgba(26,46,71,0.45)", borderColor: "rgba(0,229,255,0.12)" }}
-            >
-              <span className="text-sm font-extrabold shrink-0" style={{ color: "#00E5FF" }}>
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <p className="text-sm font-bold text-white mb-1">{item.title}</p>
-                {item.description && (
-                  <div className="text-xs leading-relaxed" style={{ color: "#8FA3BF" }}>
-                    <PortableText value={item.description} />
-                  </div>
-                )}
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
+/** @deprecated */
+export function IndustryProcess() {
+  return null;
 }
 
 /** Mockup: Why Choose — visual left + benefits list right */

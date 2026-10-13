@@ -12,7 +12,6 @@ import {
   IndustryPillars,
   IndustrySuccessStories,
   IndustryLifecycle,
-  IndustryProcess,
   IndustryWhyUs,
 } from "@/components/industries/IndustrySection";
 import { getFinancePage, getLatestPostsByService, getAllPosts } from "@/lib/sanity/queries";
@@ -108,12 +107,10 @@ export default async function FinancePage() {
         items={mapItems(data.challenges)}
       />
 
-      {/* Services includes solutions list + Contact us CTA */}
+      {/* Services slot → real Solutions content (placeholders removed) */}
       <IndustryServiceCards
-        title={data.servicesHeadline || "Our Custom Finance Software Development Services"}
-        items={mapItems(data.services?.length ? data.services : DEMO_FINANCE_PAGE.services)}
-        solutionsTitle={data.solutionsHeadline || "Our Finance Transformation Solutions"}
-        solutions={mapItems(data.solutions)}
+        title={data.solutionsHeadline || "Our Finance Transformation Solutions"}
+        items={mapItems(data.solutions)}
       />
 
       <IndustryClientsGrid
@@ -121,13 +118,11 @@ export default async function FinancePage() {
         items={mapItems(data.clients)}
       />
 
-      {/* Pillars includes Business Outcomes + Contact us CTA */}
+      {/* How We Drive Success slot → real Outcomes content (pillars placeholders removed) */}
       <IndustryPillars
         title={data.pillarsHeadline || "How We Drive the Success of Your Finance Transformation"}
         description={data.pillarsDescription}
-        items={mapItems(data.pillars?.length ? data.pillars : DEMO_FINANCE_PAGE.pillars)}
-        outcomesTitle={data.outcomesHeadline || "Business Outcomes"}
-        outcomes={mapItems(data.outcomes)}
+        items={mapItems(data.outcomes)}
       />
 
       <IndustrySuccessStories
@@ -135,12 +130,8 @@ export default async function FinancePage() {
         stories={data.successStories || []}
       />
 
+      {/* Process slot → real Process & Delivery content (lifecycle placeholders removed) */}
       <IndustryLifecycle
-        title={data.lifecycleHeadline || "Our Finance Lifecycle and Delivery Model"}
-        items={mapItems(data.lifecycle?.length ? data.lifecycle : DEMO_FINANCE_PAGE.lifecycle)}
-      />
-
-      <IndustryProcess
         title={data.processHeadline || "Finance Transformation Process & Delivery"}
         items={mapItems(data.process)}
       />
