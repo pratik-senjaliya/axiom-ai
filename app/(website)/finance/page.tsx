@@ -35,12 +35,6 @@ function mergeFinanceData(cms: any) {
   if (!merged.hero.secondaryCta) merged.hero.secondaryCta = fallback.hero.secondaryCta;
   merged.finalCta = { ...fallback.finalCta, ...(cms.finalCta || {}) };
   if (!merged.seo) merged.seo = fallback.seo;
-  // Always drop the removed "70+" metric if present in CMS
-  if (Array.isArray(merged.heroMetrics)) {
-    merged.heroMetrics = merged.heroMetrics.filter(
-      (m: any) => !String(m?.value || "").includes("70") && !/programs supported/i.test(m?.label || "")
-    );
-  }
   return merged;
 }
 
@@ -99,7 +93,6 @@ export default async function FinancePage() {
           { label: "Industries" },
           { label: "Finance" },
         ]}
-        metrics={data.heroMetrics || DEMO_FINANCE_PAGE.heroMetrics}
       />
 
       <IndustryChallengePanel

@@ -103,6 +103,21 @@ export default defineType({
       initialValue: 'About the Client',
     }),
     defineField({
+      name: 'aboutClientImage',
+      title: 'About Client Image',
+      type: 'image',
+      group: 'about',
+      options: { hotspot: true },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative Text',
+        },
+      ],
+      description: 'Shown beside the About the Client copy. Falls back to Main Image if empty.',
+    }),
+    defineField({
       name: 'aboutClient',
       title: 'About the Client',
       type: 'simpleBlockContent',

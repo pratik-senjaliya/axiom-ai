@@ -29,6 +29,8 @@ function mergeCaseStudy(cms: any, slug: string) {
       ...DEMO_CASE_STUDY_VIEW,
       ...cms,
       heroStats: cms.heroStats?.length ? cms.heroStats : DEMO_CASE_STUDY_VIEW.heroStats,
+      aboutClientImage: cms.aboutClientImage || DEMO_CASE_STUDY_VIEW.aboutClientImage,
+      aboutClientImageAlt: cms.aboutClientImageAlt || DEMO_CASE_STUDY_VIEW.aboutClientImageAlt,
       challengeItems: cms.challengeItems?.length
         ? cms.challengeItems
         : DEMO_CASE_STUDY_VIEW.challengeItems,
@@ -100,6 +102,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <CaseStudyAbout
           title={study.aboutClientHeadline || "About the Client"}
           content={study.aboutClient}
+          image={study.aboutClientImage || study.image}
+          imageAlt={study.aboutClientImageAlt || study.imageAlt || study.title}
         />
       )}
 

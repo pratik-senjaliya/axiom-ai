@@ -7,7 +7,7 @@ import { getNavigationServices, getSettings } from "@/lib/sanity/queries";
 import { portableTextToPlain } from "@/lib/seo";
 
 const DEFAULT_DESCRIPTION =
-  "Enterprise AI, ERP & Data advisory. Building the future of intelligent enterprise.";
+  "Enterprise AI, ERP & Data engineering. Building the future of intelligent enterprise.";
 
 const DEFAULT_SOCIAL_LINKS = [
   { platform: "email", url: "mailto:hello@syncorigins.com" },
@@ -70,6 +70,9 @@ function getPlatformLabel(platform: string) {
   }
 }
 
+const linkClass = "text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]";
+const headingClass = "text-[#8FA3BF] font-semibold mb-4 text-[12px] uppercase tracking-wider";
+
 export async function Footer() {
   const [dynamicServices, settings] = await Promise.all([
     getNavigationServices(),
@@ -88,12 +91,13 @@ export async function Footer() {
     `© ${new Date().getFullYear()} ${companyName}. All rights reserved.`;
 
   return (
-    <footer className="bg-[#0D1B2A] text-[#C5D1E0] py-16 border-t border-[#00E5FF]/10">
+    <footer className="bg-[#0D1B2A] text-[#C5D1E0] py-10 md:py-12 border-t border-[#00E5FF]/10">
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16 justify-items-start">
-          <div className="md:col-span-5 lg:col-span-4 pr-4 flex flex-col items-start text-left">
-            <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="relative w-48 h-20">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-8 md:gap-6 mb-10">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-4 flex flex-col items-start text-left">
+            <Link href="/" className="flex items-center gap-3 mb-4">
+              <div className="relative w-40 h-14">
                 <Image
                   src="/SyncOrigin_Logo.png"
                   alt={`${companyName} Logo`}
@@ -102,17 +106,17 @@ export async function Footer() {
                 />
               </div>
             </Link>
-            <p className="text-sm text-[#8FA3BF] mb-8 max-w-[280px] leading-relaxed whitespace-pre-line">
+            <p className="text-sm text-[#8FA3BF] mb-5 max-w-[260px] leading-relaxed whitespace-pre-line">
               {footerDescription}
             </p>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               {socialLinks.map((link: { platform: string; url: string }, index: number) => (
                 <a
                   key={`${link.platform}-${index}`}
                   href={getSocialHref(link.platform, link.url)}
                   target={link.platform === "email" ? undefined : "_blank"}
                   rel={link.platform === "email" ? undefined : "noopener noreferrer"}
-                  className="w-10 h-10 rounded-[12px] bg-[#14243A] border border-[#00E5FF]/15 flex items-center justify-center text-[#8FA3BF] hover:border-[#00E5FF]/40 hover:text-[#00E5FF] transition-all"
+                  className="w-9 h-9 rounded-[10px] bg-[#14243A] border border-[#00E5FF]/15 flex items-center justify-center text-[#8FA3BF] hover:border-[#00E5FF]/40 hover:text-[#00E5FF] transition-all"
                 >
                   <SocialIcon platform={link.platform} />
                   <span className="sr-only">{getPlatformLabel(link.platform)}</span>
@@ -121,46 +125,54 @@ export async function Footer() {
             </div>
           </div>
 
-          <div className="md:col-start-7 lg:col-start-7 md:col-span-3">
-            <p className="text-[#8FA3BF] font-semibold mb-6 text-[13px] uppercase tracking-wider">Services</p>
-            <ul className="space-y-4">
-              <li><Link href="/ai-implementation" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">AI Implementation</Link></li>
-              <li><Link href="/erp-transformation" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">ERP Transformation</Link></li>
-              <li><Link href="/data-analytics" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Data & Analytics</Link></li>
-              <li><Link href="/managed-delivery" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Managed Delivery</Link></li>
-              <li><Link href="/sustainability" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">AI for Sustainable Operations</Link></li>
+          {/* Services */}
+          <div className="md:col-span-3">
+            <p className={headingClass}>Services</p>
+            <ul className="space-y-2.5">
+              <li><Link href="/ai-implementation" className={linkClass}>AI Implementation</Link></li>
+              <li><Link href="/erp-transformation" className={linkClass}>ERP Transformation</Link></li>
+              <li><Link href="/data-analytics" className={linkClass}>Data & Analytics</Link></li>
+              <li><Link href="/managed-delivery" className={linkClass}>Managed Delivery</Link></li>
+              <li><Link href="/sustainability" className={linkClass}>AI for Sustainable Operations</Link></li>
               {dynamicServices.map((service) => (
                 <li key={service.slug}>
-                  <Link href={`/${service.slug}`} className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">
+                  <Link href={`/${service.slug}`} className={linkClass}>
                     {service.title}
                   </Link>
                 </li>
               ))}
             </ul>
-            <p className="text-[#8FA3BF] font-semibold mb-4 mt-8 text-[13px] uppercase tracking-wider">Industries</p>
-            <ul className="space-y-4">
-              <li><Link href="/finance" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Finance</Link></li>
+          </div>
+
+          {/* Industries — own column between Services and Company */}
+          <div className="md:col-span-2">
+            <p className={headingClass}>Industries</p>
+            <ul className="space-y-2.5">
+              <li><Link href="/finance" className={linkClass}>Finance</Link></li>
             </ul>
           </div>
 
-          <div className="md:col-start-10 lg:col-start-10 md:col-span-3">
-            <p className="text-[#8FA3BF] font-semibold mb-6 text-[13px] uppercase tracking-wider">Company</p>
-            <ul className="space-y-4">
-              <li><Link href="/about" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">About</Link></li>
-              <li><Link href="/solutions" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Solutions</Link></li>
-              <li><Link href="/insights" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Insights</Link></li>
-              <li><Link href="/contact" className="text-sm hover:text-[#00E5FF] transition-colors text-[#C5D1E0]">Contact</Link></li>
+          {/* Company */}
+          <div className="md:col-span-3">
+            <p className={headingClass}>Company</p>
+            <ul className="space-y-2.5">
+              <li><Link href="/about" className={linkClass}>About</Link></li>
+              <li><Link href="/solutions" className={linkClass}>Solutions</Link></li>
+              <li><Link href="/insights" className={linkClass}>Insights</Link></li>
+              <li><Link href="/contact" className={linkClass}>Contact</Link></li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-[#00E5FF]/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
-            <p className="text-sm text-[#8FA3BF]">{copyrightText}</p>
-          </div>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy-policy" className="text-sm text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">Privacy Policy</Link>
-            <Link href="/terms-of-usage" className="text-sm text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">Terms of Service</Link>
+        <div className="border-t border-[#00E5FF]/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+          <p className="text-sm text-[#8FA3BF]">{copyrightText}</p>
+          <div className="flex items-center gap-5">
+            <Link href="/privacy-policy" className="text-sm text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-of-usage" className="text-sm text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">
+              Terms of Service
+            </Link>
           </div>
         </div>
       </Container>

@@ -17,6 +17,9 @@ export const DEMO_CASE_STUDY = {
     { value: "Fewer", label: "Manual reconciliations" },
   ],
   aboutClientHeadline: "About the Client",
+  aboutClientImage:
+    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop",
+  aboutClientImageAlt: "Enterprise finance headquarters",
   aboutClient: pt(
     "A multi-entity enterprise with regional finance teams and a shared service center supporting close, consolidations, and management reporting. Leadership needed a faster, more controlled close without disrupting ERP investments already in place."
   ),
@@ -76,6 +79,8 @@ export const DEMO_CASE_STUDY_VIEW = {
   heroStats: DEMO_CASE_STUDY.heroStats,
   aboutClientHeadline: DEMO_CASE_STUDY.aboutClientHeadline,
   aboutClient: DEMO_CASE_STUDY.aboutClient,
+  aboutClientImage: DEMO_CASE_STUDY.aboutClientImage,
+  aboutClientImageAlt: DEMO_CASE_STUDY.aboutClientImageAlt,
   challengeHeadline: DEMO_CASE_STUDY.challengeHeadline,
   challengeItems: DEMO_CASE_STUDY.challengeItems,
   approachHeadline: DEMO_CASE_STUDY.approachHeadline,

@@ -723,6 +723,8 @@ export async function getCaseStudyBySlug(slug: string): Promise<any> {
     heroStats[] { value, label },
     aboutClientHeadline,
     aboutClient,
+    "aboutClientImage": coalesce(aboutClientImage.asset->url, mainImage.asset->url),
+    "aboutClientImageAlt": coalesce(aboutClientImage.alt, mainImage.alt),
     challengeHeadline,
     challengeItems,
     challenge,
