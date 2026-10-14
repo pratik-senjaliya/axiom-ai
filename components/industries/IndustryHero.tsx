@@ -38,7 +38,7 @@ export function IndustryHero({
 }: IndustryHeroProps) {
   return (
     <section
-      className="relative min-h-[70vh] pt-32 pb-14 flex flex-col items-center justify-center overflow-hidden text-center"
+      className="relative min-h-[70vh] pt-32 pb-20 md:pb-24 flex flex-col items-center justify-center overflow-hidden text-center"
       style={{ background: "linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)" }}
     >
       <div className="bg-grid opacity-60 z-0" />

@@ -35,8 +35,7 @@ export const BLOG_INDUSTRY_CATEGORIES: { label: string; value: string }[] = [
   { label: "Finance", value: "finance" },
   { label: "Retail", value: "retail" },
   { label: "Manufacturing", value: "manufacturing" },
-  { label: "Healthcare", value: "healthcare" },
-  { label: "Logistics", value: "logistics" },
+  { label: "Housing", value: "housing" },
 ];
 
 export const BLOG_FILTER_CATEGORIES = [

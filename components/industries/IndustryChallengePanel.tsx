@@ -38,9 +38,9 @@ export function IndustryChallengePanel({
   if (!items?.length) return null;
 
   return (
-    <section className="py-16 md:py-20" style={{ background: "#0A0F1F" }}>
+    <section className="py-24" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10 tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12 tracking-tight">
           {title}
         </h2>
 
