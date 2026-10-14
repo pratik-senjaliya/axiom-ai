@@ -65,12 +65,26 @@ export default defineType({
       group: 'hero',
       options: {
         list: [
-          { title: 'Finance', value: 'finance' },
           { title: 'AI Implementation', value: 'ai' },
           { title: 'ERP Transformation', value: 'erp' },
           { title: 'Data & Analytics', value: 'data' },
           { title: 'Managed Delivery', value: 'managed' },
           { title: 'Sustainability', value: 'sustainability' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'relatedIndustry',
+      title: 'Related Industry',
+      type: 'string',
+      group: 'hero',
+      options: {
+        list: [
+          { title: 'Finance', value: 'finance' },
+          { title: 'Retail', value: 'retail' },
+          { title: 'Manufacturing', value: 'manufacturing' },
+          { title: 'Healthcare', value: 'healthcare' },
+          { title: 'Logistics', value: 'logistics' },
         ],
       },
     }),

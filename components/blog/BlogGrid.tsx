@@ -3,9 +3,8 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { BlogPost } from "@/lib/blog";
+import { BlogPost, BLOG_SERVICE_CATEGORIES, BLOG_INDUSTRY_CATEGORIES, postMatchesCategory } from "@/lib/blog";
 import { BlogCard } from "./BlogCard";
-import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 
 import { PortableText } from "@/components/ui/PortableText";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
@@ -27,14 +26,6 @@ const SparkleIcon = () => (
 export function BlogGrid({ posts, categories, initialCategory = "All", pageData }: BlogGridProps) {
   const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState(initialCategory);
-
-  const serviceMap: { [key: string]: string } = {
-    "AI Implementation": "ai",
-    "ERP Transformation": "erp",
-    "Data & Analytics": "data",
-    "Managed Delivery": "managed",
-    "Sustainability": "sustainability"
-  };
 
   // Sync with URL
   useEffect(() => {
@@ -59,13 +50,19 @@ export function BlogGrid({ posts, categories, initialCategory = "All", pageData 
 
   const filteredPosts = useMemo(() => {
     if (activeCategory === "All") return posts;
-    return posts.filter((p) => p.relatedService === serviceMap[activeCategory]);
+    return posts.filter((p) => postMatchesCategory(p, activeCategory));
   }, [posts, activeCategory]);
 
   const featuredPost = filteredPosts.length > 0 ? filteredPosts[0] : null;
   const gridPosts = filteredPosts.slice(1);
 
-  const allCategories = ["All", ...categories.filter(c => c && c !== "All")];
+  const serviceLabels = BLOG_SERVICE_CATEGORIES.map((c) => c.label).filter((l) =>
+    categories.includes(l)
+  );
+  const industryLabels = BLOG_INDUSTRY_CATEGORIES.map((c) => c.label).filter((l) =>
+    categories.includes(l)
+  );
+  const allCategories = ["All", ...serviceLabels, ...industryLabels];
 
   return (
     <div className="w-full">
@@ -96,32 +93,38 @@ export function BlogGrid({ posts, categories, initialCategory = "All", pageData 
             <PortableText value={pageData?.description} />
           </div>
 
-          {/* ── Filter Bar (Moved into Hero) ── */}
-          <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 relative z-20 mx-auto">
-            {allCategories.map((category) => (
-              <button
-                key={category}
-                onClick={() => handleCategoryClick(category)}
-                className="px-6 py-2.5 rounded-full text-[0.7rem] font-bold uppercase tracking-widest transition-all duration-300 border flex-shrink-0"
-                style={
-                  activeCategory === category
-                    ? {
-                        background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)',
-                        color: '#0A0F1F',
-                        borderColor: 'transparent',
-                        boxShadow: '0 0 20px rgba(0,229,255,0.3)',
-                        transform: 'scale(1.05)',
-                      }
-                    : {
-                        background: 'rgba(20,36,58,0.7)',
-                        borderColor: 'rgba(0,229,255,0.1)',
-                        color: '#8FA3BF',
-                      }
-                }
-              >
-                {category}
-              </button>
-            ))}
+          {/* ── Filter Bar: Services + Industries ── */}
+          <div className="flex flex-col items-center gap-4 relative z-20 mx-auto w-full max-w-5xl">
+            <div className="flex flex-wrap justify-center items-center gap-2.5 md:gap-3">
+              {allCategories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => handleCategoryClick(category)}
+                  className="px-5 py-2 rounded-full text-[0.65rem] font-bold uppercase tracking-widest transition-all duration-300 border flex-shrink-0"
+                  style={
+                    activeCategory === category
+                      ? {
+                          background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)',
+                          color: '#0A0F1F',
+                          borderColor: 'transparent',
+                          boxShadow: '0 0 20px rgba(0,229,255,0.3)',
+                        }
+                      : {
+                          background: 'rgba(20,36,58,0.7)',
+                          borderColor: 'rgba(0,229,255,0.1)',
+                          color: '#8FA3BF',
+                        }
+                  }
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+            {industryLabels.length > 0 && (
+              <p className="text-[10px] uppercase tracking-[0.2em] font-semibold" style={{ color: '#5A6F8A' }}>
+                Services · Industries
+              </p>
+            )}
           </div>
         </SlideUp>
       </section>

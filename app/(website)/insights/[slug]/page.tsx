@@ -44,36 +44,47 @@ const slugify = (text: string) =>
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-const SERVICE_CTAS: Record<string, any> = {
+const SERVICE_CTAS: Record<string, {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonHref: string;
+}> = {
   ai: {
     title: "Ready to Scale with Enterprise AI?",
     description: "Supercharge your operations with custom AI agents and automation. Book a strategy call today.",
     buttonText: "Launch Your AI Strategy",
-    buttonHref: "/ai-implementation",
+    buttonHref: "/contact",
   },
   erp: {
     title: "Accelerate Your ERP Transformation",
     description: "Empower your organization with modern ERP solutions and seamless system integration.",
     buttonText: "Start Your ERP Journey",
-    buttonHref: "/erp-transformation",
+    buttonHref: "/contact",
   },
   data: {
     title: "Unlock the Power of Your Data",
     description: "Turn raw data into actionable insights with enterprise analytics and predictive modeling.",
     buttonText: "Get Data-Driven Insights",
-    buttonHref: "/data-analytics",
+    buttonHref: "/contact",
   },
   managed: {
     title: "Expert Managed Delivery Services",
     description: "Scale your engineering and product teams with our high-performing managed delivery models.",
     buttonText: "Explore Delivery Models",
-    buttonHref: "/managed-delivery",
+    buttonHref: "/contact",
   },
   sustainability: {
     title: "Optimize for Sustainable Growth",
     description: "Leverage technology to drive ESG performance and long-term business resilience.",
     buttonText: "Build Sustainable Futures",
-    buttonHref: "/sustainability",
+    buttonHref: "/contact",
+  },
+  finance: {
+    title: "Ready to Transform Finance?",
+    description: "Modernize close, reporting, and finance operations with AI, data, and ERP expertise.",
+    buttonText: "Talk to Our Finance Experts",
+    buttonHref: "/contact",
   },
 };
 
@@ -83,6 +94,21 @@ const DEFAULT_CTA = {
   buttonText: "Book a Discovery Call",
   buttonHref: "/contact",
 };
+
+function resolvePostCta(post: any) {
+  const fromCms = post?.cta || {};
+  const fromService =
+    (post?.relatedService && SERVICE_CTAS[post.relatedService]) ||
+    (post?.relatedIndustry && SERVICE_CTAS[post.relatedIndustry]) ||
+    DEFAULT_CTA;
+
+  return {
+    title: fromCms.title || fromService.title,
+    description: fromCms.description || fromService.description,
+    buttonText: fromCms.buttonText || fromService.buttonText,
+    buttonHref: fromCms.buttonHref || fromService.buttonHref || "/contact",
+  };
+}
 
 export default async function BlogPostPage({ params }: BlogPageProps) {
   const { slug } = await params;
@@ -237,7 +263,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
 
               {/* CTA Widget */}
               {(() => {
-                const cta = (post.relatedService && SERVICE_CTAS[post.relatedService]) || DEFAULT_CTA;
+                const cta = resolvePostCta(post);
                 return (
                   <div className="p-8 rounded-[2rem] border text-white relative overflow-hidden group" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #14243A 100%)', borderColor: 'rgba(0,229,255,0.2)', boxShadow: '0 0 30px rgba(0,229,255,0.07)' }}>
                       <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" style={{ background: '#00E5FF' }} />
@@ -306,16 +332,24 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         </div>
       </section>
 
-      {/* 4. Bottom CTA Section - Dynamic based on service */}
+      {/* 4. Bottom CTA Section - CMS editable, defaults to /contact */}
       {(() => {
-        const cta = (post.relatedService && SERVICE_CTAS[post.relatedService]) || DEFAULT_CTA;
+        const cta = resolvePostCta(post);
+        const badge =
+          post.relatedIndustry === "finance"
+            ? "Finance"
+            : post.relatedService === "ai"
+              ? "AI Strategy"
+              : post.relatedService
+                ? String(post.relatedService).toUpperCase()
+                : "Enterprise AI";
         return (
           <DarkCTA 
             title={cta.title}
             description={cta.description}
             buttonText={cta.buttonText}
             buttonHref={cta.buttonHref}
-            badgeText={post.relatedService ? (post.relatedService === 'ai' ? "AI Strategy" : post.relatedService.toUpperCase()) : "Enterprise AI"}
+            badgeText={badge}
           />
         );
       })()}

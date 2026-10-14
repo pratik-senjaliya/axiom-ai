@@ -201,7 +201,7 @@ export function ContactForm({ data }: { data: any }) {
                     type="text"
                     name="name"
                     required
-                    placeholder=" Elon Musk"
+                    placeholder="John Doe"
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full px-5 py-2.5 rounded-xl font-medium outline-none transition-all placeholder:text-[#3E526D] text-sm"
@@ -214,7 +214,7 @@ export function ContactForm({ data }: { data: any }) {
                     type="email"
                     name="email"
                     required
-                    placeholder="elon@mars.com"
+                    placeholder="john@company.com"
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full px-5 py-2.5 rounded-xl font-medium outline-none transition-all placeholder:text-[#3E526D] text-sm"
@@ -229,7 +229,7 @@ export function ContactForm({ data }: { data: any }) {
                   <input
                     type="text"
                     name="company"
-                    placeholder="SpaceX"
+                    placeholder="Your company name"
                     value={formData.company}
                     onChange={handleChange}
                     className="w-full px-5 py-2.5 rounded-xl font-medium outline-none transition-all placeholder:text-[#3E526D] text-sm"

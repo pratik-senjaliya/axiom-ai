@@ -12,6 +12,50 @@ export interface BlogPost {
   imageAlt?: string;
   readTime: string;
   relatedService?: string;
+  relatedIndustry?: string;
+  cta?: {
+    title?: string;
+    description?: string;
+    buttonText?: string;
+    buttonHref?: string;
+  };
+}
+
+/** Service filters shown on Insights listing */
+export const BLOG_SERVICE_CATEGORIES: { label: string; value: string }[] = [
+  { label: "AI Implementation", value: "ai" },
+  { label: "ERP Transformation", value: "erp" },
+  { label: "Data & Analytics", value: "data" },
+  { label: "Managed Delivery", value: "managed" },
+  { label: "Sustainability", value: "sustainability" },
+];
+
+/** Industry filters shown on Insights listing */
+export const BLOG_INDUSTRY_CATEGORIES: { label: string; value: string }[] = [
+  { label: "Finance", value: "finance" },
+  { label: "Retail", value: "retail" },
+  { label: "Manufacturing", value: "manufacturing" },
+  { label: "Healthcare", value: "healthcare" },
+  { label: "Logistics", value: "logistics" },
+];
+
+export const BLOG_FILTER_CATEGORIES = [
+  ...BLOG_SERVICE_CATEGORIES,
+  ...BLOG_INDUSTRY_CATEGORIES,
+];
+
+export function getBlogFilterValue(label: string): string | undefined {
+  return BLOG_FILTER_CATEGORIES.find((c) => c.label === label)?.value;
+}
+
+export function postMatchesCategory(post: BlogPost, label: string): boolean {
+  const value = getBlogFilterValue(label);
+  if (!value) return false;
+  const isIndustry = BLOG_INDUSTRY_CATEGORIES.some((c) => c.value === value);
+  if (isIndustry) {
+    return post.relatedIndustry === value || post.relatedService === value;
+  }
+  return post.relatedService === value;
 }
 
 export const blogPosts: BlogPost[] = [

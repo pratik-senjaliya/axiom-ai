@@ -164,7 +164,8 @@ const caseStudy = {
   excerpt:
     "How SyncOrigins helped a multi-entity finance organization cut close cycle time and replace spreadsheet-heavy reconciliations with governed automation.",
   publishedAt: "2025-11-12T10:00:00.000Z",
-  relatedService: "finance",
+  relatedService: "ai",
+  relatedIndustry: "finance",
   heroBadge: "Case Study · Finance",
   heroStats: [
     { _key: "hs1", value: "~40%", label: "Faster close cycle" },

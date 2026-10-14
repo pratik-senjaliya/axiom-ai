@@ -87,6 +87,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     "imageAlt": mainImage.alt,
     "readTime": coalesce(readTime, "5 min read"),
     "relatedService": relatedService,
+    "relatedIndustry": relatedIndustry,
     "content": ""
   }`
 
@@ -137,6 +138,8 @@ export async function getPostBySlug(slug: string): Promise<any> {
     ),
     "imageAlt": mainImage.alt,
     "relatedService": relatedService,
+    "relatedIndustry": relatedIndustry,
+    cta { title, description, buttonText, buttonHref },
     "readTime": coalesce(readTime, "5 min read"),
     "category": coalesce(category, "Insights"),
     faqs,
@@ -752,8 +755,9 @@ export async function getRelatedCaseStudies(slug: string, limit: number = 3): Pr
 
 // ==================== BLOG FILTERING ====================
 
+/** Posts for a service or industry page (matches relatedService or relatedIndustry). */
 export async function getLatestPostsByService(service: string, limit: number = 3): Promise<BlogPost[]> {
-  const query = `*[_type == "post" && relatedService == $service] | order(publishedAt desc) [0...$limit] {
+  const query = `*[_type == "post" && (relatedService == $service || relatedIndustry == $service)] | order(publishedAt desc) [0...$limit] {
     "id": _id,
     title,
     "slug": slug.current,
@@ -791,6 +795,8 @@ export async function getLatestPostsByService(service: string, limit: number = 3
         "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop"
       )
     ),
+    "relatedService": relatedService,
+    "relatedIndustry": relatedIndustry,
     "readTime": coalesce(readTime, "5 min read")
   }`
 
