@@ -14,7 +14,7 @@ import {
   IndustryLifecycle,
   IndustryWhyUs,
 } from "@/components/industries/IndustrySection";
-import { getFinancePage, getLatestPostsByService, getAllPosts } from "@/lib/sanity/queries";
+import { getFinancePage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
 import { DEMO_FINANCE_PAGE } from "@/lib/demo/financePage";
 
@@ -54,10 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function FinancePage() {
   const data = mergeFinanceData(await getFinancePage());
 
-  let relatedPosts = await getLatestPostsByService("finance");
-  if (!relatedPosts?.length) {
-    relatedPosts = ((await getAllPosts()) || []).slice(0, 3);
-  }
+  const relatedPosts = await getLatestPostsByService("finance");
 
   const mapItems = (items: any[] = []) =>
     items.map((item: any) => ({ title: item.title, description: item.description }));

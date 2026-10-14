@@ -94,37 +94,30 @@ export function BlogGrid({ posts, categories, initialCategory = "All", pageData 
           </div>
 
           {/* ── Filter Bar: Services + Industries ── */}
-          <div className="flex flex-col items-center gap-4 relative z-20 mx-auto w-full max-w-5xl">
-            <div className="flex flex-wrap justify-center items-center gap-2.5 md:gap-3">
-              {allCategories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => handleCategoryClick(category)}
-                  className="px-5 py-2 rounded-full text-[0.65rem] font-bold uppercase tracking-widest transition-all duration-300 border flex-shrink-0"
-                  style={
-                    activeCategory === category
-                      ? {
-                          background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)',
-                          color: '#0A0F1F',
-                          borderColor: 'transparent',
-                          boxShadow: '0 0 20px rgba(0,229,255,0.3)',
-                        }
-                      : {
-                          background: 'rgba(20,36,58,0.7)',
-                          borderColor: 'rgba(0,229,255,0.1)',
-                          color: '#8FA3BF',
-                        }
-                  }
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-            {industryLabels.length > 0 && (
-              <p className="text-[10px] uppercase tracking-[0.2em] font-semibold" style={{ color: '#5A6F8A' }}>
-                Services · Industries
-              </p>
-            )}
+          <div className="flex flex-wrap justify-center items-center gap-2.5 md:gap-3 relative z-20 mx-auto w-full max-w-5xl">
+            {allCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategoryClick(category)}
+                className="px-5 py-2 rounded-full text-[0.65rem] font-bold uppercase tracking-widest transition-all duration-300 border flex-shrink-0"
+                style={
+                  activeCategory === category
+                    ? {
+                        background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)',
+                        color: '#0A0F1F',
+                        borderColor: 'transparent',
+                        boxShadow: '0 0 20px rgba(0,229,255,0.3)',
+                      }
+                    : {
+                        background: 'rgba(20,36,58,0.7)',
+                        borderColor: 'rgba(0,229,255,0.1)',
+                        color: '#8FA3BF',
+                      }
+                }
+              >
+                {category}
+              </button>
+            ))}
           </div>
         </SlideUp>
       </section>
