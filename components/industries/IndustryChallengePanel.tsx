@@ -1,13 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import {
+  ServerCrash,
+  Network,
+  ClipboardList,
+  Clock3,
+  ShieldAlert,
+  Bot,
+  type LucideIcon,
+} from "lucide-react";
 import { PortableText } from "@/components/ui/PortableText";
-import { cn } from "@/lib/utils";
+import { HoverCard } from "@/components/ui/animations/HoverCard";
+import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 
 type ChallengeItem = {
   title: string;
   description?: any;
 };
+
+const CHALLENGE_ICONS: LucideIcon[] = [
+  ServerCrash,
+  Network,
+  ClipboardList,
+  Clock3,
+  ShieldAlert,
+  Bot,
+];
 
 export function IndustryChallengePanel({
   title = "Finance Challenges We Solve",
@@ -16,54 +35,57 @@ export function IndustryChallengePanel({
   title?: string;
   items: ChallengeItem[];
 }) {
-  const [active, setActive] = useState(0);
   if (!items?.length) return null;
-  const current = items[active] || items[0];
 
   return (
     <section className="py-16 md:py-20" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-8 tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10 tracking-tight">
           {title}
         </h2>
 
-        <div
-          className="grid lg:grid-cols-2 rounded-2xl overflow-hidden border"
-          style={{ borderColor: "rgba(0,229,255,0.18)" }}
-        >
-          <div style={{ background: "#0D1B2A" }}>
-            {items.map((item, index) => (
-              <button
-                key={item.title}
-                type="button"
-                onClick={() => setActive(index)}
-                className={cn(
-                  "w-full text-left px-5 md:px-6 py-3.5 border-b transition-all text-sm",
-                  active === index ? "font-bold" : "font-medium hover:bg-white/5"
-                )}
-                style={{
-                  borderColor: "rgba(0,229,255,0.1)",
-                  color: active === index ? "#FFFFFF" : "#8FA3BF",
-                  background: active === index ? "rgba(0,229,255,0.08)" : "transparent",
-                  borderLeft: active === index ? "3px solid #00E5FF" : "3px solid transparent",
-                }}
-              >
-                {item.title}
-              </button>
-            ))}
-          </div>
-
-          <div className="p-5 md:p-7" style={{ background: "rgba(0,229,255,0.06)" }}>
-            <p className="text-lg font-bold text-white mb-3">{current.title}</p>
-            <div className="text-sm md:text-base leading-relaxed" style={{ color: "#C5D1E0" }}>
-              {current.description ? (
-                <PortableText value={current.description} />
-              ) : (
-                <p>{current.title}</p>
-              )}
-            </div>
-          </div>
-        </div>
+        <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          {items.map((item, index) => {
+            const Icon = CHALLENGE_ICONS[index % CHALLENGE_ICONS.length];
+            return (
+              <StaggerItem key={item.title}>
+                <HoverCard
+                  className="h-full rounded-2xl border p-6 md:p-7 text-left flex flex-col"
+                  style={{
+                    background: "rgba(26,46,71,0.7)",
+                    borderColor: "rgba(0,229,255,0.16)",
+                  }}
+                >
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <div
+                      className="inline-flex h-12 w-12 items-center justify-center rounded-xl border shrink-0"
+                      style={{
+                        background: "rgba(0,229,255,0.1)",
+                        color: "#00E5FF",
+                        borderColor: "rgba(0,229,255,0.35)",
+                        boxShadow: "0 0 16px rgba(0,229,255,0.18)",
+                      }}
+                    >
+                      <Icon className="w-6 h-6" strokeWidth={1.75} />
+                    </div>
+                    <span
+                      className="text-xs font-extrabold tracking-wider"
+                      style={{ color: "rgba(0,229,255,0.55)" }}
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <p className="text-lg font-bold text-white mb-3 leading-snug">{item.title}</p>
+                  {item.description && (
+                    <div className="text-sm leading-relaxed flex-grow" style={{ color: "#8FA3BF" }}>
+                      <PortableText value={item.description} />
+                    </div>
+                  )}
+                </HoverCard>
+              </StaggerItem>
+            );
+          })}
+        </StaggerGroup>
       </div>
     </section>
   );
