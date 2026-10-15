@@ -15,6 +15,7 @@ import {
   IndustryWhyUs,
 } from "@/components/industries/IndustrySection";
 import { getFinancePage, getLatestPostsByService } from "@/lib/sanity/queries";
+import { isFinanceListed } from "@/lib/content-visibility";
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
 import { DEMO_FINANCE_PAGE } from "@/lib/demo/financePage";
 
@@ -48,6 +49,8 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: data.seo?.metaKeywords,
     ogImage: data.seo?.openGraphImage,
     slug: "/finance",
+    noindex: !isFinanceListed(),
+    nofollow: !isFinanceListed(),
   });
 }
 

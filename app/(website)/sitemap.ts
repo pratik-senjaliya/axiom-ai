@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { client } from '@/lib/sanity/client'
 import { CORE_SERVICE_SLUGS } from '@/lib/core-services'
+import { areCaseStudiesListed, isFinanceListed } from '@/lib/content-visibility'
 
 // Revalidate sitemap every hour
 export const revalidate = 60
@@ -17,7 +18,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const [s, p, cs] = await Promise.all([
             client.fetch<string[]>(`*[_type == "service" && !(slug.current in $reserved)].slug.current`, { reserved: CORE_SERVICE_SLUGS }),
             client.fetch<string[]>(`*[_type == "post"].slug.current`),
-            client.fetch<string[]>(`*[_type == "caseStudy"].slug.current`),
+            areCaseStudiesListed()
+              ? client.fetch<string[]>(`*[_type == "caseStudy"].slug.current`)
+              : Promise.resolve([] as string[]),
         ]);
         serviceSlugs = s || [];
         postSlugs = p || [];
@@ -88,12 +91,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: 'monthly',
             priority: 0.8,
         },
-        {
-            url: `${baseUrl}/finance`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        },
+        ...(isFinanceListed()
+          ? [{
+              url: `${baseUrl}/finance`,
+              lastModified: new Date(),
+              changeFrequency: 'monthly' as const,
+              priority: 0.8,
+            }]
+          : []),
         {
             url: `${baseUrl}/privacy-policy`,
             lastModified: new Date(),

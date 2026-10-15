@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Linkedin, Mail, Youtube } from "lucide-react";
 import { getNavigationServices, getSettings } from "@/lib/sanity/queries";
+import { isFinanceListed } from "@/lib/content-visibility";
 import { portableTextToPlain } from "@/lib/seo";
 
 const DEFAULT_DESCRIPTION =
@@ -96,8 +97,8 @@ export async function Footer() {
       {/* Same container as Header — keeps left/right edges aligned */}
       <div className="container-custom">
         <div className="grid grid-cols-2 md:grid-cols-12 gap-10 md:gap-10 lg:gap-12 mb-12 md:mb-14 items-start">
-          {/* Brand — logo top-aligned with Services / Industries / Company headings */}
-          <div className="col-span-2 md:col-span-4 flex flex-col items-start text-left pr-0 md:pr-6">
+          {/* Brand */}
+          <div className={`col-span-2 ${isFinanceListed() ? "md:col-span-4" : "md:col-span-5"} flex flex-col items-start text-left pr-0 md:pr-6`}>
             <Link href="/" className="flex items-start mb-5 -mt-1.5">
               <div className="relative w-44 h-14 md:w-52 md:h-16">
                 <Image
@@ -129,7 +130,7 @@ export async function Footer() {
           </div>
 
           {/* Services */}
-          <div className="md:col-span-3">
+          <div className={isFinanceListed() ? "md:col-span-3" : "md:col-span-4"}>
             <p className={headingClass}>Services</p>
             <ul className="space-y-3.5">
               <li><Link href="/ai-implementation" className={linkClass}>AI Implementation</Link></li>
@@ -147,13 +148,15 @@ export async function Footer() {
             </ul>
           </div>
 
-          {/* Industries */}
-          <div className="md:col-span-2">
-            <p className={headingClass}>Industries</p>
-            <ul className="space-y-3.5">
-              <li><Link href="/finance" className={linkClass}>Finance</Link></li>
-            </ul>
-          </div>
+          {/* Industries — hidden until Finance (and other industries) are ready for launch */}
+          {isFinanceListed() && (
+            <div className="md:col-span-2">
+              <p className={headingClass}>Industries</p>
+              <ul className="space-y-3.5">
+                <li><Link href="/finance" className={linkClass}>Finance</Link></li>
+              </ul>
+            </div>
+          )}
 
           {/* Company */}
           <div className="md:col-span-3">

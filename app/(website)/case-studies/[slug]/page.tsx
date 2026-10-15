@@ -4,6 +4,7 @@ import { getCaseStudyBySlug, getRelatedCaseStudies } from "@/lib/sanity/queries"
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
+import { areCaseStudiesListed } from "@/lib/content-visibility";
 import { DEMO_CASE_STUDY_SLUG } from "@/lib/demo/financePage";
 import { DEMO_CASE_STUDY_VIEW } from "@/lib/demo/caseStudy";
 import {
@@ -54,8 +55,15 @@ async function resolveCaseStudy(slug: string) {
 export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
   const { slug } = await params;
   const study = await resolveCaseStudy(slug);
+  const hideFromSearch = !areCaseStudiesListed();
   if (!study) {
-    return genMeta({ title: "Case Study Not Found | SyncOrigins", description: "", slug: `/case-studies/${slug}` });
+    return genMeta({
+      title: "Case Study Not Found | SyncOrigins",
+      description: "",
+      slug: `/case-studies/${slug}`,
+      noindex: true,
+      nofollow: true,
+    });
   }
   return genMeta({
     title: study.seo?.metaTitle || `${study.title} | Case Study | SyncOrigins`,
@@ -64,6 +72,8 @@ export async function generateMetadata({ params }: CaseStudyPageProps): Promise<
     ogImage: study.seo?.openGraphImage || study.image,
     ogType: "article",
     slug: `/case-studies/${slug}`,
+    noindex: hideFromSearch,
+    nofollow: hideFromSearch,
   });
 }
 

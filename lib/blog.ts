@@ -1,3 +1,5 @@
+import { isFinanceListed } from "@/lib/content-visibility";
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -34,13 +36,17 @@ export const BLOG_SERVICE_CATEGORIES: { label: string; value: string }[] = [
   { label: "Sustainability", value: "sustainability" },
 ];
 
-/** Industry filters shown on Insights listing */
-export const BLOG_INDUSTRY_CATEGORIES: { label: string; value: string }[] = [
+/** Industry filters shown on Insights listing (Finance hidden until industry page launches) */
+const ALL_BLOG_INDUSTRY_CATEGORIES: { label: string; value: string }[] = [
   { label: "Finance", value: "finance" },
   { label: "Retail", value: "retail" },
   { label: "Manufacturing", value: "manufacturing" },
   { label: "Housing", value: "housing" },
 ];
+
+export const BLOG_INDUSTRY_CATEGORIES = ALL_BLOG_INDUSTRY_CATEGORIES.filter(
+  (c) => c.value !== "finance" || isFinanceListed()
+);
 
 export const BLOG_FILTER_CATEGORIES = [
   ...BLOG_SERVICE_CATEGORIES,
