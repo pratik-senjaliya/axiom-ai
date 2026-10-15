@@ -107,6 +107,28 @@ export default defineType({
         ],
       }],
     }),
+    defineField({
+      name: 'heroCta',
+      title: 'Hero CTA',
+      type: 'object',
+      group: 'hero',
+      description: 'Button shown under the hero summary. Defaults to Contact if left empty.',
+      fields: [
+        {
+          name: 'buttonText',
+          type: 'string',
+          title: 'Button Text',
+          initialValue: 'Talk to Our Experts',
+        },
+        {
+          name: 'buttonHref',
+          type: 'string',
+          title: 'Button Link',
+          description: 'e.g. /contact',
+          initialValue: '/contact',
+        },
+      ],
+    }),
 
     defineField({
       name: 'aboutClientHeadline',
@@ -114,6 +136,7 @@ export default defineType({
       type: 'string',
       group: 'about',
       initialValue: 'About the Client',
+      description: 'Shown on the right, beside the About Client image.',
     }),
     defineField({
       name: 'aboutClientImage',

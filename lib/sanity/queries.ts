@@ -715,6 +715,7 @@ export async function getCaseStudyBySlug(slug: string): Promise<any> {
     ${CASE_STUDY_CARD_FIELDS},
     heroBadge,
     heroStats[] { value, label },
+    heroCta { buttonText, buttonHref },
     aboutClientHeadline,
     aboutClient,
     "aboutClientImage": coalesce(aboutClientImage.asset->url, mainImage.asset->url),

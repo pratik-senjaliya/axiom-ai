@@ -17,6 +17,10 @@ export const DEMO_CASE_STUDY = {
     { value: "Days earlier", label: "Management reporting" },
     { value: "Fewer", label: "Manual reconciliations" },
   ],
+  heroCta: {
+    buttonText: "Talk to Our Experts",
+    buttonHref: "/contact",
+  },
   aboutClientHeadline: "About the Client",
   aboutClientImage:
     "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop",
@@ -78,6 +82,7 @@ export const DEMO_CASE_STUDY_VIEW = {
   relatedService: DEMO_CASE_STUDY.relatedService,
   heroBadge: DEMO_CASE_STUDY.heroBadge,
   heroStats: DEMO_CASE_STUDY.heroStats,
+  heroCta: DEMO_CASE_STUDY.heroCta,
   aboutClientHeadline: DEMO_CASE_STUDY.aboutClientHeadline,
   aboutClient: DEMO_CASE_STUDY.aboutClient,
   aboutClientImage: DEMO_CASE_STUDY.aboutClientImage,

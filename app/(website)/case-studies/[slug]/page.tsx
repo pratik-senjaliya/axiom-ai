@@ -89,12 +89,14 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         seo={study.seo}
       />
 
-      {/* 1. Hero — title left, stats right */}
+      {/* 1. Hero — title left, stats right, CTA */}
       <CaseStudyHero
         title={study.title}
         excerpt={study.excerpt}
         stats={study.heroStats}
         badge={study.heroBadge || "Case Study · Finance"}
+        ctaText={study.heroCta?.buttonText || "Talk to Our Experts"}
+        ctaHref={study.heroCta?.buttonHref || "/contact"}
       />
 
       {/* 2. About the Client */}
