@@ -80,7 +80,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const feedback = study.testimonials?.[0];
 
   return (
-    <div style={{ background: "#0A0F1F" }}>
+    <div className="overflow-x-clip" style={{ background: "#0A0F1F" }}>
       <ServicePageSchemas
         title={study.seo?.metaTitle || study.title}
         description={description}

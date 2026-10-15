@@ -66,7 +66,7 @@ export default async function FinancePage() {
   }));
 
   return (
-    <div>
+    <div className="overflow-x-clip">
       <ServicePageSchemas
         title={data?.seo?.metaTitle || `${hero?.title || ""} ${hero?.titleHighlight || ""}`.trim()}
         description={portableTextToPlain(hero?.description) || ""}
@@ -94,6 +94,7 @@ export default async function FinancePage() {
 
       <IndustryChallengePanel
         title={data.challengesHeadline || "Finance Challenges We Solve"}
+        description={data.challengesDescription}
         items={mapItems(data.challenges)}
       />
 
@@ -135,7 +136,7 @@ export default async function FinancePage() {
       <RelatedInsights posts={relatedPosts} serviceName="Finance" />
 
       {faqs.length > 0 && (
-        <section className="py-24" style={{ background: "#0A0F1F" }}>
+        <section className="py-16 md:py-24 overflow-x-clip" style={{ background: "#0A0F1F" }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">
             <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>

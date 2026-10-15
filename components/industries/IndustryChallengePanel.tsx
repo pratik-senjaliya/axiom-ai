@@ -1,17 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  ServerCrash,
-  Network,
-  ClipboardList,
-  Clock3,
-  ShieldAlert,
-  Bot,
-  type LucideIcon,
-} from "lucide-react";
 import { PortableText } from "@/components/ui/PortableText";
-import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 
 type ChallengeItem = {
@@ -19,72 +9,70 @@ type ChallengeItem = {
   description?: any;
 };
 
-const CHALLENGE_ICONS: LucideIcon[] = [
-  ServerCrash,
-  Network,
-  ClipboardList,
-  Clock3,
-  ShieldAlert,
-  Bot,
-];
-
+/**
+ * Challenges — editorial numbered list (distinct from Solutions card grid)
+ */
 export function IndustryChallengePanel({
   title = "Finance Challenges We Solve",
+  description,
   items,
 }: {
   title?: string;
+  description?: any;
   items: ChallengeItem[];
 }) {
   if (!items?.length) return null;
 
   return (
-    <section className="py-24" style={{ background: "#0A0F1F" }}>
+    <section className="py-16 md:py-24 overflow-x-clip" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12 tracking-tight">
-          {title}
-        </h2>
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-10 md:mb-14">
+          <div className="lg:col-span-4">
+            <p
+              className="text-[11px] font-bold uppercase tracking-[0.22em] mb-3"
+              style={{ color: "#F0A46A" }}
+            >
+              Pain points
+            </p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight leading-tight">
+              {title}
+            </h2>
+          </div>
+          {description && (
+            <div className="lg:col-span-8 lg:pt-8">
+              <div className="text-sm sm:text-base leading-relaxed max-w-2xl" style={{ color: "#8FA3BF" }}>
+                <PortableText value={description} />
+              </div>
+            </div>
+          )}
+        </div>
 
-        <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {items.map((item, index) => {
-            const Icon = CHALLENGE_ICONS[index % CHALLENGE_ICONS.length];
-            return (
-              <StaggerItem key={item.title}>
-                <HoverCard
-                  className="h-full rounded-2xl border p-6 md:p-7 text-left flex flex-col"
-                  style={{
-                    background: "rgba(26,46,71,0.7)",
-                    borderColor: "rgba(0,229,255,0.16)",
-                  }}
+        <StaggerGroup className="border-t" style={{ borderColor: "rgba(240,164,106,0.2)" }}>
+          {items.map((item, index) => (
+            <StaggerItem key={item.title}>
+              <div
+                className="group grid grid-cols-[auto_1fr] sm:grid-cols-[4.5rem_1fr] gap-4 sm:gap-6 md:gap-8 py-5 sm:py-6 md:py-7 border-b transition-colors"
+                style={{ borderColor: "rgba(255,255,255,0.08)" }}
+              >
+                <span
+                  className="text-2xl sm:text-3xl font-extrabold leading-none pt-0.5 tabular-nums transition-colors"
+                  style={{ color: "rgba(240,164,106,0.55)" }}
                 >
-                  <div className="flex items-start justify-between gap-3 mb-4">
-                    <div
-                      className="inline-flex h-12 w-12 items-center justify-center rounded-xl border shrink-0"
-                      style={{
-                        background: "rgba(0,229,255,0.1)",
-                        color: "#00E5FF",
-                        borderColor: "rgba(0,229,255,0.35)",
-                        boxShadow: "0 0 16px rgba(0,229,255,0.18)",
-                      }}
-                    >
-                      <Icon className="w-6 h-6" strokeWidth={1.75} />
-                    </div>
-                    <span
-                      className="text-xs font-extrabold tracking-wider"
-                      style={{ color: "rgba(0,229,255,0.55)" }}
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <p className="text-lg font-bold text-white mb-3 leading-snug">{item.title}</p>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div className="min-w-0 grid md:grid-cols-[minmax(0,14rem)_1fr] lg:grid-cols-[minmax(0,18rem)_1fr] gap-2 md:gap-6 items-start">
+                  <h3 className="text-base sm:text-lg font-bold text-white leading-snug group-hover:text-[#F0A46A] transition-colors">
+                    {item.title}
+                  </h3>
                   {item.description && (
-                    <div className="text-sm leading-relaxed flex-grow" style={{ color: "#8FA3BF" }}>
+                    <div className="text-sm leading-relaxed" style={{ color: "#8FA3BF" }}>
                       <PortableText value={item.description} />
                     </div>
                   )}
-                </HoverCard>
-              </StaggerItem>
-            );
-          })}
+                </div>
+              </div>
+            </StaggerItem>
+          ))}
         </StaggerGroup>
       </div>
     </section>

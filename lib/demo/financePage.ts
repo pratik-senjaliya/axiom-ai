@@ -21,6 +21,9 @@ export const DEMO_FINANCE_PAGE = {
   ],
 
   challengesHeadline: "Finance Challenges We Solve",
+  challengesDescription: pt(
+    "Modern finance teams still hit the same blockers — legacy systems, fragmented data, and slow cycles that keep AI and automation out of reach."
+  ),
   challenges: [
     titledItem(
       "Legacy finance systems",

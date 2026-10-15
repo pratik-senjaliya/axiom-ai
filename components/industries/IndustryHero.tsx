@@ -38,7 +38,7 @@ export function IndustryHero({
 }: IndustryHeroProps) {
   return (
     <section
-      className="relative min-h-[70vh] pt-32 pb-20 md:pb-24 flex flex-col items-center justify-center overflow-hidden text-center"
+      className="relative min-h-[auto] sm:min-h-[70vh] pt-28 sm:pt-32 pb-14 sm:pb-20 md:pb-24 flex flex-col items-center justify-center overflow-x-clip overflow-hidden text-center"
       style={{ background: "linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)" }}
     >
       <div className="bg-grid opacity-60 z-0" />
@@ -51,16 +51,16 @@ export function IndustryHero({
         style={{ background: "radial-gradient(circle, rgba(29,161,242,0.08) 0%, transparent 70%)" }}
       />
 
-      <SlideUp className="container-custom relative z-10 px-6 max-w-6xl mx-auto flex flex-col items-center w-full">
+      <SlideUp className="container-custom relative z-10 px-4 sm:px-6 max-w-6xl mx-auto flex flex-col items-center w-full">
         {breadcrumbs && breadcrumbs.length > 0 && (
-          <Breadcrumb items={breadcrumbs} className="mb-6 justify-center" />
+          <Breadcrumb items={breadcrumbs} className="mb-4 sm:mb-6 justify-center" />
         )}
 
-        <p className="text-sm font-semibold uppercase tracking-wide mb-6" style={{ color: "#00E5FF" }}>
+        <p className="text-xs sm:text-sm font-semibold uppercase tracking-wide mb-4 sm:mb-6" style={{ color: "#00E5FF" }}>
           {industryLabel}
         </p>
 
-        <h1 className="type-hero text-white mb-6 mx-auto">
+        <h1 className="type-hero text-white mb-4 sm:mb-6 mx-auto px-1">
           {title}
           {titleHighlight ? (
             <>
@@ -71,7 +71,7 @@ export function IndustryHero({
         </h1>
 
         {description && (
-          <div className="type-lead mb-10 max-w-4xl mx-auto" style={{ color: "#C5D1E0" }}>
+          <div className="type-lead mb-8 sm:mb-10 max-w-4xl mx-auto px-1" style={{ color: "#C5D1E0" }}>
             <PortableText value={description} className="text-inherit" />
           </div>
         )}
