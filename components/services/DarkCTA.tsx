@@ -26,7 +26,7 @@ export function DarkCTA({
   titleAs = 'h5',
 }: DarkCTAProps) {
   return (
-    <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #0A0F1F 50%, #14243A 100%)' }}>
+    <section className="py-14 md:py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #0A0F1F 50%, #14243A 100%)' }}>
       {/* Cyan grid */}
       <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.04) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 

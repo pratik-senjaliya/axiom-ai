@@ -38,7 +38,7 @@ export function CaseStudySlider({ data }: CaseStudySliderProps) {
   const sectionSubtitle = data.sectionSubtitle || 'Case Studies'
 
   return (
-    <section className="py-24 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
+    <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
       <div
         className="absolute top-0 left-0 right-0 h-px pointer-events-none"
         style={{ background: 'linear-gradient(to right, transparent, rgba(0,229,255,0.35), transparent)' }}

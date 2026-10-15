@@ -182,10 +182,10 @@ export default async function AIImplementationPage() {
       />
 
       {/* Our Enterprise AI Stack (The 4 Layers) */}
-      <section className="py-24 relative overflow-hidden" style={{ background: '#0D1B2A' }}>
+      <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: '#0D1B2A' }}>
         <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
         <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
-          <div className="text-center max-w-5xl mx-auto mb-16">
+          <div className="text-center max-w-5xl mx-auto mb-10 md:mb-12">
             <h3 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
               {data?.layersHeadline}
             </h3>
@@ -230,7 +230,7 @@ export default async function AIImplementationPage() {
             ))}
           </div>
 
-          <div className="flex justify-center mt-16 md:mt-20">
+          <div className="flex justify-center mt-10 md:mt-12">
             <Link href={data?.layersCta?.link || "/contact"}>
               <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
                 {data?.layersCta?.text || "Talk to Our AI Expert"}
@@ -280,7 +280,7 @@ export default async function AIImplementationPage() {
       <RelatedInsights posts={relatedPosts} serviceName="AI Implementation" />
 
       {faqs.length > 0 && (
-        <section className="py-24 relative z-10" style={{ background: '#0A0F1F' }}>
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#0A0F1F' }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">
             <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>

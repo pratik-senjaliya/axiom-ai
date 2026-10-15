@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { BlogPost, BLOG_INDUSTRY_CATEGORIES, BLOG_SERVICE_CATEGORIES } from "@/lib/blog";
 import { AuthorAvatar } from "@/components/blog/AuthorAvatar";
+import { BlogCoverImage } from "@/components/blog/BlogCoverImage";
 
 interface BlogCardProps {
   post: BlogPost;
@@ -78,23 +78,21 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
               </div>
             </div>
 
-            <div
-              className="order-1 lg:order-2 relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto lg:min-h-[380px]"
-              style={{ background: "rgba(13,27,42,0.9)" }}
-            >
-              {post.image ? (
-                <Image
-                  src={post.image}
+            <div className="order-1 lg:order-2 min-w-0 self-stretch">
+              {(post.imageCard || post.image) ? (
+                <BlogCoverImage
+                  src={post.imageCard || post.image}
                   alt={post.imageAlt || post.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                  variant="card"
+                  aspectClassName="aspect-[16/10] sm:aspect-[16/9] lg:h-full lg:min-h-[320px] lg:aspect-auto"
+                  className="min-h-[200px] sm:min-h-[240px] lg:min-h-full"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
-                  unoptimized
+                  hoverZoom
                 />
               ) : (
                 <div
-                  className="w-full h-full flex items-center justify-center"
+                  className="w-full aspect-[16/10] lg:h-full lg:min-h-[320px] flex items-center justify-center"
                   style={{ background: "linear-gradient(135deg, #0D1B2A, #14243A)" }}
                 >
                   <span style={{ color: "#14243A" }}>SyncOrigins Insights</span>
@@ -127,19 +125,19 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
           el.style.boxShadow = "";
         }}
       >
-        <div className="relative aspect-[16/10] overflow-hidden shrink-0" style={{ background: "rgba(13,27,42,0.9)" }}>
-          {post.image ? (
-            <Image
-              src={post.image}
+        <div className="shrink-0">
+          {(post.imageCard || post.image) ? (
+            <BlogCoverImage
+              src={post.imageCard || post.image}
               alt={post.imageAlt || post.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              variant="card"
+              aspectClassName="aspect-[16/10]"
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              unoptimized
+              hoverZoom
             />
           ) : (
             <div
-              className="w-full h-full flex items-center justify-center px-4"
+              className="w-full aspect-[16/10] flex items-center justify-center px-4"
               style={{ background: "linear-gradient(135deg, #0D1B2A, #14243A)" }}
             >
               <span className="font-bold text-center line-clamp-2 text-sm" style={{ color: "#5A6F8A" }}>

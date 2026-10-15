@@ -136,7 +136,7 @@ export default async function FinancePage() {
       <RelatedInsights posts={relatedPosts} serviceName="Finance" />
 
       {faqs.length > 0 && (
-        <section className="py-16 md:py-24 overflow-x-clip" style={{ background: "#0A0F1F" }}>
+        <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">
             <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>

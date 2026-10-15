@@ -132,7 +132,7 @@ export function BlogGrid({ posts, categories, initialCategory = "All", pageData 
         </SlideUp>
       </section>
 
-      <section className="pb-16 sm:pb-24 md:pb-32 pt-8 sm:pt-12 md:pt-16 relative z-10" style={{ background: "#0A0F1F" }}>
+      <section className="pb-12 sm:pb-16 md:pb-20 pt-8 sm:pt-10 md:pt-12 relative z-10" style={{ background: "#0A0F1F" }}>
         <div className="px-4 sm:px-5 relative z-10 max-w-[95rem] mx-auto w-full">
           <motion.div layout className="min-h-0 md:min-h-[400px]">
             <AnimatePresence mode="popLayout">
@@ -153,7 +153,7 @@ export function BlogGrid({ posts, categories, initialCategory = "All", pageData 
               {gridPosts.length > 0 ? (
                 <motion.div
                   layout
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-8 mb-12 sm:mb-16 md:mb-24"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-8 mb-8 sm:mb-10 md:mb-12"
                 >
                   {gridPosts.map((post, idx) => (
                     <motion.div
@@ -175,7 +175,7 @@ export function BlogGrid({ posts, categories, initialCategory = "All", pageData 
                     layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="py-16 sm:py-24 md:py-32 text-center border border-white/5 bg-white/[0.02] rounded-2xl sm:rounded-[3rem] backdrop-blur-sm px-4"
+                    className="py-12 sm:py-16 md:py-20 text-center border border-white/5 bg-white/[0.02] rounded-2xl sm:rounded-[2rem] backdrop-blur-sm px-4"
                   >
                     <p className="text-sm sm:text-base md:text-xl font-medium text-white/40 tracking-wide uppercase">
                       No articles found in this category.

@@ -199,7 +199,7 @@ export default async function DataAnalyticsPage() {
 
       {/* Our Approach */}
       {data?.approachHeadline && (
-        <section className="py-24 relative z-10" style={{ background: '#14243A' }}>
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#14243A' }}>
           <div className="container-custom">
             <div className="max-w-4xl text-left">
               <h3 className="type-section-title text-white mb-6">
@@ -237,11 +237,11 @@ export default async function DataAnalyticsPage() {
 
       {/* ── Use Cases (Where Data Creates Immediate Impact) ── */}
       {useCaseItems.length > 0 && (
-        <section className="py-24 relative overflow-hidden" style={{ background: '#14243A' }}>
+        <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: '#14243A' }}>
           <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
 
           <div className="container-custom px-4 relative z-10 max-w-[90rem] mx-auto">
-            <div className="text-center max-w-5xl mx-auto mb-16">
+            <div className="text-center max-w-5xl mx-auto mb-10 md:mb-12">
               <h3 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem] mb-6">
                 {data?.useCasesHeadline}
               </h3>
@@ -283,9 +283,9 @@ export default async function DataAnalyticsPage() {
       )}
 
       {data?.technologies && data.technologies.length > 0 && (
-        <section className="py-24 relative z-10" style={{ background: '#0D1B2A' }}>
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#0D1B2A' }}>
           <div className="container-custom px-4">
-            <div className="text-center max-w-4xl mx-auto mb-16">
+            <div className="text-center max-w-4xl mx-auto mb-10 md:mb-12">
               <h4 className="type-section-title tracking-tight text-white mb-6">{data.techHeadline}</h4>
               {data.techBody && (
                 <div className="text-lg max-w-5xl mx-auto" style={{ color: '#8FA3BF' }}>
@@ -306,7 +306,7 @@ export default async function DataAnalyticsPage() {
               ))}
             </StaggerGroup>
 
-            <div className="flex justify-center mt-16 md:mt-20">
+            <div className="flex justify-center mt-10 md:mt-12">
               <Link href={data?.techCta?.link || "/contact"}>
                 <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
                   {data?.techCta?.text || "Build Your Data Stack"}
@@ -338,7 +338,7 @@ export default async function DataAnalyticsPage() {
 
       {/* Final Multi-CTA Layer */}
       {data?.ctaHeadline && (
-        <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0F1F 0%, #0D1B2A 50%, #14243A 100%)' }}>
+        <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0F1F 0%, #0D1B2A 50%, #14243A 100%)' }}>
           {/* Grid overlay */}
           <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
           {/* Glow */}

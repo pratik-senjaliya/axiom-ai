@@ -174,7 +174,7 @@ export default async function HomePage() {
       </section>
 
       {/* 2. Why Digital Transformations Fail */}
-      <section className="py-24 relative" style={{ background: '#14243A' }}>
+      <section className="py-12 md:py-16 relative" style={{ background: '#14243A' }}>
         <div className="container-custom">
           <div className="text-center mb-20 max-w-4xl mx-auto">
             <h2 className="type-section-title text-white mb-6">
@@ -224,9 +224,9 @@ export default async function HomePage() {
       </section>
 
       {/* 3. Execution Across AI, Data & ERP */}
-      <section id="services" className="py-24 relative" style={{ background: '#0A0F1F' }}>
+      <section id="services" className="py-12 md:py-16 relative" style={{ background: '#0A0F1F' }}>
         <div className="container-custom">
-          <div className="text-center mb-16 max-w-4xl mx-auto">
+          <div className="text-center mb-10 md:mb-12 max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 font-medium mb-4" style={{ color: '#00E5FF' }}>
               <SparkleIcon />
               <span className="text-sm font-medium uppercase tracking-widest">{data?.solutionsSubtitle || "What We Do"}</span>
@@ -266,7 +266,7 @@ export default async function HomePage() {
             ))}
           </StaggerGroup>
 
-          <div className="flex justify-center mt-16 md:mt-20">
+          <div className="flex justify-center mt-10 md:mt-12">
             <Link href={data?.solutionsCta?.link || "/contact"}>
               <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
                 {data?.solutionsCta?.text || "Talk to Our AI Expert"}
@@ -280,10 +280,10 @@ export default async function HomePage() {
       </section>
 
       {/* 4. Three phases to transformation */}
-      <section className="py-24 relative overflow-hidden" style={{ background: '#0D1B2A' }}>
+      <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: '#0D1B2A' }}>
         <div className="absolute inset-0 bg-grid opacity-50 pointer-events-none" />
         <div className="container-custom relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10 md:mb-12">
             <div className="inline-flex items-center gap-2 font-medium mb-4" style={{ color: '#00E5FF' }}>
               <SparkleIcon />
               <span className="text-sm font-medium">Our Approach</span>
@@ -320,9 +320,9 @@ export default async function HomePage() {
       </section>
 
       {/* 5. Built for Enterprise Leaders */}
-      <section className="py-24 relative" style={{ background: '#14243A' }}>
+      <section className="py-12 md:py-16 relative" style={{ background: '#14243A' }}>
         <div className="container-custom">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10 md:mb-12">
             <p className="text-3xl md:text-[2.5rem] font-bold text-white mb-4">
               {data?.personasHeadline}
             </p>
@@ -353,7 +353,7 @@ export default async function HomePage() {
             })}
           </StaggerGroup>
 
-          <div className="flex justify-center mt-16 md:mt-20">
+          <div className="flex justify-center mt-10 md:mt-12">
             <Link href={data?.personasCta?.link || "/contact"}>
               <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
                 {data?.personasCta?.text || "Build Your AI-Ready Roadmap"}
@@ -370,7 +370,7 @@ export default async function HomePage() {
 
       {/* 5.5 Corporate Affiliation */}
       {data?.affiliationTitle && data?.affiliationBody && (
-        <section className="py-24 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
+        <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
           <div className="absolute top-0 w-full h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent)' }} />
           <FadeIn className="container-custom max-w-5xl mx-auto text-center relative z-10 px-4">
             {data?.affiliationHeadline && <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border" style={{ background: 'rgba(0,229,255,0.05)', borderColor: 'rgba(0,229,255,0.2)' }}>
@@ -392,7 +392,7 @@ export default async function HomePage() {
 
       {/* FAQ */}
       {faqs.length > 0 && (
-        <section className="py-24 relative z-10" style={{ background: '#0A0F1F' }}>
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#0A0F1F' }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">
             <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>
@@ -400,7 +400,7 @@ export default async function HomePage() {
       )}
 
       {/* 6. Contact CTA */}
-      <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0F1F 0%, #0D1B2A 50%, #14243A 100%)' }}>
+      <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0F1F 0%, #0D1B2A 50%, #14243A 100%)' }}>
         {/* Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[30rem] rounded-full blur-[100px] pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
         {/* Top border accent */}

@@ -67,7 +67,7 @@ export default async function AboutPage() {
       />
 
       {/* ── Hero Section ── */}
-      <section className="relative pt-20 pb-32 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
+      <section className="relative pt-20 pb-16 md:pb-20 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
         <div className="bg-grid opacity-60 z-0" />
         {/* Glow radials */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[50rem] rounded-full blur-[130px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
@@ -104,7 +104,7 @@ export default async function AboutPage() {
 
       {/* ── Who We Are ── */}
       {data?.whoWeAreHeadline && (
-        <section className="py-24 relative z-10" style={{ background: '#14243A' }}>
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#14243A' }}>
           <FadeIn className="container-custom px-4">
             <div className="grid lg:grid-cols-12 gap-16 items-start">
               <div className="lg:col-span-5 relative">
@@ -122,9 +122,9 @@ export default async function AboutPage() {
 
       {/* ── Philosophy Section ── */}
       {data?.philosophyHeadline && (
-        <section className="py-24 relative z-10" style={{ background: '#0A0F1F' }}>
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#0A0F1F' }}>
           <SlideUp className="container-custom px-4 max-w-5xl mx-auto">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10 md:mb-12">
               <h3 className="type-section-title text-white mb-6">{data.philosophyHeadline}</h3>
               <div className="max-w-3xl mx-auto text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
                 <style>{`
@@ -213,7 +213,7 @@ export default async function AboutPage() {
 
       {/* ── Final CTA ── */}
       {data?.ctaHeadline && (
-        <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0F1F 0%, #0D1B2A 50%, #14243A 100%)' }}>
+        <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0F1F 0%, #0D1B2A 50%, #14243A 100%)' }}>
           {/* Grid overlay */}
           <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
           {/* Glow */}

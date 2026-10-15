@@ -179,7 +179,7 @@ export default async function ManagedDeliveryPage() {
       <RelatedInsights posts={relatedPosts} serviceName="Managed Delivery" />
 
       {faqs.length > 0 && (
-        <section className="py-24 relative z-10" style={{ background: '#0A0F1F' }}>
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#0A0F1F' }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">
             <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>

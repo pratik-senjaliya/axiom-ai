@@ -188,12 +188,12 @@ export default async function SustainabilityPage() {
       />
 
       {/* ── SyncOrigins Advantage (Roadmap) ── */}
-      <section className="py-24 relative overflow-hidden" style={{ background: '#14243A' }}>
+      <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: '#14243A' }}>
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
 
         <div className="container-custom px-4 relative z-10 max-w-[90rem] mx-auto">
-          <div className="text-center max-w-5xl mx-auto mb-16">
+          <div className="text-center max-w-5xl mx-auto mb-10 md:mb-12">
              <h4 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem] mb-6">
               {data?.roadmapHeadline}
             </h4>
@@ -238,7 +238,7 @@ export default async function SustainabilityPage() {
       <RelatedInsights posts={relatedPosts} serviceName="Sustainability" />
 
       {faqs.length > 0 && (
-        <section className="py-24 relative z-10" style={{ background: '#0A0F1F' }}>
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#0A0F1F' }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">
             <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>

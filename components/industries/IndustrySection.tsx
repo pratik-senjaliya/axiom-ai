@@ -66,7 +66,7 @@ const IconBox = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ContactCta = ({ href = "/contact" }: { href?: string }) => (
-  <div className="flex justify-center mt-12">
+  <div className="flex justify-center mt-8">
     <Link href={href}>
       <Button
         className="rounded-full px-8 h-11 text-[15px] font-bold border-none hover:scale-105 transition-all"
@@ -96,9 +96,9 @@ export function IndustryServiceCards({
   solutions?: Item[];
 }) {
   return (
-    <section id="services" className="py-16 md:py-24 scroll-mt-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
+    <section id="services" className="py-12 md:py-16 scroll-mt-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-8 md:mb-12 tracking-tight max-w-3xl mx-auto">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8 tracking-tight max-w-3xl mx-auto">
           {title}
         </h2>
         <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
@@ -138,9 +138,9 @@ export function IndustrySolutionsList() {
 /** Mockup: 3x3 clients grid with filled cards + distinct icons */
 export function IndustryClientsGrid({ title, items }: { title: string; items: Item[] }) {
   return (
-    <section id="clients" className="py-16 md:py-24 scroll-mt-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
+    <section id="clients" className="py-12 md:py-16 scroll-mt-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-8 md:mb-12 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8 tracking-tight">
           {title}
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 md:gap-4">
@@ -187,9 +187,9 @@ export function IndustryPillars({
   outcomes?: Item[];
 }) {
   return (
-    <section className="py-16 md:py-24 overflow-x-clip" style={{ background: "#0A0F1F" }}>
+    <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-6 md:mb-8">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-3 md:mb-4">{title}</h2>
           {description && (
             <div className="text-sm sm:text-base leading-relaxed" style={{ color: "#8FA3BF" }}>
@@ -241,9 +241,9 @@ export function IndustrySuccessStories({
 }) {
   if (!stories?.length) return null;
   return (
-    <section className="py-16 md:py-24 overflow-x-clip" style={{ background: "#0A0F1F" }}>
+    <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-8 md:mb-12 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8 tracking-tight">
           {title}
         </h2>
         <StaggerGroup className={`grid gap-4 sm:gap-5 ${stories.length === 1 ? "max-w-xl mx-auto" : "lg:grid-cols-2"}`}>
@@ -357,9 +357,9 @@ export function IndustryLifecycle({
   process?: Item[];
 }) {
   return (
-    <section className="py-16 md:py-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
+    <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-8 md:mb-12 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8 tracking-tight">
           {title}
         </h2>
         <div className="relative">
@@ -418,7 +418,7 @@ export function IndustryWhyUs({
   items: Item[];
 }) {
   return (
-    <section className="py-16 md:py-24 overflow-x-clip" style={{ background: "#14243A" }}>
+    <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#14243A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-3 max-w-3xl">
           {title}

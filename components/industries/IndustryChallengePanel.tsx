@@ -11,6 +11,7 @@ type ChallengeItem = {
 
 /**
  * Challenges — editorial numbered list (distinct from Solutions card grid)
+ * Colors match SyncOrigins navy/cyan theme.
  */
 export function IndustryChallengePanel({
   title = "Finance Challenges We Solve",
@@ -24,13 +25,13 @@ export function IndustryChallengePanel({
   if (!items?.length) return null;
 
   return (
-    <section className="py-16 md:py-24 overflow-x-clip" style={{ background: "#0A0F1F" }}>
+    <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-10 md:mb-14">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-8 md:mb-10">
           <div className="lg:col-span-4">
             <p
               className="text-[11px] font-bold uppercase tracking-[0.22em] mb-3"
-              style={{ color: "#F0A46A" }}
+              style={{ color: "#00E5FF" }}
             >
               Pain points
             </p>
@@ -47,21 +48,21 @@ export function IndustryChallengePanel({
           )}
         </div>
 
-        <StaggerGroup className="border-t" style={{ borderColor: "rgba(240,164,106,0.2)" }}>
+        <StaggerGroup className="border-t" style={{ borderColor: "rgba(0,229,255,0.18)" }}>
           {items.map((item, index) => (
             <StaggerItem key={item.title}>
               <div
                 className="group grid grid-cols-[auto_1fr] sm:grid-cols-[4.5rem_1fr] gap-4 sm:gap-6 md:gap-8 py-5 sm:py-6 md:py-7 border-b transition-colors"
-                style={{ borderColor: "rgba(255,255,255,0.08)" }}
+                style={{ borderColor: "rgba(0,229,255,0.1)" }}
               >
                 <span
                   className="text-2xl sm:text-3xl font-extrabold leading-none pt-0.5 tabular-nums transition-colors"
-                  style={{ color: "rgba(240,164,106,0.55)" }}
+                  style={{ color: "rgba(0,229,255,0.55)" }}
                 >
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div className="min-w-0 grid md:grid-cols-[minmax(0,14rem)_1fr] lg:grid-cols-[minmax(0,18rem)_1fr] gap-2 md:gap-6 items-start">
-                  <h3 className="text-base sm:text-lg font-bold text-white leading-snug group-hover:text-[#F0A46A] transition-colors">
+                  <h3 className="text-base sm:text-lg font-bold text-white leading-snug group-hover:text-[#00E5FF] transition-colors">
                     {item.title}
                   </h3>
                   {item.description && (

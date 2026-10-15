@@ -32,10 +32,11 @@ export const DEFAULT_OG_IMAGE_HEIGHT = 1024;
 
 export function resolveOgImage(
   siteUrl: string,
-  ...candidates: (string | null | undefined)[]
+  ...candidates: (string | null | undefined | unknown)[]
 ): { url: string; isDefault: boolean } {
   for (const candidate of candidates) {
-    const trimmed = candidate?.trim();
+    if (typeof candidate !== "string") continue;
+    const trimmed = candidate.trim();
     if (!trimmed) continue;
 
     const url = trimmed.startsWith("http")

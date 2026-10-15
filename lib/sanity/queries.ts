@@ -1,6 +1,52 @@
 import { client } from './client'
 import type { BlogPost } from '../blog'
 import { CORE_SERVICE_SLUGS } from '../core-services'
+import { blogCardImageUrl, blogDetailImageUrl } from './image'
+
+const IMAGE_FALLBACK = `
+  select(
+    relatedService == "ai" => select(
+      _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
+      _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1620712943543-bcc4628c9757?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=800&auto=format&fit=crop"
+    ),
+    relatedService == "erp" => select(
+      _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+      _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1454165833968-3860bb617482?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop"
+    ),
+    relatedService == "data" => select(
+      _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+      _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1504868584819-f8e905263543?q=80&w=800&auto=format&fit=crop"
+    ),
+    relatedService == "managed" => select(
+      _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop",
+      _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
+    ),
+    relatedService == "sustainability" => select(
+      _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop",
+      _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1508514177221-18d14de04965?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1466611653911-95282ee365d5?q=80&w=800&auto=format&fit=crop"
+    ),
+    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop"
+  )
+`
+
+function withResolvedBlogImages<T extends Record<string, any>>(post: T | null): T | null {
+  if (!post) return post
+  const fallback = post.image as string | undefined
+  const source = post.mainImage || fallback
+  const imageCard = blogCardImageUrl(source, fallback) || fallback
+  const imageDetail = blogDetailImageUrl(source, fallback) || fallback
+  return {
+    ...post,
+    image: imageCard || fallback,
+    imageCard,
+    imageDetail,
+  }
+}
 
 const SEO_FIELDS = `
   metaTitle,
@@ -54,36 +100,8 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     "date": publishedAt,
     "author": coalesce(author, "SyncOrigins"),
     authorRole,
-    "image": coalesce(mainImage.asset->url, 
-      select(
-        relatedService == "ai" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1620712943543-bcc4628c9757?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "erp" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1454165833968-3860bb617482?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "data" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1504868584819-f8e905263543?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "managed" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "sustainability" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1508514177221-18d14de04965?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1466611653911-95282ee365d5?q=80&w=800&auto=format&fit=crop"
-        ),
-        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop"
-      )
-    ),
+    mainImage,
+    "image": coalesce(mainImage.asset->url, ${IMAGE_FALLBACK}),
     "imageAlt": mainImage.alt,
     "readTime": coalesce(readTime, "5 min read"),
     "relatedService": relatedService,
@@ -91,7 +109,8 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     "content": ""
   }`
 
-  return safeFetch<BlogPost[]>(query, {}, [])
+  const posts = await safeFetch<BlogPost[]>(query, {}, [])
+  return (posts || []).map((p) => withResolvedBlogImages(p) as BlogPost)
 }
 
 // GROQ query to get a single post by slug
@@ -105,37 +124,8 @@ export async function getPostBySlug(slug: string): Promise<any> {
     "date": publishedAt,
     "author": coalesce(author, "SyncOrigins"),
     authorRole,
-    "mainImage": mainImage.asset->url,
-    "image": coalesce(mainImage.asset->url, 
-      select(
-        relatedService == "ai" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1620712943543-bcc4628c9757?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "erp" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1454165833968-3860bb617482?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "data" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1504868584819-f8e905263543?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "managed" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "sustainability" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1508514177221-18d14de04965?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1466611653911-95282ee365d5?q=80&w=800&auto=format&fit=crop"
-        ),
-        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop"
-      )
-    ),
+    mainImage,
+    "image": coalesce(mainImage.asset->url, ${IMAGE_FALLBACK}),
     "imageAlt": mainImage.alt,
     "relatedService": relatedService,
     "relatedIndustry": relatedIndustry,
@@ -146,7 +136,8 @@ export async function getPostBySlug(slug: string): Promise<any> {
     seo { ${SEO_FIELDS} }
   }`
 
-  return safeFetch<any>(query, { slug }, null)
+  const post = await safeFetch<any>(query, { slug }, null)
+  return withResolvedBlogImages(post)
 }
 
 // Get all slugs for generateStaticParams
@@ -765,42 +756,16 @@ export async function getLatestPostsByService(service: string, limit: number = 3
     "category": coalesce(category, "Insights"),
     "date": publishedAt,
     "author": coalesce(author, "SyncOrigins"),
-    "image": coalesce(mainImage.asset->url, 
-      select(
-        relatedService == "ai" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1620712943543-bcc4628c9757?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "erp" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1454165833968-3860bb617482?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "data" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1504868584819-f8e905263543?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "managed" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
-        ),
-        relatedService == "sustainability" => select(
-          _id match "a*" || _id match "1*" || _id match "5*" => "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop",
-          _id match "b*" || _id match "2*" || _id match "6*" => "https://images.unsplash.com/photo-1508514177221-18d14de04965?q=80&w=800&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1466611653911-95282ee365d5?q=80&w=800&auto=format&fit=crop"
-        ),
-        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop"
-      )
-    ),
+    mainImage,
+    "image": coalesce(mainImage.asset->url, ${IMAGE_FALLBACK}),
+    "imageAlt": mainImage.alt,
     "relatedService": relatedService,
     "relatedIndustry": relatedIndustry,
     "readTime": coalesce(readTime, "5 min read")
   }`
 
-  return safeFetch<BlogPost[]>(query, { service, limit }, [])
+  const posts = await safeFetch<BlogPost[]>(query, { service, limit }, [])
+  return (posts || []).map((p) => withResolvedBlogImages(p) as BlogPost)
 }
 
 // ==================== SETTINGS ====================

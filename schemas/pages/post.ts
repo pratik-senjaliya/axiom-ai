@@ -34,20 +34,27 @@ export default defineType({
         }),
         defineField({
             name: 'mainImage',
-            title: 'Main Image',
+            title: 'Cover Image',
             type: 'image',
             options: {
                 hotspot: true,
             },
+            description:
+                'Used on Insights cards and the article page. ' +
+                'Recommended size: 1600 × 1000 px (16:10 landscape). Minimum: 1200 × 750 px. ' +
+                'Format: JPG or WebP (PNG only if you need transparency). ' +
+                'Keep the subject centered; after upload, set the hotspot so faces/key content stay in frame when cards crop to 16:10. ' +
+                'Avoid tall/portrait images — they leave empty bars or crop poorly on blog cards.',
             fields: [
                 {
                     name: 'alt',
                     type: 'string',
                     title: 'Alternative Text',
-                    description: 'Important for SEO and accessibility',
+                    description: 'Describe the image for SEO and accessibility (required).',
                     validation: (Rule) => Rule.required(),
                 }
             ],
+            validation: (Rule) => Rule.required().error('Add a cover image (1600×1000, 16:10 landscape recommended).'),
         }),
         defineField({
             name: 'content',

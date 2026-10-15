@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, getAllPosts } from "@/lib/sanity/queries";
@@ -9,8 +8,9 @@ import { Button } from "@/components/ui/Button";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { AuthorAvatar } from "@/components/blog/AuthorAvatar";
 import { ArticleShareLinks } from "@/components/blog/ArticleShareLinks";
+import { BlogCoverImage } from "@/components/blog/BlogCoverImage";
 import { BlogPageSchemas } from "@/components/seo/BlogPageSchemas";
-import { User, Calendar, Clock, ChevronRight } from "lucide-react";
+import { Calendar, Clock, ChevronRight } from "lucide-react";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 import { generateMetadata as genMeta } from "@/lib/seo";
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
     title: post.seo?.metaTitle || post.title,
     description: post.seo?.metaDescription || post.excerpt || "",
     keywords: post.seo?.metaKeywords,
-    ogImage: post.seo?.openGraphImage || post.mainImage,
+    ogImage: post.seo?.openGraphImage || post.imageDetail || post.image,
     ogType: "article",
     slug: `/insights/${slug}`,
   });
@@ -140,12 +140,13 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
   const articleUrl = `${siteUrl}/insights/${slug}`;
 
   const headings = (post.content || [])
-    .filter((block: any) => block._type === "block" && ["h2", "h3"].includes(block.style))
+    .filter((block: any) => block._type === "block" && block.style === "h2")
     .map((block: any) => ({
-      text: block.children[0].text,
+      text: block.children?.[0]?.text || "",
       level: block.style,
-      id: slugify(block.children[0].text)
-    }));
+      id: slugify(block.children?.[0]?.text || ""),
+    }))
+    .filter((heading: any) => heading.text);
 
   return (
     <div className="pt-24" style={{ background: '#0A0F1F' }}>
@@ -153,7 +154,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         title={post.title}
         description={post.excerpt || ""}
         url={articleUrl}
-        image={post.seo?.openGraphImage || post.mainImage}
+        image={post.seo?.openGraphImage || post.imageDetail || post.image}
         datePublished={post.date}
         authorName={displayAuthor}
         seo={post.seo}
@@ -184,21 +185,20 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                 <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {post.readTime}</span>
               </div>
             </div>
-            <div
-              className="relative aspect-[16/10] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg animate-fade-in-right"
-              style={{ background: "rgba(13,27,42,0.8)" }}
-            >
-              {post.image ? (
-                <Image 
-                  src={post.image} 
-                  alt={post.imageAlt || post.title} 
-                  fill 
-                  className="object-contain"
+            <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-lg animate-fade-in-right min-w-0">
+              {(post.imageDetail || post.image) ? (
+                <BlogCoverImage
+                  src={post.imageDetail || post.image}
+                  alt={post.imageAlt || post.title}
+                  variant="natural"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
-                  unoptimized
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-4xl font-bold truncate p-8" style={{ background: 'rgba(0,229,255,0.05)', color: '#14243A' }}>
+                <div
+                  className="w-full h-48 flex items-center justify-center text-2xl md:text-4xl font-bold truncate p-8"
+                  style={{ background: "rgba(0,229,255,0.05)", color: "#14243A" }}
+                >
                   {post.title}
                 </div>
               )}
@@ -247,10 +247,8 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                     <a
                       key={i}
                       href={`#${heading.id}`}
-                      className={`transition-all hover:text-[#00E5FF] leading-snug border-l-2 pl-4 -ml-[2px] ${
-                        heading.level === 'h3' ? 'text-xs border-transparent pr-4' : 'font-bold border-[#00E5FF]/20 pr-4'
-                      }`}
-                      style={{ color: heading.level === 'h3' ? '#8FA3BF' : '#C5D1E0' }}
+                      className="transition-all hover:text-[#00E5FF] leading-snug border-l-2 pl-4 -ml-[2px] font-bold border-[#00E5FF]/20 pr-4"
+                      style={{ color: "#C5D1E0" }}
                     >
                       {heading.text}
                     </a>
@@ -287,7 +285,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
             </div>
 
             {/* Author Footer Card */}
-            <div className="mt-16 p-8 md:p-12 rounded-[2rem] border flex flex-col md:flex-row gap-8 items-center text-center md:text-left" style={{ background: '#0D1B2A', borderColor: 'rgba(0,229,255,0.15)' }}>
+            <div className="mt-10 md:mt-12 p-6 sm:p-8 md:p-10 rounded-2xl border flex flex-col md:flex-row gap-6 md:gap-8 items-center text-center md:text-left" style={{ background: '#0D1B2A', borderColor: 'rgba(0,229,255,0.15)' }}>
               <AuthorAvatar author={displayAuthor} size="lg" />
               <div className="flex-grow">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
@@ -355,7 +353,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
       })()}
 
       {/* 5. Related Posts Section */}
-      <section className="py-20" style={{ background: '#0D1B2A' }}>
+      <section className="py-12 md:py-16" style={{ background: '#0D1B2A' }}>
         <div className="container-custom px-4 max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-12">
             <div>
@@ -371,20 +369,29 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
             {finalRelated.map((rp, i) => (
               <Link key={i} href={`/insights/${rp.slug || ""}`} className="group flex flex-col h-full rounded-[1.5rem] overflow-hidden transition-all hover:[border-color:rgba(0,229,255,0.35)]" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)' }}
               >
-                <div className="relative aspect-[16/10] overflow-hidden" style={{ background: "rgba(13,27,42,0.9)" }}>
-                  {rp.image ? (
-                    <Image
-                      src={rp.image}
+                <div className="relative overflow-hidden">
+                  {(rp.imageCard || rp.image) ? (
+                    <BlogCoverImage
+                      src={rp.imageCard || rp.image}
                       alt={rp.title}
-                      fill
-                      className="object-contain p-1.5 transition-transform duration-700 group-hover:scale-[1.02]"
-                      unoptimized
+                      variant="card"
+                      aspectClassName="aspect-[16/10]"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      hoverZoom
                     />
                   ) : (
-                    <div className="w-full h-full" style={{ background: 'rgba(0,229,255,0.05)' }} />
+                    <div className="w-full h-36" style={{ background: "rgba(0,229,255,0.05)" }} />
                   )}
-                  <div className="absolute top-4 left-4">
-                    <span className="px-2.5 py-1 rounded-full text-[9px] font-bold tracking-widest uppercase" style={{ background: 'rgba(0,229,255,0.12)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.3)', backdropFilter: 'blur(8px)' }}>
+                  <div className="absolute top-3 left-3 z-20">
+                    <span
+                      className="px-2.5 py-1 rounded-full text-[9px] font-bold tracking-widest uppercase"
+                      style={{
+                        background: "rgba(10,15,31,0.75)",
+                        color: "#00E5FF",
+                        border: "1px solid rgba(0,229,255,0.3)",
+                        backdropFilter: "blur(8px)",
+                      }}
+                    >
                       {rp.category}
                     </span>
                   </div>

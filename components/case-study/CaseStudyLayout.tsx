@@ -5,7 +5,7 @@ import { PortableText } from "@/components/ui/PortableText";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { ChevronRight } from "lucide-react";
 
-const SECTION_PAD = "py-12 sm:py-16 md:py-20";
+const SECTION_PAD = "py-12 md:py-16";
 const H2 = "text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight";
 const BODY = "text-sm sm:text-base leading-relaxed";
 const MUTED = { color: "#C5D1E0" } as const;

@@ -34,7 +34,7 @@ export const HorizontalFeature: React.FC<HorizontalFeatureProps> = ({
   titleAs = "h2",
 }) => {
   return (
-    <section className="py-16" style={{ background: bgWhite ? '#0A0F1F' : '#14243A' }}>
+    <section className="py-12 md:py-16" style={{ background: bgWhite ? '#0A0F1F' : '#14243A' }}>
       <div className="container-custom px-4">
         {(title || description) && (
           <div className="max-w-5xl mb-16">

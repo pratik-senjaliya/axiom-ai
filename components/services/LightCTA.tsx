@@ -21,7 +21,7 @@ export function LightCTA({
   secondaryButtonLink = "/contact"
 }: LightCTAProps) {
   return (
-    <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #14243A 0%, #0D1B2A 60%, #0A0F1F 100%)' }}>
+    <section className="py-14 md:py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #14243A 0%, #0D1B2A 60%, #0A0F1F 100%)' }}>
       {/* Subtle grid */}
       <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.04) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
 

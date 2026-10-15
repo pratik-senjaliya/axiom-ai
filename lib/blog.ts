@@ -9,6 +9,10 @@ export interface BlogPost {
   author: string;
   authorRole: string;
   image: string;
+  /** Pre-cropped 16:10 URL for listing cards (hotspot-aware when from Sanity) */
+  imageCard?: string;
+  /** Full-width URL for detail hero */
+  imageDetail?: string;
   imageAlt?: string;
   readTime: string;
   relatedService?: string;

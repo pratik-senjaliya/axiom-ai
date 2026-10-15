@@ -73,7 +73,7 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
   );
 
   return (
-    <section className="py-24 relative overflow-hidden" style={{ background: bgWhite ? '#0D1B2A' : '#14243A' }}>
+    <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: bgWhite ? '#0D1B2A' : '#14243A' }}>
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
 

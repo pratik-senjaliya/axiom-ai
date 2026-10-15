@@ -18,7 +18,7 @@ export function RelatedInsights({ posts, serviceName, compact = false }: Related
 
   return (
     <section
-      className={`relative overflow-hidden ${compact ? "py-12 md:py-14" : "py-24"}`}
+      className={`relative overflow-hidden ${compact ? "py-10 md:py-12" : "py-12 md:py-16"}`}
       style={{ background: '#0A0F1F' }}
     >
       {/* Glow */}

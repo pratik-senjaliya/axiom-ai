@@ -43,7 +43,7 @@ export const ObstacleSection: React.FC<ObstacleSectionProps> = ({
   className 
 }) => {
   return (
-    <section className={cn("py-24 md:py-32 relative overflow-hidden", className)} style={{ background: '#0D1B2A' }}>
+    <section className={cn("py-12 md:py-20 relative overflow-hidden", className)} style={{ background: '#0D1B2A' }}>
       <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
       
       <div className="container-custom px-4 relative z-10">

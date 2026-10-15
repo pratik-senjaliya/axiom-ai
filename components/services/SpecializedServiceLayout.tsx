@@ -152,7 +152,7 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
       )}
 
       {layers.length > 0 && useAiLayerGrid && (
-        <section className="py-24 relative overflow-hidden" style={{ background: "#0D1B2A" }}>
+        <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: "#0D1B2A" }}>
           <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
           <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
             <div className="text-center max-w-5xl mx-auto mb-16">
@@ -271,7 +271,7 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
       )}
 
       {faqs.length > 0 && (
-        <section className="py-24 relative z-10" style={{ background: "#0A0F1F" }}>
+        <section className="py-12 md:py-16 relative z-10" style={{ background: "#0A0F1F" }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">
             <FAQ items={faqs} title="Frequently Asked Questions" />
           </div>
