@@ -29,6 +29,8 @@ export const DEMO_CASE_STUDY = {
     "A multi-entity enterprise with regional finance teams and a shared service center supporting close, consolidations, and management reporting. Leadership needed a faster, more controlled close without disrupting ERP investments already in place."
   ),
   challengeHeadline: "The Challenges",
+  challengeDescription:
+    "The finance organization faced structural process and data constraints that kept close cycles slow and AI out of reach.",
   challengeItems: [
     "Month-end close routinely stretched beyond 12 days with unclear ownership across entities.",
     "Reconciliations lived in spreadsheets, making exceptions hard to detect early.",
@@ -36,6 +38,8 @@ export const DEMO_CASE_STUDY = {
     "AI pilots could not move to production without governed data and control frameworks.",
   ],
   approachHeadline: "Our Solutions / Approach",
+  approachDescription:
+    "We combined process redesign, a governed finance data layer, and AI-assisted automation with clear ownership.",
   approachItems: [
     "Redesigned the close calendar with clear owners, SLAs, and control checkpoints.",
     "Built a governed finance data layer connecting GL, subledgers, and operational sources.",
@@ -44,6 +48,8 @@ export const DEMO_CASE_STUDY = {
   ],
   technologies: ["Dynamics 365", "Power BI", "Azure", "Python", "Automation"],
   outcomesHeadline: "Outcomes / Result",
+  outcomesDescription:
+    "Measurable improvements across close cycle time, reporting speed, and day-to-day finance operations.",
   outcomeCards: [
     "~40% faster close cycle",
     "Management reporting available days earlier",
@@ -88,11 +94,14 @@ export const DEMO_CASE_STUDY_VIEW = {
   aboutClientImage: DEMO_CASE_STUDY.aboutClientImage,
   aboutClientImageAlt: DEMO_CASE_STUDY.aboutClientImageAlt,
   challengeHeadline: DEMO_CASE_STUDY.challengeHeadline,
+  challengeDescription: DEMO_CASE_STUDY.challengeDescription,
   challengeItems: DEMO_CASE_STUDY.challengeItems,
   approachHeadline: DEMO_CASE_STUDY.approachHeadline,
+  approachDescription: DEMO_CASE_STUDY.approachDescription,
   approachItems: DEMO_CASE_STUDY.approachItems,
   technologies: DEMO_CASE_STUDY.technologies,
   outcomesHeadline: DEMO_CASE_STUDY.outcomesHeadline,
+  outcomesDescription: DEMO_CASE_STUDY.outcomesDescription,
   outcomeCards: DEMO_CASE_STUDY.outcomeCards,
   testimonialsHeadline: DEMO_CASE_STUDY.testimonialsHeadline,
   testimonials: DEMO_CASE_STUDY.testimonials,

@@ -12,13 +12,10 @@ export default defineType({
   groups: [
     { name: 'hero', title: 'Hero Section' },
     { name: 'challenges', title: 'Finance Industry Challenges' },
-    { name: 'services', title: 'Custom Finance Services' },
     { name: 'solutions', title: 'Finance Transformation Solutions' },
     { name: 'clients', title: 'Clients We Serve' },
-    { name: 'pillars', title: 'How We Drive Success' },
-    { name: 'outcomes', title: 'Business Outcomes' },
+    { name: 'outcomes', title: 'How We Drive Success / Outcomes' },
     { name: 'successStories', title: 'Success Stories' },
-    { name: 'lifecycle', title: 'Lifecycle & Delivery Model' },
     { name: 'process', title: 'Process & Delivery' },
     { name: 'whyUs', title: 'Why Choose SyncOrigins' },
     { name: 'faqs', title: 'FAQs & CTA' },
@@ -61,10 +58,10 @@ export default defineType({
     }),
     defineField({
       name: 'challengesDescription',
-      title: 'Description',
+      title: 'Section Subline',
       type: 'simpleBlockContent',
       group: 'challenges',
-      description: 'Optional text shown under the section headline.',
+      description: 'Shown under the section headline.',
     }),
     defineField({
       name: 'challenges',
@@ -83,26 +80,6 @@ export default defineType({
     }),
 
     defineField({
-      name: 'servicesHeadline',
-      title: 'Services Headline',
-      type: 'string',
-      group: 'services',
-      initialValue: 'Our Custom Finance Software Development Services',
-    }),
-    defineField({
-      name: 'services',
-      title: 'Service Cards',
-      type: 'array',
-      group: 'services',
-      of: [{ type: 'object', fields: [...titledDescription] }],
-      initialValue: [
-        { title: 'Finance Consulting & Product Strategy' },
-        { title: 'Custom Finance Software Development' },
-        { title: 'Finance Modernization & Re-Architecture' },
-      ],
-    }),
-
-    defineField({
       name: 'solutionsHeadline',
       title: 'Solutions Headline',
       type: 'string',
@@ -111,9 +88,10 @@ export default defineType({
     }),
     defineField({
       name: 'solutionsDescription',
-      title: 'Description',
+      title: 'Section Subline',
       type: 'simpleBlockContent',
       group: 'solutions',
+      description: 'Shown under the section headline.',
     }),
     defineField({
       name: 'solutions',
@@ -140,9 +118,10 @@ export default defineType({
     }),
     defineField({
       name: 'clientsDescription',
-      title: 'Description',
+      title: 'Section Subline',
       type: 'simpleBlockContent',
       group: 'clients',
+      description: 'Shown under the section headline.',
     }),
     defineField({
       name: 'clients',
@@ -159,38 +138,18 @@ export default defineType({
     }),
 
     defineField({
-      name: 'pillarsHeadline',
-      title: 'Pillars Headline',
-      type: 'string',
-      group: 'pillars',
-      initialValue: 'How We Drive the Success of Your Finance Transformation',
-    }),
-    defineField({
-      name: 'pillarsDescription',
-      title: 'Pillars Description',
-      type: 'simpleBlockContent',
-      group: 'pillars',
-    }),
-    defineField({
-      name: 'pillars',
-      title: 'Delivery Pillars',
-      type: 'array',
-      group: 'pillars',
-      of: [{ type: 'object', fields: [...titledDescription] }],
-    }),
-
-    defineField({
       name: 'outcomesHeadline',
       title: 'Outcomes Headline',
       type: 'string',
       group: 'outcomes',
-      initialValue: 'Business Outcomes',
+      initialValue: 'How We Drive the Success of Your Finance Transformation',
     }),
     defineField({
       name: 'outcomesDescription',
-      title: 'Description',
+      title: 'Section Subline',
       type: 'simpleBlockContent',
       group: 'outcomes',
+      description: 'Shown under the section headline.',
     }),
     defineField({
       name: 'outcomes',
@@ -241,28 +200,6 @@ export default defineType({
     }),
 
     defineField({
-      name: 'lifecycleHeadline',
-      title: 'Lifecycle Headline',
-      type: 'string',
-      group: 'lifecycle',
-      initialValue: 'Our Finance Lifecycle and Delivery Model',
-    }),
-    defineField({
-      name: 'lifecycle',
-      title: 'Lifecycle Stages',
-      type: 'array',
-      group: 'lifecycle',
-      of: [{ type: 'object', fields: [...titledDescription] }],
-      initialValue: [
-        { title: 'Discovery & Planning' },
-        { title: 'Design & Prototyping' },
-        { title: 'Development & Integration' },
-        { title: 'Testing & Compliance' },
-        { title: 'Launch & Optimization' },
-      ],
-    }),
-
-    defineField({
       name: 'processHeadline',
       title: 'Process Headline',
       type: 'string',
@@ -271,9 +208,10 @@ export default defineType({
     }),
     defineField({
       name: 'processDescription',
-      title: 'Description',
+      title: 'Section Subline',
       type: 'simpleBlockContent',
       group: 'process',
+      description: 'Shown under the section headline.',
     }),
     defineField({
       name: 'process',
@@ -300,9 +238,10 @@ export default defineType({
     }),
     defineField({
       name: 'whyUsDescription',
-      title: 'Description',
+      title: 'Section Subline',
       type: 'simpleBlockContent',
       group: 'whyUs',
+      description: 'Shown under the section headline.',
     }),
     defineField({
       name: 'whyUs',

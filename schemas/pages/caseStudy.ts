@@ -168,6 +168,14 @@ export default defineType({
       initialValue: 'The Challenges',
     }),
     defineField({
+      name: 'challengeDescription',
+      title: 'Section Subline',
+      type: 'text',
+      rows: 3,
+      group: 'challenge',
+      description: 'Optional text shown under the section headline.',
+    }),
+    defineField({
       name: 'challengeItems',
       title: 'Challenge Cards (2x2 grid)',
       type: 'array',
@@ -188,6 +196,14 @@ export default defineType({
       type: 'string',
       group: 'approach',
       initialValue: 'Our Solutions / Approach',
+    }),
+    defineField({
+      name: 'approachDescription',
+      title: 'Section Subline',
+      type: 'text',
+      rows: 3,
+      group: 'approach',
+      description: 'Optional text shown under the section headline.',
     }),
     defineField({
       name: 'approachItems',
@@ -218,6 +234,14 @@ export default defineType({
       type: 'string',
       group: 'outcomes',
       initialValue: 'Outcomes / Result',
+    }),
+    defineField({
+      name: 'outcomesDescription',
+      title: 'Section Subline',
+      type: 'text',
+      rows: 3,
+      group: 'outcomes',
+      description: 'Optional text shown under the section headline.',
     }),
     defineField({
       name: 'outcomeCards',

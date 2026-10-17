@@ -140,12 +140,27 @@ export function CaseStudyAbout({
 }
 
 /** 2x2 numbered challenge cards */
-export function CaseStudyChallengeGrid({ title, items }: { title: string; items: string[] }) {
+export function CaseStudyChallengeGrid({
+  title,
+  description,
+  items,
+}: {
+  title: string;
+  description?: string;
+  items: string[];
+}) {
   if (!items?.length) return null;
   return (
     <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className={`${H2} mb-6 sm:mb-8 md:mb-10`}>{title}</h2>
+        <div className="mb-6 sm:mb-8 md:mb-10 max-w-3xl">
+          <h2 className={H2}>{title}</h2>
+          {description && (
+            <p className={`${BODY} mt-3 sm:mt-4`} style={MUTED}>
+              {description}
+            </p>
+          )}
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5">
           {items.map((text, index) => (
             <div
@@ -174,7 +189,15 @@ export function CaseStudyChallengeGrid({ title, items }: { title: string; items:
 }
 
 /** Dark numbered solutions grid */
-export function CaseStudySolutionsGrid({ title, items }: { title: string; items: string[] }) {
+export function CaseStudySolutionsGrid({
+  title,
+  description,
+  items,
+}: {
+  title: string;
+  description?: string;
+  items: string[];
+}) {
   if (!items?.length) return null;
   return (
     <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#050910" }}>
@@ -183,7 +206,14 @@ export function CaseStudySolutionsGrid({ title, items }: { title: string; items:
           className="rounded-xl sm:rounded-2xl border p-4 sm:p-6 md:p-10"
           style={{ background: "#0A0F1F", borderColor: "rgba(0,229,255,0.15)" }}
         >
-          <h2 className={`${H2} mb-6 sm:mb-8 md:mb-10`}>{title}</h2>
+          <div className="mb-6 sm:mb-8 md:mb-10 max-w-3xl">
+            <h2 className={H2}>{title}</h2>
+            {description && (
+              <p className={`${BODY} mt-3 sm:mt-4`} style={MUTED}>
+                {description}
+              </p>
+            )}
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 md:gap-6">
             {items.map((text, index) => (
               <div
@@ -236,12 +266,27 @@ export function CaseStudyTechnologies({ items }: { items: string[] }) {
 }
 
 /** Outcome cards grid */
-export function CaseStudyOutcomesGrid({ title, items }: { title: string; items: string[] }) {
+export function CaseStudyOutcomesGrid({
+  title,
+  description,
+  items,
+}: {
+  title: string;
+  description?: string;
+  items: string[];
+}) {
   if (!items?.length) return null;
   return (
     <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className={`${H2} mb-6 sm:mb-8 md:mb-10`}>{title}</h2>
+        <div className="mb-6 sm:mb-8 md:mb-10 max-w-3xl">
+          <h2 className={H2}>{title}</h2>
+          {description && (
+            <p className={`${BODY} mt-3 sm:mt-4`} style={MUTED}>
+              {description}
+            </p>
+          )}
+        </div>
         <div
           className="rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 border"
           style={{

@@ -51,23 +51,10 @@ export const DEMO_FINANCE_PAGE = {
     ),
   ],
 
-  servicesHeadline: "Our Custom Finance Software Development Services",
-  services: [
-    titledItem(
-      "Finance Consulting & Product Strategy",
-      "Define transformation roadmap, prioritize value cases, and align finance, IT, and business stakeholders."
-    ),
-    titledItem(
-      "Custom Finance Software Development",
-      "Build secure, scalable finance applications and workflows tailored to your operating model."
-    ),
-    titledItem(
-      "Finance Modernization & Re-Architecture",
-      "Upgrade legacy finance systems, simplify integrations, and prepare platforms for AI and automation."
-    ),
-  ],
-
   solutionsHeadline: "Our Finance Transformation Solutions",
+  solutionsDescription: pt(
+    "End-to-end capabilities that modernize finance processes, data, ERP platforms, and AI-ready operations."
+  ),
   solutions: [
     titledItem(
       "Finance Process Transformation",
@@ -96,6 +83,9 @@ export const DEMO_FINANCE_PAGE = {
   ],
 
   clientsHeadline: "Finance Clients We Serve",
+  clientsDescription: pt(
+    "From banking and fintech to corporate finance and shared service centers — we meet teams where they operate."
+  ),
   clients: [
     { title: "Banking" },
     { title: "Payments" },
@@ -108,26 +98,10 @@ export const DEMO_FINANCE_PAGE = {
     { title: "Fintech Platforms" },
   ],
 
-  pillarsHeadline: "How We Drive the Success of Your Finance Transformation",
-  pillarsDescription: pt(
+  outcomesHeadline: "How We Drive the Success of Your Finance Transformation",
+  outcomesDescription: pt(
     "A practical delivery model that reduces risk, protects timelines, and keeps finance stakeholders aligned from discovery to scale."
   ),
-  pillars: [
-    titledItem(
-      "Risk Identification and Management",
-      "We surface process, data, and control risks early — then build mitigation into the transformation plan."
-    ),
-    titledItem(
-      "Accurate Time and Budget Estimation",
-      "Clear scoping and phased delivery keep finance programs predictable and outcome-focused."
-    ),
-    titledItem(
-      "Teamwork and Knowledge Management",
-      "Shared ownership, documentation, and enablement so finance teams can run what we build."
-    ),
-  ],
-
-  outcomesHeadline: "Business Outcomes",
   outcomes: [
     titledItem("Faster financial decision-making", "Leaders get timely, trusted numbers to act with confidence."),
     titledItem("Improved data visibility", "One coherent view across entities, systems, and operational drivers."),
@@ -159,16 +133,10 @@ export const DEMO_FINANCE_PAGE = {
     },
   ],
 
-  lifecycleHeadline: "Our Finance Lifecycle and Delivery Model",
-  lifecycle: [
-    titledItem("Discovery & Planning", "Define goals, analyze needs, and create a comprehensive transformation plan."),
-    titledItem("Design & Prototyping", "Create process designs, data models, wireframes, and prototypes."),
-    titledItem("Development & Integration", "Build features and connect ERP, data, and partner systems."),
-    titledItem("Testing & Compliance", "Quality audits, user validation, and regulatory control checks."),
-    titledItem("Launch & Optimization", "Deployment, enablement, and continuous performance monitoring."),
-  ],
-
   processHeadline: "Finance Transformation Process & Delivery",
+  processDescription: pt(
+    "A structured delivery path from discovery through scale — designed for finance controls, speed, and lasting adoption."
+  ),
   process: [
     { _key: "s1", title: "Discover & Assess", description: pt("Map processes, systems, data quality, and pain points.") },
     { _key: "s2", title: "Define Priorities", description: pt("Align value cases, sequencing, and success metrics.") },

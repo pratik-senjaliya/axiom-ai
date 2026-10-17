@@ -15,26 +15,70 @@ import {
   IndustryWhyUs,
 } from "@/components/industries/IndustrySection";
 import { getFinancePage, getLatestPostsByService } from "@/lib/sanity/queries";
-import { isFinanceListed } from "@/lib/content-visibility";
+import { areCaseStudiesListed, isFinanceListed } from "@/lib/content-visibility";
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
 import { DEMO_FINANCE_PAGE } from "@/lib/demo/financePage";
 
 export const dynamic = "force-dynamic";
 
+function hasTextContent(value: unknown): boolean {
+  if (!value) return false;
+  if (typeof value === "string") return value.trim().length > 0;
+  if (Array.isArray(value)) return value.length > 0;
+  return true;
+}
+
+/** Keep CMS titles, fill missing item descriptions from demo by matching title. */
+function mergeTitledItems(cmsItems: any[] | undefined, fallbackItems: any[] = []) {
+  if (!cmsItems?.length) return fallbackItems;
+  return cmsItems.map((item, index) => {
+    const fallback =
+      fallbackItems.find((f) => f.title && f.title === item.title) || fallbackItems[index];
+    return {
+      ...item,
+      description: hasTextContent(item.description) ? item.description : fallback?.description,
+    };
+  });
+}
+
 function mergeFinanceData(cms: any) {
   const fallback = DEMO_FINANCE_PAGE;
   if (!cms) return fallback;
+
   const merged: any = { ...fallback, ...cms };
-  for (const key of Object.keys(fallback)) {
-    if (Array.isArray((fallback as any)[key]) && (!cms[key] || cms[key].length === 0)) {
-      merged[key] = (fallback as any)[key];
-    }
+
+  const descriptionKeys = [
+    "challengesDescription",
+    "solutionsDescription",
+    "clientsDescription",
+    "outcomesDescription",
+    "processDescription",
+    "whyUsDescription",
+  ] as const;
+
+  for (const key of descriptionKeys) {
+    if (!hasTextContent(merged[key])) merged[key] = (fallback as any)[key];
   }
+
+  merged.challenges = mergeTitledItems(cms.challenges, fallback.challenges);
+  merged.solutions = mergeTitledItems(cms.solutions, fallback.solutions);
+  merged.clients = mergeTitledItems(cms.clients, fallback.clients);
+  merged.outcomes = mergeTitledItems(cms.outcomes, fallback.outcomes);
+  merged.process = mergeTitledItems(cms.process, fallback.process);
+  merged.whyUs = mergeTitledItems(cms.whyUs, fallback.whyUs);
+
+  if (!cms.successStories?.length) {
+    merged.successStories = fallback.successStories;
+  }
+
   merged.hero = { ...fallback.hero, ...(cms.hero || {}) };
-  if (!merged.hero.description) merged.hero.description = fallback.hero.description;
+  if (!hasTextContent(merged.hero.description)) merged.hero.description = fallback.hero.description;
   if (!merged.hero.primaryCta) merged.hero.primaryCta = fallback.hero.primaryCta;
   if (!merged.hero.secondaryCta) merged.hero.secondaryCta = fallback.hero.secondaryCta;
   merged.finalCta = { ...fallback.finalCta, ...(cms.finalCta || {}) };
+  if (!hasTextContent(merged.finalCta?.description)) {
+    merged.finalCta.description = fallback.finalCta.description;
+  }
   if (!merged.seo) merged.seo = fallback.seo;
   return merged;
 }
@@ -101,32 +145,35 @@ export default async function FinancePage() {
         items={mapItems(data.challenges)}
       />
 
-      {/* Services slot → real Solutions content (placeholders removed) */}
       <IndustryServiceCards
         title={data.solutionsHeadline || "Our Finance Transformation Solutions"}
+        description={data.solutionsDescription}
         items={mapItems(data.solutions)}
       />
 
       <IndustryClientsGrid
         title={data.clientsHeadline || "Finance Clients We Serve"}
+        description={data.clientsDescription}
         items={mapItems(data.clients)}
       />
 
-      {/* How We Drive Success slot → real Outcomes content (pillars placeholders removed) */}
       <IndustryPillars
-        title={data.pillarsHeadline || "How We Drive the Success of Your Finance Transformation"}
-        description={data.pillarsDescription}
+        title={data.outcomesHeadline || "How We Drive the Success of Your Finance Transformation"}
+        description={data.outcomesDescription}
         items={mapItems(data.outcomes)}
       />
 
-      <IndustrySuccessStories
-        title={data.successStoriesHeadline || "Finance Transformation Success Stories"}
-        stories={data.successStories || []}
-      />
+      {/* Soft-launch: success stories link to case studies — hide until published */}
+      {areCaseStudiesListed() && (
+        <IndustrySuccessStories
+          title={data.successStoriesHeadline || "Finance Transformation Success Stories"}
+          stories={data.successStories || []}
+        />
+      )}
 
-      {/* Process slot → real Process & Delivery content (lifecycle placeholders removed) */}
       <IndustryLifecycle
         title={data.processHeadline || "Finance Transformation Process & Delivery"}
+        description={data.processDescription}
         items={mapItems(data.process)}
       />
 

@@ -5,7 +5,7 @@
  *
  * Flip to `false` to publish on the live site.
  */
-export const HIDE_FINANCE_FROM_SITE = true;
+export const HIDE_FINANCE_FROM_SITE = false;
 export const HIDE_CASE_STUDIES_FROM_SITE = true;
 
 export function isFinanceListed(): boolean {

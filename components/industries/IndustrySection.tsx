@@ -31,6 +31,15 @@ import { HoverCard } from "@/components/ui/animations/HoverCard";
 
 type Item = { title: string; description?: any };
 
+function SectionSubline({ description }: { description?: any }) {
+  if (!description) return null;
+  return (
+    <div className="text-sm sm:text-base leading-relaxed max-w-3xl mx-auto" style={{ color: "#8FA3BF" }}>
+      <PortableText value={description} />
+    </div>
+  );
+}
+
 const CLIENT_ICONS: { match: RegExp; icon: LucideIcon }[] = [
   { match: /bank/i, icon: Building2 },
   { match: /payment/i, icon: CreditCard },
@@ -88,9 +97,11 @@ const ContactCta = ({ href = "/contact" }: { href?: string }) => (
  */
 export function IndustryServiceCards({
   title,
+  description,
   items,
 }: {
   title: string;
+  description?: any;
   items: Item[];
   solutionsTitle?: string;
   solutions?: Item[];
@@ -98,9 +109,12 @@ export function IndustryServiceCards({
   return (
     <section id="services" className="py-12 md:py-16 scroll-mt-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8 tracking-tight max-w-3xl mx-auto">
-          {title}
-        </h2>
+        <div className="text-center mb-6 md:mb-8 space-y-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight max-w-3xl mx-auto">
+            {title}
+          </h2>
+          <SectionSubline description={description} />
+        </div>
         <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
           {items.map((item, index) => {
             const Icon = SOLUTION_ICONS[index % SOLUTION_ICONS.length];
@@ -136,13 +150,24 @@ export function IndustrySolutionsList() {
 }
 
 /** Mockup: 3x3 clients grid with filled cards + distinct icons */
-export function IndustryClientsGrid({ title, items }: { title: string; items: Item[] }) {
+export function IndustryClientsGrid({
+  title,
+  description,
+  items,
+}: {
+  title: string;
+  description?: any;
+  items: Item[];
+}) {
   return (
     <section id="clients" className="py-12 md:py-16 scroll-mt-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8 tracking-tight">
-          {title}
-        </h2>
+        <div className="text-center mb-6 md:mb-8 space-y-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
+            {title}
+          </h2>
+          <SectionSubline description={description} />
+        </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 md:gap-4">
           {items.map((item) => {
             const Icon = clientIcon(item.title);
@@ -349,9 +374,11 @@ export function IndustrySuccessStories({
  */
 export function IndustryLifecycle({
   title,
+  description,
   items,
 }: {
   title: string;
+  description?: any;
   items: Item[];
   processTitle?: string;
   process?: Item[];
@@ -359,9 +386,12 @@ export function IndustryLifecycle({
   return (
     <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8 tracking-tight">
-          {title}
-        </h2>
+        <div className="text-center mb-6 md:mb-8 space-y-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
+            {title}
+          </h2>
+          <SectionSubline description={description} />
+        </div>
         <div className="relative">
           <div
             className="hidden lg:block absolute top-8 left-[6%] right-[6%] h-px"

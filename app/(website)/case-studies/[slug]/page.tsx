@@ -24,21 +24,39 @@ interface CaseStudyPageProps {
   params: Promise<{ slug: string }>;
 }
 
+function hasTextContent(value: unknown): boolean {
+  if (!value) return false;
+  if (typeof value === "string") return value.trim().length > 0;
+  if (Array.isArray(value)) return value.length > 0;
+  return true;
+}
+
 function mergeCaseStudy(cms: any, slug: string) {
   if (cms) {
     return {
       ...DEMO_CASE_STUDY_VIEW,
       ...cms,
+      excerpt: hasTextContent(cms.excerpt) ? cms.excerpt : DEMO_CASE_STUDY_VIEW.excerpt,
       heroStats: cms.heroStats?.length ? cms.heroStats : DEMO_CASE_STUDY_VIEW.heroStats,
+      aboutClient: hasTextContent(cms.aboutClient) ? cms.aboutClient : DEMO_CASE_STUDY_VIEW.aboutClient,
       aboutClientImage: cms.aboutClientImage || DEMO_CASE_STUDY_VIEW.aboutClientImage,
       aboutClientImageAlt: cms.aboutClientImageAlt || DEMO_CASE_STUDY_VIEW.aboutClientImageAlt,
+      challengeDescription: hasTextContent(cms.challengeDescription)
+        ? cms.challengeDescription
+        : DEMO_CASE_STUDY_VIEW.challengeDescription,
       challengeItems: cms.challengeItems?.length
         ? cms.challengeItems
         : DEMO_CASE_STUDY_VIEW.challengeItems,
+      approachDescription: hasTextContent(cms.approachDescription)
+        ? cms.approachDescription
+        : DEMO_CASE_STUDY_VIEW.approachDescription,
       approachItems: cms.approachItems?.length
         ? cms.approachItems
         : DEMO_CASE_STUDY_VIEW.approachItems,
       technologies: cms.technologies?.length ? cms.technologies : DEMO_CASE_STUDY_VIEW.technologies,
+      outcomesDescription: hasTextContent(cms.outcomesDescription)
+        ? cms.outcomesDescription
+        : DEMO_CASE_STUDY_VIEW.outcomesDescription,
       outcomeCards: cms.outcomeCards?.length ? cms.outcomeCards : DEMO_CASE_STUDY_VIEW.outcomeCards,
       testimonials: cms.testimonials?.length ? cms.testimonials : DEMO_CASE_STUDY_VIEW.testimonials,
     };
@@ -122,12 +140,14 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       {/* 3. The Challenges — 2x2 numbered cards */}
       <CaseStudyChallengeGrid
         title={study.challengeHeadline || "The Challenges"}
+        description={study.challengeDescription}
         items={study.challengeItems || []}
       />
 
       {/* 4. Solutions / Approach — dark numbered grid */}
       <CaseStudySolutionsGrid
         title={study.approachHeadline || "Our Solutions / Approach"}
+        description={study.approachDescription}
         items={study.approachItems || []}
       />
 
@@ -137,6 +157,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       {/* 6. Outcomes — metric cards */}
       <CaseStudyOutcomesGrid
         title={study.outcomesHeadline || "Outcomes / Result"}
+        description={study.outcomesDescription}
         items={study.outcomeCards || []}
       />
 
@@ -149,8 +170,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         />
       )}
 
-      {/* 8. More Case Studies */}
-      <CaseStudyMore items={related} />
+      {/* Soft-launch: hide related case study discovery until published */}
+      {areCaseStudiesListed() && <CaseStudyMore items={related} />}
 
       <DarkCTA
         badgeText="Case Study"
