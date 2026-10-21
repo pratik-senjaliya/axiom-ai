@@ -1,22 +1,8 @@
 import type { Metadata } from "next";
-import { DarkCTA } from "@/components/services/DarkCTA";
-import { RelatedInsights } from "@/components/services/RelatedInsights";
-import { FAQ } from "@/components/ui/FAQ";
-import { PortableText } from "@/components/ui/PortableText";
-import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
-import { IndustryHero } from "@/components/industries/IndustryHero";
-import { IndustryChallengePanel } from "@/components/industries/IndustryChallengePanel";
-import {
-  IndustryServiceCards,
-  IndustryClientsGrid,
-  IndustryPillars,
-  IndustrySuccessStories,
-  IndustryLifecycle,
-  IndustryWhyUs,
-} from "@/components/industries/IndustrySection";
+import { IndustryPageLayout } from "@/components/industries/IndustryPageLayout";
 import { getFinancePage, getLatestPostsByService } from "@/lib/sanity/queries";
-import { areCaseStudiesListed, isFinanceListed } from "@/lib/content-visibility";
-import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
+import { isFinanceListed } from "@/lib/content-visibility";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import { DEMO_FINANCE_PAGE } from "@/lib/demo/financePage";
 
 export const dynamic = "force-dynamic";
@@ -100,106 +86,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function FinancePage() {
   const data = mergeFinanceData(await getFinancePage());
-
   const relatedPosts = await getLatestPostsByService("finance");
 
-  const mapItems = (items: any[] = []) =>
-    items.map((item: any) => ({ title: item.title, description: item.description }));
-
-  const hero = data.hero;
-  const faqs = (data.faqs || []).map((faq: any) => ({
-    question: faq.question,
-    answer: <PortableText value={faq.answer} />,
-  }));
-
-  return (
-    <div className="overflow-x-clip">
-      <ServicePageSchemas
-        title={data?.seo?.metaTitle || `${hero?.title || ""} ${hero?.titleHighlight || ""}`.trim()}
-        description={portableTextToPlain(hero?.description) || ""}
-        url={`${getSiteUrl()}/finance`}
-        image={data?.seo?.openGraphImage || hero?.image}
-        seo={data?.seo}
-        faqs={data?.faqs}
-      />
-
-      <IndustryHero
-        industryLabel="Industries · Finance"
-        title={hero?.title || "Transform Finance Through AI, Data &"}
-        titleHighlight={hero?.titleHighlight || "Intelligent Enterprise Systems"}
-        description={hero?.description}
-        primaryButtonText={hero?.primaryCta?.text || "Talk to Our Finance Experts"}
-        primaryButtonLink={hero?.primaryCta?.link || "/contact"}
-        secondaryButtonText={hero?.secondaryCta?.text || "Explore Finance Solutions"}
-        secondaryButtonLink={hero?.secondaryCta?.link || "#services"}
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Industries" },
-          { label: "Finance" },
-        ]}
-      />
-
-      <IndustryChallengePanel
-        title={data.challengesHeadline || "Finance Challenges We Solve"}
-        description={data.challengesDescription}
-        items={mapItems(data.challenges)}
-      />
-
-      <IndustryServiceCards
-        title={data.solutionsHeadline || "Our Finance Transformation Solutions"}
-        description={data.solutionsDescription}
-        items={mapItems(data.solutions)}
-      />
-
-      <IndustryClientsGrid
-        title={data.clientsHeadline || "Finance Clients We Serve"}
-        description={data.clientsDescription}
-        items={mapItems(data.clients)}
-      />
-
-      <IndustryPillars
-        title={data.outcomesHeadline || "How We Drive the Success of Your Finance Transformation"}
-        description={data.outcomesDescription}
-        items={mapItems(data.outcomes)}
-      />
-
-      {/* Soft-launch: success stories link to case studies — hide until published */}
-      {areCaseStudiesListed() && (
-        <IndustrySuccessStories
-          title={data.successStoriesHeadline || "Finance Transformation Success Stories"}
-          stories={data.successStories || []}
-        />
-      )}
-
-      <IndustryLifecycle
-        title={data.processHeadline || "Finance Transformation Process & Delivery"}
-        description={data.processDescription}
-        items={mapItems(data.process)}
-      />
-
-      <IndustryWhyUs
-        title={data.whyUsHeadline || "Why Choose SyncOrigins for Finance"}
-        description={data.whyUsDescription}
-        items={mapItems(data.whyUs)}
-      />
-
-      <RelatedInsights posts={relatedPosts} serviceName="Finance" />
-
-      {faqs.length > 0 && (
-        <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>
-          <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title="Frequently Asked Questions" />
-          </div>
-        </section>
-      )}
-
-      <DarkCTA
-        badgeText={data.finalCta?.badgeText || "Finance"}
-        title={data.finalCta?.title || "Ready to Transform Your Finance Operations?"}
-        description={data.finalCta?.description}
-        buttonText={data.finalCta?.buttonText || "Talk to Our Finance Experts"}
-        buttonHref={data.finalCta?.buttonLink || "/contact"}
-      />
-    </div>
-  );
+  return <IndustryPageLayout data={data} industryName="Finance" path="/finance" relatedPosts={relatedPosts} />;
 }

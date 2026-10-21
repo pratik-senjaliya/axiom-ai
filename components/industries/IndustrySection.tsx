@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Building2,
   CreditCard,
@@ -442,10 +443,20 @@ export function IndustryWhyUs({
   title,
   description,
   items,
+  image,
+  imageAlt,
+  imageLabel = "Finance expertise",
+  imageTitle = "AI, data, and ERP delivery built for finance transformation",
+  listTitle = "Benefits of partnering with SyncOrigins for Finance",
 }: {
   title: string;
   description?: any;
   items: Item[];
+  image?: string;
+  imageAlt?: string;
+  imageLabel?: string;
+  imageTitle?: string;
+  listTitle?: string;
 }) {
   return (
     <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#14243A" }}>
@@ -467,23 +478,43 @@ export function IndustryWhyUs({
               borderColor: "rgba(0,229,255,0.2)",
             }}
           >
-            <div
-              className="absolute top-6 right-6 h-24 w-24 rounded-full opacity-30 blur-2xl"
-              style={{ background: "#00E5FF" }}
-            />
-            <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-2" style={{ color: "#00E5FF" }}>
-              Finance expertise
-            </p>
-            <p className="text-xl md:text-2xl font-bold text-white leading-snug relative z-10">
-              AI, data, and ERP delivery built for finance transformation
-            </p>
+            {image ? (
+              <>
+                <Image
+                  src={image}
+                  alt={imageAlt || imageTitle || ""}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(180deg, rgba(7,16,31,0.1) 30%, rgba(7,16,31,0.9) 100%)" }}
+                />
+              </>
+            ) : (
+              <div
+                className="absolute top-6 right-6 h-24 w-24 rounded-full opacity-30 blur-2xl"
+                style={{ background: "#00E5FF" }}
+              />
+            )}
+            {imageLabel && (
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-2 relative z-10" style={{ color: "#00E5FF" }}>
+                {imageLabel}
+              </p>
+            )}
+            {imageTitle && (
+              <p className="text-xl md:text-2xl font-bold text-white leading-snug relative z-10">
+                {imageTitle}
+              </p>
+            )}
           </div>
           <div
             className="rounded-2xl border p-5 md:p-6"
             style={{ background: "rgba(10,15,31,0.45)", borderColor: "rgba(0,229,255,0.12)" }}
           >
             <p className="text-sm font-bold text-white mb-4">
-              Benefits of partnering with SyncOrigins for Finance
+              {listTitle}
             </p>
             <ul className="space-y-3">
               {items.map((item) => (

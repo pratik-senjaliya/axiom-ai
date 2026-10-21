@@ -623,11 +623,10 @@ export async function getManagedDeliveryPage(): Promise<any> {
     return safeFetch<any>(query, {}, null)
 }
 
-// ==================== FINANCE PAGE ====================
+// ==================== FINANCE / INDUSTRY PAGES ====================
 
-export async function getFinancePage(): Promise<any> {
-  const query = `*[_type == "financePage" && _id == "financePageSingleton"][0] {
-    seo,
+const INDUSTRY_PAGE_FIELDS = `
+    seo { ${SEO_FIELDS} },
     hero {
       badge,
       title,
@@ -665,6 +664,11 @@ export async function getFinancePage(): Promise<any> {
     process[] { step, title, description },
     whyUsHeadline,
     whyUsDescription,
+    "whyUsImage": whyUsImage.asset->url,
+    "whyUsImageAlt": whyUsImage.alt,
+    whyUsImageLabel,
+    whyUsImageTitle,
+    whyUsListTitle,
     whyUs[] { title, description },
     faqs[] { question, answer },
     finalCta {
@@ -674,8 +678,35 @@ export async function getFinancePage(): Promise<any> {
       buttonText,
       buttonLink
     }
-  }`
+`
+
+export async function getFinancePage(): Promise<any> {
+  const query = `*[_type == "financePage" && _id == "financePageSingleton"][0] {${INDUSTRY_PAGE_FIELDS}}`
   return safeFetch<any>(query, {}, null)
+}
+
+// ==================== INDUSTRY PAGES (CMS-created, served at /[slug]) ====================
+
+export async function getIndustryPageBySlug(slug: string): Promise<any> {
+  const query = `*[_type == "industryPage" && slug.current == $slug][0] {
+    title,
+    "slug": slug.current,${INDUSTRY_PAGE_FIELDS}}`
+  return safeFetch<any>(query, { slug }, null)
+}
+
+export async function getAllIndustryPageSlugs(): Promise<string[]> {
+  const query = `*[_type == "industryPage" && !(slug.current in $reserved)].slug.current`
+  return safeFetch<string[]>(query, { reserved: CORE_SERVICE_SLUGS }, [])
+}
+
+/** Industry pages that should appear in header/footer navigation */
+export async function getNavigationIndustries(): Promise<any[]> {
+  const query = `*[_type == "industryPage" && showInNavigation != false && defined(slug.current) && !(slug.current in $reserved)] | order(title asc) {
+    title,
+    "slug": slug.current,
+    navTags
+  }`
+  return safeFetch<any[]>(query, { reserved: CORE_SERVICE_SLUGS }, [])
 }
 
 // ==================== CASE STUDIES (DETAIL PAGES) ====================

@@ -1,5 +1,6 @@
 import { defineType, defineField } from 'sanity'
 import { CORE_SERVICE_SLUGS } from '../../lib/core-services'
+import { isSlugFreeAcrossPages } from './industryPage'
 
 export default defineType({
     name: 'service',
@@ -45,7 +46,7 @@ export default defineType({
             name: 'slug',
             title: 'URL Slug',
             type: 'slug',
-            options: { source: 'title' },
+            options: { source: 'title', isUnique: isSlugFreeAcrossPages },
             group: 'hero',
             validation: (Rule) =>
                 Rule.required().custom((slug) => {

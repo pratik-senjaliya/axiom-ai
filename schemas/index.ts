@@ -36,6 +36,7 @@ import dataAnalyticsPage from './pages/dataAnalyticsPage'
 import managedDeliveryPage from './pages/managedDeliveryPage'
 import sustainabilityPage from './pages/sustainabilityPage'
 import financePage from './pages/financePage'
+import industryPage from './pages/industryPage'
 import caseStudies from './pages/caseStudies'
 import caseStudy from './pages/caseStudy'
 import privacyPolicy from './pages/privacyPolicy'
@@ -84,6 +85,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         service,
         post,
         caseStudy,
+        industryPage,
         teamMember,
 
         // Forms & Subscriptions

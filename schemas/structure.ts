@@ -76,6 +76,8 @@ export const structure = (S: StructureBuilder) =>
                         .title('Industry Pages')
                         .items([
                             singletonListItem(S, 'financePage', 'Finance'),
+                            S.divider(),
+                            S.documentTypeListItem('industryPage').title('Other Industries'),
                         ])
                 ),
 

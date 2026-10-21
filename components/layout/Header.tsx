@@ -27,9 +27,7 @@ type NavItem = {
 const navigation: NavItem[] = [
   { name: "Home", href: "/" },
   { name: "Services", href: "#services", hasDropdown: true, dropdownKey: "services" },
-  ...(isFinanceListed()
-    ? [{ name: "Industries", href: "#industries", hasDropdown: true, dropdownKey: "industries" as const }]
-    : []),
+  { name: "Industries", href: "#industries", hasDropdown: true, dropdownKey: "industries" },
   { name: "Solutions", href: "/solutions" },
   { name: "Insights", href: "/insights" },
   { name: "About", href: "/about" },
@@ -129,6 +127,7 @@ export const Header: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<"services" | "industries" | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<"services" | "industries" | null>(null);
   const [dynamicServices, setDynamicServices] = useState<DynamicNavService[]>([]);
+  const [dynamicIndustries, setDynamicIndustries] = useState<DynamicNavService[]>([]);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -137,6 +136,9 @@ export const Header: React.FC = () => {
       .then((data) => {
         if (data?.services) {
           setDynamicServices(data.services);
+        }
+        if (data?.industryPages) {
+          setDynamicIndustries(data.industryPages);
         }
       })
       .catch(() => {});
@@ -167,7 +169,8 @@ export const Header: React.FC = () => {
       return [...servicePaths, ...dynamicPaths].some((path) => pathname.startsWith(path));
     }
     if (item.dropdownKey === "industries") {
-      return industryPaths.some((path) => pathname.startsWith(path));
+      const dynamicPaths = dynamicIndustries.map((i) => i.href);
+      return [...industryPaths, ...dynamicPaths].some((path) => pathname.startsWith(path));
     }
     return pathname === item.href;
   };
@@ -182,6 +185,11 @@ export const Header: React.FC = () => {
   };
 
   const dropdownOpen = openDropdown !== null;
+
+  // Hide the Industries menu entirely when there is nothing to list
+  const navItems = navigation.filter(
+    (item) => item.dropdownKey !== "industries" || industryCategories.length + dynamicIndustries.length > 0
+  );
 
   return (
     <>
@@ -210,7 +218,7 @@ export const Header: React.FC = () => {
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-2">
-              {navigation.map((item) => (
+              {navItems.map((item) => (
                 <div
                   key={item.name}
                   className="relative"
@@ -348,6 +356,32 @@ export const Header: React.FC = () => {
                             </div>
                           </Link>
                         ))}
+                        {dynamicIndustries.map((industry) => (
+                          <Link
+                            key={industry.slug}
+                            href={industry.href}
+                            className="group/item flex gap-4 p-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
+                          >
+                            <DynamicServiceIcon />
+                            <div>
+                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-2">
+                                {industry.title}
+                              </h3>
+                              {(industry.navTags?.length ?? 0) > 0 && (
+                                <div className="flex flex-wrap gap-2">
+                                  {industry.navTags!.map((tag) => (
+                                    <span
+                                      key={tag}
+                                      className="px-3 py-1 bg-[#14243A] text-[#8FA3BF] text-[0.75rem] font-medium rounded-full cursor-default border border-[#00E5FF]/10"
+                                    >
+                                      {tag}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </Link>
+                        ))}
                       </div>
                     </div>
                   )}
@@ -384,7 +418,7 @@ export const Header: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-40 bg-[#0A0F1F]/98 backdrop-blur-xl pt-24 px-6 overflow-y-auto border-r border-[#00E5FF]/10">
           <nav className="flex flex-col gap-6 text-lg font-medium">
-            {navigation.map((item) => (
+            {navItems.map((item) => (
               <React.Fragment key={item.name}>
                 {item.hasDropdown && item.dropdownKey ? (
                   <>
@@ -423,17 +457,16 @@ export const Header: React.FC = () => {
                             {cat.title}
                           </Link>
                         ))}
-                        {item.dropdownKey === "services" &&
-                          dynamicServices.map((service) => (
-                            <Link
-                              key={service.slug}
-                              href={service.href}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                              className="text-[#8FA3BF] text-base hover:text-[#00E5FF] transition-colors"
-                            >
-                              {service.title}
-                            </Link>
-                          ))}
+                        {(item.dropdownKey === "services" ? dynamicServices : dynamicIndustries).map((service) => (
+                          <Link
+                            key={service.slug}
+                            href={service.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="text-[#8FA3BF] text-base hover:text-[#00E5FF] transition-colors"
+                          >
+                            {service.title}
+                          </Link>
+                        ))}
                       </div>
                     )}
                   </>
