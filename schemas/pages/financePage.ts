@@ -1,9 +1,25 @@
 import { defineType, defineField } from 'sanity'
+import { INDUSTRY_ICON_OPTIONS } from '../../lib/industry-icons'
 
 const titledDescription = [
   { name: 'title', type: 'string', title: 'Title' },
   { name: 'description', type: 'simpleBlockContent', title: 'Description' },
 ] as const
+
+/** Button shown under a section; empty text/link fall back to "Contact us" → /contact */
+const sectionCta = (name: string, title: string, group: string) =>
+  defineField({
+    name,
+    title,
+    type: 'object',
+    group,
+    options: { collapsible: true, collapsed: false },
+    fields: [
+      { name: 'text', type: 'string', title: 'Button Text', description: 'Defaults to "Contact us".' },
+      { name: 'link', type: 'string', title: 'Button Link', description: 'e.g. /contact, #services or a full URL. Defaults to /contact.' },
+      { name: 'hidden', type: 'boolean', title: 'Hide this button', initialValue: false },
+    ],
+  })
 
 export const industryGroups = [
   { name: 'hero', title: 'Hero Section' },
@@ -134,6 +150,7 @@ export const industryFields = [
       { title: 'Risk, Compliance & Reporting' },
     ],
   }),
+  sectionCta('solutionsCta', 'Button Under Solutions', 'solutions'),
 
   defineField({
     name: 'clientsHeadline',
@@ -154,7 +171,27 @@ export const industryFields = [
     title: 'Client Segments',
     type: 'array',
     group: 'clients',
-    of: [{ type: 'object', fields: [...titledDescription] }],
+    of: [{
+      type: 'object',
+      fields: [
+        ...titledDescription,
+        {
+          name: 'icon',
+          type: 'string',
+          title: 'Icon',
+          description: 'Pick an icon. Leave empty to choose one automatically from the title.',
+          options: { list: [...INDUSTRY_ICON_OPTIONS] },
+        },
+        {
+          name: 'iconImage',
+          type: 'image',
+          title: 'Custom Icon (optional)',
+          description: 'Upload your own icon (SVG or PNG, square). Overrides the icon picked above.',
+          options: { accept: 'image/svg+xml,image/png,image/webp' },
+        },
+      ],
+      preview: { select: { title: 'title', subtitle: 'icon', media: 'iconImage' } },
+    }],
     initialValue: [
       { title: 'Enterprise CFOs & Controllers' },
       { title: 'Banks & Financial Services' },
@@ -192,6 +229,7 @@ export const industryFields = [
       { title: 'Scalable, AI-ready finance operations' },
     ],
   }),
+  sectionCta('outcomesCta', 'Button Under Outcomes', 'outcomes'),
 
   defineField({
     name: 'successStoriesHeadline',

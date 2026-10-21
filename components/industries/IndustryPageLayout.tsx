@@ -76,18 +76,25 @@ export function IndustryPageLayout({ data, industryName, path, relatedPosts }: I
         title={data.solutionsHeadline || `Our ${name} Transformation Solutions`}
         description={data.solutionsDescription}
         items={mapItems(data.solutions)}
+        cta={data.solutionsCta}
       />
 
       <IndustryClientsGrid
         title={data.clientsHeadline || `${name} Clients We Serve`}
         description={data.clientsDescription}
-        items={mapItems(data.clients)}
+        items={(data.clients || []).map((item: any) => ({
+          title: item.title,
+          description: item.description,
+          icon: item.icon,
+          iconImage: item.iconImage,
+        }))}
       />
 
       <IndustryPillars
         title={data.outcomesHeadline || `How We Drive the Success of Your ${name} Transformation`}
         description={data.outcomesDescription}
         items={mapItems(data.outcomes)}
+        cta={data.outcomesCta}
       />
 
       {/* Soft-launch: success stories link to case studies — hide until published */}

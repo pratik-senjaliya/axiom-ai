@@ -23,14 +23,36 @@ import {
   Blocks,
   TestTube2,
   Rocket,
+  Wallet,
+  PiggyBank,
+  PieChart,
+  Handshake,
+  Store,
+  ShoppingCart,
+  Factory,
+  Truck,
+  Package,
+  Hospital,
+  HeartPulse,
+  GraduationCap,
+  Plane,
+  Zap,
+  Leaf,
+  Globe,
+  Server,
+  Cpu,
+  Scale,
   type LucideIcon,
 } from "lucide-react";
+import type { IndustryIconName } from "@/lib/industry-icons";
 import { PortableText } from "@/components/ui/PortableText";
 import { Button } from "@/components/ui/Button";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
 
 type Item = { title: string; description?: any };
+type ClientItem = Item & { icon?: string; iconImage?: string };
+export type SectionCta = { text?: string; link?: string; hidden?: boolean };
 
 function SectionSubline({ description }: { description?: any }) {
   if (!description) return null;
@@ -57,8 +79,17 @@ const SOLUTION_ICONS = [Workflow, Bot, BarChart3, Database, Cog, FileCheck];
 const PILLAR_ICONS = [Shield, ListChecks, BarChart3, Cog, LineChart, Rocket];
 const PROCESS_ICONS = [Search, ListChecks, PenTool, Blocks, TestTube2, Rocket];
 
-function clientIcon(title: string): LucideIcon {
-  return CLIENT_ICONS.find((entry) => entry.match.test(title))?.icon || Building2;
+/** Icons selectable in the CMS — keys must match INDUSTRY_ICON_OPTIONS */
+const PICKABLE_ICONS: Record<IndustryIconName, LucideIcon> = {
+  Building2, Landmark, CreditCard, HandCoins, Wallet, PiggyBank, Home, Shield, LineChart, BarChart3,
+  PieChart, Briefcase, Users, Handshake, Store, ShoppingCart, Factory, Truck, Package, Hospital,
+  HeartPulse, GraduationCap, Plane, Zap, Leaf, Globe, Server, Database, Cpu, Bot, Cog, Workflow,
+  FileCheck, Scale, Rocket,
+};
+
+function clientIcon(item: ClientItem): LucideIcon {
+  const picked = item.icon && PICKABLE_ICONS[item.icon as IndustryIconName];
+  return picked || CLIENT_ICONS.find((entry) => entry.match.test(item.title))?.icon || Building2;
 }
 
 const IconBox = ({ children }: { children: React.ReactNode }) => (
@@ -75,22 +106,25 @@ const IconBox = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-const ContactCta = ({ href = "/contact" }: { href?: string }) => (
-  <div className="flex justify-center mt-8">
-    <Link href={href}>
-      <Button
-        className="rounded-full px-8 h-11 text-[15px] font-bold border-none hover:scale-105 transition-all"
-        style={{
-          background: "linear-gradient(135deg, #1DA1F2, #00E5FF)",
-          color: "#0A0F1F",
-          boxShadow: "0 0 22px rgba(0,229,255,0.3)",
-        }}
-      >
-        Contact us
-      </Button>
-    </Link>
-  </div>
-);
+const ContactCta = ({ cta }: { cta?: SectionCta }) => {
+  if (cta?.hidden) return null;
+  return (
+    <div className="flex justify-center mt-8">
+      <Link href={cta?.link || "/contact"}>
+        <Button
+          className="rounded-full px-8 h-11 text-[15px] font-bold border-none hover:scale-105 transition-all"
+          style={{
+            background: "linear-gradient(135deg, #1DA1F2, #00E5FF)",
+            color: "#0A0F1F",
+            boxShadow: "0 0 22px rgba(0,229,255,0.3)",
+          }}
+        >
+          {cta?.text || "Contact us"}
+        </Button>
+      </Link>
+    </div>
+  );
+};
 
 /**
  * Doc design: vertical service cards (icon + title + details)
@@ -100,10 +134,12 @@ export function IndustryServiceCards({
   title,
   description,
   items,
+  cta,
 }: {
   title: string;
   description?: any;
   items: Item[];
+  cta?: SectionCta;
   solutionsTitle?: string;
   solutions?: Item[];
 }) {
@@ -139,7 +175,7 @@ export function IndustryServiceCards({
             );
           })}
         </StaggerGroup>
-        <ContactCta />
+        <ContactCta cta={cta} />
       </div>
     </section>
   );
@@ -158,7 +194,7 @@ export function IndustryClientsGrid({
 }: {
   title: string;
   description?: any;
-  items: Item[];
+  items: ClientItem[];
 }) {
   return (
     <section id="clients" className="py-12 md:py-16 scroll-mt-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
@@ -171,7 +207,7 @@ export function IndustryClientsGrid({
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 md:gap-4">
           {items.map((item) => {
-            const Icon = clientIcon(item.title);
+            const Icon = clientIcon(item);
             return (
               <div
                 key={item.title}
@@ -185,7 +221,18 @@ export function IndustryClientsGrid({
                   className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background: "rgba(0,229,255,0.12)", color: "#00E5FF" }}
                 >
-                  <Icon className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.75} />
+                  {item.iconImage ? (
+                    <Image
+                      src={item.iconImage}
+                      alt=""
+                      width={24}
+                      height={24}
+                      unoptimized
+                      className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                    />
+                  ) : (
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.75} />
+                  )}
                 </div>
                 <p className="text-xs sm:text-sm md:text-[15px] font-bold text-white leading-snug">{item.title}</p>
               </div>
@@ -205,10 +252,12 @@ export function IndustryPillars({
   title,
   description,
   items,
+  cta,
 }: {
   title: string;
   description?: any;
   items: Item[];
+  cta?: SectionCta;
   outcomesTitle?: string;
   outcomes?: Item[];
 }) {
@@ -246,7 +295,7 @@ export function IndustryPillars({
             );
           })}
         </StaggerGroup>
-        <ContactCta />
+        <ContactCta cta={cta} />
       </div>
     </section>
   );
