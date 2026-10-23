@@ -1,13 +1,8 @@
-"use client";
-
 import React from "react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { PortableText } from "@/components/ui/PortableText";
-import { Button } from "@/components/ui/Button";
-import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
-import { HoverCard } from "@/components/ui/animations/HoverCard";
-import { SectionHeading, type HeadingTag } from "@/components/ui/SectionHeading";
+import { RichText, Section, SectionHeader, ButtonLink } from "@/components/ui/kit";
+import { CellGrid, FeatureCell, Timeline } from "@/components/ui/blocks";
+import { type HeadingTag } from "@/components/ui/SectionHeading";
 
 export interface FeatureItem {
   /* Common */
@@ -46,13 +41,22 @@ interface FeatureGridProps {
   ctaHref?: string;
   /** Semantic tag for the section title (visual style unchanged). */
   titleAs?: HeadingTag;
+  eyebrow?: string;
 }
 
 const Checkmark = () => (
-  <svg className="w-5 h-5 shrink-0 mt-0.5" style={{ color: '#00E5FF' }} viewBox="0 0 20 20" fill="currentColor">
-    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+  <svg className="mt-1 h-4 w-4 shrink-0 text-accent" viewBox="0 0 16 16" fill="none" aria-hidden>
+    <path d="m3.5 8.5 3 3 6-7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
+
+/** Pick a column count that keeps rows balanced for the number of items. */
+function columnsFor(count: number, requested: 2 | 3 | 4): 2 | 3 | 4 {
+  if (count <= 2) return 2;
+  if (count === 3) return 3;
+  if (count === 4) return requested === 4 ? 4 : 2;
+  return 3;
+}
 
 export const FeatureGrid: React.FC<FeatureGridProps> = ({
   title,
@@ -61,181 +65,93 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
   columns = 2,
   bgWhite = false,
   isRoadmap = false,
-  small = false,
   ctaText,
   ctaHref = "/contact",
   titleAs = "h2",
+  eyebrow,
 }) => {
-  const gridClass = cn(
-    "gap-6 lg:gap-8 justify-center",
-    !isRoadmap && "flex flex-wrap lg:flex-nowrap",
-    isRoadmap && "flex flex-col gap-12 max-w-4xl mx-auto relative before:absolute before:inset-0 before:ml-[31px] md:before:ml-[50%] before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#00E5FF]/30 before:to-transparent"
-  );
+  if (!items?.length && !title) return null;
 
   return (
-    <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: bgWhite ? '#0D1B2A' : '#14243A' }}>
-      {/* Subtle grid pattern */}
-      <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
+    <Section tone={bgWhite ? "raised" : "base"}>
+      <SectionHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        as={titleAs}
+        layout={description ? "split" : "stack"}
+        className="mb-14 lg:mb-16"
+      />
 
-      <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
-
-        {(title || description) && (
-          <div className="text-center max-w-5xl mx-auto mb-16">
-            {title && (
-              <SectionHeading
-                as={titleAs}
-                className={cn("tracking-tight font-bold text-white mb-6", small ? "text-2xl md:text-3xl" : "text-3xl md:text-[2.5rem]")}
-              >
-                {title}
-              </SectionHeading>
-            )}
-            {description && (
-              <div className={cn("leading-relaxed max-w-5xl mx-auto", small ? "text-base" : "text-lg")} style={{ color: '#8FA3BF' }}>
-                <PortableText value={description} />
-              </div>
-            )}
-          </div>
-        )}
-
-        <StaggerGroup className={gridClass}>
+      {isRoadmap ? (
+        <Timeline items={items.map((item) => ({ title: item.title, description: item.description, label: item.badge }))} />
+      ) : (
+        <CellGrid cols={columnsFor(items.length, columns)}>
           {items.map((item, index) => {
-            if (isRoadmap) {
-              return (
-                <StaggerItem key={index} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                  <div className="flex items-center justify-center w-16 h-16 rounded-full shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xl border-2" style={{ background: 'rgba(0,229,255,0.15)', borderColor: '#00E5FF', color: '#00E5FF', boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
-                    {item.stepNumber || index + 1}
-                  </div>
-                  <HoverCard className={cn("w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] rounded-[2rem] border h-full", small ? "p-6" : "p-8")} style={{ background: 'rgba(26,46,71,0.7)', borderColor: 'rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
-                    {item.badge && <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full mb-4" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', border: '1px solid rgba(0,229,255,0.25)' }}>{item.badge}</span>}
-                    <p className={cn("font-bold text-white mb-4", small ? "text-xl" : "text-2xl")}>{item.title}</p>
-                    {item.description && (
-                      <div className="leading-relaxed text-sm" style={{ color: '#8FA3BF' }}>
-                        <PortableText value={item.description} />
-                      </div>
-                    )}
-                  </HoverCard>
-                </StaggerItem>
-              );
-            }
-
-            // Standard / Layer / Use Case Card
+            const showIndex = !item.icon && !item.useCaseLabel && !item.metricValue;
             return (
-              <StaggerItem key={index} className="flex h-auto w-full sm:w-[calc(50%-1.5rem)] lg:basis-[calc(25%-2.5rem)] flex-grow flex-shrink-0 min-w-[280px] max-w-[400px]">
-                <HoverCard className={cn("rounded-[2rem] flex flex-col w-full h-full", small ? "p-6 md:p-8" : "p-8 sm:p-10")} style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
-                {/* Header (Badge or Icon) */}
-                <div className="mb-6 flex items-center gap-3">
-                  {item.badge && (
-                    <span className="inline-block px-3 py-1 text-xs font-bold rounded-full" style={{ background: '#00E5FF', color: '#0A0F1F' }}>
-                      {item.badge}
-                    </span>
-                  )}
-                  {item.useCaseLabel && (
-                    <>
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'rgba(0,229,255,0.12)', color: '#00E5FF' }}>
-                        {item.icon || (
-                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                          </svg>
-                        )}
-                      </div>
-                      <span className="text-xs sm:text-sm font-bold tracking-widest" style={{ color: '#00E5FF' }}>
-                        {item.useCaseLabel}
-                      </span>
-                    </>
-                  )}
-                  {!item.useCaseLabel && item.icon && !item.badge && (
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-2" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF' }}>
-                      {item.icon}
-                    </div>
-                  )}
-                  {item.metricValue && (
-                    <div className="mb-4">
-                      <div className="text-4xl font-black text-white mb-1">{item.metricValue}</div>
-                      <div className="text-sm font-medium tracking-wide" style={{ color: '#00E5FF' }}>{item.metricLabel}</div>
-                    </div>
-                  )}
-                </div>
+              <FeatureCell
+                key={index}
+                index={showIndex ? index : undefined}
+                icon={item.icon}
+                badge={item.badge ? <span className="chip border-line-accent text-accent">{item.badge}</span> : undefined}
+                title={!item.metricValue || item.title ? item.title : undefined}
+                description={item.description}
+                footerLabel={item.outcomeTitle}
+                footer={item.outcomeDescription}
+                titleAs="h3"
+              >
+                {item.useCaseLabel && (
+                  <p className="-order-1 mb-4 text-xs font-medium uppercase tracking-[0.14em] text-accent">{item.useCaseLabel}</p>
+                )}
 
-                {/* Title and Description */}
-                {(!item.metricValue || item.title) && <p className={cn("font-bold text-white mb-4", small ? "text-xl" : "text-2xl")}>{item.title}</p>}
-                {item.description && (
-                  <div className={cn("leading-relaxed mb-6", small ? "text-sm sm:text-base" : "text-base sm:text-lg")} style={{ color: '#8FA3BF' }}>
-                    <PortableText value={item.description} />
+                {item.metricValue && (
+                  <div className="mt-4">
+                    <div className="font-display text-4xl font-semibold tracking-tight text-fg">{item.metricValue}</div>
+                    {item.metricLabel && <div className="mt-1 text-sm text-accent">{item.metricLabel}</div>}
                   </div>
                 )}
 
-                {/* Checkmark Bullets */}
                 {item.bullets && item.bullets.length > 0 && (
-                  <ul className="space-y-4 mb-8 flex-grow">
+                  <ul className="mt-6 space-y-3">
                     {item.bullets.map((bullet, i) => (
-                      <li key={i} className="flex items-start gap-3">
+                      <li key={i} className="flex items-start gap-3 text-[0.9375rem] text-body">
                         <Checkmark />
-                        <span style={{ color: '#C5D1E0' }}>{bullet}</span>
+                        <span>{bullet}</span>
                       </li>
                     ))}
                   </ul>
                 )}
 
-                {/* Use Case Details */}
                 {(item.pocText || item.impactText) && (
-                  <div className="space-y-4 mb-8 flex-grow">
+                  <dl className="mt-6 space-y-4">
                     {item.pocText && (
-                      <div className="flex gap-3">
-                        <svg className="w-5 h-5 shrink-0 fill-current" style={{ color: '#00E5FF' }} viewBox="0 0 24 24">
-                          <path d="M11 21v-7H6l9-12v7h5l-9 12z" />
-                        </svg>
-                        <div>
-                          <span className="block text-xs font-bold uppercase mb-0.5" style={{ color: '#8FA3BF' }}>POC Focus</span>
-                          <div style={{ color: '#C5D1E0' }}>
-                            <PortableText value={item.pocText} />
-                          </div>
-                        </div>
+                      <div>
+                        <dt className="mb-1 text-xs font-medium uppercase tracking-[0.14em] text-muted">POC focus</dt>
+                        <dd><RichText value={item.pocText} className="text-[0.9375rem] text-body" /></dd>
                       </div>
                     )}
                     {item.impactText && (
-                      <div className="flex gap-3">
-                        <svg className="w-5 h-5 shrink-0 fill-current" style={{ color: '#1DA1F2' }} viewBox="0 0 24 24">
-                          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <div>
-                          <span className="block text-xs font-bold uppercase mb-0.5" style={{ color: '#8FA3BF' }}>Business Impact</span>
-                          <div style={{ color: '#C5D1E0' }}>
-                            <PortableText value={item.impactText} />
-                          </div>
-                        </div>
+                      <div>
+                        <dt className="mb-1 text-xs font-medium uppercase tracking-[0.14em] text-muted">Business impact</dt>
+                        <dd><RichText value={item.impactText} className="text-[0.9375rem] text-body" /></dd>
                       </div>
                     )}
-                  </div>
+                  </dl>
                 )}
+              </FeatureCell>
+            );
+          })}
+        </CellGrid>
+      )}
 
-                {/* Outcome Footer */}
-                {item.outcomeTitle && (
-                  <div className="mt-auto p-5 rounded-xl" style={{ background: 'rgba(0,229,255,0.07)', border: '1px solid rgba(0,229,255,0.2)' }}>
-                    <div className="text-sm font-bold mb-1" style={{ color: '#00E5FF' }}>{item.outcomeTitle}</div>
-                    <div className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
-                      <PortableText value={item.outcomeDescription} />
-                    </div>
-                  </div>
-                )}
-              </HoverCard>
-            </StaggerItem>
-          );
-        })}
-        </StaggerGroup>
-
-        {ctaText && (
-          <div className="flex justify-center mt-16 md:mt-20">
-            <Link href={ctaHref}>
-              <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
-                {ctaText}
-                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Button>
-            </Link>
-          </div>
-        )}
-      </div>
-    </section>
+      {ctaText && (
+        <div className={cn("mt-12 flex", isRoadmap ? "justify-start" : "justify-center")}>
+          <ButtonLink href={ctaHref} arrow>
+            {ctaText}
+          </ButtonLink>
+        </div>
+      )}
+    </Section>
   );
 };

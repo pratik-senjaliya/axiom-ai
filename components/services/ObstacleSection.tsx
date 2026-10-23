@@ -1,9 +1,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { PortableText } from "@/components/ui/PortableText";
-import { SlideUp } from "@/components/ui/animations/SlideUp";
-import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
-import { HoverCard } from "@/components/ui/animations/HoverCard";
+import { Eyebrow } from "@/components/ui/kit";
+import { NumberedRows } from "@/components/ui/blocks";
 
 interface ObstacleItemProps {
   title: string;
@@ -11,64 +9,39 @@ interface ObstacleItemProps {
   icon?: React.ReactNode;
 }
 
-const ObstacleItem: React.FC<ObstacleItemProps> = ({ title, description, icon }) => (
-  <HoverCard className="p-8 rounded-[2.5rem] h-full" style={{ background: 'rgba(26,46,71,0.7)', border: '1px solid rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
-    <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-7 group-hover:scale-110 transition-all duration-300" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF' }}>
-      {icon ? (
-        <div className="w-6 h-6">{icon}</div>
-      ) : (
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      )}
-    </div>
-    <p className="text-xl font-bold text-white mb-4 tracking-tight group-hover:text-[#00E5FF] transition-colors">{title}</p>
-    <div className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
-      <PortableText value={description} />
-    </div>
-  </HoverCard>
-);
-
 interface ObstacleSectionProps {
   title: string;
   subtitle?: React.ReactNode;
   items: ObstacleItemProps[];
   className?: string;
+  eyebrow?: string;
 }
 
-export const ObstacleSection: React.FC<ObstacleSectionProps> = ({ 
-  title, 
-  subtitle, 
+/** Problem statement: sticky heading on the left, numbered editorial rows on the right. */
+export const ObstacleSection: React.FC<ObstacleSectionProps> = ({
+  title,
+  subtitle,
   items,
-  className 
+  className,
+  eyebrow = "The challenge",
 }) => {
+  if (!title && !items?.length) return null;
+
   return (
-    <section className={cn("py-12 md:py-20 relative overflow-hidden", className)} style={{ background: '#0D1B2A' }}>
-      <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
-      
-      <div className="container-custom px-4 relative z-10">
-        <SlideUp className="text-center max-w-5xl mx-auto mb-16 md:mb-20">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">
-            {title}
-          </h2>
-          {subtitle && (
-            <div className="text-lg md:text-xl font-medium leading-relaxed max-w-5xl mx-auto" style={{ color: '#8FA3BF' }}>
-              {subtitle}
+    <section className={cn("relative overflow-x-clip bg-ink-900 section-y", className)}>
+      <div className="container-custom">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <div className="reveal lg:sticky lg:top-28">
+              <Eyebrow className="mb-5">{eyebrow}</Eyebrow>
+              <h2 className="h-section">{title}</h2>
+              {subtitle && <div className="lead mt-6">{subtitle}</div>}
             </div>
-          )}
-        </SlideUp>
-        
-        <StaggerGroup className="flex flex-wrap justify-center gap-6 lg:gap-8 max-w-[95rem] mx-auto px-4">
-          {items.map((item, index) => (
-            <StaggerItem key={index} className="flex h-auto w-full sm:w-[calc(50%-1.5rem)] lg:basis-[calc(25%-2.5rem)] flex-grow flex-shrink-0 min-w-[280px] max-w-[400px]">
-              <ObstacleItem 
-                title={item.title} 
-                description={item.description}
-                icon={item.icon} 
-              />
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
+          </div>
+          <div className="lg:col-span-7">
+            <NumberedRows items={items} />
+          </div>
+        </div>
       </div>
     </section>
   );

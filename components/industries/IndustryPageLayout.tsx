@@ -1,6 +1,6 @@
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
-import { FAQ } from "@/components/ui/FAQ";
+import { FAQSection } from "@/components/ui/FAQ";
 import { PortableText } from "@/components/ui/PortableText";
 import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
 import { IndustryHero } from "@/components/industries/IndustryHero";
@@ -124,13 +124,7 @@ export function IndustryPageLayout({ data, industryName, path, relatedPosts }: I
 
       <RelatedInsights posts={relatedPosts} serviceName={name} />
 
-      {faqs.length > 0 && (
-        <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>
-          <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title="Frequently Asked Questions" />
-          </div>
-        </section>
-      )}
+      <FAQSection items={faqs} />
 
       <DarkCTA
         badgeText={data.finalCta?.badgeText || name}

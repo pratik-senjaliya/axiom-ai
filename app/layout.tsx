@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Sora } from "next/font/google";
+import { Inter, Sora } from "next/font/google";
 import {
   DEFAULT_OG_IMAGE,
   DEFAULT_OG_IMAGE_HEIGHT,
@@ -9,9 +9,17 @@ import "./globals.css";
 
 const GTM_ID = "GTM-KQDC3WHF";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  preload: true,
+});
+
 const sora = Sora({
   subsets: ["latin"],
   variable: "--font-sora",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   preload: true,
 });
@@ -95,7 +103,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-IN" className={sora.variable}>
+    <html lang="en-IN" className={`${inter.variable} ${sora.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{

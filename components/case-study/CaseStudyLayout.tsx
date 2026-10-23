@@ -1,16 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Check } from "lucide-react";
 import { PortableText } from "@/components/ui/PortableText";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import { ChevronRight } from "lucide-react";
+import { ArrowIcon, ButtonLink, Eyebrow, RichText, Section, SectionHeader, indexLabel } from "@/components/ui/kit";
+import { CellGrid } from "@/components/ui/blocks";
 
-const SECTION_PAD = "py-12 md:py-16";
-const H2 = "text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight";
-const BODY = "text-sm sm:text-base leading-relaxed";
-const MUTED = { color: "#C5D1E0" } as const;
-
-/** Hero — larger title left + KPI stats right + CTA */
+/** Hero — title left, KPI stats right, CTA */
 export function CaseStudyHero({
   title,
   excerpt,
@@ -27,66 +24,42 @@ export function CaseStudyHero({
   ctaHref?: string;
 }) {
   return (
-    <section
-      className="pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 md:pb-24 overflow-x-clip"
-      style={{ background: "#0A0F1F" }}
-    >
-      <div className="container-custom px-4 max-w-7xl mx-auto">
+    <section className="relative overflow-hidden bg-ink-900 pb-16 pt-28 sm:pt-32 lg:pb-24 lg:pt-36">
+      <div aria-hidden className="bg-grid-fade" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-line" />
+      <div className="container-custom relative">
         <Breadcrumb
           items={[
             { label: "Home", href: "/" },
             { label: "Case Studies" },
             { label: title.length > 40 ? `${title.slice(0, 40)}…` : title },
           ]}
-          className="mb-6 sm:mb-8"
+          className="mb-10 lg:mb-12"
         />
-        <div className="grid lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center">
-          <div className="lg:col-span-7 min-w-0">
-            {badge && (
-              <span
-                className="inline-block text-[10px] sm:text-xs font-bold uppercase tracking-wider px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md mb-5 sm:mb-6"
-                style={{ background: "rgba(0,229,255,0.12)", color: "#00E5FF" }}
-              >
-                {badge}
-              </span>
-            )}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-white leading-[1.1] tracking-tight mb-4 sm:mb-5">
-              {title}
-            </h1>
-            {excerpt && (
-              <p className="text-base sm:text-lg leading-relaxed max-w-2xl mb-6 sm:mb-8" style={MUTED}>
-                {excerpt}
-              </p>
-            )}
+        <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="min-w-0 lg:col-span-7">
+            {badge && <Eyebrow className="mb-6">{badge}</Eyebrow>}
+            <h1 className="h-display">{title}</h1>
+            {excerpt && <p className="lead mt-6 max-w-2xl">{excerpt}</p>}
             {ctaText && ctaHref && (
-              <Link
-                href={ctaHref}
-                className="inline-flex items-center gap-2 rounded-full px-7 sm:px-8 h-12 sm:h-14 text-sm sm:text-base font-bold text-[#0A0F1F] bg-gradient-to-r from-[#1DA1F2] to-[#00E5FF] hover:scale-[1.03] transition-transform shadow-[0_0_24px_rgba(0,229,255,0.35)]"
-              >
-                {ctaText}
-                <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
-              </Link>
+              <div className="mt-10">
+                <ButtonLink href={ctaHref} size="lg" arrow>
+                  {ctaText}
+                </ButtonLink>
+              </div>
             )}
           </div>
           {stats && stats.length > 0 && (
-            <div
-              className="lg:col-span-5 rounded-2xl border p-5 sm:p-7 md:p-8 space-y-4 sm:space-y-6"
-              style={{
-                background: "rgba(0,229,255,0.08)",
-                borderColor: "rgba(0,229,255,0.25)",
-              }}
-            >
+            <dl className="panel-accent min-w-0 divide-y divide-line px-7 py-2 sm:px-9 lg:col-span-5">
               {stats.map((stat) => (
-                <div key={stat.label} className="flex flex-wrap items-baseline gap-2 sm:gap-3">
-                  <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold" style={{ color: "#00E5FF" }}>
-                    {stat.value}
-                  </span>
-                  <span className="text-sm sm:text-base md:text-lg font-medium" style={MUTED}>
-                    {stat.label}
-                  </span>
+                <div key={stat.label} className="flex flex-col-reverse py-6">
+                  <dt className="mt-2 text-[0.9375rem] text-body">{stat.label}</dt>
+                  <dd className="break-words font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+                    <span className="gradient-text">{stat.value}</span>
+                  </dd>
                 </div>
               ))}
-            </div>
+            </dl>
           )}
         </div>
       </div>
@@ -107,39 +80,28 @@ export function CaseStudyAbout({
   imageAlt?: string;
 }) {
   return (
-    <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#0D1B2A" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-start">
-          {image && (
-            <div className="lg:col-span-5 min-w-0 order-1">
-              <div
-                className="relative aspect-[16/10] sm:aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden border"
-                style={{ borderColor: "rgba(0,229,255,0.18)" }}
-              >
-                <Image
-                  src={image}
-                  alt={imageAlt || title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  unoptimized
-                />
-              </div>
+    <Section tone="base">
+      <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+        {image && (
+          <div className="reveal min-w-0 lg:col-span-5">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-line">
+              <Image src={image} alt={imageAlt || title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 40vw" unoptimized />
             </div>
-          )}
-          <div className={`${image ? "lg:col-span-7" : "lg:col-span-12 max-w-3xl"} min-w-0 order-2`}>
-            <h2 className={`${H2} mb-4 sm:mb-5 md:mb-6`}>{title}</h2>
-            <div className={BODY} style={MUTED}>
-              <PortableText value={content} />
-            </div>
+          </div>
+        )}
+        <div className={`reveal min-w-0 ${image ? "lg:col-span-7" : "lg:col-span-12 max-w-3xl"}`}>
+          <Eyebrow className="mb-5">The client</Eyebrow>
+          <h2 className="h-section">{title}</h2>
+          <div className="lead mt-6">
+            <PortableText value={content} />
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
-/** 2x2 numbered challenge cards */
+/** Challenges — sticky heading with numbered rows */
 export function CaseStudyChallengeGrid({
   title,
   description,
@@ -151,44 +113,29 @@ export function CaseStudyChallengeGrid({
 }) {
   if (!items?.length) return null;
   return (
-    <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#0A0F1F" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="mb-6 sm:mb-8 md:mb-10 max-w-3xl">
-          <h2 className={H2}>{title}</h2>
-          {description && (
-            <p className={`${BODY} mt-3 sm:mt-4`} style={MUTED}>
-              {description}
-            </p>
-          )}
+    <Section tone="raised">
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-5">
+          <div className="reveal lg:sticky lg:top-28">
+            <Eyebrow className="mb-5">The challenge</Eyebrow>
+            <h2 className="h-section">{title}</h2>
+            {description && <p className="lead mt-6">{description}</p>}
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+        <ol className="border-t border-line lg:col-span-7">
           {items.map((text, index) => (
-            <div
-              key={index}
-              className="rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border min-w-0"
-              style={{
-                background: "rgba(255, 180, 120, 0.06)",
-                borderColor: "rgba(255, 180, 120, 0.18)",
-              }}
-            >
-              <span
-                className="text-base sm:text-lg font-extrabold mb-2 sm:mb-3 inline-block"
-                style={{ color: "#00E5FF" }}
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <p className={BODY} style={MUTED}>
-                {text}
-              </p>
-            </div>
+            <li key={index} className="reveal grid grid-cols-[2.75rem_1fr] gap-4 border-b border-line py-7 sm:grid-cols-[4rem_1fr] sm:gap-6">
+              <span className="pt-0.5 font-display text-sm font-medium tabular-nums text-accent">{indexLabel(index)}</span>
+              <p className="text-base leading-relaxed text-body sm:text-[1.0625rem]">{text}</p>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
-    </section>
+    </Section>
   );
 }
 
-/** Dark numbered solutions grid */
+/** Solutions / approach — numbered steps in a shared-border panel */
 export function CaseStudySolutionsGrid({
   title,
   description,
@@ -200,72 +147,51 @@ export function CaseStudySolutionsGrid({
 }) {
   if (!items?.length) return null;
   return (
-    <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#050910" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div
-          className="rounded-xl sm:rounded-2xl border p-4 sm:p-6 md:p-10"
-          style={{ background: "#0A0F1F", borderColor: "rgba(0,229,255,0.15)" }}
-        >
-          <div className="mb-6 sm:mb-8 md:mb-10 max-w-3xl">
-            <h2 className={H2}>{title}</h2>
-            {description && (
-              <p className={`${BODY} mt-3 sm:mt-4`} style={MUTED}>
-                {description}
-              </p>
-            )}
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 md:gap-6">
-            {items.map((text, index) => (
-              <div
-                key={index}
-                className="rounded-xl sm:rounded-2xl border p-4 sm:p-5 md:p-6 min-w-0"
-                style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)" }}
-              >
-                <span
-                  className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-2 sm:mb-3 inline-block"
-                  style={{ color: "#00E5FF" }}
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <p className={`${BODY} text-white/90`}>{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+    <Section tone="base">
+      <SectionHeader
+        eyebrow="Our approach"
+        title={title}
+        description={description}
+        layout={description ? "split" : "stack"}
+        className="mb-14 lg:mb-16"
+      />
+      <ol className="cell-grid reveal grid-cols-1 md:grid-cols-2">
+        {items.map((text, index) => (
+          <li
+            key={index}
+            className={`flex flex-col gap-6 p-7 sm:p-9 ${items.length % 2 === 1 && index === items.length - 1 ? "md:col-span-2" : ""}`}
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-line-accent font-display text-sm font-semibold text-accent">
+              {indexLabel(index)}
+            </span>
+            <p className="text-base leading-relaxed text-body sm:text-[1.0625rem]">{text}</p>
+          </li>
+        ))}
+      </ol>
+    </Section>
   );
 }
 
-/** Horizontal tech name row */
+/** Technologies used — chip row */
 export function CaseStudyTechnologies({ items }: { items: string[] }) {
   if (!items?.length) return null;
   return (
-    <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#0D1B2A" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className={`${H2} mb-6 sm:mb-8 md:mb-10 text-center`}>Technologies Used</h2>
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
+    <Section tone="raised" size="sm">
+      <div className="reveal grid gap-6 lg:grid-cols-12 lg:items-center lg:gap-16">
+        <h2 className="h-card lg:col-span-4">Technologies Used</h2>
+        <ul className="flex flex-wrap gap-2 lg:col-span-8">
           {items.map((name) => (
-            <div
-              key={name}
-              className="min-w-[96px] sm:min-w-[120px] px-4 sm:px-6 py-3 sm:py-4 rounded-xl border text-center"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                borderColor: "rgba(0,229,255,0.18)",
-              }}
-            >
-              <p className="text-sm sm:text-base font-bold" style={MUTED}>
-                {name}
-              </p>
-            </div>
+            <li key={name} className="chip px-4 py-2 text-sm text-fg">
+              {name}
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
-    </section>
+    </Section>
   );
 }
 
-/** Outcome cards grid */
+/** Outcomes — checklist panel */
 export function CaseStudyOutcomesGrid({
   title,
   description,
@@ -277,45 +203,29 @@ export function CaseStudyOutcomesGrid({
 }) {
   if (!items?.length) return null;
   return (
-    <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#0A0F1F" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="mb-6 sm:mb-8 md:mb-10 max-w-3xl">
-          <h2 className={H2}>{title}</h2>
-          {description && (
-            <p className={`${BODY} mt-3 sm:mt-4`} style={MUTED}>
-              {description}
-            </p>
-          )}
-        </div>
-        <div
-          className="rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 border"
-          style={{
-            background: "rgba(255, 200, 150, 0.06)",
-            borderColor: "rgba(255, 200, 150, 0.15)",
-          }}
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {items.map((text, index) => (
-              <div
-                key={index}
-                className="rounded-xl border px-4 py-4 sm:px-5 sm:py-5 text-sm sm:text-base leading-relaxed font-medium min-w-0"
-                style={{
-                  background: "rgba(13,27,42,0.95)",
-                  borderColor: "rgba(255,255,255,0.08)",
-                  color: "#C5D1E0",
-                }}
-              >
-                {text}
-              </div>
-            ))}
+    <Section tone="base">
+      <SectionHeader
+        eyebrow="Results"
+        title={title}
+        description={description}
+        layout={description ? "split" : "stack"}
+        className="mb-14 lg:mb-16"
+      />
+      <CellGrid cols={3}>
+        {items.map((text, index) => (
+          <div key={index} className="flex h-full gap-4 p-7 sm:p-8">
+            <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+              <Check className="h-3.5 w-3.5" strokeWidth={2.25} />
+            </span>
+            <p className="text-[0.9375rem] font-medium leading-relaxed text-fg sm:text-base">{text}</p>
           </div>
-        </div>
-      </div>
-    </section>
+        ))}
+      </CellGrid>
+    </Section>
   );
 }
 
-/** Client Feedback — quote mark left, text + attribution right */
+/** Client feedback — large quote */
 export function CaseStudyFeedback({
   quote,
   author,
@@ -327,111 +237,73 @@ export function CaseStudyFeedback({
 }) {
   if (!quote) return null;
   return (
-    <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#0D1B2A" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div
-          className="rounded-xl sm:rounded-2xl border grid md:grid-cols-[220px_1fr] lg:grid-cols-[260px_1fr] overflow-hidden"
-          style={{ background: "rgba(26,46,71,0.5)", borderColor: "rgba(0,229,255,0.15)" }}
-        >
-          <div
-            className="p-5 sm:p-6 md:p-8 border-b md:border-b-0 md:border-r flex flex-col"
-            style={{ borderColor: "rgba(0,229,255,0.12)" }}
-          >
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4">Client Feedback</h2>
-            <span
-              className="text-5xl sm:text-7xl font-serif leading-none mt-auto hidden sm:block"
-              style={{ color: "rgba(0,229,255,0.35)" }}
-            >
-              ”
+    <Section tone="raised">
+      <figure className="reveal mx-auto max-w-4xl">
+        <Eyebrow className="mb-8">Client Feedback</Eyebrow>
+        <blockquote className="font-display text-2xl font-medium leading-snug tracking-tight text-fg sm:text-3xl lg:text-[2.125rem]">
+          {typeof quote === "string" ? <p>&ldquo;{quote}&rdquo;</p> : <PortableText value={quote} />}
+        </blockquote>
+        {(author || role) && (
+          <figcaption className="mt-10 flex items-center gap-4 border-t border-line pt-6">
+            <span aria-hidden className="h-px w-8 bg-accent" />
+            <span>
+              {author && <span className="block font-semibold text-fg">{author}</span>}
+              {role && <span className="mt-0.5 block text-sm text-muted">{role}</span>}
             </span>
-          </div>
-          <div className="p-5 sm:p-6 md:p-8 min-w-0">
-            <div className={`${BODY} mb-5 sm:mb-6`} style={MUTED}>
-              {typeof quote === "string" ? <p>{quote}</p> : <PortableText value={quote} />}
-            </div>
-            {author && (
-              <p className="text-base sm:text-lg font-bold" style={{ color: "#00E5FF" }}>
-                {author}
-              </p>
-            )}
-            {role && (
-              <p className="text-sm sm:text-base mt-1" style={{ color: "#8FA3BF" }}>
-                {role}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-    </section>
+          </figcaption>
+        )}
+      </figure>
+    </Section>
   );
 }
 
-/** Explore More Case Studies */
+/** Case study cards — used by "Explore More" and the Solutions page */
 export function CaseStudyMore({
   items,
   title = "Explore More Case Studies",
+  as = "h2",
+  description,
 }: {
   items: { slug: string; title: string; excerpt?: string; image?: string; imageAlt?: string }[];
   title?: string;
+  as?: "h2" | "h3";
+  description?: any;
 }) {
   if (!items?.length) return null;
   return (
-    <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#0A0F1F" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className={`${H2} text-center mb-6 sm:mb-8 md:mb-10`}>{title}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
-          {items.map((item, index) => {
-            const accents = [
-              "rgba(255,120,160,0.25)",
-              "rgba(0,200,180,0.25)",
-              "rgba(140,120,255,0.25)",
-            ];
-            return (
-              <Link
-                key={item.slug}
-                href={`/case-studies/${item.slug}`}
-                className="group rounded-xl sm:rounded-2xl border overflow-hidden transition-all hover:[border-color:rgba(0,229,255,0.35)] min-w-0"
-                style={{
-                  background: "rgba(26,46,71,0.55)",
-                  border: "1px solid rgba(0,229,255,0.12)",
-                }}
-              >
-                <div
-                  className="relative aspect-[16/10]"
-                  style={{ background: accents[index % accents.length] }}
-                >
-                  {item.image ? (
-                    <Image
-                      src={item.image}
-                      alt={item.imageAlt || item.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      unoptimized
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
-                      <p className="text-sm sm:text-base font-bold text-white line-clamp-3">{item.title}</p>
-                    </div>
-                  )}
+    <Section tone="base">
+      <SectionHeader title={title} as={as} description={description} className="mb-12" />
+      <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((item) => (
+          <Link key={item.slug} href={`/case-studies/${item.slug}`} className="reveal group flex min-w-0 flex-col">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-line bg-ink-800">
+              {item.image ? (
+                <Image
+                  src={item.image}
+                  alt={item.imageAlt || item.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  unoptimized
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center p-6 text-center">
+                  <div aria-hidden className="bg-grid-fade" />
+                  <p className="relative line-clamp-3 font-display text-base font-semibold text-fg">{item.title}</p>
                 </div>
-                <div className="p-4 sm:p-5">
-                  <p className="text-sm sm:text-base font-bold text-white mb-2 sm:mb-3 line-clamp-3 group-hover:text-[#00E5FF] transition-colors">
-                    {item.title}
-                  </p>
-                  <span
-                    className="inline-flex items-center text-xs sm:text-sm font-bold"
-                    style={{ color: "#00E5FF" }}
-                  >
-                    View the Case Study
-                    <ChevronRight className="w-4 h-4 ml-1" />
-                  </span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+              )}
+            </div>
+            <p className="mt-6 font-display text-lg font-semibold leading-snug tracking-tight text-fg line-clamp-3 sm:text-xl">
+              {item.title}
+            </p>
+            <RichText value={item.excerpt} className="copy mt-3 line-clamp-3" />
+            <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-fg">
+              View the Case Study
+              <ArrowIcon className="h-4 w-4 text-accent transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }

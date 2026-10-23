@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import {
   Building2,
@@ -45,23 +44,12 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { IndustryIconName } from "@/lib/industry-icons";
-import { PortableText } from "@/components/ui/PortableText";
-import { Button } from "@/components/ui/Button";
-import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
-import { HoverCard } from "@/components/ui/animations/HoverCard";
+import { ButtonLink, Eyebrow, RichText, Section, SectionHeader, indexLabel } from "@/components/ui/kit";
+import { CellGrid, FeatureCell, Timeline } from "@/components/ui/blocks";
 
 type Item = { title: string; description?: any };
 type ClientItem = Item & { icon?: string; iconImage?: string };
 export type SectionCta = { text?: string; link?: string; hidden?: boolean };
-
-function SectionSubline({ description }: { description?: any }) {
-  if (!description) return null;
-  return (
-    <div className="text-sm sm:text-base leading-relaxed max-w-3xl mx-auto" style={{ color: "#8FA3BF" }}>
-      <PortableText value={description} />
-    </div>
-  );
-}
 
 const CLIENT_ICONS: { match: RegExp; icon: LucideIcon }[] = [
   { match: /bank/i, icon: Building2 },
@@ -92,44 +80,18 @@ function clientIcon(item: ClientItem): LucideIcon {
   return picked || CLIENT_ICONS.find((entry) => entry.match.test(item.title))?.icon || Building2;
 }
 
-const IconBox = ({ children }: { children: React.ReactNode }) => (
-  <div
-    className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border"
-    style={{
-      background: "rgba(0,229,255,0.1)",
-      color: "#00E5FF",
-      borderColor: "rgba(0,229,255,0.35)",
-      boxShadow: "0 0 16px rgba(0,229,255,0.18)",
-    }}
-  >
-    {children}
-  </div>
-);
-
 const ContactCta = ({ cta }: { cta?: SectionCta }) => {
   if (cta?.hidden) return null;
   return (
-    <div className="flex justify-center mt-8">
-      <Link href={cta?.link || "/contact"}>
-        <Button
-          className="rounded-full px-8 h-11 text-[15px] font-bold border-none hover:scale-105 transition-all"
-          style={{
-            background: "linear-gradient(135deg, #1DA1F2, #00E5FF)",
-            color: "#0A0F1F",
-            boxShadow: "0 0 22px rgba(0,229,255,0.3)",
-          }}
-        >
-          {cta?.text || "Contact us"}
-        </Button>
-      </Link>
+    <div className="mt-12 flex justify-center">
+      <ButtonLink href={cta?.link || "/contact"} arrow>
+        {cta?.text || "Contact us"}
+      </ButtonLink>
     </div>
   );
 };
 
-/**
- * Doc design: vertical service cards (icon + title + details)
- * SyncOrigins content: Finance Transformation Solutions
- */
+/** Transformation solutions — icon feature panel */
 export function IndustryServiceCards({
   title,
   description,
@@ -143,41 +105,33 @@ export function IndustryServiceCards({
   solutionsTitle?: string;
   solutions?: Item[];
 }) {
+  if (!items?.length) return null;
   return (
-    <section id="services" className="py-12 md:py-16 scroll-mt-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="text-center mb-6 md:mb-8 space-y-3">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight max-w-3xl mx-auto">
-            {title}
-          </h2>
-          <SectionSubline description={description} />
-        </div>
-        <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-          {items.map((item, index) => {
-            const Icon = SOLUTION_ICONS[index % SOLUTION_ICONS.length];
-            return (
-              <StaggerItem key={item.title}>
-                <HoverCard
-                  className="h-full rounded-2xl border p-5 sm:p-6 md:p-7 text-left flex flex-col min-w-0"
-                  style={{ background: "rgba(26,46,71,0.7)", borderColor: "rgba(0,229,255,0.16)" }}
-                >
-                  <IconBox>
-                    <Icon className="w-6 h-6" strokeWidth={1.75} />
-                  </IconBox>
-                  <p className="text-lg font-bold text-white mb-3 leading-snug">{item.title}</p>
-                  {item.description && (
-                    <div className="text-sm leading-relaxed flex-grow" style={{ color: "#8FA3BF" }}>
-                      <PortableText value={item.description} />
-                    </div>
-                  )}
-                </HoverCard>
-              </StaggerItem>
-            );
-          })}
-        </StaggerGroup>
-        <ContactCta cta={cta} />
-      </div>
-    </section>
+    <Section tone="raised" id="services">
+      <SectionHeader
+        eyebrow="Solutions"
+        title={title}
+        description={description}
+        layout={description ? "split" : "stack"}
+        className="mb-14 lg:mb-16"
+      />
+      <CellGrid cols={3}>
+        {items.map((item, index) => {
+          const Icon = SOLUTION_ICONS[index % SOLUTION_ICONS.length];
+          return (
+            <FeatureCell
+              key={item.title}
+              index={index}
+              icon={<Icon strokeWidth={1.75} />}
+              title={item.title}
+              titleAs="p"
+              description={item.description}
+            />
+          );
+        })}
+      </CellGrid>
+      <ContactCta cta={cta} />
+    </Section>
   );
 }
 
@@ -186,7 +140,7 @@ export function IndustrySolutionsList() {
   return null;
 }
 
-/** Mockup: 3x3 clients grid with filled cards + distinct icons */
+/** Client types — compact icon grid */
 export function IndustryClientsGrid({
   title,
   description,
@@ -196,58 +150,38 @@ export function IndustryClientsGrid({
   description?: any;
   items: ClientItem[];
 }) {
+  if (!items?.length) return null;
   return (
-    <section id="clients" className="py-12 md:py-16 scroll-mt-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="text-center mb-6 md:mb-8 space-y-3">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
-            {title}
-          </h2>
-          <SectionSubline description={description} />
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 md:gap-4">
-          {items.map((item) => {
-            const Icon = clientIcon(item);
-            return (
-              <div
-                key={item.title}
-                className="flex flex-col items-center justify-center text-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl border px-2.5 sm:px-4 py-4 sm:py-6 md:py-7 transition-colors hover:border-[rgba(0,229,255,0.35)] min-w-0"
-                style={{
-                  background: "rgba(26,46,71,0.55)",
-                  borderColor: "rgba(0,229,255,0.14)",
-                }}
-              >
-                <div
-                  className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: "rgba(0,229,255,0.12)", color: "#00E5FF" }}
-                >
-                  {item.iconImage ? (
-                    <Image
-                      src={item.iconImage}
-                      alt=""
-                      width={24}
-                      height={24}
-                      unoptimized
-                      className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
-                    />
-                  ) : (
-                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.75} />
-                  )}
-                </div>
-                <p className="text-xs sm:text-sm md:text-[15px] font-bold text-white leading-snug">{item.title}</p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+    <Section tone="base" id="clients">
+      <SectionHeader
+        eyebrow="Who we serve"
+        title={title}
+        description={description}
+        layout={description ? "split" : "stack"}
+        className="mb-12"
+      />
+      <ul className="reveal grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-line bg-line xs:grid-cols-2 lg:grid-cols-3">
+        {items.map((item) => {
+          const Icon = clientIcon(item);
+          return (
+            <li key={item.title} className="flex items-center gap-4 bg-[#0B1222] px-6 py-5 transition-colors hover:bg-[#0E182B]">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-line bg-white/[0.03] text-accent">
+                {item.iconImage ? (
+                  <Image src={item.iconImage} alt="" width={20} height={20} unoptimized className="h-5 w-5 object-contain" />
+                ) : (
+                  <Icon className="h-5 w-5" strokeWidth={1.75} />
+                )}
+              </span>
+              <span className="font-display text-[0.9375rem] font-medium leading-snug text-fg">{item.title}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </Section>
   );
 }
 
-/**
- * Doc design: How We Drive Success — vertical cards with details
- * SyncOrigins content: Business Outcomes
- */
+/** Business outcomes — icon feature panel */
 export function IndustryPillars({
   title,
   description,
@@ -261,43 +195,32 @@ export function IndustryPillars({
   outcomesTitle?: string;
   outcomes?: Item[];
 }) {
+  if (!items?.length) return null;
   return (
-    <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-6 md:mb-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-3 md:mb-4">{title}</h2>
-          {description && (
-            <div className="text-sm sm:text-base leading-relaxed" style={{ color: "#8FA3BF" }}>
-              <PortableText value={description} />
-            </div>
-          )}
-        </div>
-        <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-          {items.map((item, index) => {
-            const Icon = PILLAR_ICONS[index % PILLAR_ICONS.length];
-            return (
-              <StaggerItem key={item.title}>
-                <HoverCard
-                  className="h-full rounded-2xl border p-5 sm:p-6 md:p-7 text-left flex flex-col min-w-0"
-                  style={{ background: "rgba(26,46,71,0.7)", borderColor: "rgba(0,229,255,0.16)" }}
-                >
-                  <IconBox>
-                    <Icon className="w-6 h-6" strokeWidth={1.75} />
-                  </IconBox>
-                  <p className="text-lg font-bold text-white mb-3 leading-snug">{item.title}</p>
-                  {item.description && (
-                    <div className="text-sm leading-relaxed flex-grow" style={{ color: "#8FA3BF" }}>
-                      <PortableText value={item.description} />
-                    </div>
-                  )}
-                </HoverCard>
-              </StaggerItem>
-            );
-          })}
-        </StaggerGroup>
-        <ContactCta cta={cta} />
-      </div>
-    </section>
+    <Section tone="raised">
+      <SectionHeader
+        eyebrow="Outcomes"
+        title={title}
+        description={description}
+        layout={description ? "split" : "stack"}
+        className="mb-14 lg:mb-16"
+      />
+      <CellGrid cols={3}>
+        {items.map((item, index) => {
+          const Icon = PILLAR_ICONS[index % PILLAR_ICONS.length];
+          return (
+            <FeatureCell
+              key={item.title}
+              icon={<Icon strokeWidth={1.75} />}
+              title={item.title}
+              titleAs="p"
+              description={item.description}
+            />
+          );
+        })}
+      </CellGrid>
+      <ContactCta cta={cta} />
+    </Section>
   );
 }
 
@@ -306,7 +229,7 @@ export function IndustryOutcomes() {
   return null;
 }
 
-/** Mockup: Project cards with visual header, Challenge / Solution, CTA */
+/** Success stories — challenge / solution with a case study link */
 export function IndustrySuccessStories({
   title,
   stories,
@@ -316,112 +239,48 @@ export function IndustrySuccessStories({
 }) {
   if (!stories?.length) return null;
   return (
-    <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8 tracking-tight">
-          {title}
-        </h2>
-        <StaggerGroup className={`grid gap-4 sm:gap-5 ${stories.length === 1 ? "max-w-xl mx-auto" : "lg:grid-cols-2"}`}>
-          {stories.map((story: any, index: number) => (
-            <StaggerItem key={story._key || index}>
-              <HoverCard
-                className="h-full rounded-2xl border overflow-hidden flex flex-col"
-                style={{ background: "rgba(26,46,71,0.55)", borderColor: "rgba(0,229,255,0.15)" }}
-              >
-                <div
-                  className="relative h-36 flex items-center justify-center overflow-hidden"
-                  style={{
-                    background:
-                      "linear-gradient(145deg, rgba(29,161,242,0.3) 0%, rgba(13,27,42,0.95) 55%, rgba(0,229,255,0.12) 100%)",
-                  }}
-                >
-                  <div
-                    className="absolute inset-x-8 bottom-4 top-6 rounded-t-lg border border-b-0 opacity-80"
-                    style={{
-                      background: "rgba(10,15,31,0.85)",
-                      borderColor: "rgba(0,229,255,0.25)",
-                    }}
-                  >
-                    <div className="h-2 border-b" style={{ borderColor: "rgba(0,229,255,0.15)" }} />
-                    <div className="p-3 grid grid-cols-3 gap-2">
-                      {[1, 2, 3].map((n) => (
-                        <div
-                          key={n}
-                          className="h-6 rounded"
-                          style={{ background: "rgba(0,229,255,0.08)" }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="relative z-10 flex gap-2">
-                    {(story.badges || ["~40%", "Faster", "Close"]).map((badge: string) => (
-                      <span
-                        key={badge}
-                        className="px-2.5 py-1 rounded-full text-[11px] font-bold"
-                        style={{
-                          background: "rgba(10,15,31,0.85)",
-                          color: "#00E5FF",
-                          border: "1px solid rgba(0,229,255,0.4)",
-                        }}
-                      >
-                        {badge}
-                      </span>
-                    ))}
-                  </div>
+    <Section tone="base">
+      <SectionHeader eyebrow="Success stories" title={title} className="mb-12" />
+      <div className={`grid gap-6 ${stories.length === 1 ? "max-w-3xl" : "lg:grid-cols-2"}`}>
+        {stories.map((story: any, index: number) => (
+          <article key={story._key || index} className="panel panel-hover reveal flex flex-col p-7 sm:p-9">
+            {(story.badges || []).length > 0 && (
+              <ul className="mb-6 flex flex-wrap gap-2">
+                {story.badges.map((badge: string) => (
+                  <li key={badge} className="chip border-line-accent text-accent">{badge}</li>
+                ))}
+              </ul>
+            )}
+            {story.title && <p className="h-card">{story.title}</p>}
+            <dl className="mt-6 space-y-5">
+              {story.clientChallenge && (
+                <div>
+                  <dt className="mb-1.5 text-xs font-medium uppercase tracking-[0.14em] text-muted">Challenge</dt>
+                  <dd><RichText value={story.clientChallenge} className="copy" /></dd>
                 </div>
-                <div className="p-5 md:p-6 flex flex-col flex-grow">
-                  {story.title && (
-                    <p className="text-lg font-bold text-white mb-4 leading-snug">{story.title}</p>
-                  )}
-                  {story.clientChallenge && (
-                    <div className="mb-3">
-                      <p className="text-sm font-bold mb-1" style={{ color: "#00E5FF" }}>
-                        Challenges
-                      </p>
-                      <div className="text-sm leading-relaxed" style={{ color: "#8FA3BF" }}>
-                        <PortableText value={story.clientChallenge} />
-                      </div>
-                    </div>
-                  )}
-                  {story.solutionDelivered && (
-                    <div className="mb-5">
-                      <p className="text-sm font-bold mb-1" style={{ color: "#00E5FF" }}>
-                        Solutions
-                      </p>
-                      <div className="text-sm leading-relaxed" style={{ color: "#8FA3BF" }}>
-                        <PortableText value={story.solutionDelivered} />
-                      </div>
-                    </div>
-                  )}
-                  {story.ctaLink && (
-                    <div className="mt-auto">
-                      <Link href={story.ctaLink}>
-                        <Button
-                          className="rounded-full px-5 h-9 text-sm font-bold border-none"
-                          style={{
-                            background: "linear-gradient(135deg, #1DA1F2, #00E5FF)",
-                            color: "#0A0F1F",
-                          }}
-                        >
-                          {story.ctaText || "View the Case Study"}
-                        </Button>
-                      </Link>
-                    </div>
-                  )}
+              )}
+              {story.solutionDelivered && (
+                <div>
+                  <dt className="mb-1.5 text-xs font-medium uppercase tracking-[0.14em] text-muted">Solution</dt>
+                  <dd><RichText value={story.solutionDelivered} className="copy" /></dd>
                 </div>
-              </HoverCard>
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
+              )}
+            </dl>
+            {story.ctaLink && (
+              <div className="mt-auto pt-8">
+                <ButtonLink href={story.ctaLink} variant="secondary" size="sm" arrow>
+                  {story.ctaText || "View the Case Study"}
+                </ButtonLink>
+              </div>
+            )}
+          </article>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }
 
-/**
- * Doc design: Lifecycle circular stages
- * SyncOrigins content: Process & Delivery steps (fills that design)
- */
+/** Process & delivery steps */
 export function IndustryLifecycle({
   title,
   description,
@@ -433,52 +292,36 @@ export function IndustryLifecycle({
   processTitle?: string;
   process?: Item[];
 }) {
+  if (!items?.length) return null;
   return (
-    <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0D1B2A" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="text-center mb-6 md:mb-8 space-y-3">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
-            {title}
-          </h2>
-          <SectionSubline description={description} />
-        </div>
-        <div className="relative">
-          <div
-            className="hidden lg:block absolute top-8 left-[6%] right-[6%] h-px"
-            style={{ background: "rgba(0,229,255,0.25)" }}
-          />
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
-            {items.map((item, index) => {
-              const Icon = PROCESS_ICONS[index % PROCESS_ICONS.length];
-              return (
-                <div key={item.title} className="text-center relative z-10 min-w-0 px-0.5">
-                  <div
-                    className="mx-auto mb-2.5 sm:mb-3 h-12 w-12 sm:h-16 sm:w-16 rounded-full flex items-center justify-center border-2"
-                    style={{
-                      background: "#0A0F1F",
-                      borderColor: "#00E5FF",
-                      color: "#00E5FF",
-                      boxShadow: "0 0 18px rgba(0,229,255,0.2)",
-                    }}
-                  >
-                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.75} />
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] font-extrabold mb-1" style={{ color: "#00E5FF" }}>
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <p className="text-xs sm:text-sm font-bold text-white mb-1 leading-snug">{item.title}</p>
-                  {item.description && (
-                    <div className="text-[10px] sm:text-[11px] leading-relaxed px-0.5" style={{ color: "#8FA3BF" }}>
-                      <PortableText value={item.description} />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
+    <Section tone="base">
+      <SectionHeader
+        eyebrow="How we deliver"
+        title={title}
+        description={description}
+        layout={description ? "split" : "stack"}
+        className="mb-14 lg:mb-16"
+      />
+      {items.length <= 5 ? (
+        <Timeline items={items} />
+      ) : (
+        <CellGrid cols={3}>
+          {items.map((item, index) => {
+            const Icon = PROCESS_ICONS[index % PROCESS_ICONS.length];
+            return (
+              <FeatureCell
+                key={item.title}
+                index={index}
+                icon={<Icon strokeWidth={1.75} />}
+                title={item.title}
+                titleAs="p"
+                description={item.description}
+              />
+            );
+          })}
+        </CellGrid>
+      )}
+    </Section>
   );
 }
 
@@ -487,7 +330,7 @@ export function IndustryProcess() {
   return null;
 }
 
-/** Mockup: Why Choose — visual left + benefits list right */
+/** Why choose us — visual panel left, benefits list right */
 export function IndustryWhyUs({
   title,
   description,
@@ -507,83 +350,62 @@ export function IndustryWhyUs({
   imageTitle?: string;
   listTitle?: string;
 }) {
+  if (!items?.length) return null;
   return (
-    <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#14243A" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-3 max-w-3xl">
-          {title}
-        </h2>
-        {description && (
-          <div className="text-sm md:text-base leading-relaxed mb-8 max-w-3xl" style={{ color: "#8FA3BF" }}>
-            <PortableText value={description} />
-          </div>
-        )}
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
-          <div
-            className="rounded-2xl border min-h-[260px] p-6 md:p-8 flex flex-col justify-end relative overflow-hidden"
-            style={{
-              background:
-                "radial-gradient(ellipse at 30% 20%, rgba(0,229,255,0.2), transparent 55%), linear-gradient(160deg, #0D1B2A, #07101F)",
-              borderColor: "rgba(0,229,255,0.2)",
-            }}
-          >
+    <Section tone="raised">
+      <SectionHeader
+        eyebrow="Why SyncOrigins"
+        title={title}
+        description={description}
+        layout={description ? "split" : "stack"}
+        className="mb-14 lg:mb-16"
+      />
+      <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-5">
+          <div className="panel-accent reveal relative flex min-h-[20rem] flex-col justify-end overflow-hidden p-8 lg:sticky lg:top-28 lg:min-h-[26rem]">
             {image ? (
               <>
                 <Image
                   src={image}
                   alt={imageAlt || imageTitle || ""}
                   fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
                   className="object-cover"
                 />
-                <div
-                  className="absolute inset-0"
-                  style={{ background: "linear-gradient(180deg, rgba(7,16,31,0.1) 30%, rgba(7,16,31,0.9) 100%)" }}
-                />
+                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-transparent" />
               </>
             ) : (
-              <div
-                className="absolute top-6 right-6 h-24 w-24 rounded-full opacity-30 blur-2xl"
-                style={{ background: "#00E5FF" }}
-              />
+              <>
+                <div aria-hidden className="bg-grid-fade" />
+                <div
+                  aria-hidden
+                  className="absolute -right-20 -top-20 h-72 w-72 rounded-full blur-3xl"
+                  style={{ background: "radial-gradient(circle, rgba(0,229,255,0.25), transparent 70%)" }}
+                />
+              </>
             )}
-            {imageLabel && (
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-2 relative z-10" style={{ color: "#00E5FF" }}>
-                {imageLabel}
-              </p>
-            )}
-            {imageTitle && (
-              <p className="text-xl md:text-2xl font-bold text-white leading-snug relative z-10">
-                {imageTitle}
-              </p>
-            )}
-          </div>
-          <div
-            className="rounded-2xl border p-5 md:p-6"
-            style={{ background: "rgba(10,15,31,0.45)", borderColor: "rgba(0,229,255,0.12)" }}
-          >
-            <p className="text-sm font-bold text-white mb-4">
-              {listTitle}
-            </p>
-            <ul className="space-y-3">
-              {items.map((item) => (
-                <li key={item.title} className="flex gap-2.5">
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "#00E5FF" }} />
-                  <div>
-                    <p className="font-bold text-white text-sm">{item.title}</p>
-                    {item.description && (
-                      <div className="text-sm leading-relaxed mt-0.5" style={{ color: "#8FA3BF" }}>
-                        <PortableText value={item.description} />
-                      </div>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <div className="relative">
+              {imageLabel && <Eyebrow className="mb-4">{imageLabel}</Eyebrow>}
+              {imageTitle && <p className="font-display text-2xl font-semibold leading-snug tracking-tight text-fg">{imageTitle}</p>}
+            </div>
           </div>
         </div>
+        <div className="lg:col-span-7">
+          {listTitle && <p className="mb-6 text-sm font-medium text-muted">{listTitle}</p>}
+          <ul className="border-t border-line">
+            {items.map((item, index) => (
+              <li key={item.title} className="reveal grid grid-cols-[2.75rem_1fr] gap-4 border-b border-line py-6 sm:grid-cols-[3.5rem_1fr]">
+                <span className="pt-0.5 font-display text-sm font-medium tabular-nums text-accent">{indexLabel(index)}</span>
+                <div>
+                  <p className="h-card">{item.title}</p>
+                  <RichText value={item.description} className="copy mt-2" />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </section>
+    </Section>
   );
 }
 

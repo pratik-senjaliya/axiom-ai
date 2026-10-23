@@ -39,9 +39,7 @@
   --border-subtle: rgba(0, 229, 255, 0.12);
   --border-accent: rgba(0, 229, 255, 0.35);
 
-  /* Typography */
-  --font-inter:   'Inter', system-ui, sans-serif;
-  --font-display: 'Inter', system-ui, sans-serif;
+  /* Typography — --font-inter / --font-sora come from next/font in app/layout.tsx */
 
   /* Spacing */
   --spacing-xs: 0.5rem;
@@ -70,15 +68,20 @@
 
   html {
     @apply scroll-smooth;
-    font-size: 88%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     background-color: #0A0F1F;
-    color: #C5D1E0;
+    color: #B4C2D3;
     @apply font-sans antialiased;
+  }
+
+  ::selection {
+    background: rgba(0, 229, 255, 0.25);
+    color: #FFFFFF;
   }
 
   input::placeholder,
@@ -122,8 +125,9 @@
 
   /* Typography */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold leading-tight;
-    color: #FFFFFF;
+    @apply font-display font-semibold leading-tight;
+    color: #F3F6FA;
+    letter-spacing: -0.015em;
   }
 
   h1 { @apply text-4xl md:text-5xl lg:text-6xl font-bold; }
@@ -154,57 +158,66 @@
 
   /* === BUTTONS === */
   .btn {
-    @apply inline-flex items-center justify-center;
-    @apply font-medium rounded-full transition-all duration-200;
-    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap;
+    @apply font-sans font-semibold rounded-full transition-all duration-200;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
     @apply disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  /* Primary: Electric Blue → Neon Cyan gradient with glow */
+  /* Primary: solid cyan, dark text */
   .btn-primary {
-    background: linear-gradient(135deg, #1DA1F2, #00E5FF);
-    color: #0A0F1F;
+    background: linear-gradient(180deg, #33ECFF 0%, #00D5F0 100%);
+    color: #04121C;
     border: none;
-    font-weight: 700;
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.35), 0 4px 15px rgba(0, 0, 0, 0.3);
-    @apply hover:scale-105;
-    transition: all 0.25s ease;
+    box-shadow: 0 1px 0 0 rgba(255,255,255,0.35) inset, 0 8px 24px -8px rgba(0, 229, 255, 0.55);
   }
   .btn-primary:hover {
-    background: linear-gradient(135deg, #00E5FF, #66FCF1);
-    box-shadow: 0 0 35px rgba(0, 229, 255, 0.6), 0 4px 20px rgba(0, 0, 0, 0.4);
+    color: #04121C;
+    background: linear-gradient(180deg, #66F3FF 0%, #1ADFF7 100%);
+    box-shadow: 0 1px 0 0 rgba(255,255,255,0.4) inset, 0 10px 30px -8px rgba(0, 229, 255, 0.7);
   }
 
-  /* Secondary: Dark glass with cyan border */
+  /* Secondary: quiet outline */
   .btn-secondary {
-    background: rgba(20, 36, 58, 0.8);
-    border: 1px solid rgba(0, 229, 255, 0.3);
-    color: #C5D1E0;
-    backdrop-filter: blur(8px);
-    @apply hover:-translate-y-0.5;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(148, 178, 214, 0.25);
+    color: #F3F6FA;
   }
   .btn-secondary:hover {
-    border-color: rgba(0, 229, 255, 0.65);
-    color: #00E5FF;
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+    color: #FFFFFF;
+    border-color: rgba(0, 229, 255, 0.5);
+    background: rgba(0, 229, 255, 0.06);
   }
 
-  /* Outline */
+  /* Outline (legacy name) */
   .btn-outline {
-    border: 1px solid rgba(0, 229, 255, 0.35);
+    border: 1px solid rgba(148, 178, 214, 0.25);
     background: transparent;
-    color: #C5D1E0;
-    @apply hover:border-[#00E5FF] hover:text-[#00E5FF];
+    color: #F3F6FA;
+  }
+  .btn-outline:hover {
+    color: #FFFFFF;
+    border-color: rgba(0, 229, 255, 0.5);
+  }
+
+  /* White (on accent panels) */
+  .btn-white {
+    background: #F3F6FA;
+    color: #0A0F1F;
+  }
+  .btn-white:hover {
+    background: #FFFFFF;
+    color: #0A0F1F;
   }
 
   /* Ghost */
   .btn-ghost {
     background: transparent;
-    color: #8FA3BF;
+    color: #B4C2D3;
   }
   .btn-ghost:hover {
-    background: rgba(0, 229, 255, 0.08);
-    color: #C5D1E0;
+    background: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF;
   }
 
   /* === CARDS === */
@@ -231,17 +244,129 @@
 
   /* === CONTAINER === */
   .container-custom {
-    @apply w-full mx-auto px-6 sm:px-8 lg:px-12 max-w-[95rem];
+    @apply w-full mx-auto px-5 sm:px-8 lg:px-10 max-w-site;
   }
 
   /* === SECTION === */
   .section {
-    @apply py-8 md:py-12 lg:py-16 xl:py-20;
+    @apply py-20 md:py-24 lg:py-28;
+  }
+
+  /* ============================================================
+   * DESIGN SYSTEM (redesign) — use these instead of inline styles
+   * ============================================================ */
+
+  /* Section vertical rhythm */
+  .section-y    { @apply py-20 md:py-24 lg:py-28; }
+  .section-y-sm { @apply py-14 md:py-16 lg:py-20; }
+
+  /* Eyebrow label above headings */
+  .eyebrow {
+    @apply inline-flex items-center gap-3 font-sans text-xs font-medium uppercase;
+    letter-spacing: 0.18em;
+    color: #00E5FF;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.5rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.7;
+  }
+
+  /* Headings */
+  .h-display {
+    @apply font-display font-semibold text-[2.375rem] leading-[1.08] sm:text-5xl sm:leading-[1.05] lg:text-[3.75rem];
+    letter-spacing: -0.035em;
+    color: #F3F6FA;
+    text-wrap: balance;
+  }
+  .h-section {
+    @apply font-display font-semibold text-[1.875rem] leading-[1.15] sm:text-4xl lg:text-[2.625rem] lg:leading-[1.1];
+    letter-spacing: -0.03em;
+    color: #F3F6FA;
+    text-wrap: balance;
+  }
+  .h-card {
+    @apply font-display font-semibold text-lg leading-snug sm:text-xl;
+    letter-spacing: -0.015em;
+    color: #F3F6FA;
+  }
+
+  /* Body copy */
+  .lead {
+    @apply text-lg leading-relaxed md:text-xl md:leading-relaxed;
+    color: #B4C2D3;
+  }
+  .copy {
+    @apply text-[0.9375rem] leading-relaxed sm:text-base sm:leading-[1.7];
+    color: #A3B3C6;
+  }
+  .lead p, .copy p { @apply mb-4 last:mb-0; }
+
+  /* Panels */
+  .panel {
+    @apply rounded-2xl border;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    border-color: rgba(148, 178, 214, 0.12);
+  }
+  .panel-hover {
+    @apply transition-colors duration-300;
+  }
+  .panel-hover:hover {
+    border-color: rgba(0, 229, 255, 0.3);
+  }
+
+  /* Accent-bordered panel (gradient hairline) */
+  .panel-accent {
+    @apply relative rounded-3xl;
+    background:
+      linear-gradient(180deg, #0F1A2D, #0A0F1F) padding-box,
+      linear-gradient(135deg, rgba(0,229,255,0.55), rgba(29,161,242,0.15) 40%, rgba(148,178,214,0.12)) border-box;
+    border: 1px solid transparent;
+  }
+
+  /* Shared-border grid: cells read as one composed object */
+  .cell-grid {
+    @apply grid overflow-hidden rounded-2xl border;
+    border-color: rgba(148, 178, 214, 0.12);
+    gap: 1px;
+    background: rgba(148, 178, 214, 0.12);
+  }
+  .cell-grid > * {
+    background: #0B1222;
+  }
+
+  /* Tag / chip */
+  .chip {
+    @apply inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium;
+    border-color: rgba(148, 178, 214, 0.18);
+    color: #B4C2D3;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  /* Subtle masked grid for hero backgrounds */
+  .bg-grid-fade {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(148, 178, 214, 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 178, 214, 0.07) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  /* Hairline divider with cyan center */
+  .rule-accent {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.35), transparent);
   }
 
   /* === GRADIENT TEXT — Cyan → Blue === */
   .gradient-text {
-    background: linear-gradient(135deg, #00E5FF 0%, #66FCF1 40%, #1DA1F2 100%);
+    background: linear-gradient(100deg, #66FCF1 0%, #00E5FF 45%, #1DA1F2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -302,6 +427,38 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
+
+  /* Rich text from the CMS outside articles: inherit section styling */
+  .rich-text strong { color: #F3F6FA; font-weight: 600; }
+  .rich-text a { color: #00E5FF; text-decoration: underline; text-decoration-color: rgba(0,229,255,0.35); text-underline-offset: 3px; }
+  .rich-text ul, .rich-text ol { margin-top: 0.5rem; }
+
+  /* About → philosophy body: lists become hairline rows */
+  .about-philosophy ul {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    border-top: 1px solid rgba(148, 178, 214, 0.12);
+  }
+  .about-philosophy ul li {
+    position: relative;
+    margin: 0;
+    padding: 1.1rem 0 1.1rem 1.75rem;
+    border-bottom: 1px solid rgba(148, 178, 214, 0.12);
+    color: #F3F6FA;
+    font-weight: 500;
+  }
+  .about-philosophy ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.75rem;
+    width: 0.75rem;
+    height: 1px;
+    background: #00E5FF;
+  }
+  .about-philosophy ul, .about-philosophy li { margin-left: 0 !important; }
+  .about-philosophy p { margin-bottom: 1.25rem; }
 
   /* Premium Blog Typography - Lean and Modern (dark) */
   .prose-clean {
@@ -599,6 +756,23 @@
   .animate-scroll          { animation: scroll 30s linear infinite; }
   .animate-pulse-glow      { animation: pulseGlow 2s ease-in-out infinite; }
   .animate-float           { animation: float 6s ease-in-out infinite; }
+}
+
+/* Reveal on scroll — pure CSS progressive enhancement.
+ * Content is never hidden: browsers without scroll-driven animations
+ * (or users with reduced motion) simply see it in place. */
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
 }
 
 /* Keyframe Animations */

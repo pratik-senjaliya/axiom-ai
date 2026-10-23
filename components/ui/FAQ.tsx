@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { SlideUp } from "@/components/ui/animations/SlideUp";
-import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
+import React, { useId, useState } from "react";
+import { cn } from "@/lib/utils";
 import { PortableText } from "@/components/ui/PortableText";
 
 interface FAQItem {
@@ -26,6 +25,57 @@ interface FAQProps {
   moreLinkText?: string;
 }
 
+/** Accordion list. Answers stay in the DOM (collapsed with CSS) so they are crawlable. */
+export function FAQList({ items }: { items: FAQItem[] }) {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const baseId = useId();
+
+  return (
+    <div className="border-t border-line">
+      {items.map((item, index) => {
+        const open = openIndex === index;
+        const panelId = `${baseId}-panel-${index}`;
+        return (
+          <div key={index} className="border-b border-line">
+            <h3>
+              <button
+                type="button"
+                onClick={() => setOpenIndex(open ? null : index)}
+                aria-expanded={open}
+                aria-controls={panelId}
+                className="group flex w-full items-start justify-between gap-6 py-6 text-left"
+              >
+                <span className={cn("font-display text-base font-medium leading-snug transition-colors sm:text-lg", open ? "text-fg" : "text-body group-hover:text-fg")}>
+                  {item.question}
+                </span>
+                <span
+                  aria-hidden
+                  className={cn(
+                    "relative mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-colors",
+                    open ? "border-line-accent text-accent" : "border-line text-muted group-hover:text-fg"
+                  )}
+                >
+                  <span className="absolute h-px w-3 bg-current" />
+                  <span className={cn("absolute h-3 w-px bg-current transition-transform duration-300", open && "scale-y-0")} />
+                </span>
+              </button>
+            </h3>
+            <div
+              id={panelId}
+              role="region"
+              className={cn("grid transition-[grid-template-rows] duration-300 ease-out", open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}
+            >
+              <div className="overflow-hidden">
+                <div className="copy max-w-3xl pb-7 pr-12">{renderAnswer(item.answer)}</div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export const FAQ: React.FC<FAQProps> = ({
   items,
   title = "Frequently Asked Questions",
@@ -33,82 +83,53 @@ export const FAQ: React.FC<FAQProps> = ({
   moreLinkHref = "/faq",
   moreLinkText = "More FAQs →",
 }) => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggleItem = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <div className="w-full">
       {(title || showMoreLink) && (
-        <SlideUp className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-          {title && (
-            <h5 className="type-section-title text-white mb-4 sm:mb-0">
-              {title}
-            </h5>
-          )}
+        <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          {title && <h2 className="h-section">{title}</h2>}
           {showMoreLink && (
-            <a
-              href={moreLinkHref}
-              className="font-medium hover:text-[#00E5FF] transition-colors"
-              style={{ color: '#C5D1E0' }}
-            >
+            <a href={moreLinkHref} className="font-medium text-body transition-colors hover:text-accent">
               {moreLinkText}
             </a>
           )}
-        </SlideUp>
+        </div>
       )}
-
-      <StaggerGroup className="space-y-4 max-w-4xl mx-auto">
-        {items.map((item, index) => (
-          <StaggerItem
-            key={index}
-            className="border overflow-hidden rounded-2xl transition-all duration-300"
-            style={{ 
-              borderColor: openIndex === index ? 'rgba(0,229,255,0.4)' : 'rgba(0,229,255,0.15)',
-              background: openIndex === index ? 'rgba(0,229,255,0.05)' : 'rgba(26,46,71,0.6)',
-              backdropFilter: 'blur(10px)',
-              boxShadow: openIndex === index ? '0 0 20px rgba(0,229,255,0.1)' : 'none'
-            }}
-          >
-            <button
-              onClick={() => toggleItem(index)}
-              className="w-full px-6 py-5 text-left flex items-center justify-between transition-colors hover:bg-white/5"
-            >
-              <span className="font-semibold text-lg text-white pr-4">
-                {item.question}
-              </span>
-              <div 
-                className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300"
-                style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF', transform: openIndex === index ? 'rotate(180deg)' : 'rotate(0deg)' }}
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </div>
-            </button>
-            {openIndex === index && (
-              <div className="px-6 py-5 border-t" style={{ borderColor: 'rgba(0,229,255,0.1)', background: 'rgba(10,15,31,0.3)' }}>
-                <div className="text-[15px] leading-relaxed" style={{ color: '#8FA3BF' }}>
-                  {renderAnswer(item.answer)}
-                </div>
-              </div>
-            )}
-          </StaggerItem>
-        ))}
-      </StaggerGroup>
+      <FAQList items={items} />
     </div>
   );
 };
 
+/** Full-width FAQ section: heading on the left, accordion on the right. */
+export function FAQSection({
+  items,
+  title = "Frequently Asked Questions",
+  eyebrow = "FAQ",
+  description,
+}: {
+  items: FAQItem[];
+  title?: string;
+  eyebrow?: string;
+  description?: React.ReactNode;
+}) {
+  if (!items?.length) return null;
+  return (
+    <section className="relative overflow-x-clip bg-ink-900 section-y">
+      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-line" />
+      <div className="container-custom">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <p className="eyebrow mb-5">{eyebrow}</p>
+              <h2 className="h-section">{title}</h2>
+              {description && <div className="copy mt-5">{description}</div>}
+            </div>
+          </div>
+          <div className="lg:col-span-8">
+            <FAQList items={items} />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

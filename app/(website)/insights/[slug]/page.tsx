@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, getAllPosts } from "@/lib/sanity/queries";
 import { PortableText } from "@/components/ui/PortableText";
 import { FAQ } from "@/components/ui/FAQ";
-import { Button } from "@/components/ui/Button";
 import { DarkCTA } from "@/components/services/DarkCTA";
+import { BlogCard } from "@/components/blog/BlogCard";
+import { ButtonLink, Eyebrow, Section, SectionHeader, TextLink } from "@/components/ui/kit";
 import { AuthorAvatar } from "@/components/blog/AuthorAvatar";
 import { ArticleShareLinks } from "@/components/blog/ArticleShareLinks";
 import { BlogCoverImage } from "@/components/blog/BlogCoverImage";
 import { BlogPageSchemas } from "@/components/seo/BlogPageSchemas";
-import { Calendar, Clock, ChevronRight } from "lucide-react";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 import { generateMetadata as genMeta } from "@/lib/seo";
@@ -146,10 +145,22 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
       level: block.style,
       id: slugify(block.children?.[0]?.text || ""),
     }))
-    .filter((heading: any) => heading.text);
+    .filter((heading: any) => heading.text.trim() && heading.id);
+
+  const cta = resolvePostCta(post);
+  const sidebarCtaTitle =
+    cta.title === DEFAULT_CTA.title ? "Need a Strategy?" : cta.title;
+  const badge =
+    post.relatedIndustry === "finance"
+      ? "Finance"
+      : post.relatedService === "ai"
+        ? "AI Strategy"
+        : post.relatedService
+          ? String(post.relatedService).toUpperCase()
+          : "Enterprise AI";
 
   return (
-    <div className="pt-24" style={{ background: '#0A0F1F' }}>
+    <div className="bg-ink-900 pt-[4.5rem]">
       <BlogPageSchemas
         title={post.title}
         description={post.excerpt || ""}
@@ -160,158 +171,144 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         seo={post.seo}
         faqs={post.faqs}
       />
-      {/* 1. Hero Section - Title Left, Image Right */}
-      <section className="py-8 md:py-12 border-b" style={{ background: '#0D1B2A', borderColor: 'rgba(0,229,255,0.1)' }}>
-        <div className="container-custom px-4 max-w-7xl mx-auto">
+
+      {/* 1. Article header */}
+      <header id="top" className="relative scroll-mt-24 overflow-hidden pt-10 sm:pt-12">
+        <div aria-hidden className="bg-grid-fade" />
+        <div className="container-custom relative">
           <Breadcrumb
             items={[
               { label: "Home", href: "/" },
               { label: "Insights", href: "/insights" },
               { label: post.title },
             ]}
-            className="mb-6"
+            className="mb-10 lg:mb-12"
           />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            <div className="animate-fade-in-left">
-              <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border" style={{ background: 'rgba(0,229,255,0.1)', borderColor: 'rgba(0,229,255,0.3)', color: '#00E5FF' }}>
-                {post.category}
-              </div>
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-white mb-6 leading-tight tracking-tight">
-                {post.title}
-              </h1>
-              <div className="flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-widest" style={{ color: '#8FA3BF' }}>
-                <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {post.date}</span>
-                <span className="w-1 h-1 rounded-full" style={{ background: '#14243A' }} />
-                <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {post.readTime}</span>
-              </div>
-            </div>
-            <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-lg animate-fade-in-right min-w-0">
-              {(post.imageDetail || post.image) ? (
-                <BlogCoverImage
-                  src={post.imageDetail || post.image}
-                  alt={post.imageAlt || post.title}
-                  variant="natural"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  priority
-                />
-              ) : (
-                <div
-                  className="w-full h-48 flex items-center justify-center text-2xl md:text-4xl font-bold truncate p-8"
-                  style={{ background: "rgba(0,229,255,0.05)", color: "#14243A" }}
-                >
-                  {post.title}
-                </div>
+          <div className="max-w-4xl">
+            {post.category && <Eyebrow className="mb-6">{post.category}</Eyebrow>}
+            <h1 className="font-display text-[2rem] font-semibold leading-[1.12] tracking-[-0.03em] text-fg sm:text-[2.75rem] lg:text-[3.25rem]">
+              {post.title}
+            </h1>
+            {post.excerpt && <p className="lead mt-6 max-w-3xl">{post.excerpt}</p>}
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted">
+              <span className="flex items-center gap-3">
+                <AuthorAvatar author={displayAuthor} size="sm" />
+                <span className="font-medium text-fg">{displayAuthor}</span>
+              </span>
+              {post.date && <span>{post.date}</span>}
+              {post.readTime && (
+                <span className="flex items-center gap-2">
+                  <span className="h-1 w-1 rounded-full bg-muted/60" />
+                  {post.readTime}
+                </span>
               )}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Metadata Bar - Simplified */}
-      <section className="py-6 border-b sticky top-20 backdrop-blur-md z-30 hidden md:block" style={{ background: 'rgba(10,15,31,0.92)', borderColor: 'rgba(0,229,255,0.1)' }}>
-        <div className="container-custom px-4 max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-10">
-            <div className="flex items-center gap-3">
-              <AuthorAvatar author={displayAuthor} size="sm" />
-              <span className="text-xs font-bold text-white">{displayAuthor}</span>
-            </div>
-            <div className="h-4 w-[1px]" style={{ background: 'rgba(0,229,255,0.15)' }} />
-            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest" style={{ color: '#8FA3BF' }}>
-               <span>Share:</span>
-               <div className="flex items-center gap-3 ml-1">
-                 <ArticleShareLinks title={post.title} url={articleUrl} />
-               </div>
+            <div className="mt-6 flex flex-wrap items-center gap-2 lg:hidden">
+              <span className="mr-1 text-xs font-medium uppercase tracking-[0.18em] text-muted">Share</span>
+              <ArticleShareLinks
+                title={post.title}
+                url={articleUrl}
+                linkClassName="chip transition-colors hover:border-line-accent hover:text-fg"
+              />
             </div>
           </div>
-          <a href="#article-start" className="text-[10px] font-bold uppercase tracking-widest border-b-2 border-transparent transition-all" style={{ color: '#00E5FF' }}>
-            Back to Top
-          </a>
-        </div>
-      </section>
 
-      {/* 3. Main Content Area */}
-      <section className="py-10 md:py-14" id="article-start" style={{ background: '#0A0F1F' }}>
-        <div className="container-custom px-4 max-w-7xl mx-auto flex flex-col lg:flex-row gap-10 lg:gap-14">
-          
-          {/* Sticky Sidebar Left */}
-          <aside className="lg:w-[320px] hidden lg:block flex-shrink-0">
-            <div className="sticky top-40 space-y-10">
-              {/* Table of Contents */}
-              <div className="p-8 rounded-[2rem] border transition-all hover:border-[#00E5FF]/30" style={{ background: 'rgba(13,27,42,0.4)', borderColor: 'rgba(0,229,255,0.15)', backdropFilter: 'blur(10px)' }}>
-                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-8 flex items-center justify-between" style={{ color: '#00E5FF' }}>
-                  <span>In this article</span>
-                  <ChevronRight className="w-3 h-3" />
-                </h4>
-                <nav className="flex flex-col gap-5 text-sm">
-                  {headings.map((heading: any, i: number) => (
-                    <a
-                      key={i}
-                      href={`#${heading.id}`}
-                      className="transition-all hover:text-[#00E5FF] leading-snug border-l-2 pl-4 -ml-[2px] font-bold border-[#00E5FF]/20 pr-4"
-                      style={{ color: "#C5D1E0" }}
-                    >
-                      {heading.text}
-                    </a>
-                  ))}
-                  <a href="#faqs" className="font-bold transition-colors hover:text-[#00E5FF] border-l-2 border-transparent pl-4 -ml-[2px]" style={{ color: '#C5D1E0' }}>
-                    FAQs
-                  </a>
+          <div className="mt-12 overflow-hidden rounded-2xl border border-line lg:mt-14">
+            {(post.imageDetail || post.image) ? (
+              <BlogCoverImage
+                src={post.imageDetail || post.image}
+                alt={post.imageAlt || post.title}
+                variant="natural"
+                sizes="(max-width: 1280px) 100vw, 1200px"
+                priority
+              />
+            ) : (
+              <div className="flex h-48 w-full items-center justify-center bg-ink-800 p-8 font-display text-2xl text-muted">
+                SyncOrigins Insights
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* 2. Body */}
+      <section className="py-14 lg:py-20" id="article-start">
+        <div className="container-custom grid gap-12 lg:grid-cols-12 lg:gap-10">
+          <aside className="hidden lg:col-span-3 lg:block">
+            <div className="sticky top-28 space-y-10">
+              {(headings.length > 0 || post.faqs?.length > 0) && (
+                <nav aria-label="In this article">
+                  <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">In this article</p>
+                  <ul className="space-y-1 border-l border-line">
+                    {headings.map((heading: any, i: number) => (
+                      <li key={i}>
+                        <a
+                          href={`#${heading.id}`}
+                          className="-ml-px block border-l border-transparent py-1.5 pl-4 text-sm leading-snug text-body transition-colors hover:border-accent hover:text-fg"
+                        >
+                          {heading.text}
+                        </a>
+                      </li>
+                    ))}
+                    {post.faqs?.length > 0 && (
+                      <li>
+                        <a href="#faqs" className="-ml-px block border-l border-transparent py-1.5 pl-4 text-sm text-body transition-colors hover:border-accent hover:text-fg">
+                          FAQs
+                        </a>
+                      </li>
+                    )}
+                  </ul>
                 </nav>
+              )}
+
+              <div>
+                <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">Share</p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <ArticleShareLinks
+                    title={post.title}
+                    url={articleUrl}
+                    linkClassName="chip transition-colors hover:border-line-accent hover:text-fg"
+                  />
+                </div>
               </div>
 
-              {/* CTA Widget */}
-              {(() => {
-                const cta = resolvePostCta(post);
-                return (
-                  <div className="p-8 rounded-[2rem] border text-white relative overflow-hidden group" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #14243A 100%)', borderColor: 'rgba(0,229,255,0.2)', boxShadow: '0 0 30px rgba(0,229,255,0.07)' }}>
-                      <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" style={{ background: '#00E5FF' }} />
-                      <h4 className="text-lg font-bold mb-3 relative z-10">{cta.title === DEFAULT_CTA.title ? "Need a Strategy?" : cta.title.replace("Ready to ", "Need a ").replace("?", "") + "?"}</h4>
-                      <p className="text-xs mb-6 leading-relaxed relative z-10" style={{ color: 'rgba(255,255,255,0.6)' }}>{cta.description}</p>
-                      <Link href={cta.buttonHref || "/contact"}>
-                        <Button className="w-full font-bold rounded-xl text-xs py-3 h-auto relative z-10 border-0 hover:scale-105 transition-all text-[#0A0F1F]" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
-                          {cta.buttonText}
-                        </Button>
-                      </Link>
-                  </div>
-                );
-              })()}
+              <div className="panel-accent relative overflow-hidden p-6">
+                <p className="font-display text-lg font-semibold text-fg">{sidebarCtaTitle}</p>
+                <p className="mt-2 text-sm leading-relaxed text-body">{cta.description}</p>
+                <ButtonLink href={cta.buttonHref || "/contact"} size="sm" className="mt-5 w-full">
+                  {cta.buttonText}
+                </ButtonLink>
+              </div>
+
+              <a href="#top" className="inline-flex items-center gap-2 py-1 text-xs font-medium uppercase tracking-[0.18em] text-muted transition-colors hover:text-accent">
+                <span aria-hidden>↑</span> Back to top
+              </a>
             </div>
           </aside>
 
-          {/* Core Article Body */}
-          <article className="lg:w-2/3 flex-grow">
-            <div className="max-w-4xl mx-auto lg:mx-0">
-              <PortableText value={post.content} className="max-w-none prose-blog" />
-            </div>
+          <article className="min-w-0 lg:col-span-8 lg:col-start-5">
+            <PortableText value={post.content} className="max-w-none prose-blog" />
 
-            {/* Author Footer Card */}
-            <div className="mt-10 md:mt-12 p-6 sm:p-8 md:p-10 rounded-2xl border flex flex-col md:flex-row gap-6 md:gap-8 items-center text-center md:text-left" style={{ background: '#0D1B2A', borderColor: 'rgba(0,229,255,0.15)' }}>
-              <AuthorAvatar author={displayAuthor} size="lg" />
+            {/* Author */}
+            <div className="panel mt-14 flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:p-8">
+              <AuthorAvatar author={displayAuthor} size="md" />
               <div className="flex-grow">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                   <div>
-                     <h4 className="text-xl font-bold text-white mb-1">{displayAuthor}</h4>
-                     {displayAuthorRole && (
-                       <span className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: '#00E5FF' }}>
-                         {displayAuthorRole}
-                       </span>
-                     )}
-                   </div>
-                   <Link href="/insights">
-                    <Button variant="outline" className="rounded-xl font-bold text-[10px] h-9 hover:text-[#00E5FF] transition-colors" style={{ borderColor: 'rgba(0,229,255,0.3)', color: '#C5D1E0', background: 'rgba(20,36,58,0.6)' }}>
-                      Browse More Articles
-                    </Button>
-                   </Link>
-                </div>
-                <p className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
+                <p className="font-display text-lg font-semibold text-fg">{displayAuthor}</p>
+                {displayAuthorRole && (
+                  <p className="mt-0.5 text-xs font-medium uppercase tracking-[0.14em] text-accent">{displayAuthorRole}</p>
+                )}
+                <p className="mt-3 text-sm leading-relaxed text-body">
                   {displayAuthor} brings expertise from over a decade of enterprise technology leadership. Focusing on bridging the gap between strategic intent and technical delivery for global organizations.
                 </p>
               </div>
+              <ButtonLink href="/insights" variant="secondary" size="sm" className="shrink-0">
+                Browse More Articles
+              </ButtonLink>
             </div>
 
             {/* FAQs */}
             {post.faqs && post.faqs.length > 0 && (
-              <div className="mt-20 scroll-mt-40" id="faqs">
+              <div className="mt-20 scroll-mt-28" id="faqs">
                 <FAQ
                   items={post.faqs.map((f: any) => ({
                     question: f.question,
@@ -330,93 +327,32 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         </div>
       </section>
 
-      {/* 4. Bottom CTA Section - CMS editable, defaults to /contact */}
-      {(() => {
-        const cta = resolvePostCta(post);
-        const badge =
-          post.relatedIndustry === "finance"
-            ? "Finance"
-            : post.relatedService === "ai"
-              ? "AI Strategy"
-              : post.relatedService
-                ? String(post.relatedService).toUpperCase()
-                : "Enterprise AI";
-        return (
-          <DarkCTA 
-            title={cta.title}
-            description={cta.description}
-            buttonText={cta.buttonText}
-            buttonHref={cta.buttonHref}
-            badgeText={badge}
+      {/* 3. Bottom CTA — CMS editable, defaults to /contact */}
+      <DarkCTA
+        title={cta.title}
+        description={cta.description}
+        buttonText={cta.buttonText}
+        buttonHref={cta.buttonHref}
+        badgeText={badge}
+      />
+
+      {/* 4. Related posts */}
+      {finalRelated.length > 0 && (
+        <Section tone="raised" divider>
+          <SectionHeader
+            eyebrow="More from the enterprise roadmap"
+            title="Related Insights"
+            layout="split"
+            actions={<TextLink href="/insights">View all insights</TextLink>}
+            className="mb-12"
           />
-        );
-      })()}
-
-      {/* 5. Related Posts Section */}
-      <section className="py-12 md:py-16" style={{ background: '#0D1B2A' }}>
-        <div className="container-custom px-4 max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-12">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Related Insights</h2>
-              <div className="text-xs font-bold uppercase tracking-widest" style={{ color: '#8FA3BF' }}>More from the enterprise roadmap</div>
-            </div>
-            <Link href="/insights" className="text-xs font-bold uppercase tracking-widest border-b-2 border-transparent hover:border-current transition-all" style={{ color: '#00E5FF' }}>
-              View All Insights
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
             {finalRelated.map((rp, i) => (
-              <Link key={i} href={`/insights/${rp.slug || ""}`} className="group flex flex-col h-full rounded-[1.5rem] overflow-hidden transition-all hover:[border-color:rgba(0,229,255,0.35)]" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)' }}
-              >
-                <div className="relative overflow-hidden">
-                  {(rp.imageCard || rp.image) ? (
-                    <BlogCoverImage
-                      src={rp.imageCard || rp.image}
-                      alt={rp.title}
-                      variant="card"
-                      aspectClassName="aspect-[16/10]"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      hoverZoom
-                    />
-                  ) : (
-                    <div className="w-full h-36" style={{ background: "rgba(0,229,255,0.05)" }} />
-                  )}
-                  <div className="absolute top-3 left-3 z-20">
-                    <span
-                      className="px-2.5 py-1 rounded-full text-[9px] font-bold tracking-widest uppercase"
-                      style={{
-                        background: "rgba(10,15,31,0.75)",
-                        color: "#00E5FF",
-                        border: "1px solid rgba(0,229,255,0.3)",
-                        backdropFilter: "blur(8px)",
-                      }}
-                    >
-                      {rp.category}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center gap-2 mb-3 text-[9px] font-bold uppercase tracking-widest" style={{ color: '#8FA3BF' }}>
-                    <span>{rp.date}</span>
-                  </div>
-
-                  <h3 className="text-base font-bold text-white group-hover:text-[#00E5FF] transition-colors line-clamp-2 leading-snug mb-4">
-                    {rp.title}
-                  </h3>
-
-                  <div className="mt-auto inline-flex items-center font-bold text-[11px] uppercase tracking-widest transition-all" style={{ color: '#00E5FF' }}>
-                     Read Article
-                     <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </div>
-              </Link>
+              <BlogCard key={rp.slug || i} post={rp} />
             ))}
           </div>
-        </div>
-      </section>
-
+        </Section>
+      )}
     </div>
   );
 }

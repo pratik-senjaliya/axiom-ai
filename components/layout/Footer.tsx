@@ -70,10 +70,8 @@ function getPlatformLabel(platform: string) {
   }
 }
 
-const linkClass =
-  "text-[15px] md:text-base hover:text-[#00E5FF] transition-colors text-[#C5D1E0] leading-snug";
-const headingClass =
-  "text-[#8FA3BF] font-semibold mb-5 text-[13px] md:text-sm uppercase tracking-[0.14em]";
+const linkClass = "inline-block py-1.5 text-[0.9375rem] text-body transition-colors hover:text-fg";
+const headingClass = "mb-5 font-sans text-xs font-medium uppercase tracking-[0.18em] text-muted";
 
 export async function Footer() {
   const [dynamicServices, dynamicIndustries, settings] = await Promise.all([
@@ -95,34 +93,33 @@ export async function Footer() {
     `© ${new Date().getFullYear()} ${companyName}. All rights reserved.`;
 
   return (
-    <footer className="bg-[#0D1B2A] text-[#C5D1E0] py-14 md:py-16 lg:py-20 border-t border-[#00E5FF]/10">
+    <footer className="relative overflow-hidden border-t border-line bg-ink-950 text-body">
+      <div aria-hidden className="rule-accent absolute inset-x-0 top-0" />
       {/* Same container as Header — keeps left/right edges aligned */}
-      <div className="container-custom">
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 md:gap-10 lg:gap-12 mb-12 md:mb-14 items-start">
+      <div className="container-custom pb-10 pt-16 md:pt-20">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-12 md:gap-10">
           {/* Brand */}
-          <div className={`col-span-2 ${showIndustries ? "md:col-span-4" : "md:col-span-5"} flex flex-col items-start text-left pr-0 md:pr-6`}>
-            <Link href="/" className="flex items-start mb-5 -mt-1.5">
-              <div className="relative w-44 h-14 md:w-52 md:h-16">
-                <Image
-                  src="/SyncOrigin_Logo.png"
-                  alt={`${companyName} Logo`}
-                  fill
-                  className="object-contain object-left object-top"
-                  sizes="208px"
-                />
-              </div>
+          <div className={`col-span-2 ${showIndustries ? "md:col-span-4" : "md:col-span-5"} flex flex-col items-start`}>
+            <Link href="/" className="mb-6 inline-flex" aria-label={`${companyName} home`}>
+              <Image
+                src="/SyncOrigin_Logo.png"
+                alt={`${companyName} Logo`}
+                width={168}
+                height={42}
+                className="h-10 w-auto"
+              />
             </Link>
-            <p className="text-[15px] md:text-base text-[#8FA3BF] mb-6 max-w-[300px] leading-relaxed whitespace-pre-line">
+            <p className="mb-8 max-w-xs whitespace-pre-line text-[0.9375rem] leading-relaxed text-muted">
               {footerDescription}
             </p>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               {socialLinks.map((link: { platform: string; url: string }, index: number) => (
                 <a
                   key={`${link.platform}-${index}`}
                   href={getSocialHref(link.platform, link.url)}
                   target={link.platform === "email" ? undefined : "_blank"}
                   rel={link.platform === "email" ? undefined : "noopener noreferrer"}
-                  className="w-10 h-10 rounded-xl bg-[#14243A] border border-[#00E5FF]/15 flex items-center justify-center text-[#8FA3BF] hover:border-[#00E5FF]/40 hover:text-[#00E5FF] transition-all"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-body transition-colors hover:border-line-accent hover:text-accent"
                 >
                   <SocialIcon platform={link.platform} />
                   <span className="sr-only">{getPlatformLabel(link.platform)}</span>
@@ -132,9 +129,9 @@ export async function Footer() {
           </div>
 
           {/* Services */}
-          <div className={showIndustries ? "md:col-span-3" : "md:col-span-4"}>
+          <div className={showIndustries ? "col-span-2 sm:col-span-1 md:col-span-3" : "col-span-2 sm:col-span-1 md:col-span-4"}>
             <p className={headingClass}>Services</p>
-            <ul className="space-y-3.5">
+            <ul className="space-y-1">
               <li><Link href="/ai-implementation" className={linkClass}>AI Implementation</Link></li>
               <li><Link href="/erp-transformation" className={linkClass}>ERP Transformation</Link></li>
               <li><Link href="/data-analytics" className={linkClass}>Data & Analytics</Link></li>
@@ -154,7 +151,7 @@ export async function Footer() {
           {showIndustries && (
             <div className="md:col-span-2">
               <p className={headingClass}>Industries</p>
-              <ul className="space-y-3.5">
+              <ul className="space-y-1">
                 {isFinanceListed() && <li><Link href="/finance" className={linkClass}>Finance</Link></li>}
                 {dynamicIndustries.map((industry) => (
                   <li key={industry.slug}>
@@ -170,7 +167,7 @@ export async function Footer() {
           {/* Company */}
           <div className="md:col-span-3">
             <p className={headingClass}>Company</p>
-            <ul className="space-y-3.5">
+            <ul className="space-y-1">
               <li><Link href="/about" className={linkClass}>About</Link></li>
               {isSolutionsListed() && <li><Link href="/solutions" className={linkClass}>Solutions</Link></li>}
               <li><Link href="/insights" className={linkClass}>Insights</Link></li>
@@ -179,13 +176,13 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-[#00E5FF]/10 pt-7 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[14px] md:text-[15px] text-[#8FA3BF]">{copyrightText}</p>
+        <div className="mt-16 flex flex-col-reverse items-start justify-between gap-4 border-t border-line pt-8 sm:flex-row sm:items-center">
+          <p className="text-sm text-muted">{copyrightText}</p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy-policy" className="text-[14px] md:text-[15px] text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">
+            <Link href="/privacy-policy" className="inline-block py-2 text-sm text-muted transition-colors hover:text-fg">
               Privacy Policy
             </Link>
-            <Link href="/terms-of-usage" className="text-[14px] md:text-[15px] text-[#8FA3BF] hover:text-[#00E5FF] transition-colors">
+            <Link href="/terms-of-usage" className="inline-block py-2 text-sm text-muted transition-colors hover:text-fg">
               Terms of Service
             </Link>
           </div>

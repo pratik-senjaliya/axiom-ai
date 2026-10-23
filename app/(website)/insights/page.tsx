@@ -57,7 +57,7 @@ export default async function InsightsPage({
   const categories = BLOG_FILTER_CATEGORIES.map((c) => c.label);
 
   return (
-    <div className="pt-20 sm:pt-24 pb-0 overflow-x-clip" style={{ background: "#0A0F1F" }}>
+    <div className="overflow-x-clip bg-ink-900 pt-[4.5rem]">
       <InnerPageSchemas
         title={pageData?.seo?.metaTitle || "Insights & AI Trends | SyncOrigins"}
         description={

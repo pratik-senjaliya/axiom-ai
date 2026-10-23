@@ -1,7 +1,5 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface SlideUpProps {
   children: ReactNode;
@@ -12,17 +10,11 @@ interface SlideUpProps {
   style?: React.CSSProperties;
 }
 
-export function SlideUp({ children, delay = 0, duration = 0.6, y = 40, className = "", style }: SlideUpProps) {
+/** Scroll reveal via CSS (see `.reveal` in globals.css). Content is never hidden. */
+export function SlideUp({ children, className = "", style }: SlideUpProps) {
   return (
-    <motion.div
-      style={style}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }} // Custom highly-responsive easing
-      className={className}
-    >
+    <div className={cn("reveal", className)} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }

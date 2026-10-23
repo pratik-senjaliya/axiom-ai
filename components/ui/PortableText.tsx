@@ -82,7 +82,7 @@ const components = {
             <h6 className="text-base font-bold mb-2 mt-3 text-white">{children}</h6>
         ),
         blockquote: ({ children }: any) => (
-            <blockquote className="border-l-4 border-primary-500 pl-4 py-1 my-4 bg-neutral-50 italic text-neutral-700 rounded-r">
+            <blockquote className="border-l-2 border-accent pl-5 py-1 my-6 italic text-fg">
                 {children}
             </blockquote>
         ),
@@ -94,12 +94,12 @@ const components = {
         strong: ({ children }: any) => <strong className="font-bold">{children}</strong>,
         em: ({ children }: any) => <em className="italic">{children}</em>,
         code: ({ children }: any) => (
-            <code className="bg-neutral-100 text-primary-700 px-1.5 py-0.5 rounded text-sm font-mono border border-neutral-200">
+            <code className="bg-ink-700 text-accent px-1.5 py-0.5 rounded text-[0.875em] font-mono border border-line">
                 {children}
             </code>
         ),
         underline: ({ children }: any) => <span className="underline decoration-primary-300 decoration-2 underline-offset-2">{children}</span>,
-        "strike-through": ({ children }: any) => <span className="line-through text-neutral-500">{children}</span>,
+        "strike-through": ({ children }: any) => <span className="line-through text-muted">{children}</span>,
         link: ({ value, children }: any) => {
             const target = value?.href?.startsWith('http') ? '_blank' : undefined
             return (
@@ -156,8 +156,8 @@ const components = {
         },
     },
     list: {
-        bullet: ({ children }: any) => <ul className="list-disc list-outside ml-5 mb-3 space-y-1.5 leading-relaxed">{children}</ul>,
-        number: ({ children }: any) => <ol className="list-decimal list-outside ml-5 mb-3 space-y-1.5 leading-relaxed">{children}</ol>,
+        bullet: ({ children }: any) => <ul className="list-disc list-outside ml-5 mb-3 space-y-1.5 leading-relaxed marker:text-accent">{children}</ul>,
+        number: ({ children }: any) => <ol className="list-decimal list-outside ml-5 mb-3 space-y-1.5 leading-relaxed marker:text-accent">{children}</ol>,
     },
     types: {
         htmlTable: ({ value }: any) => <HtmlTable value={value} />,
@@ -179,8 +179,12 @@ export function PortableText({ value, className = '' }: PortableTextProps) {
 
     const cleanedValue = cleanBrandName(value);
 
+    // Long-form article styling only for blog posts; everywhere else rich text
+    // inherits size and colour from the section it sits in.
+    const proseClass = className.includes('prose-blog') ? 'prose-clean' : 'rich-text'
+
     return (
-        <div className={`prose-clean ${className}`}>
+        <div className={`${proseClass} ${className}`}>
             <PortableTextReact value={cleanedValue} components={components} />
         </div>
     )
