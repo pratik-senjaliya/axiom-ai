@@ -7,7 +7,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { CORE_SERVICE_PATHS } from "@/lib/core-services";
-import { isFinanceListed } from "@/lib/content-visibility";
+import { isFinanceListed, isSolutionsListed } from "@/lib/content-visibility";
 import { DynamicServiceIcon } from "@/components/layout/DynamicServiceIcon";
 
 type DynamicNavService = {
@@ -16,6 +16,8 @@ type DynamicNavService = {
   href: string;
   navTags?: string[];
 };
+
+type HeaderLink = { text?: string; link?: string };
 
 type NavItem = {
   name: string;
@@ -28,7 +30,7 @@ const navigation: NavItem[] = [
   { name: "Home", href: "/" },
   { name: "Services", href: "#services", hasDropdown: true, dropdownKey: "services" },
   { name: "Industries", href: "#industries", hasDropdown: true, dropdownKey: "industries" },
-  { name: "Solutions", href: "/solutions" },
+  ...(isSolutionsListed() ? [{ name: "Solutions", href: "/solutions" }] : []),
   { name: "Insights", href: "/insights" },
   { name: "About", href: "/about" },
 ];
@@ -128,6 +130,8 @@ export const Header: React.FC = () => {
   const [mobileExpanded, setMobileExpanded] = useState<"services" | "industries" | null>(null);
   const [dynamicServices, setDynamicServices] = useState<DynamicNavService[]>([]);
   const [dynamicIndustries, setDynamicIndustries] = useState<DynamicNavService[]>([]);
+  const [headerContactLink, setHeaderContactLink] = useState<HeaderLink | null>(null);
+  const [headerCta, setHeaderCta] = useState<HeaderLink | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -140,6 +144,8 @@ export const Header: React.FC = () => {
         if (data?.industryPages) {
           setDynamicIndustries(data.industryPages);
         }
+        setHeaderContactLink(data?.headerContactLink || null);
+        setHeaderCta(data?.headerCta || null);
       })
       .catch(() => {});
   }, []);
@@ -185,6 +191,11 @@ export const Header: React.FC = () => {
   };
 
   const dropdownOpen = openDropdown !== null;
+
+  const contactText = headerContactLink?.text || "Contact";
+  const contactHref = headerContactLink?.link || "/contact";
+  const ctaText = headerCta?.text || "Book a Call";
+  const ctaHref = headerCta?.link || "/contact";
 
   // Hide the Industries menu entirely when there is nothing to list
   const navItems = navigation.filter(
@@ -391,12 +402,12 @@ export const Header: React.FC = () => {
 
             {/* Actions */}
             <div className="hidden md:flex items-center gap-8">
-              <Link href="/contact" className="text-base font-medium text-[#8FA3BF] hover:text-white transition-colors">
-                Contact
+              <Link href={contactHref} className="text-base font-medium text-[#8FA3BF] hover:text-white transition-colors">
+                {contactText}
               </Link>
-              <Link href="/contact">
+              <Link href={ctaHref}>
                 <Button size="md" className="rounded-full px-8 h-12 text-base font-bold text-[#0A0F1F] bg-gradient-to-r from-[#1DA1F2] to-[#00E5FF] border-none hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,229,255,0.4)]">
-                  Book a Call
+                  {ctaText}
                 </Button>
               </Link>
             </div>
@@ -488,16 +499,16 @@ export const Header: React.FC = () => {
               </React.Fragment>
             ))}
             <Link
-              href="/contact"
+              href={contactHref}
               onClick={() => setIsMobileMenuOpen(false)}
               className="text-[#C5D1E0] border-b border-[#00E5FF]/10 pb-4"
             >
-              Contact
+              {contactText}
             </Link>
             <div className="mt-4">
-              <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href={ctaHref} onClick={() => setIsMobileMenuOpen(false)}>
                 <Button className="w-full rounded-full bg-gradient-to-r from-[#1DA1F2] to-[#00E5FF] text-[#0A0F1F] border-none h-12 font-bold">
-                  Book a Call
+                  {ctaText}
                 </Button>
               </Link>
             </div>

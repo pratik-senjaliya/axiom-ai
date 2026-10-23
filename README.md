@@ -88,6 +88,38 @@ export const metadata = generateMetadata({
 3. **Fonts**: Update font imports in `app/layout.tsx`
 4. **SEO**: Configure in `lib/seo.ts` and add verification codes
 
+## Soft-launch / hidden content
+
+Some pages are live by direct URL but hidden everywhere else until their content is ready.
+The flags live in `lib/content-visibility.ts` — set a flag to `false` to publish.
+
+| Flag | Pages | Current state |
+| --- | --- | --- |
+| `HIDE_FINANCE_FROM_SITE` | `/finance` | Published (`false`) |
+| `HIDE_CASE_STUDIES_FROM_SITE` | `/case-studies/[slug]` and `/solutions` | Hidden (`true`) |
+
+While a page is hidden it still renders at its URL (for client review), but it is:
+
+- removed from the header menu and footer
+- removed from `sitemap.xml` and `llms.txt`, and disallowed in `robots.txt`
+- marked `noindex, nofollow`
+- not linked from other pages (CMS rich-text links render as plain text; the home hero
+  secondary button is hidden while it points to `/solutions`)
+
+### Solutions page → Case studies
+
+`/solutions` no longer shows the old "solutions" (use cases). It now shows the hero plus a
+grid of all **Case Study** documents from the CMS. Notes for when this goes live:
+
+- The URL and the menu label are still **Solutions** — intentionally not renamed yet.
+- The old solutions/use cases data is **kept in the CMS** (Use Cases Page → cases, tabs).
+  `components/solutions/SolutionsGrid.tsx` is unused but kept so it can be restored.
+- Because the page is now case studies, its visibility follows the case study flag via
+  `isSolutionsListed()`. Flipping `HIDE_CASE_STUDIES_FROM_SITE` to `false` publishes the
+  case study pages **and** brings back every Solutions link, the sitemap entry and indexing.
+- Each case study's Hero CTA and Bottom CTA are editable in the CMS (Case Study → Hero /
+  Bottom CTA tabs); empty fields fall back to the default text.
+
 ## Environment Variables
 
 Create a `.env.local` file:

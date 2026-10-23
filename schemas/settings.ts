@@ -25,6 +25,26 @@ export default defineType({
             description: 'Bottom bar copyright line. Leave empty to use the default.',
         }),
         defineField({
+            name: 'headerContactLink',
+            title: 'Header Text Link',
+            type: 'object',
+            description: 'Plain link next to the main header button. Defaults to "Contact" → /contact.',
+            fields: [
+                { name: 'text', type: 'string', title: 'Text' },
+                { name: 'link', type: 'string', title: 'Link' },
+            ],
+        }),
+        defineField({
+            name: 'headerCta',
+            title: 'Header Button',
+            type: 'object',
+            description: 'Highlighted button in the header. Defaults to "Book a Call" → /contact.',
+            fields: [
+                { name: 'text', type: 'string', title: 'Text' },
+                { name: 'link', type: 'string', title: 'Link' },
+            ],
+        }),
+        defineField({
             name: 'socialLinks',
             title: 'Social Media Links',
             type: 'array',

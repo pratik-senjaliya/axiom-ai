@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { client } from '@/lib/sanity/client'
 import { CORE_SERVICE_SLUGS } from '@/lib/core-services'
-import { areCaseStudiesListed, isFinanceListed } from '@/lib/content-visibility'
+import { areCaseStudiesListed, isFinanceListed, isSolutionsListed } from '@/lib/content-visibility'
 
 // Revalidate sitemap every hour
 export const revalidate = 60
@@ -46,12 +46,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: 'monthly',
             priority: 0.8,
         },
-        {
-            url: `${baseUrl}/solutions`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.9,
-        },
+        ...(isSolutionsListed()
+          ? [{
+              url: `${baseUrl}/solutions`,
+              lastModified: new Date(),
+              changeFrequency: 'weekly' as const,
+              priority: 0.9,
+            }]
+          : []),
         {
             url: `${baseUrl}/insights`,
             lastModified: new Date(),

@@ -174,11 +174,15 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       {areCaseStudiesListed() && <CaseStudyMore items={related} />}
 
       <DarkCTA
-        badgeText="Case Study"
-        title="Ready to Write Your Transformation Story?"
-        description="Partner with SyncOrigins to turn operational challenges into measurable business outcomes."
-        buttonText="Talk to Our Experts"
-        buttonHref="/contact"
+        badgeText={study.finalCta?.badgeText || "Case Study"}
+        title={study.finalCta?.title || "Ready to Write Your Transformation Story?"}
+        description={
+          study.finalCta?.description?.length
+            ? study.finalCta.description
+            : "Partner with SyncOrigins to turn operational challenges into measurable business outcomes."
+        }
+        buttonText={study.finalCta?.buttonText || "Talk to Our Experts"}
+        buttonHref={study.finalCta?.buttonLink || "/contact"}
       />
     </div>
   );

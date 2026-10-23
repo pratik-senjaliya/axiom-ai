@@ -7,6 +7,7 @@ export default defineType({
     groups: [
         { name: 'hero', title: 'Hero Section' },
         { name: 'contactInfo', title: 'Contact Information' },
+        { name: 'form', title: 'Contact Form' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -47,6 +48,13 @@ export default defineType({
             group: 'contactInfo',
         }),
 
+        defineField({
+            name: 'submitButtonText',
+            title: 'Submit Button Text',
+            type: 'string',
+            group: 'form',
+            description: 'Defaults to "Transmit Message".',
+        }),
         defineField({ name: 'phone', title: 'Phone Number (Fallback)', type: 'string', group: 'contactInfo' }),
         defineField({ name: 'email', title: 'Email Address (Fallback)', type: 'string', group: 'contactInfo' }),
         defineField({

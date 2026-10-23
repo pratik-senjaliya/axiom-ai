@@ -161,6 +161,8 @@ export default async function SustainabilityPage() {
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
+        secondaryButtonText={data?.hero?.secondaryCta?.text}
+        secondaryButtonLink={data?.hero?.secondaryCta?.link}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Services" },

@@ -307,7 +307,7 @@ export function ContactForm({ data }: { data: any }) {
                 className="w-full h-14 rounded-xl font-black text-[#0A0F1F] flex items-center justify-center gap-3 transition-all hover:scale-[1.01] hover:brightness-110 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed mt-2 group"
                 style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 10px 40px rgba(0,229,255,0.3)' }}
               >
-                <span className="tracking-tight text-base uppercase">{isSubmitting ? "Sending..." : "Transmit Message"}</span>
+                <span className="tracking-tight text-base uppercase">{isSubmitting ? "Sending..." : data?.submitButtonText || "Transmit Message"}</span>
                 {!isSubmitting && (
                   <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" className="transition-transform group-hover:translate-x-1.5 duration-300">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />

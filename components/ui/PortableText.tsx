@@ -1,6 +1,7 @@
 import { PortableText as PortableTextReact } from '@portabletext/react'
 import Link from 'next/link'
 import { HtmlTable } from '@/components/ui/HtmlTable'
+import { isSolutionsListed } from '@/lib/content-visibility'
 
 interface PortableTextProps {
     value: any
@@ -140,7 +141,10 @@ const components = {
                     default: href = '/';
                 }
             }
-            
+
+            // Soft-launch: render hidden pages as plain text instead of a link
+            if (href === '/solutions' && !isSolutionsListed()) return <>{children}</>
+
             return (
                 <Link 
                     href={href} 

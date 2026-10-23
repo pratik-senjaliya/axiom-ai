@@ -416,7 +416,8 @@ export async function getContactPage(): Promise<any> {
       phone,
       email,
       address,
-      businessHours
+      businessHours,
+      submitButtonText
     }`
   return safeFetch<any>(query, {}, null)
 }
@@ -468,7 +469,9 @@ export async function getUseCasesPage(): Promise<any> {
     },
     pocOffer {
       title,
-      description
+      description,
+      buttonText,
+      buttonLink
     },
   }`
     return safeFetch<any>(query, {}, null, { cache: 'no-store' })
@@ -762,6 +765,7 @@ export async function getCaseStudyBySlug(slug: string): Promise<any> {
     outcomeMetrics[] { value, label },
     testimonialsHeadline,
     testimonials[] { quote, author, role, company },
+    finalCta { badgeText, title, description, buttonText, buttonLink },
     seo { ${SEO_FIELDS} }
   }`
   return safeFetch<any>(query, { slug }, null)
@@ -808,7 +812,9 @@ export async function getSettings(): Promise<any> {
     socialLinks[] {
       platform,
       url
-    }
+    },
+    headerContactLink { text, link },
+    headerCta { text, link }
   }`
   return safeFetch<any>(query, {}, null, { cache: 'no-store' })
 }

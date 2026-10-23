@@ -369,14 +369,16 @@ export function CaseStudyFeedback({
 /** Explore More Case Studies */
 export function CaseStudyMore({
   items,
+  title = "Explore More Case Studies",
 }: {
   items: { slug: string; title: string; excerpt?: string; image?: string; imageAlt?: string }[];
+  title?: string;
 }) {
   if (!items?.length) return null;
   return (
     <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <h2 className={`${H2} text-center mb-6 sm:mb-8 md:mb-10`}>Explore More Case Studies</h2>
+        <h2 className={`${H2} text-center mb-6 sm:mb-8 md:mb-10`}>{title}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
           {items.map((item, index) => {
             const accents = [

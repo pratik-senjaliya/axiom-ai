@@ -3,37 +3,29 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { PortableText } from "@/components/ui/PortableText";
 import { DarkCTA } from "@/components/services/DarkCTA";
-import { getUseCasesPage } from "@/lib/sanity/queries";
-import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
+import { getAllCaseStudies, getUseCasesPage } from "@/lib/sanity/queries";
+import { CaseStudyMore } from "@/components/case-study/CaseStudyLayout";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
-import { SolutionsGrid } from "@/components/solutions/SolutionsGrid";
+import { DEMO_CASE_STUDY_VIEW } from "@/lib/demo/caseStudy";
+import { isSolutionsListed } from "@/lib/content-visibility";
 
 import { generateMetadata as genMeta } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ 
-  searchParams 
-}: { 
-  searchParams: Promise<{ category?: string; tag?: string }> 
-}): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const data = await getUseCasesPage();
-  const resolvedParams = await searchParams;
-  const category = resolvedParams.category || resolvedParams.tag;
   const defaultTitle = "Enterprise AI Solutions Across Industries | SyncOrigins";
   const defaultDesc = "Explore high-impact AI solutions across industries, leveraging automation and objective execution to drive measurable ROI.";
-  
-  if (!data?.seo) return genMeta({
-    title: category ? `${category} Solutions | SyncOrigins` : defaultTitle,
-    description: defaultDesc,
-    slug: "/solutions",
-  });
+
   return genMeta({
-    title: category ? `${category} | ${data.seo.metaTitle || defaultTitle}` : (data.seo.metaTitle || defaultTitle),
-    description: data.seo.metaDescription || defaultDesc,
-    keywords: data.seo.metaKeywords,
-    ogImage: data.seo.openGraphImage,
+    title: data?.seo?.metaTitle || defaultTitle,
+    description: data?.seo?.metaDescription || defaultDesc,
+    keywords: data?.seo?.metaKeywords,
+    ogImage: data?.seo?.openGraphImage,
     slug: "/solutions",
+    noindex: !isSolutionsListed(),
+    nofollow: !isSolutionsListed(),
   });
 }
 
@@ -43,36 +35,49 @@ const SparkleIcon = () => (
   </svg>
 );
 
-export default async function SolutionsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ category?: string; tag?: string }>;
-}) {
-  const [data, resolvedParams] = await Promise.all([
+export default async function SolutionsPage() {
+  const [data, cmsCaseStudies] = await Promise.all([
     getUseCasesPage(),
-    searchParams
+    getAllCaseStudies(),
   ]);
-  const activeCategory = resolvedParams.category || resolvedParams.tag || null;
-
-  const defaultCategories = [
-    "Cost Optimization",
-    "Growth & Revenue",
-    "Operational Excellence",
-  ];
-  const categories = data?.tabs?.length ? data.tabs : defaultCategories;
+  // Solutions (use cases) are kept in the CMS but hidden from the UI for now;
+  // the page lists case studies instead.
+  const caseStudies = cmsCaseStudies?.length ? cmsCaseStudies : [DEMO_CASE_STUDY_VIEW];
+  const hero = data?.hero;
 
   return (
     <div className="pt-24 pb-0" style={{ background: '#0A0F1F' }}>
-      
-      {/* ── Interactive Grid & Hero Section (Hybrid) ── */}
-      <SolutionsGrid 
-        cases={data?.cases || []} 
-        categories={categories} 
-        initialCategory={activeCategory} 
-        heroData={data?.hero} 
-      />
 
-      <CaseStudySliderSection />
+      {/* ── Hero ── */}
+      <section className="relative pt-20 pb-12 overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
+        <div className="bg-grid opacity-60 z-0" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70rem] h-[40rem] rounded-full blur-[130px] pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
+
+        <SlideUp className="container-custom relative z-10 px-4 flex flex-col items-center">
+          {(hero?.badge || hero?.title) && (
+            <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)' }}>
+              <SparkleIcon />
+              <span className="tracking-wide uppercase text-xs font-semibold" style={{ color: '#00E5FF' }}>
+                {hero?.badge || "Strategic Solutions"}
+              </span>
+            </div>
+          )}
+
+          <h1 className="type-hero-title text-white mb-6 max-w-5xl mx-auto">
+            {hero?.title || "World-Class Impact through"}{" "}
+            {hero?.titleHighlight && (
+              <span className="gradient-text">{hero.titleHighlight}</span>
+            )}
+          </h1>
+
+          <div className="type-body-large max-w-3xl mx-auto text-[#8FA3BF] [&>p]:text-lg [&>p]:leading-relaxed" style={{ color: '#8FA3BF' }}>
+            <PortableText value={hero?.description} />
+          </div>
+        </SlideUp>
+      </section>
+
+      {/* ── Case Studies ── */}
+      <CaseStudyMore items={caseStudies} title="Case Studies" />
 
       <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #0A0F1F 100%)' }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '100px 100px' }} />
@@ -104,8 +109,8 @@ export default async function SolutionsPage({
         <DarkCTA 
             title={data.pocOffer.title}
             description={data.pocOffer.description}
-            buttonText="Start Your Pilot"
-            buttonHref="/contact"
+            buttonText={data.pocOffer.buttonText || "Start Your Pilot"}
+            buttonHref={data.pocOffer.buttonLink || "/contact"}
             titleAs="h4"
         />
       )}

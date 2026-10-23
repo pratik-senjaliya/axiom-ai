@@ -64,7 +64,9 @@ export default defineType({
             type: 'object',
             fields: [
               { name: 'title', type: 'string', title: 'POC Title' },
-              { name: 'description', type: 'simpleBlockContent', title: 'Description' }
+              { name: 'description', type: 'simpleBlockContent', title: 'Description' },
+              { name: 'buttonText', type: 'string', title: 'Button Text', description: 'Defaults to "Start Your Pilot".' },
+              { name: 'buttonLink', type: 'string', title: 'Button Link', description: 'Defaults to /contact.' },
             ],
             group: 'poc',
         }),

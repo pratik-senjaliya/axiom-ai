@@ -12,6 +12,7 @@ import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain, SITE_SCHEMA_DESCRIPTION } from "@/lib/seo";
 import { FAQ } from "@/components/ui/FAQ";
 import { HomePageSchemas } from "@/components/seo/PageSchemas";
+import { isSolutionsListed } from "@/lib/content-visibility";
 
 export const dynamic = "force-dynamic";
 
@@ -162,8 +163,10 @@ export default async function HomePage() {
                 </Button>
               </Link>
             )}
-            {data?.hero?.secondaryCta?.text && (
-              <Link href="/solutions" className="w-full sm:w-auto">
+            {/* Soft-launch: hide the button while it would point to the hidden /solutions page */}
+            {data?.hero?.secondaryCta?.text &&
+              (isSolutionsListed() || !(data.hero.secondaryCta.link || "/solutions").startsWith("/solutions")) && (
+              <Link href={data.hero.secondaryCta.link || "/solutions"} className="w-full sm:w-auto">
                 <Button variant="outline" size="lg" className="rounded-full w-full sm:w-auto px-8 h-12 text-lg font-medium hover:text-[#00E5FF] transition-colors" style={{ background: 'rgba(20,36,58,0.7)', borderColor: 'rgba(0,229,255,0.3)', color: '#C5D1E0' }}>
                   {data.hero.secondaryCta.text || "Explore Solutions"}
                 </Button>

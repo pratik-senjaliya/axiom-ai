@@ -12,6 +12,7 @@ export default defineType({
     { name: 'tech', title: 'Technologies' },
     { name: 'outcomes', title: 'Outcomes / Result' },
     { name: 'testimonials', title: 'Client Feedback' },
+    { name: 'cta', title: 'Bottom CTA' },
     { name: 'seo', title: 'SEO' },
   ],
   fields: [
@@ -285,6 +286,21 @@ export default defineType({
       type: 'array',
       of: [{ type: 'testimonial' }],
       group: 'testimonials',
+    }),
+
+    defineField({
+      name: 'finalCta',
+      title: 'Bottom CTA',
+      type: 'object',
+      group: 'cta',
+      description: 'Call-to-action band at the bottom of the page. Empty fields use the default text.',
+      fields: [
+        { name: 'badgeText', type: 'string', title: 'Badge Text', description: 'Defaults to "Case Study".' },
+        { name: 'title', type: 'string', title: 'Title', description: 'Defaults to "Ready to Write Your Transformation Story?".' },
+        { name: 'description', type: 'simpleBlockContent', title: 'Description' },
+        { name: 'buttonText', type: 'string', title: 'Button Text', description: 'Defaults to "Talk to Our Experts".' },
+        { name: 'buttonLink', type: 'string', title: 'Button Link', description: 'Defaults to /contact.' },
+      ],
     }),
 
     defineField({

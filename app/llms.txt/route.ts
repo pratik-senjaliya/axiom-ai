@@ -1,5 +1,6 @@
 import { getAllPosts, getAllServices } from "@/lib/sanity/queries";
 import { getSiteUrl, portableTextToPlain, SITE_SCHEMA_DESCRIPTION } from "@/lib/seo";
+import { isSolutionsListed } from "@/lib/content-visibility";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 3600;
@@ -49,12 +50,14 @@ export async function GET() {
       description:
         "Get in touch with SyncOrigins for expert AI, ERP, and data solutions. Discuss how we can transform your business with tailored strategies.",
     },
-    {
-      title: "Solutions | SyncOrigins",
-      url: `${siteUrl}/solutions`,
-      description:
-        "Explore SyncOrigins solutions across AI implementation, ERP transformation, data & analytics, managed delivery, and sustainability.",
-    },
+    ...(isSolutionsListed()
+      ? [{
+          title: "Solutions | SyncOrigins",
+          url: `${siteUrl}/solutions`,
+          description:
+            "Explore SyncOrigins solutions across AI implementation, ERP transformation, data & analytics, managed delivery, and sustainability.",
+        }]
+      : []),
     {
       title: "AI Implementation Services",
       url: `${siteUrl}/ai-implementation`,
