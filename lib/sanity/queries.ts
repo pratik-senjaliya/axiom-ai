@@ -724,7 +724,8 @@ const CASE_STUDY_CARD_FIELDS = `
   "image": mainImage.asset->url,
   "imageAlt": mainImage.alt,
   publishedAt,
-  relatedService
+  relatedService,
+  relatedIndustry
 `
 
 export async function getAllCaseStudies(): Promise<any[]> {

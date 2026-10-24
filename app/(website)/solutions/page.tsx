@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { PortableText } from "@/components/ui/PortableText";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { getAllCaseStudies, getUseCasesPage } from "@/lib/sanity/queries";
-import { CaseStudyMore } from "@/components/case-study/CaseStudyLayout";
+import { CaseStudyFilterGrid } from "@/components/case-study/CaseStudyFilterGrid";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { DEMO_CASE_STUDY_VIEW } from "@/lib/demo/caseStudy";
 import { isSolutionsListed } from "@/lib/content-visibility";
@@ -77,7 +77,7 @@ export default async function SolutionsPage() {
       </section>
 
       {/* ── Case Studies ── */}
-      <CaseStudyMore items={caseStudies} title="Case Studies" />
+      <CaseStudyFilterGrid items={caseStudies} title="Case Studies" />
 
       <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0D1B2A 0%, #0A0F1F 100%)' }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '100px 100px' }} />

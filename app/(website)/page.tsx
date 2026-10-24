@@ -305,7 +305,7 @@ export default async function HomePage() {
                 const style = processStyles[index % processStyles.length];
                 return (
                   <StaggerItem key={index} className="relative z-10 w-full max-w-[340px] mx-auto">
-                    <HoverCard className="rounded-[24px] h-full min-h-[230px] p-7 flex flex-col justify-center" style={{ background: style.bg, border: `1px solid ${style.border}` }}>
+                    <HoverCard className="rounded-[24px] h-full min-h-[230px] p-7 flex flex-col justify-center" style={{ background: `linear-gradient(${style.bg}, ${style.bg}), #0D1B2A`, border: `1px solid ${style.border}` }}>
                       <div className="text-[4.25rem] font-black mb-3 leading-none select-none" style={{ color: style.num }}>
                         {phase.step || `0${index + 1}`}
                       </div>

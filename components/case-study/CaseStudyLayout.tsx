@@ -367,11 +367,69 @@ export function CaseStudyFeedback({
 }
 
 /** Explore More Case Studies */
+type CaseStudyCardItem = { slug: string; title: string; excerpt?: string; image?: string; imageAlt?: string };
+
+/** Card grid shared by "Explore More" and the filterable Solutions listing */
+export function CaseStudyCards({ items }: { items: CaseStudyCardItem[] }) {
+  const accents = [
+    "rgba(255,120,160,0.25)",
+    "rgba(0,200,180,0.25)",
+    "rgba(140,120,255,0.25)",
+  ];
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
+      {items.map((item, index) => (
+        <Link
+          key={item.slug}
+          href={`/case-studies/${item.slug}`}
+          className="group rounded-xl sm:rounded-2xl border overflow-hidden transition-all hover:[border-color:rgba(0,229,255,0.35)] min-w-0"
+          style={{
+            background: "rgba(26,46,71,0.55)",
+            border: "1px solid rgba(0,229,255,0.12)",
+          }}
+        >
+          <div
+            className="relative aspect-[16/10]"
+            style={{ background: accents[index % accents.length] }}
+          >
+            {item.image ? (
+              <Image
+                src={item.image}
+                alt={item.imageAlt || item.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 33vw"
+                unoptimized
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
+                <p className="text-sm sm:text-base font-bold text-white line-clamp-3">{item.title}</p>
+              </div>
+            )}
+          </div>
+          <div className="p-4 sm:p-5">
+            <p className="text-sm sm:text-base font-bold text-white mb-2 sm:mb-3 line-clamp-3 group-hover:text-[#00E5FF] transition-colors">
+              {item.title}
+            </p>
+            <span
+              className="inline-flex items-center text-xs sm:text-sm font-bold"
+              style={{ color: "#00E5FF" }}
+            >
+              View the Case Study
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </span>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 export function CaseStudyMore({
   items,
   title = "Explore More Case Studies",
 }: {
-  items: { slug: string; title: string; excerpt?: string; image?: string; imageAlt?: string }[];
+  items: CaseStudyCardItem[];
   title?: string;
 }) {
   if (!items?.length) return null;
@@ -379,58 +437,7 @@ export function CaseStudyMore({
     <section className={`${SECTION_PAD} overflow-x-clip`} style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <h2 className={`${H2} text-center mb-6 sm:mb-8 md:mb-10`}>{title}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
-          {items.map((item, index) => {
-            const accents = [
-              "rgba(255,120,160,0.25)",
-              "rgba(0,200,180,0.25)",
-              "rgba(140,120,255,0.25)",
-            ];
-            return (
-              <Link
-                key={item.slug}
-                href={`/case-studies/${item.slug}`}
-                className="group rounded-xl sm:rounded-2xl border overflow-hidden transition-all hover:[border-color:rgba(0,229,255,0.35)] min-w-0"
-                style={{
-                  background: "rgba(26,46,71,0.55)",
-                  border: "1px solid rgba(0,229,255,0.12)",
-                }}
-              >
-                <div
-                  className="relative aspect-[16/10]"
-                  style={{ background: accents[index % accents.length] }}
-                >
-                  {item.image ? (
-                    <Image
-                      src={item.image}
-                      alt={item.imageAlt || item.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      unoptimized
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
-                      <p className="text-sm sm:text-base font-bold text-white line-clamp-3">{item.title}</p>
-                    </div>
-                  )}
-                </div>
-                <div className="p-4 sm:p-5">
-                  <p className="text-sm sm:text-base font-bold text-white mb-2 sm:mb-3 line-clamp-3 group-hover:text-[#00E5FF] transition-colors">
-                    {item.title}
-                  </p>
-                  <span
-                    className="inline-flex items-center text-xs sm:text-sm font-bold"
-                    style={{ color: "#00E5FF" }}
-                  >
-                    View the Case Study
-                    <ChevronRight className="w-4 h-4 ml-1" />
-                  </span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+        <CaseStudyCards items={items} />
       </div>
     </section>
   );

@@ -205,7 +205,12 @@ export function IndustryClientsGrid({
           </h2>
           <SectionSubline description={description} />
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 md:gap-4">
+        {/* 4-up rows when the count divides evenly (e.g. 8 → 4+4), otherwise 3-up; always 2-up on mobile */}
+        <div
+          className={`grid grid-cols-2 gap-2.5 sm:gap-3 md:gap-4 ${
+            items.length % 4 === 0 ? "md:grid-cols-4" : "sm:grid-cols-3"
+          }`}
+        >
           {items.map((item) => {
             const Icon = clientIcon(item);
             return (
