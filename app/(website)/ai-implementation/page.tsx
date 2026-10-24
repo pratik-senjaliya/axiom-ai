@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
 import { DarkCTA } from "@/components/services/DarkCTA";
@@ -6,15 +7,14 @@ import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderS
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { getAIImplementationPage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { PortableText } from "@/components/ui/PortableText";
-import { ButtonLink, Section, SectionHeader } from "@/components/ui/kit";
-import { LayerRows } from "@/components/ui/blocks";
+import { Button } from "@/components/ui/Button";
 import { notFound } from "next/navigation";
 
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
 import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
 
 export const dynamic = "force-dynamic";
-import { FAQSection } from "@/components/ui/FAQ";
+import { FAQ } from "@/components/ui/FAQ";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -164,7 +164,6 @@ export default async function AIImplementationPage() {
         badgeIcon={<BrainIcon />}
         title={data?.hero?.title}
         gradientTitlePart={data?.hero?.titleHighlight}
-        layer="ai"
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
@@ -185,30 +184,66 @@ export default async function AIImplementationPage() {
       />
 
       {/* Our Enterprise AI Stack (The 4 Layers) */}
-      {aiLayers.length > 0 && (
-        <Section tone="raised">
-          <SectionHeader
-            eyebrow="The AI stack"
-            title={data?.layersHeadline}
-            description={data?.layersDescription}
-            as="h3"
-            layout="split"
-            className="mb-14 lg:mb-16"
-          />
-          <LayerRows
-            items={(data?.layers || []).map((layer: any) => ({
-              title: layer.title,
-              description: layer.description,
-              outcome: layer.outcome,
-            }))}
-          />
-          <div className="mt-12 flex justify-center">
-            <ButtonLink href={data?.layersCta?.link || "/contact"} arrow>
-              {data?.layersCta?.text || "Talk to Our AI Expert"}
-            </ButtonLink>
+      <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: '#0D1B2A' }}>
+        <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
+        <div className="container-custom px-4 relative z-10 max-w-[95rem] mx-auto">
+          <div className="text-center max-w-5xl mx-auto mb-10 md:mb-12">
+            <h3 className="text-3xl md:text-[2.5rem] font-bold text-white mb-6">
+              {data?.layersHeadline}
+            </h3>
+            {data?.layersDescription && (
+              <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
+                <PortableText value={data.layersDescription} />
+              </div>
+            )}
           </div>
-        </Section>
-      )}
+
+          <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
+            {aiLayers.map((item, index) => (
+              <div 
+                key={index} 
+                className="flex flex-col group w-full lg:basis-[calc(50%-2rem)] min-w-[320px] max-w-[500px]"
+              >
+                <div 
+                  className="rounded-[2.5rem] p-8 md:p-10 flex flex-col h-full border transition-all duration-300" 
+                  style={{ background: 'rgba(26,46,71,0.6)', borderColor: 'rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}
+                >
+                  <div className="flex-grow">
+                    <p className="text-2xl font-bold text-white mb-6 group-hover:text-[#00E5FF] transition-colors">
+                      {item.title}
+                    </p>
+                    <div className="text-base leading-relaxed mb-8" style={{ color: '#8FA3BF' }}>
+                      <PortableText value={item.outcomeDescription} />
+                    </div>
+                  </div>
+
+                  {item.outcomeTitle && (
+                    <div 
+                      className="mt-auto p-6 rounded-2xl transition-all duration-300 group-hover:bg-[#00E5FF]/10" 
+                      style={{ background: 'rgba(0,229,255,0.07)', border: '1px solid rgba(0,229,255,0.2)' }}
+                    >
+                      <div className="text-sm font-bold mb-1" style={{ color: '#00E5FF' }}>
+                        {item.outcomeTitle}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-center mt-10 md:mt-12">
+            <Link href={data?.layersCta?.link || "/contact"}>
+              <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
+                {data?.layersCta?.text || "Talk to Our AI Expert"}
+                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <FeatureGrid 
         title={data?.useCasesHeadline}
@@ -237,7 +272,7 @@ export default async function AIImplementationPage() {
         description={data?.modelsDescription}
         items={engagementModels.length > 0 ? engagementModels : []}
         columns={2}
-        bgWhite={false}
+        bgWhite={true}
         small={true}
         titleAs="p"
       />
@@ -246,7 +281,13 @@ export default async function AIImplementationPage() {
 
       <RelatedInsights posts={relatedPosts} serviceName="AI Implementation" />
 
-      <FAQSection items={faqs} />
+      {faqs.length > 0 && (
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#0A0F1F' }}>
+          <div className="container-custom px-4 max-w-4xl mx-auto">
+            <FAQ items={faqs} title="Frequently Asked Questions" />
+          </div>
+        </section>
+      )}
 
       <DarkCTA 
         badgeText={data?.finalCta?.badgeText}

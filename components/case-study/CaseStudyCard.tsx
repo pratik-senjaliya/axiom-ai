@@ -15,23 +15,42 @@ export function CaseStudyCard({ item, index = 0 }: CaseStudyCardProps) {
   const href = item.ctaLink?.trim() || '/contact'
 
   return (
-    <div className="panel-accent flex h-full min-h-[22rem] flex-col overflow-hidden lg:min-h-[26rem] lg:flex-row">
-      <div className="order-2 flex flex-col justify-center px-7 py-10 sm:px-10 md:px-12 md:py-14 lg:order-1 lg:w-[58%]">
-        <TitleTag className="font-display text-2xl font-semibold leading-tight tracking-tight text-fg md:text-3xl lg:text-[2.25rem]">
+    <div
+      className="overflow-hidden rounded-[2rem] border flex flex-col lg:flex-row min-h-[360px] lg:min-h-[420px] h-full"
+      style={{
+        borderColor: 'rgba(0,229,255,0.15)',
+        background: 'linear-gradient(135deg, #0D1B2A 0%, #14243A 100%)',
+        boxShadow: '0 24px 60px rgba(0,0,0,0.35)',
+      }}
+    >
+      <div className="order-2 lg:order-1 flex flex-col justify-center px-8 py-10 md:px-12 md:py-14 lg:w-[58%]">
+        <TitleTag className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight mb-5">
           {item.headline}
         </TitleTag>
 
-        {item.subline && <p className="lead mt-5 max-w-2xl">{item.subline}</p>}
+        {item.subline && (
+          <p className="text-base md:text-lg leading-relaxed mb-8 max-w-2xl" style={{ color: '#D4DEE8' }}>
+            {item.subline}
+          </p>
+        )}
 
-        <div className="mt-10">
-          <Link href={href} className="btn btn-white group/btn h-11 px-6 text-[0.9375rem]">
+        <div className="mt-auto">
+          <Link
+            href={href}
+            className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-all hover:scale-[1.02]"
+            style={{
+              background: '#FFFFFF',
+              color: '#0A0F1F',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+            }}
+          >
             {ctaText}
-            <ArrowRight size={16} aria-hidden className="transition-transform group-hover/btn:translate-x-0.5" />
+            <ArrowRight size={16} aria-hidden />
           </Link>
         </div>
       </div>
 
-      <div className="relative order-1 min-h-[15rem] sm:min-h-[18rem] lg:order-2 lg:min-h-0 lg:w-[42%]">
+      <div className="order-1 lg:order-2 relative min-h-[240px] sm:min-h-[300px] lg:min-h-0 lg:w-[42%]">
         <Image
           src={item.image!}
           alt={item.imageAlt || item.headline || 'Case study'}
@@ -39,7 +58,10 @@ export function CaseStudyCard({ item, index = 0 }: CaseStudyCardProps) {
           className="object-cover"
           sizes="(max-width: 1024px) 100vw, 42vw"
         />
-        <div aria-hidden className="pointer-events-none absolute inset-0 lg:bg-gradient-to-r lg:from-[#0E1829] lg:via-transparent lg:to-transparent" />
+        <div
+          className="absolute inset-0 pointer-events-none lg:bg-gradient-to-r lg:from-[#14243A] lg:via-transparent lg:to-transparent"
+          aria-hidden
+        />
       </div>
     </div>
   )

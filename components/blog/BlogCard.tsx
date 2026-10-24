@@ -28,52 +28,76 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
     ? "SyncOrigins"
     : post.author;
 
-  const cover = post.imageCard || post.image;
-
   if (featured) {
     return (
-      <Link href={`/insights/${post.slug || ""}`} className="group grid w-full min-w-0 items-center gap-8 lg:grid-cols-12 lg:gap-14">
-        <div className="min-w-0 overflow-hidden rounded-2xl border border-line lg:order-2 lg:col-span-7">
-          {cover ? (
-            <BlogCoverImage
-              src={cover}
-              alt={post.imageAlt || post.title}
-              variant="card"
-              aspectClassName="aspect-[16/10]"
-              sizes="(max-width: 1024px) 100vw, 60vw"
-              priority
-              hoverZoom
-            />
-          ) : (
-            <div className="flex aspect-[16/10] w-full items-center justify-center bg-ink-800">
-              <span className="font-display text-muted">SyncOrigins Insights</span>
+      <Link href={`/insights/${post.slug || ""}`} className="group block w-full min-w-0">
+        <div
+          className="rounded-2xl md:rounded-[2rem] overflow-hidden transition-all duration-500 w-full"
+          style={{
+            background: "rgba(26,46,71,0.7)",
+            border: "1px solid rgba(0,229,255,0.15)",
+            boxShadow: "0 0 40px rgba(0,0,0,0.35)",
+          }}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch">
+            <div className="order-2 lg:order-1 p-4 sm:p-6 md:p-10 flex flex-col justify-center min-w-0">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <span
+                  className="px-2.5 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold tracking-wider uppercase"
+                  style={{ background: "linear-gradient(135deg, #1DA1F2, #00E5FF)", color: "#0A0F1F" }}
+                >
+                  Featured
+                </span>
+                <span
+                  className="px-2.5 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold tracking-wider uppercase border max-w-full truncate"
+                  style={{ background: "rgba(0,229,255,0.1)", borderColor: "rgba(0,229,255,0.3)", color: "#00E5FF" }}
+                >
+                  {displayCategory}
+                </span>
+                <span className="text-[9px] sm:text-[10px] font-semibold" style={{ color: "#8FA3BF" }}>
+                  {post.readTime}
+                </span>
+              </div>
+
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3 leading-snug transition-colors group-hover:text-[#00E5FF]">
+                {post.title}
+              </h2>
+
+              <p className="text-sm line-clamp-3 max-w-2xl mb-4 sm:mb-6 leading-relaxed" style={{ color: "#8FA3BF" }}>
+                {post.excerpt}
+              </p>
+
+              <div className="flex items-center gap-3 min-w-0">
+                <AuthorAvatar author={displayAuthor} size="md" />
+                <div className="flex flex-col min-w-0">
+                  <span className="text-white text-sm font-bold truncate">{displayAuthor}</span>
+                  <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: "#8FA3BF" }}>
+                    {post.date}
+                  </span>
+                </div>
+              </div>
             </div>
-          )}
-        </div>
 
-        <div className="min-w-0 lg:order-1 lg:col-span-5">
-          <div className="mb-5 flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-[0.14em]">
-            <span className="rounded-full bg-accent/10 px-2.5 py-1 text-accent">Featured</span>
-            <span className="text-accent">{displayCategory}</span>
-            {post.readTime && (
-              <>
-                <span className="h-1 w-1 rounded-full bg-muted/50" />
-                <span className="text-muted">{post.readTime}</span>
-              </>
-            )}
-          </div>
-
-          <h2 className="font-display text-2xl font-semibold leading-tight tracking-tight text-fg transition-colors group-hover:text-white sm:text-3xl lg:text-[2.125rem]">
-            {post.title}
-          </h2>
-
-          {post.excerpt && <p className="copy mt-4 line-clamp-3">{post.excerpt}</p>}
-
-          <div className="mt-8 flex items-center gap-3">
-            <AuthorAvatar author={displayAuthor} size="md" />
-            <div className="flex min-w-0 flex-col">
-              <span className="truncate text-sm font-semibold text-fg">{displayAuthor}</span>
-              <span className="text-xs text-muted">{post.date}</span>
+            <div className="order-1 lg:order-2 min-w-0 self-stretch">
+              {(post.imageCard || post.image) ? (
+                <BlogCoverImage
+                  src={post.imageCard || post.image}
+                  alt={post.imageAlt || post.title}
+                  variant="card"
+                  aspectClassName="aspect-[16/10] sm:aspect-[16/9] lg:h-full lg:min-h-[320px] lg:aspect-auto"
+                  className="min-h-[200px] sm:min-h-[240px] lg:min-h-full"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                  hoverZoom
+                />
+              ) : (
+                <div
+                  className="w-full aspect-[16/10] lg:h-full lg:min-h-[320px] flex items-center justify-center"
+                  style={{ background: "linear-gradient(135deg, #0D1B2A, #14243A)" }}
+                >
+                  <span style={{ color: "#14243A" }}>SyncOrigins Insights</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -82,58 +106,88 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
   }
 
   return (
-    <Link href={`/insights/${post.slug || ""}`} className="group flex h-full w-full min-w-0 flex-col">
-      <div className="overflow-hidden rounded-xl border border-line">
-        {cover ? (
-          <BlogCoverImage
-            src={cover}
-            alt={post.imageAlt || post.title}
-            variant="card"
-            aspectClassName="aspect-[16/10]"
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            hoverZoom
-          />
-        ) : (
-          <div className="flex aspect-[16/10] w-full items-center justify-center bg-ink-800 px-6">
-            <span className="line-clamp-2 text-center font-display text-sm text-muted">{post.title}</span>
-          </div>
-        )}
-      </div>
-
-      <div className="flex min-w-0 flex-grow flex-col pt-6">
-        <div className="mb-3 flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-[0.14em]">
-          <span className="max-w-[70%] truncate text-accent">{displayCategory}</span>
-          {post.date && (
-            <>
-              <span className="h-1 w-1 rounded-full bg-muted/50" />
-              <span className="text-muted">{post.date}</span>
-            </>
-          )}
-          {post.readTime && (
-            <>
-              <span className="h-1 w-1 rounded-full bg-muted/50" />
-              <span className="text-muted">{post.readTime}</span>
-            </>
+    <Link href={`/insights/${post.slug || ""}`} className="group h-full flex flex-col min-w-0 w-full">
+      <div
+        className="h-full flex flex-col overflow-hidden rounded-2xl md:rounded-[1.5rem] transition-all duration-300 w-full"
+        style={{
+          background: "rgba(26,46,71,0.7)",
+          border: "1px solid rgba(0,229,255,0.12)",
+          backdropFilter: "blur(10px)",
+        }}
+        onMouseEnter={(e) => {
+          const el = e.currentTarget as HTMLElement;
+          el.style.borderColor = "rgba(0,229,255,0.35)";
+          el.style.boxShadow = "0 0 25px rgba(0,229,255,0.1), 0 20px 40px rgba(0,0,0,0.4)";
+        }}
+        onMouseLeave={(e) => {
+          const el = e.currentTarget as HTMLElement;
+          el.style.borderColor = "rgba(0,229,255,0.12)";
+          el.style.boxShadow = "";
+        }}
+      >
+        <div className="shrink-0">
+          {(post.imageCard || post.image) ? (
+            <BlogCoverImage
+              src={post.imageCard || post.image}
+              alt={post.imageAlt || post.title}
+              variant="card"
+              aspectClassName="aspect-[16/10]"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              hoverZoom
+            />
+          ) : (
+            <div
+              className="w-full aspect-[16/10] flex items-center justify-center px-4"
+              style={{ background: "linear-gradient(135deg, #0D1B2A, #14243A)" }}
+            >
+              <span className="font-bold text-center line-clamp-2 text-sm" style={{ color: "#5A6F8A" }}>
+                {post.title}
+              </span>
+            </div>
           )}
         </div>
 
-        <h3 className="font-display text-lg font-semibold leading-snug tracking-tight text-fg transition-colors line-clamp-2 group-hover:text-white sm:text-xl">
-          {post.title}
-        </h3>
-
-        {post.excerpt && <p className="copy mt-3 line-clamp-3 flex-grow">{post.excerpt}</p>}
-
-        <div className="mt-6 flex items-center justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-2">
-            <AuthorAvatar author={displayAuthor} size="xs" />
-            <span className="truncate text-sm text-body">{displayAuthor}</span>
+        <div className="p-4 sm:p-5 md:p-6 flex flex-col flex-grow min-w-0">
+          <div className="flex flex-wrap items-center gap-2 mb-2.5 sm:mb-3">
+            <span
+              className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] font-bold tracking-wider uppercase max-w-[70%] truncate"
+              style={{
+                background: "rgba(0,229,255,0.12)",
+                color: "#00E5FF",
+                border: "1px solid rgba(0,229,255,0.3)",
+              }}
+            >
+              {displayCategory}
+            </span>
+            <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: "#8FA3BF" }}>
+              {post.readTime}
+            </span>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-fg">
-            Read article
-            <svg className="h-4 w-4 text-accent transition-transform group-hover:translate-x-1" viewBox="0 0 16 16" fill="none" aria-hidden>
-              <path d="M3 8h10m0 0L9 4m4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </span>
+
+          <h3 className="text-base sm:text-lg font-bold text-white mb-2 sm:mb-3 group-hover:text-[#00E5FF] transition-colors line-clamp-2 leading-snug">
+            {post.title}
+          </h3>
+
+          <p className="leading-relaxed mb-4 sm:mb-6 flex-grow line-clamp-3 text-sm" style={{ color: "#8FA3BF" }}>
+            {post.excerpt}
+          </p>
+
+          <div
+            className="flex items-center justify-between gap-3 pt-4 border-t mt-auto"
+            style={{ borderColor: "rgba(0,229,255,0.1)" }}
+          >
+            <div className="flex items-center gap-2 min-w-0">
+              <AuthorAvatar author={displayAuthor} size="xs" />
+              <span className="text-xs font-bold text-white truncate">{displayAuthor}</span>
+            </div>
+
+            <div className="flex items-center font-bold text-xs shrink-0" style={{ color: "#00E5FF" }}>
+              <span className="mr-1">Read</span>
+              <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </Link>

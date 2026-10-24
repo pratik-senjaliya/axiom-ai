@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { HorizontalFeature, HorizontalFeatureItem } from "@/components/services/HorizontalFeature";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
-import { FAQSection } from "@/components/ui/FAQ";
+import { FAQ } from "@/components/ui/FAQ";
 import { DarkCTA } from "@/components/services/DarkCTA";
 import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
@@ -180,7 +180,13 @@ export default async function ManagedDeliveryPage() {
 
       <RelatedInsights posts={relatedPosts} serviceName="Managed Delivery" />
 
-      <FAQSection items={faqs} />
+      {faqs.length > 0 && (
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#0A0F1F' }}>
+          <div className="container-custom px-4 max-w-4xl mx-auto">
+            <FAQ items={faqs} title="Frequently Asked Questions" />
+          </div>
+        </section>
+      )}
 
       <DarkCTA 
         badgeText={data?.finalCta?.badgeText}

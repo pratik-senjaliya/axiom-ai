@@ -95,20 +95,20 @@ export default async function PrivacyPolicyPage() {
       fallback={
         <div className="space-y-12">
           <div className="max-w-4xl">
-            <p className="text-body text-lg leading-relaxed">
+            <p className="text-white text-lg leading-relaxed">
               We value your privacy and are committed to protecting your personal data. This Privacy Policy
               explains how we collect, use, and safeguard your information when you interact with our website,
               products, and services.
             </p>
-            <p className="text-body text-lg leading-relaxed mt-6">
+            <p className="text-white text-lg leading-relaxed mt-6">
               By using our platform, you agree to the practices described in this policy.
             </p>
           </div>
-          <div className="grid gap-10">
+          <div className="grid md:grid-cols-2 gap-10">
             {FALLBACK_SECTIONS.map((s, i) => (
               <div key={i}>
-                <h3 className="text-xl font-semibold text-fg mb-3">{s.title}</h3>
-                <p className="text-body leading-relaxed text-base">{s.body}</p>
+                <h3 className="text-xl font-bold text-white mb-4">{s.title}</h3>
+                <p className="text-white leading-relaxed text-base">{s.body}</p>
               </div>
             ))}
           </div>

@@ -1,8 +1,9 @@
 import React from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 import { PortableText } from "@/components/ui/PortableText";
+import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { Breadcrumb, type BreadcrumbItem } from "@/components/ui/Breadcrumb";
-import { ButtonLink, Eyebrow } from "@/components/ui/kit";
-import { StackDiagram, type StackLayer } from "@/components/ui/StackDiagram";
 
 interface ServiceHeroProps {
   badgeText?: string;
@@ -17,10 +18,6 @@ interface ServiceHeroProps {
   secondaryButtonLink?: string;
   backLink?: { href: string; label: string };
   breadcrumbs?: BreadcrumbItem[];
-  /** Layer of the AI / Data / ERP stack to highlight in the hero visual */
-  layer?: StackLayer;
-  /** Replace the default stack diagram */
-  visual?: React.ReactNode;
 }
 
 export const SparkleIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
@@ -29,56 +26,9 @@ export const SparkleIcon = ({ className = "w-4 h-4" }: { className?: string }) =
   </svg>
 );
 
-/** Highlight logic kept from the original hero so CMS titles render the same words in accent. */
-function HeroTitle({ title, highlight }: { title: string; highlight?: string }) {
-  // Display-layer hotfix for persistent typo in dataset
-  const rawTitle = (title || "").replace(/Intelligient/g, "Intelligent");
-
-  if (highlight && rawTitle.toLowerCase().includes(highlight.toLowerCase())) {
-    const escaped = highlight.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const parts = rawTitle.split(new RegExp(`(${escaped})`, "gi"));
-    return (
-      <>
-        {parts.map((part, i) =>
-          part.toLowerCase() === highlight.toLowerCase() ? (
-            <span key={i} className="gradient-text">{part}</span>
-          ) : part
-        )}
-      </>
-    );
-  }
-
-  if (highlight) {
-    return (
-      <>
-        {rawTitle} <span className="gradient-text">{highlight}</span>
-      </>
-    );
-  }
-
-  if (rawTitle.includes(":")) {
-    const [prefix, suffix] = rawTitle.split(":");
-    return (
-      <>
-        {prefix}: <span className="gradient-text">{suffix}</span>
-      </>
-    );
-  }
-
-  const words = rawTitle.split(" ");
-  if (words.length > 3) {
-    return (
-      <>
-        {words.slice(0, -2).join(" ")} <span className="gradient-text">{words.slice(-2).join(" ")}</span>
-      </>
-    );
-  }
-
-  return <>{rawTitle}</>;
-}
-
 export const ServiceHero: React.FC<ServiceHeroProps> = ({
   badgeText,
+  badgeIcon,
   pills,
   title,
   gradientTitlePart,
@@ -87,63 +37,131 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
   primaryButtonLink,
   secondaryButtonText,
   secondaryButtonLink,
+  backLink,
   breadcrumbs,
-  layer,
-  visual,
 }) => {
   return (
-    <section className="relative overflow-hidden bg-ink-900 pb-16 pt-28 sm:pt-32 lg:pb-24 lg:pt-36">
-      <div aria-hidden className="bg-grid-fade" />
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-line" />
+    <section className="relative min-h-[70vh] pt-32 pb-16 flex flex-col items-center justify-center overflow-hidden text-center" style={{ background: 'linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)' }}>
+      {/* Cyan grid pattern */}
+      <div className="bg-grid opacity-60 z-0" />
 
-      <div className="container-custom relative">
+      {/* Radial glows */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] rounded-full blur-[120px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%)' }} />
+      <div className="absolute top-[30%] right-[10%] w-[35rem] h-[35rem] rounded-full blur-[100px] pointer-events-none z-0" style={{ background: 'radial-gradient(circle, rgba(29,161,242,0.08) 0%, transparent 70%)' }} />
+
+      <SlideUp key={title} className="container-custom relative z-10 px-6 max-w-6xl mx-auto flex flex-col items-center">
         {breadcrumbs && breadcrumbs.length > 0 && (
-          <Breadcrumb items={breadcrumbs} className="mb-10 lg:mb-12" />
+          <Breadcrumb items={breadcrumbs} className="mb-6 justify-center" />
         )}
 
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-7">
-            {badgeText && <Eyebrow className="mb-6">{badgeText}</Eyebrow>}
-
-            <h1 className="h-display">
-              <HeroTitle title={title} highlight={gradientTitlePart} />
-            </h1>
-
-            {description && (
-              <div className="lead mt-6 max-w-2xl">
-                <PortableText value={description} />
-              </div>
-            )}
-
-            {(primaryButtonText || secondaryButtonText) && (
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                {primaryButtonText && (
-                  <ButtonLink href={primaryButtonLink || "/contact"} size="lg" arrow>
-                    {primaryButtonText}
-                  </ButtonLink>
+        {/* Navigation & Badge Row - Single Line Constraint */}
+        {(badgeText || (pills && pills.length > 0)) && (
+          <div className="flex flex-col items-center mb-8 w-full">
+            <div className="w-full flex justify-center overflow-x-auto no-scrollbar pb-1">
+              <div className="flex flex-nowrap items-center gap-3 px-4">
+                {badgeText && (
+                  <div className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/08 backdrop-blur-sm" style={{ background: 'rgba(0,229,255,0.08)' }}>
+                    {badgeIcon || <SparkleIcon className="w-4 h-4 text-[#00E5FF]" />}
+                    <span className="text-sm font-semibold text-[#00E5FF] uppercase tracking-wide whitespace-nowrap">{badgeText}</span>
+                  </div>
                 )}
-                {secondaryButtonText && (
-                  <ButtonLink href={secondaryButtonLink || "#"} variant="secondary" size="lg">
-                    {secondaryButtonText}
-                  </ButtonLink>
-                )}
-              </div>
-            )}
-
-            {pills && pills.length > 0 && (
-              <ul className="mt-10 flex flex-wrap gap-2" aria-label="Focus areas">
-                {pills.map((pill) => (
-                  <li key={pill} className="chip">{pill}</li>
+                {pills?.map((pill, i) => (
+                  <div key={i} className="flex-shrink-0 inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium text-[#C5D1E0] border border-[#00E5FF]/15 whitespace-nowrap" style={{ background: 'rgba(20,36,58,0.6)' }}>
+                    {pill}
+                  </div>
                 ))}
-              </ul>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Title */}
+        <h1 className="type-hero text-white mb-6 mx-auto">
+          {(() => {
+            // Display-layer hotfix for persistent typo in dataset
+            const normalizedTitle = (title || "").replace(/Intelligient/g, "Intelligent");
+            const rawTitle = normalizedTitle;
+            const highlight = gradientTitlePart || "";
+
+            if (highlight && rawTitle.toLowerCase().includes(highlight.toLowerCase())) {
+              const parts = rawTitle.split(new RegExp(`(${highlight})`, "gi"));
+              return (
+                <>
+                  {parts.map((part, i) =>
+                    part.toLowerCase() === highlight.toLowerCase() ? (
+                      <span key={i} className="gradient-text">{part}</span>
+                    ) : part
+                  )}
+                </>
+              );
+            }
+
+            if (highlight) {
+              return (
+                <>
+                  {rawTitle}{" "}
+                  <span className="gradient-text">{highlight}</span>
+                </>
+              );
+            }
+
+            if (rawTitle.includes(":")) {
+              const [prefix, suffix] = rawTitle.split(":");
+              return (
+                <>
+                  {prefix}: <span className="gradient-text">{suffix}</span>
+                </>
+              );
+            }
+
+            const words = rawTitle.split(" ");
+            if (words.length > 3) {
+              const mainText = words.slice(0, -2).join(" ");
+              const highlightedText = words.slice(-2).join(" ");
+              return (
+                <>
+                  {mainText} <span className="gradient-text">{highlightedText}</span>
+                </>
+              );
+            }
+
+            return rawTitle;
+          })()}
+        </h1>
+
+        {/* Description */}
+        <div className="type-lead mb-10 max-w-4xl mx-auto" style={{ color: '#C5D1E0' }}>
+          <PortableText value={description} className="text-inherit" />
+        </div>
+
+        {/* Buttons */}
+        {(primaryButtonText || secondaryButtonText) && (
+          <div className="flex flex-col sm:flex-row gap-4 mt-10 md:mt-12 justify-center">
+            {primaryButtonText && (
+              <Link href={primaryButtonLink || "/contact"} className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full flex items-center justify-center gap-2 text-[#0A0F1F] font-bold group border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', boxShadow: '0 0 25px rgba(0,229,255,0.4)' }}>
+                  {primaryButtonText}
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Button>
+              </Link>
+            )}
+            {secondaryButtonText && (
+              <Link href={secondaryButtonLink || "#"} className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto px-8 h-12 text-[15px] rounded-full flex items-center justify-center gap-2 font-bold transition-all hover:scale-105"
+                  style={{ borderColor: "rgba(0,229,255,0.35)", color: "#C5D1E0", background: "rgba(20,36,58,0.6)" }}
+                >
+                  {secondaryButtonText}
+                </Button>
+              </Link>
             )}
           </div>
-
-          <div className="hidden justify-center lg:col-span-5 lg:flex lg:justify-end">
-            {visual ?? <StackDiagram highlight={layer} />}
-          </div>
-        </div>
-      </div>
+        )}
+      </SlideUp>
     </section>
   );
 };

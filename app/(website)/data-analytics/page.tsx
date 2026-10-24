@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { HorizontalFeature, HorizontalFeatureItem } from "@/components/services/HorizontalFeature";
 import { FeatureGrid, FeatureItem } from "@/components/services/FeatureGrid";
@@ -6,9 +8,11 @@ import { getDataAnalyticsPage, getLatestPostsByService } from "@/lib/sanity/quer
 import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
 import { ObstacleSection } from "@/components/services/ObstacleSection";
-import { ButtonLink, Section, SectionHeader } from "@/components/ui/kit";
-import { CellGrid, FeatureCell } from "@/components/ui/blocks";
-import { DarkCTA } from "@/components/services/DarkCTA";
+import Link from 'next/link';
+import { Button } from "@/components/ui/Button";
+import { SlideUp } from "@/components/ui/animations/SlideUp";
+import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
+import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
 
@@ -174,7 +178,6 @@ export default async function DataAnalyticsPage() {
         badgeText={data?.hero?.badge || "Data & Analytics"}
         title={data?.hero?.title}
         gradientTitlePart={data?.hero?.titleHighlight}
-        layer="data"
         description={data?.hero?.description}
         primaryButtonText={data?.hero?.primaryCta?.text}
         primaryButtonLink={data?.hero?.primaryCta?.link}
@@ -198,20 +201,29 @@ export default async function DataAnalyticsPage() {
 
       {/* Our Approach */}
       {data?.approachHeadline && (
-        <HorizontalFeature
-          eyebrow="Core capabilities"
-          title={data?.approachHeadline || "Core Capabilities"}
-          description={data.approachBody}
-          titleAs="h3"
-          bgWhite={true}
-          items={approachItems.map((item: any) => ({
-            ...item,
-            outcomeTitle: "Key outcome",
-            outcomeDescription: item.outcome
-          }))}
-          ctaText={data?.approachCta?.text || "Plan Your Data Architecture"}
-          ctaHref={data?.approachCta?.link || "/contact"}
-        />
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#14243A' }}>
+          <div className="container-custom">
+            <div className="max-w-4xl text-left">
+              <h3 className="type-section-title text-white mb-6">
+                {data?.approachHeadline || "Core Capabilities"}
+              </h3>
+              {data.approachBody && (
+                <div className="type-lead" style={{ color: '#8FA3BF' }}>
+                  <PortableText value={data.approachBody} />
+                </div>
+              )}
+            </div>      
+            <HorizontalFeature 
+              items={approachItems.map((item: any) => ({
+                ...item,
+                outcomeTitle: "KEY OUTCOME",
+                outcomeDescription: item.outcome
+              }))}
+              ctaText={data?.approachCta?.text || "Plan Your Data Architecture"}
+              ctaHref={data?.approachCta?.link || "/contact"}
+            />
+          </div>
+        </section>
       )}
 
       {differentiatorItems.length > 0 && (
@@ -227,62 +239,87 @@ export default async function DataAnalyticsPage() {
 
       {/* ── Use Cases (Where Data Creates Immediate Impact) ── */}
       {useCaseItems.length > 0 && (
-        <Section tone="raised">
-          <SectionHeader
-            eyebrow="Use cases"
-            title={data?.useCasesHeadline}
-            description={data?.useCasesDescription}
-            as="h3"
-            layout={data?.useCasesDescription ? "split" : "stack"}
-            className="mb-14 lg:mb-16"
-          />
-          <CellGrid cols={3}>
-            {useCaseItems.map((item: any, index: number) => (
-              <FeatureCell key={index} index={index} title={item.title} description={item.description} />
-            ))}
-          </CellGrid>
-        </Section>
+        <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: '#14243A' }}>
+          <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
+
+          <div className="container-custom px-4 relative z-10 max-w-[90rem] mx-auto">
+            <div className="text-center max-w-5xl mx-auto mb-10 md:mb-12">
+              <h3 className="tracking-tight font-bold text-white text-2xl md:text-[2.25rem] mb-6">
+                {data?.useCasesHeadline}
+              </h3>
+              {data?.useCasesDescription && (
+                <div className="text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
+                  <PortableText value={data.useCasesDescription} />
+                </div>
+              )}
+            </div>
+
+            <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+              {useCaseItems.map((item: any, index: number) => (
+                <StaggerItem key={index} className="h-full">
+                  <HoverCard 
+                    className="rounded-[2rem] flex flex-col h-full p-6 border border-white/5 bg-[#1A2E47]/40 hover:bg-[#1A2E47]/60 group transition-all duration-300 items-start justify-start"
+                    style={{ backdropFilter: 'blur(8px)' }}
+                  >
+                    {item.icon && (
+                      <div className="h-10 mb-6 flex items-center">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#00E5FF]/10 text-[#00E5FF] group-hover:scale-110 transition-transform">
+                          {item.icon}
+                        </div>
+                      </div>
+                    )}
+                    <div className="min-h-[3.5rem] mb-3">
+                      <p className="text-lg font-bold text-white leading-snug group-hover:text-[#00E5FF] transition-colors">
+                        {item.title}
+                      </p>
+                    </div>
+                    <div className="text-[0.9rem] leading-relaxed text-[#8FA3BF] flex-grow">
+                      <PortableText value={item.description} />
+                    </div>
+                  </HoverCard>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        </section>
       )}
 
       {data?.technologies && data.technologies.length > 0 && (
-        <Section tone="base">
-          <SectionHeader
-            eyebrow="Technology"
-            title={data.techHeadline}
-            description={data.techBody}
-            as="h4"
-            layout={data.techBody ? "split" : "stack"}
-            className="mb-14 lg:mb-16"
-          />
-          <dl className="reveal border-t border-line">
-            {data.technologies.map((tech: any, i: number) => {
-              const list = typeof tech.technologiesList === "string" ? tech.technologiesList : "";
-              const chips = list.includes(",") ? list.split(",").map((t: string) => t.trim()).filter(Boolean) : [];
-              return (
-                <div key={i} className="grid gap-4 border-b border-line py-7 md:grid-cols-12 md:gap-10">
-                  <dt className="h-card md:col-span-4">{tech.title}</dt>
-                  <dd className="md:col-span-8">
-                    {chips.length > 0 ? (
-                      <ul className="flex flex-wrap gap-2">
-                        {chips.map((chip: string) => (
-                          <li key={chip} className="chip">{chip}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="copy">{tech.technologiesList}</p>
-                    )}
-                  </dd>
+        <section className="py-12 md:py-16 relative z-10" style={{ background: '#0D1B2A' }}>
+          <div className="container-custom px-4">
+            <div className="text-center max-w-4xl mx-auto mb-10 md:mb-12">
+              <h4 className="type-section-title tracking-tight text-white mb-6">{data.techHeadline}</h4>
+              {data.techBody && (
+                <div className="text-lg max-w-5xl mx-auto" style={{ color: '#8FA3BF' }}>
+                    <PortableText value={data.techBody} />
                 </div>
-              );
-            })}
-          </dl>
+              )}
+            </div>
+            <StaggerGroup className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {data.technologies.map((tech: any, i: number) => (
+                <StaggerItem key={i} className="h-full">
+                  <HoverCard className="card p-8 rounded-3xl flex flex-col items-center text-center shadow-sm h-full" style={{ background: 'rgba(26,46,71,0.5)', border: '1px solid rgba(0,229,255,0.12)' }}>
+                    <p className="text-xl font-bold text-white mb-4 group-hover:text-[#00E5FF] transition-colors">{tech.title}</p>
+                    <div className="font-medium" style={{ color: '#C5D1E0' }}>
+                      {tech.technologiesList}
+                    </div>
+                  </HoverCard>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
 
-          <div className="mt-12 flex justify-center">
-            <ButtonLink href={data?.techCta?.link || "/contact"} arrow>
-              {data?.techCta?.text || "Build Your Data Stack"}
-            </ButtonLink>
+            <div className="flex justify-center mt-10 md:mt-12">
+              <Link href={data?.techCta?.link || "/contact"}>
+                <Button size="lg" className="px-8 h-12 text-base rounded-full flex items-center justify-center gap-2 font-bold border-none hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', boxShadow: '0 0 30px rgba(0,229,255,0.4)' }}>
+                  {data?.techCta?.text || "Build Your Data Stack"}
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Button>
+              </Link>
+            </div>
           </div>
-        </Section>
+        </section>
       )}
 
       {engagementSteps.length > 0 && (
@@ -291,8 +328,7 @@ export default async function DataAnalyticsPage() {
           description={data?.engagementDescription}
           items={engagementSteps}
           columns={4}
-          isRoadmap={true}
-          bgWhite={true}
+          bgWhite={false}
           small={false}
           titleAs="p"
         />
@@ -304,13 +340,44 @@ export default async function DataAnalyticsPage() {
 
       {/* Final Multi-CTA Layer */}
       {data?.ctaHeadline && (
-        <DarkCTA
-          title={data.ctaHeadline}
-          buttonText={data.ctaOptions?.[0]?.text}
-          buttonHref={data.ctaOptions?.[0]?.link || "/contact"}
-          secondaryActions={(data.ctaOptions || []).slice(1)}
-          footnote={data.ctaClosing}
-        />
+        <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0F1F 0%, #0D1B2A 50%, #14243A 100%)' }}>
+          {/* Grid overlay */}
+          <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(to right, rgba(0,229,255,0.03) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
+          {/* Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[30rem] rounded-full blur-[100px] pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
+          {/* Top border accent */}
+          <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(0,229,255,0.4), transparent)' }} />
+          
+          <SlideUp className="container-custom px-4 relative z-10 text-center flex flex-col items-center">
+            
+            <h5 className="type-section-title text-white mb-10 max-w-3xl">
+              {data.ctaHeadline}
+            </h5>
+            
+            {data.ctaOptions && data.ctaOptions.length > 0 && (
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mb-12">
+                {data.ctaOptions.map((cta: any, index: number) => (
+                   <Link href={cta.link || '/contact'} key={index}>
+                     <button className="px-8 h-14 text-base rounded-full flex items-center justify-center gap-2 transition-all font-bold hover:scale-105"
+                     style={index === 0
+                       ? { background: 'linear-gradient(135deg, #1DA1F2, #00E5FF)', color: '#0A0F1F', border: 'none', boxShadow: '0 0 25px rgba(0,229,255,0.4)' }
+                       : { background: 'rgba(20,36,58,0.7)', color: '#C5D1E0', border: '1px solid rgba(0,229,255,0.3)', boxShadow: '0 0 15px rgba(0,229,255,0.1) inset' }
+                     }>
+                       {cta.text}
+                     </button>
+                   </Link>
+                ))}
+              </div>
+            )}
+
+            {data.ctaClosing && (
+                <p className="text-xl md:text-2xl font-semibold max-w-2xl mx-auto" style={{ color: '#8FA3BF' }}>
+                    {data.ctaClosing}
+                </p>
+            )}
+            
+          </SlideUp>
+        </section>
       )}
     </div>
   );

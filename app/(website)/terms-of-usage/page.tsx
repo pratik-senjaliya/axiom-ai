@@ -95,16 +95,16 @@ export default async function TermsOfUsagePage() {
       fallback={
         <div className="space-y-12">
           <div className="max-w-4xl">
-            <p className="text-body text-lg leading-relaxed">
+            <p className="text-white text-lg leading-relaxed">
               Please read these Terms of Usage carefully before using the SyncOrigins platform. By accessing our
               services, you agree to be bound by these terms.
             </p>
           </div>
-          <div className="grid gap-10">
+          <div className="grid md:grid-cols-2 gap-10">
             {FALLBACK_SECTIONS.map((s, i) => (
               <div key={i}>
-                <h3 className="text-xl font-semibold text-fg mb-3">{s.title}</h3>
-                <p className="text-body leading-relaxed text-base">{s.body}</p>
+                <h3 className="text-xl font-bold text-white mb-4">{s.title}</h3>
+                <p className="text-white leading-relaxed text-base">{s.body}</p>
               </div>
             ))}
           </div>

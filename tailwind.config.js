@@ -14,70 +14,49 @@ module.exports = {
     },
     extend: {
       colors: {
-        // === Design tokens (dark navy / cyan) ===
-        // Surfaces, darkest → lightest
-        ink: {
-          950: "#060A15",
-          900: "#0A0F1F", // page background
-          850: "#0C1424", // raised section
-          800: "#0F1A2D", // panel
-          700: "#15233A", // panel hover / inputs
-        },
-        // Text
-        fg: "#F3F6FA", // headings
-        body: "#B4C2D3", // paragraphs
-        muted: "#7D90A8", // captions, meta
-        // Hairlines (8-digit hex keeps alpha)
-        line: {
-          DEFAULT: "#94B2D61F",
-          strong: "#94B2D633",
-          accent: "#00E5FF4D",
-        },
-        accent: {
-          DEFAULT: "#00E5FF", // neon cyan — primary accent
-          soft: "#66FCF1",
-          blue: "#1DA1F2", // electric blue — secondary accent
-        },
-
-        // === Legacy palette (kept for existing classes) ===
+        // === NEW THEME: Dark Navy / Neon Cyan ===
+        // Primary = Neon Cyan (buttons, highlights, links, icons)
         primary: {
           50:  '#E0FFFE',
           100: '#B3FFFE',
-          200: '#66FCF1',
+          200: '#66FCF1', // Soft Aqua Glow
           300: '#33F0E8',
-          400: '#00E5FF',
+          400: '#00E5FF', // Neon Cyan (Main Glow) — PRIMARY ACCENT
           500: '#00C8E0',
-          600: '#1DA1F2',
+          600: '#1DA1F2', // Electric Blue — secondary accent
           700: '#0E7FC2',
           800: '#075D93',
           900: '#003A60',
           950: '#001E33',
         },
+        // Secondary = Electric Blue family
         secondary: {
           50:  '#E8F4FE',
           100: '#C8E6FD',
           200: '#93CBF9',
           300: '#5AB0F5',
           400: '#2E97EF',
-          500: '#1DA1F2',
+          500: '#1DA1F2', // Electric Blue
           600: '#0E7FC2',
           700: '#085E94',
           800: '#044067',
           900: '#012340',
           950: '#001020',
         },
+        // Neutral = Navy Blue Grays (for dark-theme text/surfaces)
         neutral: {
-          50:  '#C5D1E0',
-          100: '#8FA3BF',
+          50:  '#C5D1E0', // Soft White / Secondary Text
+          100: '#8FA3BF', // Muted Text
           200: '#5A7490',
           300: '#3A5470',
           400: '#243A52',
-          500: '#14243A',
-          600: '#0D1B2A',
+          500: '#14243A', // Mid Night Blue (section bg)
+          600: '#0D1B2A', // Dark Blue Gradient
           700: '#0A1525',
           800: '#070F1A',
-          900: '#0A0F1F',
+          900: '#0A0F1F', // Deep Navy (Base Background)
         },
+        // Background aliases for convenience
         navy: {
           base:    '#0A0F1F',
           gradient:'#0D1B2A',
@@ -96,14 +75,26 @@ module.exports = {
           "sans-serif",
         ],
         display: [
-          "var(--font-sora)",
+          "var(--font-display)",
           "var(--font-inter)",
           "system-ui",
           "sans-serif",
         ],
       },
-      maxWidth: {
-        site: "80rem",
+      fontSize: {
+        xs:   ["0.75rem",  { lineHeight: "1rem" }],
+        sm:   ["0.875rem", { lineHeight: "1.25rem" }],
+        base: ["1.125rem", { lineHeight: "1.75rem" }],
+        lg:   ["1.25rem",  { lineHeight: "1.875rem" }],
+        xl:   ["1.5rem",   { lineHeight: "2rem" }],
+        "2xl":["1.875rem", { lineHeight: "2.25rem" }],
+        "3xl":["2.25rem",  { lineHeight: "2.5rem" }],
+        "4xl":["2.75rem",  { lineHeight: "3rem" }],
+        "5xl":["3.5rem",   { lineHeight: "1.1" }],
+        "6xl":["4.25rem",  { lineHeight: "1.1" }],
+        "7xl":["5rem",     { lineHeight: "1.1" }],
+        "8xl":["6.5rem",   { lineHeight: "1" }],
+        "9xl":["8.5rem",   { lineHeight: "1" }],
       },
       spacing: {
         "18":  "4.5rem",
@@ -117,7 +108,7 @@ module.exports = {
         soft:   "0 2px 15px -3px rgba(0,0,0,0.3), 0 10px 20px -2px rgba(0,0,0,0.2)",
         medium: "0 4px 25px -5px rgba(0,0,0,0.4), 0 10px 10px -5px rgba(0,0,0,0.2)",
         large:  "0 10px 40px -10px rgba(0,0,0,0.5)",
-        panel:  "0 1px 0 0 rgba(255,255,255,0.04) inset, 0 24px 48px -24px rgba(0,0,0,0.6)",
+        // Glow shadows
         "glow-cyan":  "0 0 20px rgba(0,229,255,0.4), 0 0 60px rgba(0,229,255,0.15)",
         "glow-blue":  "0 0 20px rgba(29,161,242,0.4), 0 0 60px rgba(29,161,242,0.15)",
         "glow-sm":    "0 0 10px rgba(0,229,255,0.3)",
