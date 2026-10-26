@@ -245,11 +245,28 @@ export default defineType({
       description: 'Optional text shown under the section headline.',
     }),
     defineField({
-      name: 'outcomeCards',
+      name: 'outcomeItems',
       title: 'Outcome Cards',
       type: 'array',
       group: 'outcomes',
+      description: 'Each card shows a bold headline (e.g. "Under 1.5 hours") with a subline under it.',
+      of: [{
+        type: 'object',
+        fields: [
+          { name: 'headline', type: 'string', title: 'Headline', description: 'e.g. Under 1.5 hours' },
+          { name: 'subline', type: 'text', rows: 2, title: 'Subline', description: 'e.g. Target daily reporting effort per plant, down from 4 hours' },
+        ],
+        preview: { select: { title: 'headline', subtitle: 'subline' } },
+      }],
+    }),
+    defineField({
+      name: 'outcomeCards',
+      title: 'Outcome Cards (legacy, single line)',
+      type: 'array',
+      group: 'outcomes',
+      description: 'Only used when "Outcome Cards" above is empty. Text before the first ":" becomes the headline.',
       of: [{ type: 'string' }],
+      hidden: ({ document }) => !(document?.outcomeCards as unknown[] | undefined)?.length,
     }),
     defineField({
       name: 'outcomes',
@@ -295,11 +312,11 @@ export default defineType({
       group: 'cta',
       description: 'Call-to-action band at the bottom of the page. Empty fields use the default text.',
       fields: [
-        { name: 'badgeText', type: 'string', title: 'Badge Text', description: 'Defaults to "Case Study".' },
-        { name: 'title', type: 'string', title: 'Title', description: 'Defaults to "Ready to Write Your Transformation Story?".' },
-        { name: 'description', type: 'simpleBlockContent', title: 'Description' },
-        { name: 'buttonText', type: 'string', title: 'Button Text', description: 'Defaults to "Talk to Our Experts".' },
-        { name: 'buttonLink', type: 'string', title: 'Button Link', description: 'Defaults to /contact.' },
+        { name: 'badgeText', type: 'string', title: 'Badge Text', description: 'Defaults to "Case Study".', initialValue: 'Case Study' },
+        { name: 'title', type: 'string', title: 'Title', description: 'Defaults to "Ready to Write Your Transformation Story?".', initialValue: 'Ready to Write Your Transformation Story?' },
+        { name: 'description', type: 'simpleBlockContent', title: 'Description', description: 'Defaults to "Partner with SyncOrigins to turn operational challenges into measurable business outcomes."' },
+        { name: 'buttonText', type: 'string', title: 'Button Text', description: 'Defaults to "Talk to Our Experts".', initialValue: 'Talk to Our Experts' },
+        { name: 'buttonLink', type: 'string', title: 'Button Link', description: 'Defaults to /contact.', initialValue: '/contact' },
       ],
     }),
 

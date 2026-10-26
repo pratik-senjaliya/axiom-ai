@@ -57,7 +57,11 @@ function mergeCaseStudy(cms: any, slug: string) {
       outcomesDescription: hasTextContent(cms.outcomesDescription)
         ? cms.outcomesDescription
         : DEMO_CASE_STUDY_VIEW.outcomesDescription,
-      outcomeCards: cms.outcomeCards?.length ? cms.outcomeCards : DEMO_CASE_STUDY_VIEW.outcomeCards,
+      outcomeCards: cms.outcomeItems?.length
+        ? cms.outcomeItems
+        : cms.outcomeCards?.length
+          ? cms.outcomeCards
+          : DEMO_CASE_STUDY_VIEW.outcomeCards,
       testimonials: cms.testimonials?.length ? cms.testimonials : DEMO_CASE_STUDY_VIEW.testimonials,
     };
   }

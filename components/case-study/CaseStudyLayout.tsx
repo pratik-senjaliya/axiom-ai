@@ -266,6 +266,16 @@ export function CaseStudyTechnologies({ items }: { items: string[] }) {
 }
 
 /** Outcome cards grid */
+type OutcomeItem = string | { headline?: string; subline?: string };
+
+/** Legacy single-line cards ("Under 1.5 hours: Target ...") split at the first colon */
+function toOutcome(item: OutcomeItem): { headline?: string; subline?: string } {
+  if (typeof item !== "string") return item;
+  const i = item.indexOf(":");
+  if (i <= 0) return { subline: item };
+  return { headline: item.slice(0, i).trim(), subline: item.slice(i + 1).trim() };
+}
+
 export function CaseStudyOutcomesGrid({
   title,
   description,
@@ -273,7 +283,7 @@ export function CaseStudyOutcomesGrid({
 }: {
   title: string;
   description?: string;
-  items: string[];
+  items: OutcomeItem[];
 }) {
   if (!items?.length) return null;
   return (
@@ -295,17 +305,25 @@ export function CaseStudyOutcomesGrid({
           }}
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {items.map((text, index) => (
+            {items.map(toOutcome).map(({ headline, subline }, index) => (
               <div
                 key={index}
-                className="rounded-xl border px-4 py-4 sm:px-5 sm:py-5 text-sm sm:text-base leading-relaxed font-medium min-w-0"
+                className="rounded-xl border px-4 py-4 sm:px-5 sm:py-5 min-w-0"
                 style={{
                   background: "rgba(13,27,42,0.95)",
                   borderColor: "rgba(255,255,255,0.08)",
-                  color: "#C5D1E0",
                 }}
               >
-                {text}
+                {headline && (
+                  <p className="text-lg sm:text-xl font-bold leading-snug" style={{ color: "#00E5FF" }}>
+                    {headline}
+                  </p>
+                )}
+                {subline && (
+                  <p className={`text-sm sm:text-base leading-relaxed ${headline ? "mt-2" : "font-medium"}`} style={{ color: "#C5D1E0" }}>
+                    {subline}
+                  </p>
+                )}
               </div>
             ))}
           </div>

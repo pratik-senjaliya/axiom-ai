@@ -73,9 +73,8 @@ export function CaseStudyFilterGrid({ items, title = "Case Studies" }: { items: 
   const [industry, setIndustry] = useState(ALL);
   const [service, setService] = useState(ALL);
 
-  // Only offer filters that match at least one case study
-  const industryOptions = BLOG_INDUSTRY_CATEGORIES.filter((c) => items.some((i) => i.relatedIndustry === c.value));
-  const serviceOptions = BLOG_SERVICE_CATEGORIES.filter((c) => items.some((i) => i.relatedService === c.value));
+  const industryOptions = BLOG_INDUSTRY_CATEGORIES;
+  const serviceOptions = BLOG_SERVICE_CATEGORIES;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -114,19 +113,13 @@ export function CaseStudyFilterGrid({ items, title = "Case Studies" }: { items: 
           {title}
         </h2>
 
-        {(industryOptions.length > 0 || serviceOptions.length > 0) && (
-          <div
-            className="mb-8 sm:mb-10 rounded-xl sm:rounded-2xl border p-4 sm:p-5 space-y-4"
-            style={{ background: "rgba(13,27,42,0.6)", borderColor: "rgba(0,229,255,0.1)" }}
-          >
-            {industryOptions.length > 0 && (
-              <FilterRow label="Industry" options={industryOptions} active={industry} onChange={(v) => update("industry", v)} />
-            )}
-            {serviceOptions.length > 0 && (
-              <FilterRow label="Service" options={serviceOptions} active={service} onChange={(v) => update("service", v)} />
-            )}
-          </div>
-        )}
+        <div
+          className="mb-8 sm:mb-10 rounded-xl sm:rounded-2xl border p-4 sm:p-5 space-y-4"
+          style={{ background: "rgba(13,27,42,0.6)", borderColor: "rgba(0,229,255,0.1)" }}
+        >
+          <FilterRow label="Industry" options={industryOptions} active={industry} onChange={(v) => update("industry", v)} />
+          <FilterRow label="Service" options={serviceOptions} active={service} onChange={(v) => update("service", v)} />
+        </div>
 
         {filtered.length > 0 ? (
           <CaseStudyCards items={filtered} />

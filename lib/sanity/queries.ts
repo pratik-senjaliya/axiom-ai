@@ -761,6 +761,7 @@ export async function getCaseStudyBySlug(slug: string): Promise<any> {
     technologies,
     outcomesHeadline,
     outcomesDescription,
+    outcomeItems[] { headline, subline },
     outcomeCards,
     outcomes,
     outcomeMetrics[] { value, label },
