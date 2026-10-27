@@ -81,6 +81,8 @@ export const structure = (S: StructureBuilder) =>
                         ])
                 ),
 
+            S.documentTypeListItem('hirePage').title('Hire Developer Pages'),
+
             S.divider(),
 
             // Individual Services — pick a template when clicking "+"

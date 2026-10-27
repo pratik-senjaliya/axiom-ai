@@ -714,6 +714,45 @@ export async function getNavigationIndustries(): Promise<any[]> {
   return safeFetch<any[]>(query, { reserved: CORE_SERVICE_SLUGS }, [])
 }
 
+// ==================== HIRE DEVELOPER PAGES (CMS-created, served at /[slug]) ====================
+
+export async function getHirePageBySlug(slug: string): Promise<any> {
+  const query = `*[_type == "hirePage" && slug.current == $slug][0] {
+    title,
+    "slug": slug.current,
+    seo { ${SEO_FIELDS} },
+    hero {
+      badge,
+      title,
+      titleHighlight,
+      description,
+      "image": image.asset->url,
+      primaryCta { text, link },
+      secondaryCta { text, link }
+    },
+    expertiseHeadline, expertiseDescription, expertise[] { title, description },
+    buildHeadline, buildDescription, buildItems[] { title, description },
+    modelsHeadline, modelsDescription, models[] { title, description, bestFor, features },
+    modelsCta { text, link },
+    techHeadline, techDescription, techStack[] { category, tools },
+    whyHeadline, whyDescription, whyItems[] { title, description },
+    "whyImage": whyImage.asset->url, "whyImageAlt": whyImage.alt,
+    whyImageLabel, whyImageTitle, whyListTitle,
+    processHeadline, processDescription, process[] { title, description },
+    industriesHeadline, industriesDescription, industries[] { title, description, icon },
+    testimonialsHeadline, testimonials[] { quote, author, role, company },
+    moreHeadline, moreLinks[] { title, description, link },
+    faqs[] { question, answer },
+    finalCta { badgeText, title, description, buttonText, buttonLink }
+  }`
+  return safeFetch<any>(query, { slug }, null)
+}
+
+export async function getAllHirePageSlugs(): Promise<string[]> {
+  const query = `*[_type == "hirePage" && defined(slug.current) && !(slug.current in $reserved)].slug.current`
+  return safeFetch<string[]>(query, { reserved: CORE_SERVICE_SLUGS }, [])
+}
+
 // ==================== CASE STUDIES (DETAIL PAGES) ====================
 
 const CASE_STUDY_CARD_FIELDS = `

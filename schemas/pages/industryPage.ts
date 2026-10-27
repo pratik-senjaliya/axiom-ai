@@ -9,7 +9,7 @@ export async function isSlugFreeAcrossPages(slug: string, context: SlugValidatio
     const client = context.getClient({ apiVersion: '2024-01-01' })
     const id = context.document?._id?.replace(/^drafts\./, '')
     const taken = await client.fetch<boolean>(
-        `count(*[_type in ["industryPage", "service"] && slug.current == $slug && !(_id in [$id, $draftId])]) > 0`,
+        `count(*[_type in ["industryPage", "service", "hirePage"] && slug.current == $slug && !(_id in [$id, $draftId])]) > 0`,
         { slug, id, draftId: `drafts.${id}` }
     )
     return !taken

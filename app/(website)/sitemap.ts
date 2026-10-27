@@ -14,20 +14,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     let postSlugs: string[] = [];
     let caseStudySlugs: string[] = [];
     let industrySlugs: string[] = [];
+    let hireSlugs: string[] = [];
 
     try {
-        const [s, p, cs, ind] = await Promise.all([
+        const [s, p, cs, ind, hire] = await Promise.all([
             client.fetch<string[]>(`*[_type == "service" && !(slug.current in $reserved)].slug.current`, { reserved: CORE_SERVICE_SLUGS }),
             client.fetch<string[]>(`*[_type == "post"].slug.current`),
             areCaseStudiesListed()
               ? client.fetch<string[]>(`*[_type == "caseStudy"].slug.current`)
               : Promise.resolve([] as string[]),
             client.fetch<string[]>(`*[_type == "industryPage" && defined(slug.current) && !(slug.current in $reserved)].slug.current`, { reserved: CORE_SERVICE_SLUGS }),
+            client.fetch<string[]>(`*[_type == "hirePage" && defined(slug.current) && !(slug.current in $reserved)].slug.current`, { reserved: CORE_SERVICE_SLUGS }),
         ]);
         serviceSlugs = s || [];
         postSlugs = p || [];
         caseStudySlugs = cs || [];
         industrySlugs = ind || [];
+        hireSlugs = hire || [];
     } catch (e) {
         console.error("Error fetching sitemap slugs:", e);
     }
@@ -119,7 +122,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]
 
     // Dynamic service and industry pages (handled by [slug]/page.tsx at root)
-    const serviceRoutes: MetadataRoute.Sitemap = [...serviceSlugs, ...industrySlugs].map((slug) => ({
+    const serviceRoutes: MetadataRoute.Sitemap = [...serviceSlugs, ...industrySlugs, ...hireSlugs].map((slug) => ({
         url: `${baseUrl}/${slug}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,

@@ -112,15 +112,17 @@ export function CaseStudyAbout({
         <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-start">
           {image && (
             <div className="lg:col-span-5 min-w-0 order-1">
+              {/* Natural aspect ratio — a fixed box cropped text baked into the image */}
               <div
-                className="relative aspect-[16/10] sm:aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden border"
+                className="rounded-xl sm:rounded-2xl overflow-hidden border"
                 style={{ borderColor: "rgba(0,229,255,0.18)" }}
               >
                 <Image
                   src={image}
                   alt={imageAlt || title}
-                  fill
-                  className="object-cover"
+                  width={0}
+                  height={0}
+                  className="block w-full h-auto"
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   unoptimized
                 />

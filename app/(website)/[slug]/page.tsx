@@ -5,9 +5,12 @@ import {
   getLatestPostsByService,
   getIndustryPageBySlug,
   getAllIndustryPageSlugs,
+  getHirePageBySlug,
+  getAllHirePageSlugs,
 } from "@/lib/sanity/queries";
 import { SpecializedServiceLayout } from "@/components/services/SpecializedServiceLayout";
 import { IndustryPageLayout } from "@/components/industries/IndustryPageLayout";
+import { HirePageLayout } from "@/components/hire/HirePageLayout";
 import { client } from "@/lib/sanity/client";
 import { generateMetadata as genMeta, portableTextToPlain } from "@/lib/seo";
 import { notFound } from "next/navigation";
@@ -62,6 +65,17 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
         slug: `/${params.slug}`,
       });
     }
+
+    const hirePage = await getHirePageBySlug(params.slug);
+    if (hirePage) {
+      return genMeta({
+        title: hirePage.seo?.metaTitle || `Hire ${hirePage.title} | SyncOrigins`,
+        description: hirePage.seo?.metaDescription || portableTextToPlain(hirePage.hero?.description),
+        keywords: hirePage.seo?.metaKeywords,
+        ogImage: hirePage.seo?.openGraphImage,
+        slug: `/${params.slug}`,
+      });
+    }
   } catch (e) {
     console.error("Error fetching service metadata:", e);
   }
@@ -74,8 +88,12 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 }
 
 export async function generateStaticParams() {
-  const [serviceSlugs, industrySlugs] = await Promise.all([getAllServiceSlugs(), getAllIndustryPageSlugs()]);
-  return [...serviceSlugs, ...industrySlugs].map((slug) => ({ slug }));
+  const [serviceSlugs, industrySlugs, hireSlugs] = await Promise.all([
+    getAllServiceSlugs(),
+    getAllIndustryPageSlugs(),
+    getAllHirePageSlugs(),
+  ]);
+  return [...serviceSlugs, ...industrySlugs, ...hireSlugs].map((slug) => ({ slug }));
 }
 
 export default async function ServicePage({ params }: PageProps) {
@@ -84,7 +102,11 @@ export default async function ServicePage({ params }: PageProps) {
 
   if (!service) {
     const industry = await getIndustryPageBySlug(slug);
-    if (!industry) notFound();
+    if (!industry) {
+      const hirePage = await getHirePageBySlug(slug);
+      if (!hirePage) notFound();
+      return <HirePageLayout data={hirePage} path={`/${slug}`} />;
+    }
 
     const relatedPosts = await getLatestPostsByService(slug, 3);
     return (

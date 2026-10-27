@@ -191,13 +191,15 @@ export function IndustryClientsGrid({
   title,
   description,
   items,
+  background = "#0D1B2A",
 }: {
   title: string;
   description?: any;
   items: ClientItem[];
+  background?: string;
 }) {
   return (
-    <section id="clients" className="py-12 md:py-16 scroll-mt-24 overflow-x-clip" style={{ background: "#0D1B2A" }}>
+    <section id="clients" className="py-12 md:py-16 scroll-mt-24 overflow-x-clip" style={{ background }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <div className="text-center mb-6 md:mb-8 space-y-3">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
@@ -452,7 +454,7 @@ export function IndustryLifecycle({
             className="hidden lg:block absolute top-8 left-[6%] right-[6%] h-px"
             style={{ background: "rgba(0,229,255,0.25)" }}
           />
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
+          <div className={`grid grid-cols-2 md:grid-cols-3 ${items.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-6"} gap-4 sm:gap-5`}>
             {items.map((item, index) => {
               const Icon = PROCESS_ICONS[index % PROCESS_ICONS.length];
               return (
