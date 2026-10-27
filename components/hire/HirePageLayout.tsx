@@ -54,7 +54,7 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
         secondaryButtonLink={hero.secondaryCta?.link || "#hiring-models"}
         breadcrumbs={[
           { label: "Home", href: "/" },
-          { label: "Hire Developers" },
+          { label: data.breadcrumbLabel || "Hire Developers" },
           { label: role },
         ]}
       />
@@ -80,6 +80,7 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
         items={data.models || []}
         ctaText={data.modelsCta?.text || `Hire ${role}`}
         ctaLink={data.modelsCta?.link || "/contact"}
+        bestForLabel={data.modelsBestForLabel || undefined}
       />
 
       <HireTechStack
@@ -122,19 +123,20 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
         <TestimonialCarousel
           testimonials={data.testimonials}
           title={data.testimonialsHeadline || "What Our Clients Say"}
-          subtitle="Testimonials"
+          subtitle={data.testimonialsBadge || "Testimonials"}
         />
       )}
 
       <HireExploreMore
         title={data.moreHeadline || "Explore More Developers to Hire"}
         items={data.moreLinks || []}
+        linkText={data.moreLinkText || undefined}
       />
 
       {faqs.length > 0 && (
         <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title="Frequently Asked Questions" />
+            <FAQ items={faqs} title={data.faqsHeadline || "Frequently Asked Questions"} />
           </div>
         </section>
       )}

@@ -101,12 +101,14 @@ export function HireModels({
   items,
   ctaText,
   ctaLink,
+  bestForLabel = "Best for:",
 }: {
   title: string;
   description?: any;
   items: HiringModel[];
   ctaText: string;
   ctaLink: string;
+  bestForLabel?: string;
 }) {
   if (!items.length) return null;
   return (
@@ -123,7 +125,7 @@ export function HireModels({
                 <p className="text-xl font-bold text-white mb-2 leading-snug">{item.title}</p>
                 {item.bestFor && (
                   <p className="text-sm font-semibold mb-4" style={{ color: "#C5D1E0" }}>
-                    Best for: <span style={{ color: "#8FA3BF" }}>{item.bestFor}</span>
+                    {bestForLabel} <span style={{ color: "#8FA3BF" }}>{item.bestFor}</span>
                   </p>
                 )}
                 {item.description && (
@@ -186,7 +188,15 @@ export function HireTechStack({ title, description, items }: { title: string; de
 }
 
 /** Links to other hire pages */
-export function HireExploreMore({ title, items }: { title: string; items: HireLink[] }) {
+export function HireExploreMore({
+  title,
+  items,
+  linkText = "Hire now",
+}: {
+  title: string;
+  items: HireLink[];
+  linkText?: string;
+}) {
   if (!items.length) return null;
   return (
     <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0D1B2A" }}>
@@ -209,7 +219,7 @@ export function HireExploreMore({ title, items }: { title: string; items: HireLi
                 </p>
               )}
               <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-bold" style={{ color: "#00E5FF" }}>
-                Hire now
+                {linkText}
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </span>
             </Link>

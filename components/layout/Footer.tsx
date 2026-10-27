@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Linkedin, Mail, Youtube } from "lucide-react";
-import { getNavigationIndustries, getNavigationServices, getSettings } from "@/lib/sanity/queries";
+import { getNavigationHirePages, getNavigationIndustries, getNavigationServices, getSettings } from "@/lib/sanity/queries";
 import { isFinanceListed, isSolutionsListed } from "@/lib/content-visibility";
 import { portableTextToPlain } from "@/lib/seo";
 
@@ -76,12 +76,16 @@ const headingClass =
   "text-[#8FA3BF] font-semibold mb-5 text-[13px] md:text-sm uppercase tracking-[0.14em]";
 
 export async function Footer() {
-  const [dynamicServices, dynamicIndustries, settings] = await Promise.all([
+  const [dynamicServices, dynamicIndustries, hirePages, settings] = await Promise.all([
     getNavigationServices(),
     getNavigationIndustries(),
+    getNavigationHirePages(),
     getSettings(),
   ]);
   const showIndustries = isFinanceListed() || dynamicIndustries.length > 0;
+  const showHire = hirePages.length > 0;
+  // 12-col grid: brand / services / industries / hire / company
+  const extraColumns = Number(showIndustries) + Number(showHire);
 
   const companyName = settings?.companyName || "SyncOrigins";
   const footerDescription =
@@ -100,7 +104,7 @@ export async function Footer() {
       <div className="container-custom">
         <div className="grid grid-cols-2 md:grid-cols-12 gap-10 md:gap-10 lg:gap-12 mb-12 md:mb-14 items-start">
           {/* Brand */}
-          <div className={`col-span-2 ${showIndustries ? "md:col-span-4" : "md:col-span-5"} flex flex-col items-start text-left pr-0 md:pr-6`}>
+          <div className={`col-span-2 ${["md:col-span-5", "md:col-span-4", "md:col-span-3"][extraColumns]} flex flex-col items-start text-left pr-0 md:pr-6`}>
             <Link href="/" className="flex items-start mb-5 -mt-1.5">
               <div className="relative w-44 h-14 md:w-52 md:h-16">
                 <Image
@@ -132,7 +136,7 @@ export async function Footer() {
           </div>
 
           {/* Services */}
-          <div className={showIndustries ? "md:col-span-3" : "md:col-span-4"}>
+          <div className={extraColumns > 0 ? "md:col-span-3" : "md:col-span-4"}>
             <p className={headingClass}>Services</p>
             <ul className="space-y-3.5">
               <li><Link href="/ai-implementation" className={linkClass}>AI Implementation</Link></li>
@@ -167,8 +171,23 @@ export async function Footer() {
             </div>
           )}
 
+          {showHire && (
+            <div className="md:col-span-2">
+              <p className={headingClass}>Hire Developers</p>
+              <ul className="space-y-3.5">
+                {hirePages.map((page) => (
+                  <li key={page.slug}>
+                    <Link href={`/${page.slug}`} className={linkClass}>
+                      {page.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Company */}
-          <div className="md:col-span-3">
+          <div className={extraColumns === 2 ? "md:col-span-2" : "md:col-span-3"}>
             <p className={headingClass}>Company</p>
             <ul className="space-y-3.5">
               <li><Link href="/about" className={linkClass}>About</Link></li>

@@ -79,6 +79,37 @@ export default defineType({
                 }),
         }),
 
+        defineField({
+            name: 'showInNavigation',
+            title: 'Show in Navigation',
+            type: 'boolean',
+            group: 'settings',
+            initialValue: true,
+            description: 'When enabled, this page appears in the "Hire Developers" menu and footer.',
+        }),
+        defineField({
+            name: 'navLabel',
+            title: 'Menu Label',
+            type: 'string',
+            group: 'settings',
+            description: 'Text shown in the menu. Defaults to "Hire <Role Name>".',
+        }),
+        defineField({
+            name: 'navTags',
+            title: 'Navigation Tags',
+            type: 'array',
+            of: [{ type: 'string' }],
+            group: 'settings',
+            description: 'Short tags shown under the menu link (e.g. "GenAI", "LLM", "RAG").',
+        }),
+        defineField({
+            name: 'breadcrumbLabel',
+            title: 'Breadcrumb Parent Label',
+            type: 'string',
+            group: 'settings',
+            description: 'Defaults to "Hire Developers".',
+        }),
+
         // 1. Hero
         defineField({ name: 'hero', title: 'Hero Header', type: 'hero', group: 'hero' }),
 
@@ -95,6 +126,13 @@ export default defineType({
         // 4. Hiring models
         headline('modelsHeadline', 'Hiring Models Headline', 'models'),
         subline('modelsDescription', 'models'),
+        defineField({
+            name: 'modelsBestForLabel',
+            title: '"Best For" Label',
+            type: 'string',
+            group: 'models',
+            description: 'Defaults to "Best for:".',
+        }),
         titledList('models', 'Hiring Models', 'models', [
             { name: 'bestFor', type: 'string', title: 'Best For', description: 'Short line, e.g. "Long-term AI product development".' },
             { name: 'features', type: 'array', of: [{ type: 'string' }], title: 'Key Points' },
@@ -161,6 +199,7 @@ export default defineType({
 
         // 9. Testimonials
         headline('testimonialsHeadline', 'Testimonials Headline', 'testimonials'),
+        headline('testimonialsBadge', 'Testimonials Badge', 'testimonials'),
         defineField({
             name: 'testimonials',
             title: 'Testimonials',
@@ -172,6 +211,13 @@ export default defineType({
 
         // 10. Explore more
         headline('moreHeadline', 'Explore More Headline', 'more'),
+        defineField({
+            name: 'moreLinkText',
+            title: 'Card Link Text',
+            type: 'string',
+            group: 'more',
+            description: 'Defaults to "Hire now".',
+        }),
         defineField({
             name: 'moreLinks',
             title: 'Other Developers to Hire',
@@ -189,6 +235,7 @@ export default defineType({
         }),
 
         // 11–12. FAQs & final CTA
+        headline('faqsHeadline', 'FAQs Headline', 'faqs'),
         defineField({ name: 'faqs', title: 'FAQs', type: 'array', group: 'faqs', of: [{ type: 'faq' }] }),
         defineField({
             name: 'finalCta',

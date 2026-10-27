@@ -720,6 +720,7 @@ export async function getHirePageBySlug(slug: string): Promise<any> {
   const query = `*[_type == "hirePage" && slug.current == $slug][0] {
     title,
     "slug": slug.current,
+    breadcrumbLabel,
     seo { ${SEO_FIELDS} },
     hero {
       badge,
@@ -732,7 +733,7 @@ export async function getHirePageBySlug(slug: string): Promise<any> {
     },
     expertiseHeadline, expertiseDescription, expertise[] { title, description },
     buildHeadline, buildDescription, buildItems[] { title, description },
-    modelsHeadline, modelsDescription, models[] { title, description, bestFor, features },
+    modelsHeadline, modelsDescription, modelsBestForLabel, models[] { title, description, bestFor, features },
     modelsCta { text, link },
     techHeadline, techDescription, techStack[] { category, tools },
     whyHeadline, whyDescription, whyItems[] { title, description },
@@ -740,12 +741,22 @@ export async function getHirePageBySlug(slug: string): Promise<any> {
     whyImageLabel, whyImageTitle, whyListTitle,
     processHeadline, processDescription, process[] { title, description },
     industriesHeadline, industriesDescription, industries[] { title, description, icon },
-    testimonialsHeadline, testimonials[] { quote, author, role, company },
-    moreHeadline, moreLinks[] { title, description, link },
-    faqs[] { question, answer },
+    testimonialsHeadline, testimonialsBadge, testimonials[] { quote, author, role, company },
+    moreHeadline, moreLinkText, moreLinks[] { title, description, link },
+    faqsHeadline, faqs[] { question, answer },
     finalCta { badgeText, title, description, buttonText, buttonLink }
   }`
   return safeFetch<any>(query, { slug }, null)
+}
+
+/** Hire pages that should appear in header/footer navigation */
+export async function getNavigationHirePages(): Promise<any[]> {
+  const query = `*[_type == "hirePage" && showInNavigation != false && defined(slug.current) && !(slug.current in $reserved)] | order(title asc) {
+    "title": coalesce(navLabel, "Hire " + title),
+    "slug": slug.current,
+    navTags
+  }`
+  return safeFetch<any[]>(query, { reserved: CORE_SERVICE_SLUGS }, [])
 }
 
 export async function getAllHirePageSlugs(): Promise<string[]> {

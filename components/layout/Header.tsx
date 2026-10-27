@@ -19,17 +19,20 @@ type DynamicNavService = {
 
 type HeaderLink = { text?: string; link?: string };
 
+type DropdownKey = "services" | "industries" | "hire";
+
 type NavItem = {
   name: string;
   href: string;
   hasDropdown?: boolean;
-  dropdownKey?: "services" | "industries";
+  dropdownKey?: DropdownKey;
 };
 
 const navigation: NavItem[] = [
   { name: "Home", href: "/" },
   { name: "Services", href: "#services", hasDropdown: true, dropdownKey: "services" },
   { name: "Industries", href: "#industries", hasDropdown: true, dropdownKey: "industries" },
+  { name: "Hire Developers", href: "#hire", hasDropdown: true, dropdownKey: "hire" },
   ...(isSolutionsListed() ? [{ name: "Solutions", href: "/solutions" }] : []),
   { name: "Insights", href: "/insights" },
   { name: "About", href: "/about" },
@@ -126,10 +129,11 @@ export const Header: React.FC = () => {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<"services" | "industries" | null>(null);
-  const [mobileExpanded, setMobileExpanded] = useState<"services" | "industries" | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<DropdownKey | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<DropdownKey | null>(null);
   const [dynamicServices, setDynamicServices] = useState<DynamicNavService[]>([]);
   const [dynamicIndustries, setDynamicIndustries] = useState<DynamicNavService[]>([]);
+  const [hirePages, setHirePages] = useState<DynamicNavService[]>([]);
   const [headerContactLink, setHeaderContactLink] = useState<HeaderLink | null>(null);
   const [headerCta, setHeaderCta] = useState<HeaderLink | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -143,6 +147,9 @@ export const Header: React.FC = () => {
         }
         if (data?.industryPages) {
           setDynamicIndustries(data.industryPages);
+        }
+        if (data?.hirePages) {
+          setHirePages(data.hirePages);
         }
         setHeaderContactLink(data?.headerContactLink || null);
         setHeaderCta(data?.headerCta || null);
@@ -158,7 +165,7 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleMouseEnter = (key: "services" | "industries") => {
+  const handleMouseEnter = (key: DropdownKey) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setOpenDropdown(key);
   };
@@ -177,6 +184,9 @@ export const Header: React.FC = () => {
     if (item.dropdownKey === "industries") {
       const dynamicPaths = dynamicIndustries.map((i) => i.href);
       return [...industryPaths, ...dynamicPaths].some((path) => pathname.startsWith(path));
+    }
+    if (item.dropdownKey === "hire") {
+      return hirePages.some((page) => pathname.startsWith(page.href));
     }
     return pathname === item.href;
   };
@@ -197,10 +207,12 @@ export const Header: React.FC = () => {
   const ctaText = headerCta?.text || "Book a Call";
   const ctaHref = headerCta?.link || "/contact";
 
-  // Hide the Industries menu entirely when there is nothing to list
-  const navItems = navigation.filter(
-    (item) => item.dropdownKey !== "industries" || industryCategories.length + dynamicIndustries.length > 0
-  );
+  // Hide the Industries / Hire menus entirely when there is nothing to list
+  const navItems = navigation.filter((item) => {
+    if (item.dropdownKey === "industries") return industryCategories.length + dynamicIndustries.length > 0;
+    if (item.dropdownKey === "hire") return hirePages.length > 0;
+    return true;
+  });
 
   return (
     <>
@@ -228,7 +240,7 @@ export const Header: React.FC = () => {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-2">
+            <nav className="hidden xl:flex items-center gap-2">
               {navItems.map((item) => (
                 <div
                   key={item.name}
@@ -239,7 +251,7 @@ export const Header: React.FC = () => {
                   {item.hasDropdown ? (
                     <div
                       className={cn(
-                        "px-6 py-2.5 text-base font-medium rounded-full transition-all flex items-center gap-1.5 tracking-tight cursor-pointer",
+                        "px-6 py-2.5 text-base font-medium rounded-full transition-all flex items-center gap-1.5 tracking-tight whitespace-nowrap cursor-pointer",
                         isActive(item)
                           ? "text-[#00E5FF] bg-[#00E5FF]/10 border border-[#00E5FF]/25"
                           : "text-[#C5D1E0] hover:text-white hover:bg-white/5"
@@ -263,7 +275,7 @@ export const Header: React.FC = () => {
                       href={item.href}
                       onClick={item.href === "/" ? handleHomeClick : undefined}
                       className={cn(
-                        "px-6 py-2.5 text-base font-medium rounded-full transition-all flex items-center gap-1.5 tracking-tight",
+                        "px-6 py-2.5 text-base font-medium rounded-full transition-all flex items-center gap-1.5 tracking-tight whitespace-nowrap",
                         isActive(item)
                           ? "text-[#00E5FF] bg-[#00E5FF]/10 border border-[#00E5FF]/25"
                           : "text-[#C5D1E0] hover:text-white hover:bg-white/5"
@@ -396,17 +408,55 @@ export const Header: React.FC = () => {
                       </div>
                     </div>
                   )}
+
+                  {/* Hire Developers dropdown */}
+                  {item.dropdownKey === "hire" && openDropdown === "hire" && (
+                    <div
+                      className="absolute top-full left-0 pt-4 w-max animate-scale-in"
+                      onMouseEnter={() => handleMouseEnter("hire")}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <div className="bg-[#0D1B2A]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#00E5FF]/15 p-6 relative z-[60] w-[360px]">
+                        {hirePages.map((page) => (
+                          <Link
+                            key={page.slug}
+                            href={page.href}
+                            className="group/item flex gap-4 p-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
+                          >
+                            <DynamicServiceIcon />
+                            <div>
+                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-2">
+                                {page.title}
+                              </h3>
+                              {(page.navTags?.length ?? 0) > 0 && (
+                                <div className="flex flex-wrap gap-2">
+                                  {page.navTags!.map((tag) => (
+                                    <span
+                                      key={tag}
+                                      className="px-3 py-1 bg-[#14243A] text-[#8FA3BF] text-[0.75rem] font-medium rounded-full cursor-default border border-[#00E5FF]/10"
+                                    >
+                                      {tag}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </nav>
 
             {/* Actions */}
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden xl:flex items-center gap-8">
               <Link href={contactHref} className="text-base font-medium text-[#8FA3BF] hover:text-white transition-colors">
                 {contactText}
               </Link>
               <Link href={ctaHref}>
-                <Button size="md" className="rounded-full px-8 h-12 text-base font-bold text-[#0A0F1F] bg-gradient-to-r from-[#1DA1F2] to-[#00E5FF] border-none hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,229,255,0.4)]">
+                <Button size="md" className="rounded-full px-8 h-12 whitespace-nowrap text-base font-bold text-[#0A0F1F] bg-gradient-to-r from-[#1DA1F2] to-[#00E5FF] border-none hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,229,255,0.4)]">
                   {ctaText}
                 </Button>
               </Link>
@@ -415,7 +465,7 @@ export const Header: React.FC = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-[#C5D1E0] bg-[#14243A] border border-[#00E5FF]/20 rounded-full"
+              className="xl:hidden p-2 text-[#C5D1E0] bg-[#14243A] border border-[#00E5FF]/20 rounded-full"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -427,7 +477,7 @@ export const Header: React.FC = () => {
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-[#0A0F1F]/98 backdrop-blur-xl pt-24 px-6 overflow-y-auto border-r border-[#00E5FF]/10">
+        <div className="xl:hidden fixed inset-0 z-40 bg-[#0A0F1F]/98 backdrop-blur-xl pt-24 px-6 overflow-y-auto border-r border-[#00E5FF]/10">
           <nav className="flex flex-col gap-6 text-lg font-medium">
             {navItems.map((item) => (
               <React.Fragment key={item.name}>
@@ -458,7 +508,7 @@ export const Header: React.FC = () => {
                     </button>
                     {mobileExpanded === item.dropdownKey && (
                       <div className="pl-4 flex flex-col gap-4 -mt-2">
-                        {(item.dropdownKey === "services" ? serviceCategories : industryCategories).map((cat) => (
+                        {(item.dropdownKey === "services" ? serviceCategories : item.dropdownKey === "industries" ? industryCategories : []).map((cat) => (
                           <Link
                             key={cat.title}
                             href={cat.href}
@@ -468,7 +518,7 @@ export const Header: React.FC = () => {
                             {cat.title}
                           </Link>
                         ))}
-                        {(item.dropdownKey === "services" ? dynamicServices : dynamicIndustries).map((service) => (
+                        {(item.dropdownKey === "services" ? dynamicServices : item.dropdownKey === "industries" ? dynamicIndustries : hirePages).map((service) => (
                           <Link
                             key={service.slug}
                             href={service.href}

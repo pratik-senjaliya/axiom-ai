@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getNavigationServices, getNavigationIndustries, getSettings } from '@/lib/sanity/queries';
+import { getNavigationServices, getNavigationIndustries, getNavigationHirePages, getSettings } from '@/lib/sanity/queries';
 import { getAllIndustries } from '@/lib/industries';
 import { getAllHireStaffPositions as getAllHireStaff } from '@/lib/hire-staff';
 
@@ -7,9 +7,10 @@ export const revalidate = 0; // Disable caching to always get fresh data
 
 export async function GET() {
     try {
-        const [services, industryPages, industries, hireStaff, settings] = await Promise.all([
+        const [services, industryPages, hirePages, industries, hireStaff, settings] = await Promise.all([
             getNavigationServices(),
             getNavigationIndustries(),
+            getNavigationHirePages(),
             getAllIndustries(),
             getAllHireStaff(),
             getSettings(),
@@ -29,6 +30,12 @@ export async function GET() {
                 slug: i.slug,
                 href: `/${i.slug}`,
                 navTags: i.navTags,
+            })),
+            hirePages: hirePages.map((h: any) => ({
+                title: h.title,
+                slug: h.slug,
+                href: `/${h.slug}`,
+                navTags: h.navTags,
             })),
             industries: industries.map((i: any) => ({
                 title: i.title,

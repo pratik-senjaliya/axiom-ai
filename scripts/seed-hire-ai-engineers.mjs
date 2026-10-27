@@ -25,6 +25,8 @@ const hireAiEngineersPage = {
   _type: "hirePage",
   title: "AI Engineers",
   slug: { _type: "slug", current: "hire-ai-engineers" },
+  showInNavigation: true,
+  navTags: ["GenAI", "LLM", "RAG", "AI Agents", "MLOps"],
   hero: {
     badge: "Hire AI Engineers",
     title: "Hire Vetted AI Engineers for",
