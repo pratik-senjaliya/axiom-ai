@@ -119,11 +119,11 @@ export function HireModels({
           {items.map((item, index) => (
             <StaggerItem key={item.title}>
               <HoverCard className="h-full rounded-2xl border p-6 md:p-7 text-left flex flex-col min-w-0" style={CARD_STYLE}>
-                <p className="text-[11px] font-extrabold tracking-[0.2em] mb-3" style={{ color: "#00E5FF" }}>
+                <p className="text-3xl md:text-4xl font-extrabold leading-none mb-4" style={{ color: "#00E5FF" }}>
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <p className="text-xl font-bold text-white mb-2 leading-snug">{item.title}</p>
-                {item.bestFor && (
+                {item.bestFor?.trim() && (
                   <p className="text-sm font-semibold mb-4" style={{ color: "#C5D1E0" }}>
                     {bestForLabel} <span style={{ color: "#8FA3BF" }}>{item.bestFor}</span>
                   </p>

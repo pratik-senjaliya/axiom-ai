@@ -569,7 +569,7 @@ export function IndustryWhyUs({
             className="rounded-2xl border p-5 md:p-6"
             style={{ background: "rgba(10,15,31,0.45)", borderColor: "rgba(0,229,255,0.12)" }}
           >
-            <p className="text-sm font-bold text-white mb-4">
+            <p className="text-lg md:text-xl font-bold mb-4 leading-snug" style={{ color: "#00E5FF" }}>
               {listTitle}
             </p>
             <ul className="space-y-3">
