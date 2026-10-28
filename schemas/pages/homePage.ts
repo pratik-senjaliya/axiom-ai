@@ -13,6 +13,7 @@ export default defineType({
         { name: 'personas', title: 'Target Audience' },
         { name: 'why', title: 'Why SyncOrigins' },
         { name: 'stories', title: 'Success Stories' },
+        { name: 'insights', title: 'Insights' },
         { name: 'faqs', title: 'FAQs' },
         { name: 'seo', title: 'SEO' },
     ],
@@ -259,6 +260,52 @@ export default defineType({
             of: [{ type: 'testimonial' }],
             description: 'Optional. Shown as a carousel below the case studies.',
             group: 'stories',
+        }),
+
+        // Section: Latest Insights (blog posts)
+        defineField({
+            name: 'showInsights',
+            title: 'Show Latest Insights',
+            type: 'boolean',
+            initialValue: true,
+            description: 'Shows the most recent Insights (blog) posts automatically.',
+            group: 'insights',
+        }),
+        defineField({
+            name: 'insightsBadge',
+            title: 'Insights Badge',
+            type: 'string',
+            initialValue: 'Insights & Resources',
+            group: 'insights',
+        }),
+        defineField({
+            name: 'insightsHeadline',
+            title: 'Insights Headline',
+            type: 'string',
+            initialValue: 'Ideas & Insights for Enterprise Innovation',
+            group: 'insights',
+        }),
+        defineField({
+            name: 'insightsBody',
+            title: 'Insights Body',
+            type: 'simpleBlockContent',
+            description: 'Defaults to the approved intro text when empty.',
+            group: 'insights',
+        }),
+        defineField({
+            name: 'insightsCount',
+            title: 'Number of Posts',
+            type: 'number',
+            initialValue: 3,
+            options: { list: [3, 6, 9] },
+            group: 'insights',
+        }),
+        defineField({
+            name: 'insightsLinkText',
+            title: '"View All" Link Text',
+            type: 'string',
+            initialValue: 'View all insights',
+            group: 'insights',
         }),
 
         // Section 6: Final CTA

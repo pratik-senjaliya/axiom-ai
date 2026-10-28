@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { PortableText } from "@/components/ui/PortableText";
 import { notFound } from "next/navigation";
-import { getHomePage } from "@/lib/sanity/queries";
+import { getHomePage, getLatestPosts } from "@/lib/sanity/queries";
 import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
@@ -13,6 +13,7 @@ import { FAQ } from "@/components/ui/FAQ";
 import { HomePageSchemas } from "@/components/seo/PageSchemas";
 import { isSolutionsListed } from "@/lib/content-visibility";
 import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { ArrowRight, Boxes, Brain, Building2, Database, Layers, Rocket, SlidersHorizontal, Users } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -63,6 +64,7 @@ export default async function HomePage() {
   const whyIcons = [Layers, Building2, SlidersHorizontal, Rocket];
   const showCaseStudies = data?.showCaseStudies === true;
   const testimonials = data?.testimonials || [];
+  const latestPosts = data?.showInsights !== false ? await getLatestPosts(data?.insightsCount || 3) : [];
 
   const personaGradients = [
     'linear-gradient(135deg, #1DA1F2, #00E5FF)',
@@ -481,6 +483,18 @@ export default async function HomePage() {
           subtitle={showCaseStudies ? "Testimonials" : data?.storiesBadge || "Testimonials"}
         />
       )}
+
+      {/* 5.7 Latest Insights */}
+      <RelatedInsights
+        posts={latestPosts}
+        label={data?.insightsBadge || "Insights & Resources"}
+        title={data?.insightsHeadline || "Ideas & Insights for Enterprise Innovation"}
+        description={
+          data?.insightsBody ||
+          "Explore practical insights on AI implementation, data engineering, ERP modernisation and the delivery approaches that help enterprise technology initiatives scale."
+        }
+        linkText={data?.insightsLinkText || "View all insights"}
+      />
 
       {/* FAQ */}
       {faqs.length > 0 && (

@@ -6,14 +6,28 @@ import { ArrowRight, Clock, Tag } from 'lucide-react';
 import { BlogPost } from '@/lib/blog';
 import { SlideUp } from '@/components/ui/animations/SlideUp';
 import { StaggerGroup, StaggerItem } from '@/components/ui/animations/StaggerGroup';
+import { PortableText } from '@/components/ui/PortableText';
 
 interface RelatedInsightsProps {
   posts: BlogPost[];
-  serviceName: string;
+  serviceName?: string;
   compact?: boolean;
+  /** Overrides for pages that aren't about one service, e.g. the home page */
+  label?: string;
+  title?: string;
+  description?: any;
+  linkText?: string;
 }
 
-export function RelatedInsights({ posts, serviceName, compact = false }: RelatedInsightsProps) {
+export function RelatedInsights({
+  posts,
+  serviceName,
+  compact = false,
+  label = "Related Insights",
+  title,
+  description,
+  linkText = "View all insights",
+}: RelatedInsightsProps) {
   if (!posts || posts.length === 0) return null;
 
   return (
@@ -29,11 +43,16 @@ export function RelatedInsights({ posts, serviceName, compact = false }: Related
           <div className="max-w-2xl">
             <div className={`inline-flex items-center gap-2 font-semibold text-xs tracking-wide uppercase ${compact ? "mb-2" : "mb-4"}`} style={{ color: '#00E5FF' }}>
               <span className="text-xl leading-none font-light block -mt-1">+</span>
-              <span>Related Insights</span>
+              <span>{label}</span>
             </div>
             <h5 className={`font-bold text-white tracking-tight ${compact ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"}`}>
-              Expertise In {serviceName}
+              {title || `Expertise In ${serviceName}`}
             </h5>
+            {description && (
+              <div className="text-base leading-relaxed mt-4" style={{ color: '#8FA3BF' }}>
+                <PortableText value={description} />
+              </div>
+            )}
           </div>
 
           <Link
@@ -41,7 +60,7 @@ export function RelatedInsights({ posts, serviceName, compact = false }: Related
             className="group flex items-center font-bold text-[15px] transition-all"
             style={{ color: '#00E5FF' }}
           >
-            View all insights
+            {linkText}
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </SlideUp>

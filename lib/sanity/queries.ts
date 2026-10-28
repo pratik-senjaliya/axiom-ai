@@ -334,6 +334,12 @@ export async function getHomePage(): Promise<any> {
     showCaseStudies,
     testimonialsHeadline,
     testimonials[] { quote, author, role, company },
+    showInsights,
+    insightsBadge,
+    insightsHeadline,
+    insightsBody,
+    insightsCount,
+    insightsLinkText,
     faqsHeadline,
     faqs[] { question, answer }
   }`
@@ -878,6 +884,26 @@ export async function getLatestPostsByService(service: string, limit: number = 3
   }`
 
   const posts = await safeFetch<BlogPost[]>(query, { service, limit }, [])
+  return (posts || []).map((p) => withResolvedBlogImages(p) as BlogPost)
+}
+
+/** Most recent posts across all topics (home page) */
+export async function getLatestPosts(limit: number = 3): Promise<BlogPost[]> {
+  const query = `*[_type == "post" && defined(slug.current)] | order(publishedAt desc) [0...$limit] {
+    "id": _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    "category": coalesce(category, "Insights"),
+    "date": publishedAt,
+    "author": coalesce(author, "SyncOrigins"),
+    mainImage,
+    "image": coalesce(mainImage.asset->url, ${IMAGE_FALLBACK}),
+    "imageAlt": mainImage.alt,
+    "readTime": coalesce(readTime, "5 min read")
+  }`
+
+  const posts = await safeFetch<BlogPost[]>(query, { limit }, [], { cache: 'no-store' })
   return (posts || []).map((p) => withResolvedBlogImages(p) as BlogPost)
 }
 
