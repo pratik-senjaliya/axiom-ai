@@ -50,17 +50,15 @@ export function CaseStudyCard({ item, index = 0 }: CaseStudyCardProps) {
         </div>
       </div>
 
-      <div className="order-1 lg:order-2 relative min-h-[240px] sm:min-h-[300px] lg:min-h-0 lg:w-[42%]">
+      {/* Natural aspect ratio so images with text in them are never cropped */}
+      <div className="order-1 lg:order-2 lg:w-[42%] flex items-center lg:p-8 lg:pl-0">
         <Image
           src={item.image!}
           alt={item.imageAlt || item.headline || 'Case study'}
-          fill
-          className="object-cover"
+          width={1600}
+          height={1000}
+          className="block w-full h-auto lg:rounded-2xl lg:border lg:border-[rgba(0,229,255,0.15)]"
           sizes="(max-width: 1024px) 100vw, 42vw"
-        />
-        <div
-          className="absolute inset-0 pointer-events-none lg:bg-gradient-to-r lg:from-[#14243A] lg:via-transparent lg:to-transparent"
-          aria-hidden
         />
       </div>
     </div>
