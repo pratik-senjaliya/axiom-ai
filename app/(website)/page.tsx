@@ -423,37 +423,43 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 5.5 Why SyncOrigins */}
+      {/* 5.5 Why SyncOrigins: split layout so it reads differently from the persona cards above */}
       {data?.whyCards?.length > 0 && (
-        <section className="py-12 md:py-16 relative" style={{ background: '#0D1B2A' }}>
-          <div className="container-custom">
-            <div className="text-center mb-10 md:mb-12 max-w-4xl mx-auto">
+        <section id="why-syncorigins" className="py-14 md:py-20 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
+          <div className="absolute top-0 left-0 right-0 h-px pointer-events-none" style={{ background: 'linear-gradient(to right, transparent, rgba(0,229,255,0.35), transparent)' }} />
+          <div className="absolute top-1/2 -left-40 -translate-y-1/2 w-[36rem] h-[36rem] rounded-full blur-[110px] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%)' }} />
+
+          <div className="container-custom relative z-10 grid lg:grid-cols-[5fr_7fr] gap-10 lg:gap-14 items-center">
+            <SlideUp>
               {data?.whyBadge && (
-                <div className="inline-flex items-center gap-2 font-medium mb-4" style={{ color: '#00E5FF' }}>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6" style={{ background: 'rgba(0,229,255,0.08)', borderColor: 'rgba(0,229,255,0.3)' }}>
                   <SparkleIcon />
-                  <span className="text-sm font-medium">{data.whyBadge}</span>
+                  <span className="text-sm font-semibold" style={{ color: '#00E5FF' }}>{data.whyBadge}</span>
                 </div>
               )}
               <h2 className="type-section-title text-white mb-6">
                 {data?.whyHeadline || "Engineering Intelligence Into Every Layer"}
               </h2>
               {data?.whyBody && (
-                <div className="type-lead text-[#8FA3BF] max-w-3xl mx-auto">
+                <div className="type-lead text-[#8FA3BF]">
                   <PortableText value={data.whyBody} />
                 </div>
               )}
-            </div>
+            </SlideUp>
 
-            <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <StaggerGroup className="grid sm:grid-cols-2 gap-5">
               {data.whyCards.map((card: any, index: number) => {
                 const Icon = whyIcons[index % whyIcons.length];
                 return (
                   <StaggerItem key={index} className="h-full">
-                    <HoverCard className="rounded-3xl p-7 h-full" style={{ background: 'rgba(20,36,58,0.7)', border: '1px solid rgba(0,229,255,0.12)' }}>
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 text-[#0A0F1F]" style={{ background: personaGradients[index % personaGradients.length], boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
-                        <Icon className="w-6 h-6" strokeWidth={2} />
+                    <HoverCard className="group relative rounded-2xl p-6 h-full overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(20,36,58,0.9), rgba(13,27,42,0.9))', border: '1px solid rgba(0,229,255,0.15)' }}>
+                      <span className="absolute top-4 right-5 text-4xl font-black leading-none select-none" style={{ color: 'rgba(0,229,255,0.12)' }}>
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 text-[#0A0F1F]" style={{ background: personaGradients[index % personaGradients.length], boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
+                        <Icon className="w-5 h-5" strokeWidth={2} />
                       </div>
-                      <p className="text-lg font-bold text-white mb-3">{card.title}</p>
+                      <p className="text-lg font-bold text-white mb-2 pr-10 group-hover:text-[#00E5FF] transition-colors">{card.title}</p>
                       <div className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
                         <PortableText value={card.description} />
                       </div>
