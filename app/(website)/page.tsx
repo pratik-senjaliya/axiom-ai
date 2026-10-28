@@ -471,6 +471,7 @@ export default async function HomePage() {
           subtitle={data?.storiesBadge}
           description={data?.storiesBody}
           ignoreSiteFlag
+          featuredOnly
         />
       )}
       {testimonials.length > 0 && (

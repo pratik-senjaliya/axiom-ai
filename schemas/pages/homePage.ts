@@ -222,7 +222,7 @@ export default defineType({
             title: 'Show Case Studies on Home Page',
             type: 'boolean',
             initialValue: false,
-            description: 'Turn on to show the case study slider (from the "Case Studies" document) in this section.',
+            description: 'Turn on to show the case study slider here. Only case studies with "Feature on Home Page" ticked are shown.',
             group: 'stories',
         }),
         defineField({

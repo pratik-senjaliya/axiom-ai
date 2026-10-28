@@ -250,6 +250,21 @@ export async function getCaseStudies(): Promise<any> {
   return safeFetch<any>(query, {}, null, { cache: 'no-store' })
 }
 
+// Case studies ticked "Feature on Home Page", shaped like slider spotlight items
+export async function getHomeFeaturedCaseStudies(): Promise<any[]> {
+  const query = `*[_type == "caseStudy" && featuredOnHome == true && defined(slug.current)]
+    | order(coalesce(homeOrder, 9999) asc, publishedAt desc) {
+    "headline": title,
+    "subline": excerpt,
+    "ctaText": "Read case study",
+    "ctaLink": "/case-studies/" + slug.current,
+    "image": mainImage.asset->url,
+    "imageAlt": coalesce(mainImage.alt, title)
+  }`
+
+  return safeFetch<any[]>(query, {}, [], { cache: 'no-store' })
+}
+
 // ==================== HOME PAGE ====================
 
 // GROQ query to get home page data

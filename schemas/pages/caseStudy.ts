@@ -60,6 +60,23 @@ export default defineType({
       group: 'hero',
     }),
     defineField({
+      name: 'featuredOnHome',
+      title: 'Feature on Home Page',
+      type: 'boolean',
+      group: 'hero',
+      initialValue: false,
+      description:
+        'Show this case study in the Home Page "Success Stories" slider (uses the Title, Short Summary and Main Image). The slider itself is switched on in Home Page → Success Stories.',
+    }),
+    defineField({
+      name: 'homeOrder',
+      title: 'Home Page Order',
+      type: 'number',
+      group: 'hero',
+      description: 'Optional. Lower numbers show first in the Home Page slider.',
+      hidden: ({ document }) => !document?.featuredOnHome,
+    }),
+    defineField({
       name: 'relatedService',
       title: 'Related Service Area',
       type: 'string',
