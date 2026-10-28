@@ -4,6 +4,7 @@ import { useCallback } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { SlideUp } from '@/components/ui/animations/SlideUp'
+import { PortableText } from '@/components/ui/PortableText'
 import { CaseStudyCard } from './CaseStudyCard'
 import type { CaseStudiesSectionData, CaseStudySpotlightData } from './types'
 
@@ -54,6 +55,11 @@ export function CaseStudySlider({ data }: CaseStudySliderProps) {
             <span>{sectionSubtitle}</span>
           </div>
           <h4 className="text-3xl md:text-4xl font-bold text-white tracking-tight">{sectionTitle}</h4>
+          {data.sectionDescription && (
+            <div className="type-lead max-w-3xl mx-auto mt-5" style={{ color: '#8FA3BF' }}>
+              <PortableText value={data.sectionDescription} />
+            </div>
+          )}
         </SlideUp>
 
         <SlideUp delay={0.15} className="relative w-full">

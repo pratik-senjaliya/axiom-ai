@@ -8,9 +8,11 @@ export default defineType({
         { name: 'hero', title: 'Hero Section' },
         { name: 'pitfalls', title: 'Why Transformations Fail' },
         { name: 'solutions', title: 'What We Do' },
+        { name: 'hire', title: 'Hire Engineers' },
         { name: 'roadmap', title: 'Phases to Production' },
         { name: 'personas', title: 'Target Audience' },
-        { name: 'affiliation', title: 'Corporate Affiliation' },
+        { name: 'why', title: 'Why SyncOrigins' },
+        { name: 'stories', title: 'Success Stories' },
         { name: 'faqs', title: 'FAQs' },
         { name: 'seo', title: 'SEO' },
     ],
@@ -94,6 +96,44 @@ export default defineType({
             initialValue: { text: 'Talk to Our AI Expert', link: '/contact', variant: 'primary' },
         }),
 
+        // Section: Hire Vetted Engineers
+        defineField({
+            name: 'hireBadge',
+            title: 'Hire Section Badge',
+            type: 'string',
+            initialValue: 'Hire Vetted AI, Data & ERP Engineers',
+            group: 'hire',
+        }),
+        defineField({
+            name: 'hireHeadline',
+            title: 'Hire Section Headline',
+            type: 'string',
+            initialValue: 'Extend Your Engineering Capabilities with Specialist Talent',
+            group: 'hire',
+        }),
+        defineField({
+            name: 'hireBody',
+            title: 'Hire Section Body',
+            type: 'simpleBlockContent',
+            group: 'hire',
+        }),
+        defineField({
+            name: 'hireCards',
+            title: 'Hire Cards',
+            type: 'array',
+            description: 'Leave empty to hide this section.',
+            of: [{
+                type: 'object',
+                fields: [
+                    { name: 'title', type: 'string', title: 'Title' },
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' },
+                    { name: 'cta', type: 'cta', title: 'Button', description: 'e.g. "Hire AI Engineers" → /hire-ai-engineers' },
+                ],
+                preview: { select: { title: 'title', subtitle: 'cta.link' } },
+            }],
+            group: 'hire',
+        }),
+
         // Section 4: Three Phases to Transformation
         defineField({
             name: 'roadmapHeadline',
@@ -139,6 +179,88 @@ export default defineType({
             initialValue: { text: 'Build Your AI-Ready Roadmap', link: '/contact', variant: 'primary' },
         }),
 
+        // Section: Why SyncOrigins
+        defineField({
+            name: 'whyBadge',
+            title: 'Why Section Badge',
+            type: 'string',
+            initialValue: 'Why SyncOrigins?',
+            group: 'why',
+        }),
+        defineField({
+            name: 'whyHeadline',
+            title: 'Why Section Headline',
+            type: 'string',
+            initialValue: 'Engineering Intelligence Into Every Layer',
+            group: 'why',
+        }),
+        defineField({
+            name: 'whyBody',
+            title: 'Why Section Body',
+            type: 'simpleBlockContent',
+            group: 'why',
+        }),
+        defineField({
+            name: 'whyCards',
+            title: 'Why Cards',
+            type: 'array',
+            description: 'Leave empty to hide this section.',
+            of: [{
+                type: 'object',
+                fields: [
+                    { name: 'title', type: 'string', title: 'Title' },
+                    { name: 'description', type: 'simpleBlockContent', title: 'Description' },
+                ],
+                preview: { select: { title: 'title' } },
+            }],
+            group: 'why',
+        }),
+
+        // Section: Success Stories & Testimonials
+        defineField({
+            name: 'showCaseStudies',
+            title: 'Show Case Studies on Home Page',
+            type: 'boolean',
+            initialValue: false,
+            description: 'Turn on to show the case study slider (from the "Case Studies" document) in this section.',
+            group: 'stories',
+        }),
+        defineField({
+            name: 'storiesBadge',
+            title: 'Success Stories Badge',
+            type: 'string',
+            initialValue: 'Success Stories',
+            group: 'stories',
+        }),
+        defineField({
+            name: 'storiesHeadline',
+            title: 'Success Stories Headline',
+            type: 'string',
+            initialValue: 'Enterprise Challenges. Practical Engineering Outcomes.',
+            group: 'stories',
+        }),
+        defineField({
+            name: 'storiesBody',
+            title: 'Success Stories Body',
+            type: 'simpleBlockContent',
+            group: 'stories',
+        }),
+        defineField({
+            name: 'testimonialsHeadline',
+            title: 'Testimonials Headline',
+            type: 'string',
+            description: 'Used when case studies are also shown. Defaults to "What Our Clients Say".',
+            group: 'stories',
+        }),
+        defineField({
+            name: 'testimonials',
+            title: 'Client Testimonials',
+            type: 'array',
+            of: [{ type: 'testimonial' }],
+            description: 'Optional. Shown as a carousel below the case studies.',
+            group: 'stories',
+        }),
+
         // Section 6: Final CTA
         defineField({
             name: 'finalCta',
@@ -152,29 +274,36 @@ export default defineType({
             ]
         }),
 
-        // Section 7: Corporate Affiliation
+        // Corporate Affiliation: no longer shown on the page, kept hidden for existing data
         defineField({
             name: 'affiliationHeadline',
+            hidden: true,
             title: 'Affiliation Headline',
             type: 'string',
             initialValue: 'Backed By',
-            group: 'affiliation',
         }),
         defineField({
             name: 'affiliationTitle',
+            hidden: true,
             title: 'Affiliation Name',
             type: 'string',
             initialValue: 'Lashan Digital',
-            group: 'affiliation',
         }),
         defineField({
             name: 'affiliationBody',
+            hidden: true,
             title: 'Affiliation Description',
             type: 'simpleBlockContent',
-            group: 'affiliation',
         }),
 
         // FAQ Section
+        defineField({
+            name: 'faqsHeadline',
+            title: 'FAQs Headline',
+            type: 'string',
+            initialValue: 'Frequently Asked Questions',
+            group: 'faqs',
+        }),
         defineField({
             name: 'faqs',
             title: 'Frequently Asked Questions',

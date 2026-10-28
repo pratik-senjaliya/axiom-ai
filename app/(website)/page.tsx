@@ -6,13 +6,14 @@ import { notFound } from "next/navigation";
 import { getHomePage } from "@/lib/sanity/queries";
 import { CaseStudySliderSection } from "@/components/case-study/CaseStudySliderSection";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
-import { FadeIn } from "@/components/ui/animations/FadeIn";
 import { StaggerGroup, StaggerItem } from "@/components/ui/animations/StaggerGroup";
 import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain, SITE_SCHEMA_DESCRIPTION } from "@/lib/seo";
 import { FAQ } from "@/components/ui/FAQ";
 import { HomePageSchemas } from "@/components/seo/PageSchemas";
 import { isSolutionsListed } from "@/lib/content-visibility";
+import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
+import { ArrowRight, Boxes, Brain, Building2, Database, Layers, Rocket, SlidersHorizontal, Users } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -57,6 +58,11 @@ export default async function HomePage() {
     { bg: 'rgba(29,161,242,0.07)', border: 'rgba(29,161,242,0.2)', num: 'rgba(29,161,242,0.15)' },
     { bg: 'rgba(102,252,241,0.07)', border: 'rgba(102,252,241,0.2)', num: 'rgba(102,252,241,0.12)' },
   ];
+
+  const hireIcons = [Brain, Database, Boxes, Users];
+  const whyIcons = [Layers, Building2, SlidersHorizontal, Rocket];
+  const showCaseStudies = data?.showCaseStudies === true;
+  const testimonials = data?.testimonials || [];
 
   const personaGradients = [
     'linear-gradient(135deg, #1DA1F2, #00E5FF)',
@@ -282,9 +288,57 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* 3.5 Hire Vetted Engineers */}
+      {data?.hireCards?.length > 0 && (
+        <section id="hire" className="py-12 md:py-16 relative" style={{ background: '#14243A' }}>
+          <div className="container-custom">
+            <div className="text-center mb-10 md:mb-12 max-w-4xl mx-auto">
+              {data?.hireBadge && (
+                <div className="inline-flex items-center gap-2 font-medium mb-4" style={{ color: '#00E5FF' }}>
+                  <SparkleIcon />
+                  <span className="text-sm font-medium">{data.hireBadge}</span>
+                </div>
+              )}
+              <h2 className="type-section-title text-white mb-6">
+                {data?.hireHeadline || "Extend Your Engineering Capabilities with Specialist Talent"}
+              </h2>
+              {data?.hireBody && (
+                <div className="type-lead text-[#8FA3BF] max-w-3xl mx-auto">
+                  <PortableText value={data.hireBody} />
+                </div>
+              )}
+            </div>
+
+            <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {data.hireCards.map((card: any, index: number) => {
+                const Icon = hireIcons[index % hireIcons.length];
+                return (
+                  <StaggerItem key={index} className="h-full">
+                    <HoverCard className="group rounded-3xl p-7 h-full flex flex-col" style={{ background: 'rgba(26,46,71,0.6)', border: '1px solid rgba(0,229,255,0.12)', backdropFilter: 'blur(10px)' }}>
+                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'rgba(0,229,255,0.1)', color: '#00E5FF' }}>
+                        <Icon className="w-6 h-6" strokeWidth={1.75} />
+                      </div>
+                      <p className="text-xl font-bold text-white mb-3 leading-tight group-hover:text-[#00E5FF] transition-colors">{card.title}</p>
+                      <div className="text-sm leading-relaxed mb-6" style={{ color: '#8FA3BF' }}>
+                        <PortableText value={card.description} />
+                      </div>
+                      {card.cta?.text && (
+                        <Link href={card.cta.link || "/contact"} className="mt-auto inline-flex items-center gap-2 text-sm font-bold transition-colors hover:text-white" style={{ color: '#00E5FF' }}>
+                          {card.cta.text}
+                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      )}
+                    </HoverCard>
+                  </StaggerItem>
+                );
+              })}
+            </StaggerGroup>
+          </div>
+        </section>
+      )}
+
       {/* 4. Three phases to transformation */}
       <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: '#0D1B2A' }}>
-        <div className="absolute inset-0 bg-grid opacity-50 pointer-events-none" />
         <div className="container-custom relative z-10">
           <div className="text-center mb-10 md:mb-12">
             <div className="inline-flex items-center gap-2 font-medium mb-4" style={{ color: '#00E5FF' }}>
@@ -298,8 +352,6 @@ export default async function HomePage() {
 
           {data?.roadmap && data.roadmap.length > 0 && (
             <StaggerGroup className="grid md:grid-cols-3 gap-6 relative max-w-5xl mx-auto">
-              {/* Dashed connector line */}
-              <div className="hidden md:block absolute top-[50%] left-10 right-10 h-0 border-t border-dashed pointer-events-none z-0" style={{ borderColor: 'rgba(0,229,255,0.2)' }} />
 
               {data.roadmap.map((phase: any, index: number) => {
                 const style = processStyles[index % processStyles.length];
@@ -369,35 +421,71 @@ export default async function HomePage() {
         </div>
       </section>
 
-            <CaseStudySliderSection />
-
-      {/* 5.5 Corporate Affiliation */}
-      {data?.affiliationTitle && data?.affiliationBody && (
-        <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: '#0A0F1F' }}>
-          <div className="absolute top-0 w-full h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent)' }} />
-          <FadeIn className="container-custom max-w-5xl mx-auto text-center relative z-10 px-4">
-            {data?.affiliationHeadline && <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border" style={{ background: 'rgba(0,229,255,0.05)', borderColor: 'rgba(0,229,255,0.2)' }}>
-              <SparkleIcon />
-              <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: '#00E5FF' }}>
-                {data?.affiliationHeadline}
-              </span>
-            </div>}
-            <h5 className="text-3xl md:text-4xl font-bold text-white mb-8 tracking-tight">
-              {data.affiliationTitle}
-            </h5>
-            <div className="text-lg md:text-xl leading-relaxed max-w-4xl mx-auto font-light" style={{ color: '#8FA3BF' }}>
-              <PortableText value={data.affiliationBody} />
+      {/* 5.5 Why SyncOrigins */}
+      {data?.whyCards?.length > 0 && (
+        <section className="py-12 md:py-16 relative" style={{ background: '#0D1B2A' }}>
+          <div className="container-custom">
+            <div className="text-center mb-10 md:mb-12 max-w-4xl mx-auto">
+              {data?.whyBadge && (
+                <div className="inline-flex items-center gap-2 font-medium mb-4" style={{ color: '#00E5FF' }}>
+                  <SparkleIcon />
+                  <span className="text-sm font-medium">{data.whyBadge}</span>
+                </div>
+              )}
+              <h2 className="type-section-title text-white mb-6">
+                {data?.whyHeadline || "Engineering Intelligence Into Every Layer"}
+              </h2>
+              {data?.whyBody && (
+                <div className="type-lead text-[#8FA3BF] max-w-3xl mx-auto">
+                  <PortableText value={data.whyBody} />
+                </div>
+              )}
             </div>
-          </FadeIn>
-          <div className="absolute bottom-0 w-full h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.1), transparent)' }} />
+
+            <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {data.whyCards.map((card: any, index: number) => {
+                const Icon = whyIcons[index % whyIcons.length];
+                return (
+                  <StaggerItem key={index} className="h-full">
+                    <HoverCard className="rounded-3xl p-7 h-full" style={{ background: 'rgba(20,36,58,0.7)', border: '1px solid rgba(0,229,255,0.12)' }}>
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 text-[#0A0F1F]" style={{ background: personaGradients[index % personaGradients.length], boxShadow: '0 0 15px rgba(0,229,255,0.3)' }}>
+                        <Icon className="w-6 h-6" strokeWidth={2} />
+                      </div>
+                      <p className="text-lg font-bold text-white mb-3">{card.title}</p>
+                      <div className="text-sm leading-relaxed" style={{ color: '#8FA3BF' }}>
+                        <PortableText value={card.description} />
+                      </div>
+                    </HoverCard>
+                  </StaggerItem>
+                );
+              })}
+            </StaggerGroup>
+          </div>
         </section>
+      )}
+
+      {/* 5.6 Success Stories & Testimonials (case studies toggled in the CMS) */}
+      {showCaseStudies && (
+        <CaseStudySliderSection
+          title={data?.storiesHeadline}
+          subtitle={data?.storiesBadge}
+          description={data?.storiesBody}
+          ignoreSiteFlag
+        />
+      )}
+      {testimonials.length > 0 && (
+        <TestimonialCarousel
+          testimonials={testimonials}
+          title={showCaseStudies ? data?.testimonialsHeadline || "What Our Clients Say" : data?.storiesHeadline || "What Our Clients Say"}
+          subtitle={showCaseStudies ? "Testimonials" : data?.storiesBadge || "Testimonials"}
+        />
       )}
 
       {/* FAQ */}
       {faqs.length > 0 && (
         <section className="py-12 md:py-16 relative z-10" style={{ background: '#0A0F1F' }}>
           <div className="container-custom px-4 max-w-4xl mx-auto">
-            <FAQ items={faqs} title="Frequently Asked Questions" />
+            <FAQ items={faqs} title={data?.faqsHeadline || "Frequently Asked Questions"} />
           </div>
         </section>
       )}

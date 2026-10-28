@@ -10,5 +10,7 @@ export interface CaseStudySpotlightData {
 export interface CaseStudiesSectionData {
   sectionTitle?: string
   sectionSubtitle?: string
+  /** Optional portable text shown under the section title */
+  sectionDescription?: any
   items?: CaseStudySpotlightData[]
 }

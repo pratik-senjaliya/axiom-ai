@@ -305,9 +305,21 @@ export async function getHomePage(): Promise<any> {
       description,
       primaryCta { text, link }
     },
-    affiliationHeadline,
-    affiliationTitle,
-    affiliationBody,
+    hireBadge,
+    hireHeadline,
+    hireBody,
+    hireCards[] { title, description, cta { text, link } },
+    whyBadge,
+    whyHeadline,
+    whyBody,
+    whyCards[] { title, description },
+    storiesBadge,
+    storiesHeadline,
+    storiesBody,
+    showCaseStudies,
+    testimonialsHeadline,
+    testimonials[] { quote, author, role, company },
+    faqsHeadline,
     faqs[] { question, answer }
   }`
 
