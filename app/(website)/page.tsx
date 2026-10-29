@@ -11,7 +11,7 @@ import { HoverCard } from "@/components/ui/animations/HoverCard";
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain, SITE_SCHEMA_DESCRIPTION } from "@/lib/seo";
 import { FAQ } from "@/components/ui/FAQ";
 import { HomePageSchemas } from "@/components/seo/PageSchemas";
-import { isSolutionsListed } from "@/lib/content-visibility";
+import { areCaseStudiesListed } from "@/lib/content-visibility";
 import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 import { RelatedInsights } from "@/components/services/RelatedInsights";
 import { ArrowRight, Boxes, Brain, Building2, Database, Layers, Rocket, SlidersHorizontal, Users } from "lucide-react";
@@ -171,10 +171,10 @@ export default async function HomePage() {
                 </Button>
               </Link>
             )}
-            {/* Soft-launch: hide the button while it would point to the hidden /solutions page */}
+            {/* Soft-launch: hide the button while it would point to the hidden case studies page */}
             {data?.hero?.secondaryCta?.text &&
-              (isSolutionsListed() || !(data.hero.secondaryCta.link || "/solutions").startsWith("/solutions")) && (
-              <Link href={data.hero.secondaryCta.link || "/solutions"} className="w-full sm:w-auto">
+              (areCaseStudiesListed() || !/^\/(solutions|case-studies)/.test(data.hero.secondaryCta.link || "/case-studies")) && (
+              <Link href={data.hero.secondaryCta.link || "/case-studies"} className="w-full sm:w-auto">
                 <Button variant="outline" size="lg" className="rounded-full w-full sm:w-auto px-8 h-12 text-lg font-medium hover:text-[#00E5FF] transition-colors" style={{ background: 'rgba(20,36,58,0.7)', borderColor: 'rgba(0,229,255,0.3)', color: '#C5D1E0' }}>
                   {data.hero.secondaryCta.text || "Explore Solutions"}
                 </Button>

@@ -96,7 +96,7 @@ The flags live in `lib/content-visibility.ts` — set a flag to `false` to publi
 | Flag | Pages | Current state |
 | --- | --- | --- |
 | `HIDE_FINANCE_FROM_SITE` | `/finance` | Published (`false`) |
-| `HIDE_CASE_STUDIES_FROM_SITE` | `/case-studies/[slug]` and `/solutions` | Hidden (`true`) |
+| `HIDE_CASE_STUDIES_FROM_SITE` | `/case-studies` and `/case-studies/[slug]` | Published (`false`) |
 
 While a page is hidden it still renders at its URL (for client review), but it is:
 
@@ -104,19 +104,20 @@ While a page is hidden it still renders at its URL (for client review), but it i
 - removed from `sitemap.xml` and `llms.txt`, and disallowed in `robots.txt`
 - marked `noindex, nofollow`
 - not linked from other pages (CMS rich-text links render as plain text; the home hero
-  secondary button is hidden while it points to `/solutions`)
+  secondary button is hidden while it points to `/case-studies` or `/solutions`)
 
-### Solutions page → Case studies
+### Case studies listing (formerly Solutions)
 
-`/solutions` no longer shows the old "solutions" (use cases). It now shows the hero plus a
-grid of all **Case Study** documents from the CMS. Notes for when this goes live:
+`/case-studies` shows the hero plus a grid of all **Case Study** documents from the CMS. It
+used to live at `/solutions`, which now 301-redirects to `/case-studies` (`next.config.ts`).
 
-- The URL and the menu label are still **Solutions** — intentionally not renamed yet.
-- The old solutions/use cases data is **kept in the CMS** (Use Cases Page → cases, tabs).
-  `components/solutions/SolutionsGrid.tsx` is unused but kept so it can be restored.
-- Because the page is now case studies, its visibility follows the case study flag via
-  `isSolutionsListed()`. Flipping `HIDE_CASE_STUDIES_FROM_SITE` to `false` publishes the
-  case study pages **and** brings back every Solutions link, the sitemap entry and indexing.
+- In the header it sits under the **Insights** dropdown (Insights + Case Studies). While case
+  studies are hidden, Insights shows as a plain link instead of a dropdown.
+- The hero/CTA content still comes from the CMS **Use Cases Page** document. The old
+  solutions/use cases data is kept there; `components/solutions/SolutionsGrid.tsx` is unused
+  but kept so it can be restored.
+- Flipping `HIDE_CASE_STUDIES_FROM_SITE` to `false` publishes the listing and detail pages,
+  the Insights dropdown entry, the footer link, the sitemap/llms.txt entries and indexing.
 - Each case study's Hero CTA and Bottom CTA are editable in the CMS (Case Study → Hero /
   Bottom CTA tabs); empty fields fall back to the default text.
 

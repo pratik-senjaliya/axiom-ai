@@ -1,7 +1,7 @@
 import { PortableText as PortableTextReact } from '@portabletext/react'
 import Link from 'next/link'
 import { HtmlTable } from '@/components/ui/HtmlTable'
-import { isSolutionsListed } from '@/lib/content-visibility'
+import { areCaseStudiesListed } from '@/lib/content-visibility'
 
 interface PortableTextProps {
     value: any
@@ -130,7 +130,7 @@ const components = {
                     case 'homePage': href = '/'; break;
                     case 'aboutPage': href = '/about'; break;
                     case 'servicesPage': href = '/services'; break;
-                    case 'useCasesPage': href = '/solutions'; break;
+                    case 'useCasesPage': href = '/case-studies'; break;
                     case 'aiImplementationPage': href = '/ai-implementation'; break;
                     case 'erpTransformationPage': href = '/erp-transformation'; break;
                     case 'dataAnalyticsPage': href = '/data-analytics'; break;
@@ -143,7 +143,7 @@ const components = {
             }
 
             // Soft-launch: render hidden pages as plain text instead of a link
-            if (href === '/solutions' && !isSolutionsListed()) return <>{children}</>
+            if (/^\/(solutions|case-studies)(\/|$)/.test(href) && !areCaseStudiesListed()) return <>{children}</>
 
             return (
                 <Link 

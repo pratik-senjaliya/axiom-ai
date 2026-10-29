@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Linkedin, Mail, Youtube } from "lucide-react";
 import { getNavigationHirePages, getNavigationIndustries, getNavigationServices, getSettings } from "@/lib/sanity/queries";
-import { isFinanceListed, isSolutionsListed } from "@/lib/content-visibility";
+import { isFinanceListed, areCaseStudiesListed } from "@/lib/content-visibility";
 import { portableTextToPlain } from "@/lib/seo";
 
 const DEFAULT_DESCRIPTION =
@@ -191,7 +191,7 @@ export async function Footer() {
             <p className={headingClass}>Company</p>
             <ul className="space-y-3.5">
               <li><Link href="/about" className={linkClass}>About</Link></li>
-              {isSolutionsListed() && <li><Link href="/solutions" className={linkClass}>Solutions</Link></li>}
+              {areCaseStudiesListed() && <li><Link href="/case-studies" className={linkClass}>Case Studies</Link></li>}
               <li><Link href="/insights" className={linkClass}>Insights</Link></li>
               <li><Link href="/contact" className={linkClass}>Contact</Link></li>
             </ul>

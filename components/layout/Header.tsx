@@ -7,7 +7,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { CORE_SERVICE_PATHS } from "@/lib/core-services";
-import { isFinanceListed, isSolutionsListed } from "@/lib/content-visibility";
+import { isFinanceListed, areCaseStudiesListed } from "@/lib/content-visibility";
 import { DynamicServiceIcon } from "@/components/layout/DynamicServiceIcon";
 
 type DynamicNavService = {
@@ -19,7 +19,7 @@ type DynamicNavService = {
 
 type HeaderLink = { text?: string; link?: string };
 
-type DropdownKey = "services" | "industries" | "hire";
+type DropdownKey = "services" | "industries" | "hire" | "insights";
 
 type NavItem = {
   name: string;
@@ -33,9 +33,15 @@ const navigation: NavItem[] = [
   { name: "Services", href: "#services", hasDropdown: true, dropdownKey: "services" },
   { name: "Industries", href: "#industries", hasDropdown: true, dropdownKey: "industries" },
   { name: "Hire Developers", href: "#hire", hasDropdown: true, dropdownKey: "hire" },
-  ...(isSolutionsListed() ? [{ name: "Solutions", href: "/solutions" }] : []),
-  { name: "Insights", href: "/insights" },
+  { name: "Insights", href: "/insights", hasDropdown: true, dropdownKey: "insights" },
   { name: "About", href: "/about" },
+];
+
+const insightsLinks = [
+  { title: "Insights", href: "/insights", description: "Articles and perspectives from our team" },
+  ...(areCaseStudiesListed()
+    ? [{ title: "Case Studies", href: "/case-studies", description: "How we've delivered for our clients" }]
+    : []),
 ];
 
 const industryPaths = isFinanceListed() ? ["/finance"] : [];
@@ -188,6 +194,9 @@ export const Header: React.FC = () => {
     if (item.dropdownKey === "hire") {
       return hirePages.some((page) => pathname.startsWith(page.href));
     }
+    if (item.dropdownKey === "insights") {
+      return insightsLinks.some((link) => pathname.startsWith(link.href));
+    }
     return pathname === item.href;
   };
 
@@ -207,12 +216,19 @@ export const Header: React.FC = () => {
   const ctaText = headerCta?.text || "Book a Call";
   const ctaHref = headerCta?.link || "/contact";
 
-  // Hide the Industries / Hire menus entirely when there is nothing to list
-  const navItems = navigation.filter((item) => {
-    if (item.dropdownKey === "industries") return industryCategories.length + dynamicIndustries.length > 0;
-    if (item.dropdownKey === "hire") return hirePages.length > 0;
-    return true;
-  });
+  // Hide the Industries / Hire menus entirely when there is nothing to list,
+  // and show Insights as a plain link while Case Studies is hidden
+  const navItems = navigation
+    .filter((item) => {
+      if (item.dropdownKey === "industries") return industryCategories.length + dynamicIndustries.length > 0;
+      if (item.dropdownKey === "hire") return hirePages.length > 0;
+      return true;
+    })
+    .map((item) =>
+      item.dropdownKey === "insights" && insightsLinks.length < 2
+        ? { name: item.name, href: item.href }
+        : item
+    );
 
   return (
     <>
@@ -446,6 +462,33 @@ export const Header: React.FC = () => {
                       </div>
                     </div>
                   )}
+
+                  {/* Insights dropdown */}
+                  {item.dropdownKey === "insights" && openDropdown === "insights" && (
+                    <div
+                      className="absolute top-full left-0 pt-4 w-max animate-scale-in"
+                      onMouseEnter={() => handleMouseEnter("insights")}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <div className="bg-[#0D1B2A]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#00E5FF]/15 p-6 relative z-[60] w-[360px]">
+                        {insightsLinks.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className="group/item flex gap-4 p-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
+                          >
+                            <DynamicServiceIcon />
+                            <div>
+                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-1">
+                                {link.title}
+                              </h3>
+                              <p className="text-sm text-[#8FA3BF]">{link.description}</p>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </nav>
@@ -508,7 +551,7 @@ export const Header: React.FC = () => {
                     </button>
                     {mobileExpanded === item.dropdownKey && (
                       <div className="pl-4 flex flex-col gap-4 -mt-2">
-                        {(item.dropdownKey === "services" ? serviceCategories : item.dropdownKey === "industries" ? industryCategories : []).map((cat) => (
+                        {(item.dropdownKey === "services" ? serviceCategories : item.dropdownKey === "industries" ? industryCategories : item.dropdownKey === "insights" ? insightsLinks : []).map((cat) => (
                           <Link
                             key={cat.title}
                             href={cat.href}
@@ -518,7 +561,7 @@ export const Header: React.FC = () => {
                             {cat.title}
                           </Link>
                         ))}
-                        {(item.dropdownKey === "services" ? dynamicServices : item.dropdownKey === "industries" ? dynamicIndustries : hirePages).map((service) => (
+                        {(item.dropdownKey === "services" ? dynamicServices : item.dropdownKey === "industries" ? dynamicIndustries : item.dropdownKey === "hire" ? hirePages : []).map((service) => (
                           <Link
                             key={service.slug}
                             href={service.href}

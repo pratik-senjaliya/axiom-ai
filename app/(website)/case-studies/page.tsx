@@ -7,7 +7,7 @@ import { getAllCaseStudies, getUseCasesPage } from "@/lib/sanity/queries";
 import { CaseStudyFilterGrid } from "@/components/case-study/CaseStudyFilterGrid";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
 import { DEMO_CASE_STUDY_VIEW } from "@/lib/demo/caseStudy";
-import { isSolutionsListed } from "@/lib/content-visibility";
+import { areCaseStudiesListed } from "@/lib/content-visibility";
 
 import { generateMetadata as genMeta } from "@/lib/seo";
 
@@ -23,9 +23,9 @@ export async function generateMetadata(): Promise<Metadata> {
     description: data?.seo?.metaDescription || defaultDesc,
     keywords: data?.seo?.metaKeywords,
     ogImage: data?.seo?.openGraphImage,
-    slug: "/solutions",
-    noindex: !isSolutionsListed(),
-    nofollow: !isSolutionsListed(),
+    slug: "/case-studies",
+    noindex: !areCaseStudiesListed(),
+    nofollow: !areCaseStudiesListed(),
   });
 }
 
@@ -35,7 +35,7 @@ const SparkleIcon = () => (
   </svg>
 );
 
-export default async function SolutionsPage() {
+export default async function CaseStudiesPage() {
   const [data, cmsCaseStudies] = await Promise.all([
     getUseCasesPage(),
     getAllCaseStudies(),

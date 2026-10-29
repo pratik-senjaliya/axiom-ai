@@ -33,6 +33,11 @@ const nextConfig: NextConfig = {
         permanent: true, // 301 redirect
       },
       {
+        source: '/solutions',
+        destination: '/case-studies',
+        permanent: true, // 301 redirect
+      },
+      {
         source: '/hire-staff/:slug',
         destination: '/:slug',
         permanent: true, // 301 redirect

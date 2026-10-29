@@ -7,7 +7,7 @@
  * See "Soft-launch / hidden content" in README.md for everything each flag controls.
  */
 export const HIDE_FINANCE_FROM_SITE = false;
-export const HIDE_CASE_STUDIES_FROM_SITE = true;
+export const HIDE_CASE_STUDIES_FROM_SITE = false;
 
 export function isFinanceListed(): boolean {
   return !HIDE_FINANCE_FROM_SITE;
@@ -15,12 +15,4 @@ export function isFinanceListed(): boolean {
 
 export function areCaseStudiesListed(): boolean {
   return !HIDE_CASE_STUDIES_FROM_SITE;
-}
-
-/**
- * /solutions now lists case studies (the old solutions/use cases are hidden
- * from the UI but kept in the CMS), so it follows the case study flag.
- */
-export function isSolutionsListed(): boolean {
-  return areCaseStudiesListed();
 }
