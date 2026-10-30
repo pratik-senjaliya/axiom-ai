@@ -203,7 +203,16 @@ export function HireHero({
   );
 }
 
-/** Roles we staff — centred header, wrapping icon cards (last row stays centred) */
+/** Grid spans for 4-up expertise cards so the last row always fills the width */
+function expertiseSpan(index: number, total: number) {
+  const lastRow = total % 4;
+  const inLastRow = index >= total - lastRow;
+  const lg = !inLastRow ? "lg:col-span-3" : lastRow === 3 ? "lg:col-span-4" : lastRow === 2 ? "lg:col-span-6" : "lg:col-span-12";
+  const sm = total % 2 === 1 && index === total - 1 ? "sm:col-span-2" : "";
+  return `${lg} ${sm}`;
+}
+
+/** Roles we staff — centred header, 4-up icon cards (last row stretches to fill) */
 export function HireExpertiseGrid({
   title,
   description,
@@ -220,14 +229,11 @@ export function HireExpertiseGrid({
     <section id="expertise" className="py-14 md:py-20 scroll-mt-24 overflow-x-clip" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <SectionHeader title={title} description={description} />
-        <StaggerGroup className="flex flex-wrap justify-center gap-4 sm:gap-5">
+        <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-5">
           {items.map((item, index) => {
             const Icon = ROLE_ICONS[index % ROLE_ICONS.length];
             return (
-              <StaggerItem
-                key={item.title}
-                className="w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(25%-0.9375rem)] min-w-0"
-              >
+              <StaggerItem key={item.title} className={`min-w-0 ${expertiseSpan(index, items.length)}`}>
                 <HoverCard
                   className="group relative h-full rounded-2xl border p-6 flex flex-col overflow-hidden min-w-0"
                   style={CARD_STYLE}
