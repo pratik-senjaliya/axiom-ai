@@ -1,16 +1,19 @@
-import { ServiceHero } from "@/components/services/ServiceHero";
-import { DarkCTA } from "@/components/services/DarkCTA";
 import { TestimonialCarousel } from "@/components/services/TestimonialCarousel";
 import { FAQ } from "@/components/ui/FAQ";
 import { PortableText } from "@/components/ui/PortableText";
 import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
 import {
-  IndustryPillars,
-  IndustryClientsGrid,
-  IndustryLifecycle,
-  IndustryWhyUs,
-} from "@/components/industries/IndustrySection";
-import { HireExpertiseGrid, HireModels, HireTechStack, HireExploreMore } from "@/components/hire/HireSections";
+  HireHero,
+  HireExpertiseGrid,
+  HireBuild,
+  HireModels,
+  HireTechStack,
+  HireWhy,
+  HireProcess,
+  HireIndustries,
+  HireExploreMore,
+  HireFinalCta,
+} from "@/components/hire/HireSections";
 import { getSiteUrl, portableTextToPlain } from "@/lib/seo";
 
 interface HirePageLayoutProps {
@@ -26,6 +29,8 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
 
   const mapItems = (items: any[] = []) =>
     items.map((item: any) => ({ title: item.title, description: item.description }));
+
+  const primaryCta = { text: hero.primaryCta?.text || `Hire ${role}`, link: hero.primaryCta?.link || "/contact" };
 
   const faqs = (data.faqs || []).map((faq: any) => ({
     question: faq.question,
@@ -43,36 +48,34 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
         faqs={data?.faqs}
       />
 
-      <ServiceHero
-        badgeText={hero.badge}
+      <HireHero
+        badge={hero.badge}
         title={hero.title || `Hire Vetted ${role} for`}
-        gradientTitlePart={hero.titleHighlight}
-        description={hero.description || ""}
-        primaryButtonText={hero.primaryCta?.text || `Hire ${role}`}
-        primaryButtonLink={hero.primaryCta?.link || "/contact"}
-        secondaryButtonText={hero.secondaryCta?.text || "Explore Hiring Models"}
-        secondaryButtonLink={hero.secondaryCta?.link || "#hiring-models"}
+        highlight={hero.titleHighlight}
+        description={hero.description}
+        primaryCta={primaryCta}
+        secondaryCta={{ text: hero.secondaryCta?.text || "Explore Hiring Models", link: hero.secondaryCta?.link || "#hiring-models" }}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: data.breadcrumbLabel || "Hire Developers" },
           { label: role },
         ]}
+        role={role}
+        roles={(data.expertise || []).map((item: any) => item.title).filter(Boolean)}
       />
 
       <HireExpertiseGrid
         title={data.expertiseHeadline || `${role} Expertise We Offer`}
         description={data.expertiseDescription}
         items={mapItems(data.expertise)}
+        cta={primaryCta}
       />
 
-      {(data.buildItems?.length ?? 0) > 0 && (
-        <IndustryPillars
-          title={data.buildHeadline || `What You Can Build with ${role}`}
-          description={data.buildDescription}
-          items={mapItems(data.buildItems)}
-          cta={{ hidden: true }}
-        />
-      )}
+      <HireBuild
+        title={data.buildHeadline || `What You Can Build with ${role}`}
+        description={data.buildDescription}
+        items={mapItems(data.buildItems)}
+      />
 
       <HireModels
         title={data.modelsHeadline || `Flexible ${role} Hiring Models`}
@@ -89,35 +92,27 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
         items={data.techStack || []}
       />
 
-      {(data.whyItems?.length ?? 0) > 0 && (
-        <IndustryWhyUs
-          title={data.whyHeadline || `Why Hire ${role} from SyncOrigins`}
-          description={data.whyDescription}
-          items={mapItems(data.whyItems)}
-          image={data.whyImage}
-          imageAlt={data.whyImageAlt}
-          imageLabel={data.whyImageLabel || "Hire with SyncOrigins"}
-          imageTitle={data.whyImageTitle || `Pre-vetted ${role} ready to join your team`}
-          listTitle={data.whyListTitle || `Benefits of hiring ${role} from SyncOrigins`}
-        />
-      )}
+      <HireWhy
+        title={data.whyHeadline || `Why Hire ${role} from SyncOrigins`}
+        description={data.whyDescription}
+        items={mapItems(data.whyItems)}
+        image={data.whyImage}
+        imageAlt={data.whyImageAlt}
+        imageLabel={data.whyImageLabel || "Hire with SyncOrigins"}
+        imageTitle={data.whyImageTitle || `Pre-vetted ${role} ready to join your team`}
+      />
 
-      {(data.process?.length ?? 0) > 0 && (
-        <IndustryLifecycle
-          title={data.processHeadline || `Our ${role} Hiring Process`}
-          description={data.processDescription}
-          items={mapItems(data.process)}
-        />
-      )}
+      <HireProcess
+        title={data.processHeadline || `Our ${role} Hiring Process`}
+        description={data.processDescription}
+        items={mapItems(data.process)}
+      />
 
-      {(data.industries?.length ?? 0) > 0 && (
-        <IndustryClientsGrid
-          title={data.industriesHeadline || "Industries We Support"}
-          description={data.industriesDescription}
-          items={(data.industries || []).map((item: any) => ({ title: item.title, description: item.description, icon: item.icon }))}
-          background="#0A0F1F"
-        />
-      )}
+      <HireIndustries
+        title={data.industriesHeadline || "Industries We Support"}
+        description={data.industriesDescription}
+        items={(data.industries || []).map((item: any) => ({ title: item.title, description: item.description, icon: item.icon }))}
+      />
 
       {(data.testimonials?.length ?? 0) > 0 && (
         <TestimonialCarousel
@@ -141,12 +136,13 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
         </section>
       )}
 
-      <DarkCTA
-        badgeText={data.finalCta?.badgeText || `Hire ${role}`}
+      <HireFinalCta
+        badge={data.finalCta?.badgeText || `Hire ${role}`}
         title={data.finalCta?.title || `Build Your ${role} Team with SyncOrigins`}
-        description={data.finalCta?.description || ""}
-        buttonText={data.finalCta?.buttonText || `Discuss Your Hiring Requirements`}
-        buttonHref={data.finalCta?.buttonLink || "/contact"}
+        description={data.finalCta?.description}
+        cta={{ text: data.finalCta?.buttonText || "Discuss Your Hiring Requirements", link: data.finalCta?.buttonLink || "/contact" }}
+        highlightsTitle={data.whyListTitle || `Benefits of hiring ${role} from SyncOrigins`}
+        highlights={(data.whyItems || []).map((item: any) => item.title).filter(Boolean).slice(0, 5)}
       />
     </div>
   );

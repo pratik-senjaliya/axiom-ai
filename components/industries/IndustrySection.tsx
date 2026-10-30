@@ -87,7 +87,7 @@ const PICKABLE_ICONS: Record<IndustryIconName, LucideIcon> = {
   FileCheck, Scale, Rocket,
 };
 
-function clientIcon(item: ClientItem): LucideIcon {
+export function clientIcon(item: ClientItem): LucideIcon {
   const picked = item.icon && PICKABLE_ICONS[item.icon as IndustryIconName];
   return picked || CLIENT_ICONS.find((entry) => entry.match.test(item.title))?.icon || Building2;
 }
