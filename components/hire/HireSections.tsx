@@ -24,6 +24,12 @@ import {
   MessageSquare,
   Rocket,
   Blocks,
+  Code2,
+  Boxes,
+  BrainCircuit,
+  Database,
+  Cloud,
+  Plug,
   type LucideIcon,
 } from "lucide-react";
 import { PortableText } from "@/components/ui/PortableText";
@@ -332,42 +338,61 @@ export function HireModels({
   );
 }
 
-/** Tech stack — one card per category with monogram tool chips */
+const TECH_ICONS: { match: RegExp; icon: LucideIcon }[] = [
+  { match: /program|language|api/i, icon: Code2 },
+  { match: /generative|llm|gen ?ai/i, icon: Sparkles },
+  { match: /framework/i, icon: Boxes },
+  { match: /machine|ml\b|model/i, icon: BrainCircuit },
+  { match: /vector|database|storage/i, icon: Database },
+  { match: /data/i, icon: Workflow },
+  { match: /cloud|platform/i, icon: Cloud },
+  { match: /mlops|deploy|devops/i, icon: Rocket },
+  { match: /integration|enterprise/i, icon: Plug },
+];
+const techIcon = (category: string) => TECH_ICONS.find((entry) => entry.match.test(category))?.icon || Layers;
+
+/** Tech stack — one panel, a row per category with its tools as pills */
 export function HireTechStack({ title, description, items }: { title: string; description?: any; items: TechCategory[] }) {
   if (!items.length) return null;
   return (
     <section className="py-14 md:py-20 overflow-x-clip" style={{ background: "#0D1B2A" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto">
+      <div className="container-custom px-4 max-w-6xl mx-auto">
         <SectionHeader title={title} description={description} />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {items.map((row) => (
-            <div key={row.category} className="rounded-2xl border p-5 sm:p-6 min-w-0" style={CARD_STYLE}>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="h-9 w-9 rounded-lg flex items-center justify-center shrink-0" style={ICON_BOX_STYLE}>
-                  <Layers className="w-4 h-4" strokeWidth={2} />
-                </span>
-                <p className="flex-1 font-bold text-white leading-snug">{row.category}</p>
-                <span className="text-xs font-bold" style={{ color: "#8FA3BF" }}>{row.tools?.length ?? 0}</span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {(row.tools || []).map((tool) => (
+        <div
+          className="rounded-3xl border overflow-hidden"
+          style={{ background: "rgba(20,36,58,0.55)", borderColor: "rgba(0,229,255,0.16)" }}
+        >
+          {items.map((row, index) => {
+            const Icon = techIcon(row.category);
+            return (
+              <div
+                key={row.category}
+                className="group grid md:grid-cols-[280px_1fr] gap-4 md:gap-8 px-5 sm:px-8 py-5 sm:py-6 transition-colors hover:bg-[rgba(0,229,255,0.04)]"
+                style={index > 0 ? { borderTop: "1px solid rgba(0,229,255,0.1)" } : undefined}
+              >
+                <div className="flex items-center gap-3 min-w-0">
                   <span
-                    key={tool}
-                    className="inline-flex items-center gap-2 rounded-lg border pl-1 pr-3 py-1 text-xs sm:text-sm font-medium"
-                    style={{ background: "rgba(10,15,31,0.5)", borderColor: "rgba(0,229,255,0.16)", color: "#C5D1E0" }}
+                    className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110"
+                    style={ICON_BOX_STYLE}
                   >
-                    <span
-                      className="h-6 w-6 rounded-md flex items-center justify-center text-[10px] font-extrabold uppercase"
-                      style={{ background: "rgba(0,229,255,0.12)", color: "#00E5FF" }}
-                    >
-                      {tool.replace(/[^A-Za-z0-9]/g, "").slice(0, 2)}
-                    </span>
-                    {tool}
+                    <Icon className="w-5 h-5" strokeWidth={1.75} />
                   </span>
-                ))}
+                  <p className="font-bold text-white leading-snug">{row.category}</p>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  {(row.tools || []).map((tool) => (
+                    <span
+                      key={tool}
+                      className="rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors hover:border-[rgba(0,229,255,0.45)] hover:text-white"
+                      style={{ background: "rgba(10,15,31,0.55)", borderColor: "rgba(0,229,255,0.18)", color: "#C5D1E0" }}
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

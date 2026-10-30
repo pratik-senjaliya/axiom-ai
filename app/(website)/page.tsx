@@ -43,6 +43,15 @@ const SparkleIcon = () => (
   </svg>
 );
 
+/** Grid spans for the "What We Build" cards so the last row always fills the width */
+function solutionSpan(index: number, total: number) {
+  const lastRow = total % 3;
+  const inLastRow = index >= total - lastRow;
+  const lg = !inLastRow ? "lg:col-span-2" : lastRow === 2 ? "lg:col-span-3" : "lg:col-span-6";
+  const md = total % 2 === 1 && index === total - 1 ? "md:col-span-2" : "";
+  return `${lg} ${md}`;
+}
+
 export default async function HomePage() {
   const data = await getHomePage();
   if (!data) notFound();
@@ -252,9 +261,9 @@ export default async function HomePage() {
             )}
           </div>
 
-          <StaggerGroup className="grid md:grid-cols-3 gap-8">
+          <StaggerGroup className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 lg:gap-8">
             {data?.solutions?.map((card: any, idx: number) => (
-              <StaggerItem key={idx} className="h-full">
+              <StaggerItem key={idx} className={`h-full ${solutionSpan(idx, data.solutions.length)}`}>
                 <HoverCard className="group rounded-[32px] p-8 sm:p-10 h-full flex flex-col transition-all duration-300" style={{ background: 'rgba(20,36,58,0.7)', border: '1px solid rgba(0,229,255,0.1)', backdropFilter: 'blur(10px)' }}>
                   <div className="flex items-center gap-2 mb-8 font-semibold text-[0.95rem]" style={{ color: '#00E5FF' }}>
                     <SparkleIcon />
