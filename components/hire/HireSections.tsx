@@ -9,7 +9,6 @@ import {
   Bot,
   Cpu,
   Server,
-  Check,
   ArrowRight,
   ArrowUpRight,
   BadgeCheck,
@@ -127,8 +126,8 @@ export function HireHero({
   primaryCta,
   secondaryCta,
   breadcrumbs,
-  role,
-  roles,
+  image,
+  imageAlt,
 }: {
   badge?: string;
   title: string;
@@ -137,12 +136,9 @@ export function HireHero({
   primaryCta: Cta;
   secondaryCta?: Cta;
   breadcrumbs: BreadcrumbItem[];
-  role: string;
-  roles: string[];
+  image?: string;
+  imageAlt?: string;
 }) {
-  const shownRoles = roles.slice(0, 5);
-  const moreRoles = roles.length - shownRoles.length;
-
   return (
     <section
       className="relative pt-32 pb-16 md:pb-20 overflow-hidden"
@@ -180,7 +176,7 @@ export function HireHero({
           </div>
         </SlideUp>
 
-        {shownRoles.length > 0 && (
+        {image && (
           <SlideUp className="lg:col-span-5 min-w-0">
             <div className="relative">
               <div
@@ -188,53 +184,10 @@ export function HireHero({
                 style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(0,229,255,0.25), transparent 70%)" }}
               />
               <div
-                className="relative rounded-3xl border p-5 sm:p-6 backdrop-blur-xl"
-                style={{ background: "rgba(13,27,42,0.85)", borderColor: "rgba(0,229,255,0.25)", boxShadow: "0 20px 60px rgba(0,0,0,0.45)" }}
+                className="relative aspect-[4/3] lg:aspect-square rounded-3xl border overflow-hidden"
+                style={{ borderColor: "rgba(0,229,255,0.25)", boxShadow: "0 20px 60px rgba(0,0,0,0.45)" }}
               >
-                <div className="flex items-center gap-3 pb-5 mb-4 border-b" style={{ borderColor: "rgba(0,229,255,0.12)" }}>
-                  <div
-                    className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: "linear-gradient(135deg, #1DA1F2, #00E5FF)", color: "#0A0F1F" }}
-                  >
-                    <Users className="w-5 h-5" strokeWidth={2} />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: "#8FA3BF" }}>
-                      Roles you can hire
-                    </p>
-                    <p className="text-lg font-bold text-white leading-tight truncate">{role}</p>
-                  </div>
-                </div>
-                <ul className="space-y-2">
-                  {shownRoles.map((title, index) => {
-                    const Icon = ROLE_ICONS[index % ROLE_ICONS.length];
-                    return (
-                      <li key={title}>
-                        <a
-                          href="#expertise"
-                          className="group flex items-center gap-3 rounded-xl border px-3.5 py-3 transition-colors hover:border-[rgba(0,229,255,0.4)]"
-                          style={{ background: "rgba(20,36,58,0.6)", borderColor: "rgba(0,229,255,0.1)" }}
-                        >
-                          <span className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0" style={ICON_BOX_STYLE}>
-                            <Icon className="w-4 h-4" strokeWidth={1.75} />
-                          </span>
-                          <span className="flex-1 min-w-0 text-sm font-semibold text-white leading-snug">{title}</span>
-                          <Check className="w-4 h-4 shrink-0" style={{ color: "#00E5FF" }} strokeWidth={2.5} />
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
-                {moreRoles > 0 && (
-                  <a
-                    href="#expertise"
-                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold hover:underline"
-                    style={{ color: "#00E5FF" }}
-                  >
-                    +{moreRoles} more specialisations
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                )}
+                <Image src={image} alt={imageAlt || ""} fill priority sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
               </div>
             </div>
           </SlideUp>
@@ -244,7 +197,7 @@ export function HireHero({
   );
 }
 
-/** Roles we staff — sticky intro left, horizontal icon cards right */
+/** Roles we staff — centred header, wrapping icon cards (last row stays centred) */
 export function HireExpertiseGrid({
   title,
   description,
@@ -259,38 +212,51 @@ export function HireExpertiseGrid({
   if (!items.length) return null;
   return (
     <section id="expertise" className="py-14 md:py-20 scroll-mt-24 overflow-x-clip" style={{ background: "#0A0F1F" }}>
-      <div className="container-custom px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 lg:gap-12">
-        <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-32">
-            <SectionHeader title={title} description={description} align="left" />
-            {cta && <GradientLink text={cta.text} href={cta.link} className="-mt-2" />}
-          </div>
-        </div>
-        <StaggerGroup className="lg:col-span-8 grid sm:grid-cols-2 gap-4">
+      <div className="container-custom px-4 max-w-7xl mx-auto">
+        <SectionHeader title={title} description={description} />
+        <StaggerGroup className="flex flex-wrap justify-center gap-4 sm:gap-5">
           {items.map((item, index) => {
             const Icon = ROLE_ICONS[index % ROLE_ICONS.length];
             return (
-              <StaggerItem key={item.title} className="min-w-0">
-                <HoverCard className="relative h-full rounded-2xl border p-5 sm:p-6 flex gap-4 min-w-0" style={CARD_STYLE}>
-                  <span className="absolute top-4 right-5 text-xs font-extrabold" style={{ color: "rgba(0,229,255,0.35)" }}>
-                    {pad(index + 1)}
-                  </span>
-                  <div className="h-12 w-12 rounded-xl flex items-center justify-center shrink-0" style={ICON_BOX_STYLE}>
-                    <Icon className="w-6 h-6" strokeWidth={1.75} />
+              <StaggerItem
+                key={item.title}
+                className="w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(25%-0.9375rem)] min-w-0"
+              >
+                <HoverCard
+                  className="group relative h-full rounded-2xl border p-6 flex flex-col overflow-hidden min-w-0"
+                  style={CARD_STYLE}
+                >
+                  <div
+                    className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
+                    style={{ background: "linear-gradient(90deg, #1DA1F2, #00E5FF)" }}
+                  />
+                  <div className="flex items-start justify-between mb-5">
+                    <div
+                      className="h-12 w-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110"
+                      style={ICON_BOX_STYLE}
+                    >
+                      <Icon className="w-6 h-6" strokeWidth={1.75} />
+                    </div>
+                    <span className="text-2xl font-extrabold leading-none" style={{ color: "rgba(0,229,255,0.15)" }}>
+                      {pad(index + 1)}
+                    </span>
                   </div>
-                  <div className="min-w-0 pr-4">
-                    <p className="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">{item.title}</p>
-                    {item.description && (
-                      <div className="text-sm leading-relaxed" style={{ color: "#8FA3BF" }}>
-                        <PortableText value={item.description} />
-                      </div>
-                    )}
-                  </div>
+                  <p className="text-lg font-bold text-white mb-2 leading-snug">{item.title}</p>
+                  {item.description && (
+                    <div className="text-sm leading-relaxed" style={{ color: "#8FA3BF" }}>
+                      <PortableText value={item.description} />
+                    </div>
+                  )}
                 </HoverCard>
               </StaggerItem>
             );
           })}
         </StaggerGroup>
+        {cta && (
+          <div className="mt-10 flex justify-center">
+            <GradientLink text={cta.text} href={cta.link} />
+          </div>
+        )}
       </div>
     </section>
   );
@@ -549,7 +515,7 @@ export function HireIndustries({
 }: {
   title: string;
   description?: any;
-  items: (Item & { icon?: string })[];
+  items: { title: string; icon?: string }[];
 }) {
   if (!items.length) return null;
   return (
@@ -569,17 +535,12 @@ export function HireIndustries({
                   className="absolute -top-10 -right-10 h-32 w-32 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"
                   style={{ background: "rgba(0,229,255,0.15)" }}
                 />
-                <div className="relative flex items-center gap-3 mb-3">
+                <div className="relative flex items-center gap-3">
                   <span className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0" style={ICON_BOX_STYLE}>
                     <Icon className="w-5 h-5" strokeWidth={1.75} />
                   </span>
                   <p className="font-bold text-white leading-snug">{item.title}</p>
                 </div>
-                {item.description && (
-                  <div className="relative text-sm leading-relaxed" style={{ color: "#8FA3BF" }}>
-                    <PortableText value={item.description} />
-                  </div>
-                )}
               </div>
             );
           })}
@@ -640,23 +601,19 @@ export function HireFinalCta({
   title,
   description,
   cta,
-  highlightsTitle,
-  highlights,
 }: {
   badge?: string;
   title: string;
   description?: any;
   cta: Cta;
-  highlightsTitle?: string;
-  highlights: string[];
 }) {
   return (
     <section className="py-14 md:py-20 overflow-x-clip" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <div
-          className="relative rounded-3xl border overflow-hidden p-6 sm:p-10 lg:p-14"
+          className="relative rounded-3xl border overflow-hidden p-6 sm:p-10 lg:p-14 text-center"
           style={{
-            background: "radial-gradient(ellipse at 0% 0%, rgba(0,229,255,0.16), transparent 50%), linear-gradient(135deg, #0D1B2A 0%, #14243A 100%)",
+            background: "radial-gradient(ellipse at 50% 0%, rgba(0,229,255,0.16), transparent 60%), linear-gradient(135deg, #0D1B2A 0%, #14243A 100%)",
             borderColor: "rgba(0,229,255,0.25)",
           }}
         >
@@ -664,40 +621,20 @@ export function HireFinalCta({
             className="absolute inset-0 pointer-events-none"
             style={{ backgroundImage: "linear-gradient(to right, rgba(0,229,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.04) 1px, transparent 1px)", backgroundSize: "40px 40px" }}
           />
-          <div className={`relative grid gap-10 items-center ${highlights.length ? "lg:grid-cols-2" : "text-center justify-items-center"}`}>
-            <div>
-              {badge && (
-                <div className="mb-5 inline-flex items-center gap-2 text-[#00E5FF] text-sm font-semibold tracking-wide">
-                  <SparkleIcon className="w-4 h-4 text-[#00E5FF]" />
-                  <span>{badge}</span>
-                </div>
-              )}
-              <h5 className="text-3xl md:text-[2.5rem] font-bold text-white mb-5 leading-tight tracking-tight">{title}</h5>
-              {description && (
-                <div className="text-base md:text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "#8FA3BF" }}>
-                  <PortableText value={description} />
-                </div>
-              )}
-              <GradientLink text={cta.text} href={cta.link} className="h-14 px-9" />
-            </div>
-            {highlights.length > 0 && (
-              <div className="rounded-2xl border p-6 md:p-7" style={{ background: "rgba(10,15,31,0.55)", borderColor: "rgba(0,229,255,0.16)" }}>
-                {highlightsTitle && <p className="text-lg font-bold text-white mb-5 leading-snug">{highlightsTitle}</p>}
-                <ul className="space-y-3.5">
-                  {highlights.map((text) => (
-                    <li key={text} className="flex items-center gap-3 text-sm md:text-base" style={{ color: "#C5D1E0" }}>
-                      <span
-                        className="h-6 w-6 rounded-full flex items-center justify-center shrink-0"
-                        style={{ background: "rgba(0,229,255,0.15)", color: "#00E5FF" }}
-                      >
-                        <Check className="w-3.5 h-3.5" strokeWidth={3} />
-                      </span>
-                      {text}
-                    </li>
-                  ))}
-                </ul>
+          <div className="relative flex flex-col items-center">
+            {badge && (
+              <div className="mb-5 inline-flex items-center gap-2 text-[#00E5FF] text-sm font-semibold tracking-wide">
+                <SparkleIcon className="w-4 h-4 text-[#00E5FF]" />
+                <span>{badge}</span>
               </div>
             )}
+            <h5 className="text-3xl md:text-[2.5rem] font-bold text-white mb-5 leading-tight tracking-tight max-w-4xl">{title}</h5>
+            {description && (
+              <div className="text-base md:text-lg leading-relaxed mb-8 max-w-3xl" style={{ color: "#8FA3BF" }}>
+                <PortableText value={description} />
+              </div>
+            )}
+            <GradientLink text={cta.text} href={cta.link} className="h-14 px-9" />
           </div>
         </div>
       </div>

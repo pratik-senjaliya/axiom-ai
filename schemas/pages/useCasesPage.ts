@@ -2,12 +2,12 @@ import { defineType, defineField } from 'sanity'
 
 export default defineType({
     name: 'useCasesPage',
-    title: 'Use Cases Page',
+    title: 'Case Studies Listing Page',
     type: 'document',
     groups: [
         { name: 'hero', title: 'Hero Section' },
         { name: 'content', title: 'Content / Cards' },
-        { name: 'poc', title: 'POC Offer' },
+        { name: 'cta', title: 'CTA Banners' },
         { name: 'seo', title: 'SEO' },
     ],
     fields: [
@@ -52,15 +52,17 @@ export default defineType({
         // Section 4: Mid-page CTA
         defineField({
             name: 'midPageCta',
-            title: 'Mid-page CTA',
+            title: 'Banner 1 – "Have a Similar Challenge?"',
+            description: 'First banner below the case studies. Uses the Title, Description and Primary CTA fields.',
             type: 'hero', // Reuse hero specifically for the structure
-            group: 'content',
+            group: 'cta',
         }),
 
         // Section 5: The "Proof of Concept" (POC) Offer
         defineField({
             name: 'pocOffer',
-            title: 'POC Offer Section',
+            title: 'Banner 2 – "Pilot Guarantee"',
+            description: 'Second banner at the bottom of the page.',
             type: 'object',
             fields: [
               { name: 'title', type: 'string', title: 'POC Title' },
@@ -68,7 +70,7 @@ export default defineType({
               { name: 'buttonText', type: 'string', title: 'Button Text', description: 'Defaults to "Start Your Pilot".' },
               { name: 'buttonLink', type: 'string', title: 'Button Link', description: 'Defaults to /contact.' },
             ],
-            group: 'poc',
+            group: 'cta',
         }),
 
         defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),

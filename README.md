@@ -113,7 +113,7 @@ used to live at `/solutions`, which now 301-redirects to `/case-studies` (`next.
 
 - In the header it sits under the **Insights** dropdown (Insights + Case Studies). While case
   studies are hidden, Insights shows as a plain link instead of a dropdown.
-- The hero/CTA content still comes from the CMS **Use Cases Page** document. The old
+- The hero/CTA content still comes from the CMS **Case Studies Listing Page** document. The old
   solutions/use cases data is kept there; `components/solutions/SolutionsGrid.tsx` is unused
   but kept so it can be restored.
 - Flipping `HIDE_CASE_STUDIES_FROM_SITE` to `false` publishes the listing and detail pages,

@@ -60,8 +60,8 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
           { label: data.breadcrumbLabel || "Hire Developers" },
           { label: role },
         ]}
-        role={role}
-        roles={(data.expertise || []).map((item: any) => item.title).filter(Boolean)}
+        image={hero.image || data.whyImage}
+        imageAlt={hero.imageAlt || data.whyImageAlt || `Hire ${role}`}
       />
 
       <HireExpertiseGrid
@@ -111,7 +111,7 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
       <HireIndustries
         title={data.industriesHeadline || "Industries We Support"}
         description={data.industriesDescription}
-        items={(data.industries || []).map((item: any) => ({ title: item.title, description: item.description, icon: item.icon }))}
+        items={(data.industries || []).map((item: any) => ({ title: item.title, icon: item.icon }))}
       />
 
       {(data.testimonials?.length ?? 0) > 0 && (
@@ -141,8 +141,6 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
         title={data.finalCta?.title || `Build Your ${role} Team with SyncOrigins`}
         description={data.finalCta?.description}
         cta={{ text: data.finalCta?.buttonText || "Discuss Your Hiring Requirements", link: data.finalCta?.buttonLink || "/contact" }}
-        highlightsTitle={data.whyListTitle || `Benefits of hiring ${role} from SyncOrigins`}
-        highlights={(data.whyItems || []).map((item: any) => item.title).filter(Boolean).slice(0, 5)}
       />
     </div>
   );

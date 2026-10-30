@@ -49,7 +49,7 @@ export const structure = (S: StructureBuilder) =>
 
             singletonListItem(S, 'homePage', 'Home Page'),
             singletonListItem(S, 'aboutPage', 'About Page'),
-            singletonListItem(S, 'useCasesPage', 'Use Cases Page'),
+            singletonListItem(S, 'useCasesPage', 'Case Studies Listing Page'),
             singletonListItem(S, 'blogPage', 'Blog Listing Page'),
             singletonListItem(S, 'contactPage', 'Contact Page', 'contactPage'),
 
