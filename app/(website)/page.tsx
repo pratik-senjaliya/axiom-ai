@@ -156,7 +156,7 @@ export default async function HomePage() {
             })()}
           </h1>
 
-          <div className="text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed font-light" style={{ color: '#8FA3BF' }}>
+          <div className="text-lg md:text-xl mb-12 max-w-4xl mx-auto leading-relaxed font-light" style={{ color: '#8FA3BF' }}>
             <PortableText value={data?.hero?.description} className="prose-tight" />
           </div>
 
@@ -187,12 +187,12 @@ export default async function HomePage() {
       {/* 2. Why Digital Transformations Fail */}
       <section className="py-12 md:py-16 relative" style={{ background: '#14243A' }}>
         <div className="container-custom">
-          <div className="text-center mb-20 max-w-4xl mx-auto">
+          <div className="text-center mb-20 max-w-5xl mx-auto">
             <h2 className="type-section-title text-white mb-6">
               {data?.pitfallsHeadline || "Escape the “Pilot Purgatory”"}
             </h2>
             {data?.pitfallsBody && (
-              <div className="type-lead text-[#8FA3BF] max-w-3xl mx-auto">
+              <div className="type-lead text-[#8FA3BF] max-w-5xl mx-auto">
                 <PortableText value={data.pitfallsBody} />
               </div>
             )}
@@ -237,7 +237,7 @@ export default async function HomePage() {
       {/* 3. Execution Across AI, Data & ERP */}
       <section id="services" className="py-12 md:py-16 relative" style={{ background: '#0A0F1F' }}>
         <div className="container-custom">
-          <div className="text-center mb-10 md:mb-12 max-w-4xl mx-auto">
+          <div className="text-center mb-10 md:mb-12 max-w-5xl mx-auto">
             <div className="inline-flex items-center gap-2 font-medium mb-4" style={{ color: '#00E5FF' }}>
               <SparkleIcon />
               <span className="text-sm font-medium uppercase tracking-widest">{data?.solutionsSubtitle || "What We Do"}</span>
@@ -246,7 +246,7 @@ export default async function HomePage() {
               {data?.solutionsHeadline || "What We Build & Deliver"}
             </h3>
             {data?.solutionsBody && (
-              <div className="type-lead text-[#8FA3BF] max-w-2xl mx-auto">
+              <div className="type-lead text-[#8FA3BF] max-w-5xl mx-auto">
                 <PortableText value={data.solutionsBody} />
               </div>
             )}
@@ -294,7 +294,7 @@ export default async function HomePage() {
       {data?.hireCards?.length > 0 && (
         <section id="hire" className="py-12 md:py-16 relative" style={{ background: '#14243A' }}>
           <div className="container-custom">
-            <div className="text-center mb-10 md:mb-12 max-w-4xl mx-auto">
+            <div className="text-center mb-10 md:mb-12 max-w-5xl mx-auto">
               {data?.hireBadge && (
                 <div className="inline-flex items-center gap-2 font-medium mb-4" style={{ color: '#00E5FF' }}>
                   <SparkleIcon />
@@ -305,7 +305,7 @@ export default async function HomePage() {
                 {data?.hireHeadline || "Extend Your Engineering Capabilities with Specialist Talent"}
               </h2>
               {data?.hireBody && (
-                <div className="type-lead text-[#8FA3BF] max-w-3xl mx-auto">
+                <div className="type-lead text-[#8FA3BF] max-w-5xl mx-auto">
                   <PortableText value={data.hireBody} />
                 </div>
               )}
@@ -522,7 +522,7 @@ export default async function HomePage() {
           <h5 className="type-section-title text-white mb-6">
             {data?.finalCta?.title}
           </h5>
-          <div className="text-lg max-w-2xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
+          <div className="text-lg max-w-4xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
             <PortableText value={data?.finalCta?.description} />
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

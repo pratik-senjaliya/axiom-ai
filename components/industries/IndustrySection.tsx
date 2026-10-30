@@ -57,7 +57,7 @@ export type SectionCta = { text?: string; link?: string; hidden?: boolean };
 function SectionSubline({ description }: { description?: any }) {
   if (!description) return null;
   return (
-    <div className="text-sm sm:text-base leading-relaxed max-w-3xl mx-auto" style={{ color: "#8FA3BF" }}>
+    <div className="text-sm sm:text-base leading-relaxed max-w-5xl mx-auto" style={{ color: "#8FA3BF" }}>
       <PortableText value={description} />
     </div>
   );
@@ -271,7 +271,7 @@ export function IndustryPillars({
   return (
     <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-6 md:mb-8">
+        <div className="text-center max-w-5xl mx-auto mb-6 md:mb-8">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-3 md:mb-4">{title}</h2>
           {description && (
             <div className="text-sm sm:text-base leading-relaxed" style={{ color: "#8FA3BF" }}>
@@ -521,7 +521,7 @@ export function IndustryWhyUs({
           {title}
         </h2>
         {description && (
-          <div className="text-sm md:text-base leading-relaxed mb-8 max-w-3xl" style={{ color: "#8FA3BF" }}>
+          <div className="text-sm md:text-base leading-relaxed mb-8 max-w-5xl" style={{ color: "#8FA3BF" }}>
             <PortableText value={description} />
           </div>
         )}

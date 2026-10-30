@@ -70,7 +70,7 @@ export default async function CaseStudiesPage() {
             )}
           </h1>
 
-          <div className="type-body-large max-w-3xl mx-auto text-[#8FA3BF] [&>p]:text-lg [&>p]:leading-relaxed" style={{ color: '#8FA3BF' }}>
+          <div className="type-body-large max-w-5xl mx-auto text-[#8FA3BF] [&>p]:text-lg [&>p]:leading-relaxed" style={{ color: '#8FA3BF' }}>
             <PortableText value={hero?.description} />
           </div>
         </SlideUp>
@@ -87,7 +87,7 @@ export default async function CaseStudiesPage() {
           <h4 className="type-section-title text-white mb-6">
             {data?.midPageCta?.title}
           </h4>
-          <div className="text-lg max-w-2xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
+          <div className="text-lg max-w-4xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
             <PortableText value={data?.midPageCta?.description} />
           </div>
           {data?.midPageCta?.primaryCta?.text && (

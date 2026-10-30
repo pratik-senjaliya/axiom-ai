@@ -86,7 +86,7 @@ export function SolutionsGrid({ cases, categories, initialCategory, heroData }: 
             )}
           </h1>
 
-          <div className="type-body-large max-w-3xl mx-auto mb-10 text-[#8FA3BF] [&>p]:text-lg [&>p]:leading-relaxed" style={{ color: '#8FA3BF' }}>
+          <div className="type-body-large max-w-5xl mx-auto mb-10 text-[#8FA3BF] [&>p]:text-lg [&>p]:leading-relaxed" style={{ color: '#8FA3BF' }}>
             <PortableText value={heroData?.description} />
           </div>
 

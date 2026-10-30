@@ -56,7 +56,7 @@ export function CaseStudySlider({ data }: CaseStudySliderProps) {
           </div>
           <h4 className="text-3xl md:text-4xl font-bold text-white tracking-tight">{sectionTitle}</h4>
           {data.sectionDescription && (
-            <div className="type-lead max-w-3xl mx-auto mt-5" style={{ color: '#8FA3BF' }}>
+            <div className="type-lead max-w-5xl mx-auto mt-5" style={{ color: '#8FA3BF' }}>
               <PortableText value={data.sectionDescription} />
             </div>
           )}

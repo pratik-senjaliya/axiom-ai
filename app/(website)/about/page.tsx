@@ -96,7 +96,7 @@ export default async function AboutPage() {
             </span>
           </h1>
 
-          <div className="type-body-large max-w-3xl mx-auto" style={{ color: '#8FA3BF' }}>
+          <div className="type-body-large max-w-5xl mx-auto" style={{ color: '#8FA3BF' }}>
             <PortableText value={data?.hero?.description} />
           </div>
         </SlideUp>
@@ -126,7 +126,7 @@ export default async function AboutPage() {
           <SlideUp className="container-custom px-4 max-w-5xl mx-auto">
             <div className="text-center mb-10 md:mb-12">
               <h3 className="type-section-title text-white mb-6">{data.philosophyHeadline}</h3>
-              <div className="max-w-3xl mx-auto text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
+              <div className="max-w-5xl mx-auto text-lg leading-relaxed" style={{ color: '#8FA3BF' }}>
                 <style>{`
                   .philosophy-body p {
                     margin-bottom: 2rem;

@@ -72,7 +72,7 @@ function SectionHeader({ title, description, align = "center" }: { title: string
         {title}
       </h2>
       {description && (
-        <div className={`text-sm sm:text-base leading-relaxed max-w-3xl ${centered ? "mx-auto" : ""}`} style={{ color: "#8FA3BF" }}>
+        <div className={`text-sm sm:text-base leading-relaxed max-w-5xl ${centered ? "mx-auto" : ""}`} style={{ color: "#8FA3BF" }}>
           <PortableText value={description} />
         </div>
       )}
@@ -465,8 +465,8 @@ export function HireWhy({
           )}
         </div>
         {image ? (
-          <div className="grid lg:grid-cols-[5fr_7fr] gap-6 items-stretch">
-            <div className="relative rounded-2xl border overflow-hidden min-h-[300px] p-6 md:p-8 flex flex-col justify-end" style={{ borderColor: "rgba(0,229,255,0.2)" }}>
+          <div className="grid lg:grid-cols-[5fr_7fr] gap-6 items-start">
+            <div className="relative rounded-2xl border overflow-hidden aspect-[4/3] lg:aspect-square lg:sticky lg:top-28 p-6 md:p-8 flex flex-col justify-end" style={{ borderColor: "rgba(0,229,255,0.2)" }}>
               <Image src={image} alt={imageAlt || imageTitle || ""} fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
               <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(7,16,31,0.1) 30%, rgba(7,16,31,0.9) 100%)" }} />
               {imageLabel && (

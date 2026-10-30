@@ -97,7 +97,7 @@ export function BlogGrid({ posts, categories, initialCategory = "All", pageData 
             Industry Insights through <span className="gradient-text">Agentic Thinking</span>
           </h1>
           <div
-            className="max-w-3xl mx-auto mb-6 sm:mb-10 text-[#8FA3BF] text-sm sm:text-base [&>p]:text-sm sm:[&>p]:text-base [&>p]:leading-relaxed px-1"
+            className="max-w-5xl mx-auto mb-6 sm:mb-10 text-[#8FA3BF] text-sm sm:text-base [&>p]:text-sm sm:[&>p]:text-base [&>p]:leading-relaxed px-1"
             style={{ color: "#8FA3BF" }}
           >
             <PortableText value={pageData?.description} />

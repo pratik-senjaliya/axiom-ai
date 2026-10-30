@@ -49,7 +49,7 @@ export function DarkCTA({
           {title}
         </SectionHeading>
 
-        <div className="text-lg max-w-2xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
+        <div className="text-lg max-w-4xl mx-auto mb-10" style={{ color: '#8FA3BF' }}>
           <PortableText value={description} />
         </div>
 
