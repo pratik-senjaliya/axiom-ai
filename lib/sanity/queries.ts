@@ -776,7 +776,11 @@ export async function getHirePageBySlug(slug: string): Promise<any> {
     processCta { text, link },
     industriesHeadline, industriesDescription, industries[] { title, description, icon },
     testimonialsHeadline, testimonialsBadge, testimonials[] { quote, author, role, company },
-    moreHeadline, moreLinkText, moreLinks[] { title, description, link },
+    moreHeadline, moreDescription, moreLinkText,
+    moreLinks[] {
+      title, description, link,
+      "image": coalesce(image.asset->url, *[_type == "hirePage" && "/" + slug.current == ^.link][0].hero.image.asset->url)
+    },
     faqsHeadline, faqs[] { question, answer },
     finalCta { badgeText, title, description, buttonText, buttonLink }
   }`

@@ -218,12 +218,13 @@ export default defineType({
 
         // 10. Explore more
         headline('moreHeadline', 'Explore More Headline', 'more'),
+        subline('moreDescription', 'more'),
         defineField({
             name: 'moreLinkText',
             title: 'Card Link Text',
             type: 'string',
             group: 'more',
-            description: 'Defaults to "Hire now".',
+            description: 'Defaults to "Hire Now".',
         }),
         defineField({
             name: 'moreLinks',
@@ -236,6 +237,13 @@ export default defineType({
                     { name: 'title', type: 'string', title: 'Title' },
                     { name: 'description', type: 'string', title: 'Short Description' },
                     { name: 'link', type: 'string', title: 'Link', description: 'e.g. /hire-data-engineers. Defaults to /contact.' },
+                    {
+                        name: 'image',
+                        type: 'image',
+                        title: 'Image',
+                        options: { hotspot: true },
+                        description: 'Optional. Defaults to the hero image of the hire page this card links to.',
+                    },
                 ],
                 preview: { select: { title: 'title', subtitle: 'link' } },
             }],

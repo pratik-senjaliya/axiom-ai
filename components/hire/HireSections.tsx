@@ -10,7 +10,6 @@ import {
   Cpu,
   Server,
   ArrowRight,
-  ArrowUpRight,
   BadgeCheck,
   Network,
   TrendingUp,
@@ -44,7 +43,7 @@ import { HireModelTabs } from "@/components/hire/HireModelTabs";
 type Item = { title: string; description?: any };
 export type HiringModel = Item & { bestFor?: string; features?: string[] };
 export type TechCategory = { category: string; tools?: string[] };
-export type HireLink = { title: string; description?: string; link?: string };
+export type HireLink = { title: string; description?: string; link?: string; image?: string };
 type Cta = { text: string; link: string };
 
 const ROLE_ICONS: LucideIcon[] = [Brain, Sparkles, MessagesSquare, FileSearch, Bot, Cpu, Server];
@@ -606,13 +605,15 @@ const ROLE_LINK_ICONS: { match: RegExp; icon: LucideIcon }[] = [
 ];
 const roleLinkIcon = (title: string) => ROLE_LINK_ICONS.find((entry) => entry.match.test(title))?.icon || Users;
 
-/** Explore more — icon link tiles to other hire pages */
+/** Explore more — image cards linking to other hire pages */
 export function HireExploreMore({
   title,
+  description,
   items,
-  linkText = "Hire now",
+  linkText = "Hire Now",
 }: {
   title: string;
+  description?: any;
   items: HireLink[];
   linkText?: string;
 }) {
@@ -620,51 +621,61 @@ export function HireExploreMore({
   return (
     <section className="py-14 md:py-20 overflow-x-clip" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
-        <SectionHeader title={title} />
-        <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        <SectionHeader title={title} description={description} />
+        <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {items.map((item) => {
             const Icon = roleLinkIcon(item.title);
             return (
               <StaggerItem key={item.title} className="min-w-0">
                 <Link
                   href={item.link || "/contact"}
-                  className="group relative h-full rounded-2xl border p-6 flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(0,229,255,0.45)] hover:shadow-[0_18px_40px_rgba(0,0,0,0.35),0_0_24px_rgba(0,229,255,0.12)]"
-                  style={CARD_STYLE}
+                  className="group h-full rounded-[1.75rem] border overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(0,229,255,0.4)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.35),0_0_25px_rgba(0,229,255,0.1)]"
+                  style={{ background: "rgba(26,46,71,0.6)", borderColor: "rgba(0,229,255,0.12)" }}
                 >
-                  <div
-                    className="absolute -top-12 -right-12 h-36 w-36 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{ background: "rgba(0,229,255,0.16)" }}
-                  />
-                  <div className="relative flex items-start justify-between mb-8">
+                  <div className="relative aspect-[16/10] overflow-hidden shrink-0">
+                    {item.image ? (
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div
+                        className="absolute inset-0 flex items-center justify-center"
+                        style={{ background: "radial-gradient(ellipse at 30% 20%, rgba(0,229,255,0.22), transparent 60%), linear-gradient(135deg, #14243A 0%, #0A0F1F 100%)" }}
+                      >
+                        <div
+                          className="absolute inset-0 opacity-60"
+                          style={{ backgroundImage: "linear-gradient(to right, rgba(0,229,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,229,255,0.06) 1px, transparent 1px)", backgroundSize: "28px 28px" }}
+                        />
+                        <span
+                          className="relative h-16 w-16 rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110"
+                          style={{ background: "linear-gradient(135deg, rgba(29,161,242,0.3), rgba(0,229,255,0.18))", color: "#00E5FF", boxShadow: "inset 0 0 0 1px rgba(0,229,255,0.35), 0 0 30px rgba(0,229,255,0.15)" }}
+                        >
+                          <Icon className="w-8 h-8" strokeWidth={1.5} />
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <p className="text-lg font-bold text-white leading-snug mb-3 group-hover:text-[#00E5FF] transition-colors">
+                      {item.title}
+                    </p>
+                    {item.description && (
+                      <p className="text-sm leading-relaxed mb-6" style={{ color: "#8FA3BF" }}>
+                        {item.description}
+                      </p>
+                    )}
                     <span
-                      className="h-14 w-14 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                      style={{ background: "linear-gradient(135deg, rgba(29,161,242,0.25), rgba(0,229,255,0.15))", color: "#00E5FF", boxShadow: "inset 0 0 0 1px rgba(0,229,255,0.3)" }}
+                      className="mt-auto self-start inline-flex items-center gap-2 rounded-full px-5 h-10 text-sm font-bold transition-all group-hover:scale-105"
+                      style={{ background: "linear-gradient(135deg, #1DA1F2, #00E5FF)", color: "#0A0F1F", boxShadow: "0 0 18px rgba(0,229,255,0.25)" }}
                     >
-                      <Icon className="w-7 h-7" strokeWidth={1.6} />
-                    </span>
-                    <span
-                      className="h-10 w-10 rounded-full border flex items-center justify-center transition-all duration-300 group-hover:bg-[#00E5FF] group-hover:border-[#00E5FF] group-hover:text-[#0A0F1F]"
-                      style={{ borderColor: "rgba(0,229,255,0.3)", color: "#00E5FF" }}
-                    >
-                      <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:rotate-45" />
+                      {linkText}
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                     </span>
                   </div>
-                  <p className="relative text-lg font-bold text-white leading-snug mb-2 group-hover:text-[#00E5FF] transition-colors">
-                    {item.title}
-                  </p>
-                  {item.description && (
-                    <p className="relative text-sm leading-relaxed mb-4" style={{ color: "#8FA3BF" }}>
-                      {item.description}
-                    </p>
-                  )}
-                  <span className="relative mt-auto pt-4 inline-flex items-center gap-1.5 text-sm font-bold" style={{ color: "#00E5FF" }}>
-                    {linkText}
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                  <div
-                    className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
-                    style={{ background: "linear-gradient(90deg, #1DA1F2, #00E5FF)" }}
-                  />
                 </Link>
               </StaggerItem>
             );

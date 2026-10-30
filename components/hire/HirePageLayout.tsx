@@ -117,6 +117,7 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
 
       <HireExploreMore
         title={data.moreHeadline || "Explore More Developers to Hire"}
+        description={data.moreDescription}
         items={data.moreLinks || []}
         linkText={data.moreLinkText || undefined}
       />
