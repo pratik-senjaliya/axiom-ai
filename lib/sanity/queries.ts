@@ -773,6 +773,7 @@ export async function getHirePageBySlug(slug: string): Promise<any> {
     "whyImage": whyImage.asset->url, "whyImageAlt": whyImage.alt,
     whyImageLabel, whyImageTitle, whyListTitle,
     processHeadline, processDescription, process[] { title, description },
+    processCta { text, link },
     industriesHeadline, industriesDescription, industries[] { title, description, icon },
     testimonialsHeadline, testimonialsBadge, testimonials[] { quote, author, role, company },
     moreHeadline, moreLinkText, moreLinks[] { title, description, link },

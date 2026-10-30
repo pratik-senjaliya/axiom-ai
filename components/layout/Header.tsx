@@ -33,7 +33,7 @@ const navigation: NavItem[] = [
   { name: "Services", href: "#services", hasDropdown: true, dropdownKey: "services" },
   { name: "Industries", href: "#industries", hasDropdown: true, dropdownKey: "industries" },
   { name: "Hire Developers", href: "#hire", hasDropdown: true, dropdownKey: "hire" },
-  { name: "Insights", href: "/insights", hasDropdown: true, dropdownKey: "insights" },
+  { name: "Resources", href: "/insights", hasDropdown: true, dropdownKey: "insights" },
   { name: "About", href: "/about" },
 ];
 
@@ -217,7 +217,7 @@ export const Header: React.FC = () => {
   const ctaHref = headerCta?.link || "/contact";
 
   // Hide the Industries / Hire menus entirely when there is nothing to list,
-  // and show Insights as a plain link while Case Studies is hidden
+  // and show Resources as a plain "Insights" link while Case Studies is hidden
   const navItems = navigation
     .filter((item) => {
       if (item.dropdownKey === "industries") return industryCategories.length + dynamicIndustries.length > 0;
@@ -226,7 +226,7 @@ export const Header: React.FC = () => {
     })
     .map((item) =>
       item.dropdownKey === "insights" && insightsLinks.length < 2
-        ? { name: item.name, href: item.href }
+        ? { name: "Insights", href: item.href }
         : item
     );
 
@@ -463,7 +463,7 @@ export const Header: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Insights dropdown */}
+                  {/* Resources dropdown (Insights + Case Studies) */}
                   {item.dropdownKey === "insights" && openDropdown === "insights" && (
                     <div
                       className="absolute top-full left-0 pt-4 w-max animate-scale-in"

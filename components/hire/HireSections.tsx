@@ -499,7 +499,7 @@ const STEP_COLS: Record<number, string> = {
 };
 
 /** Hiring process — connected stepper (horizontal on desktop, vertical on mobile) */
-export function HireProcess({ title, description, items }: { title: string; description?: any; items: Item[] }) {
+export function HireProcess({ title, description, items, cta }: { title: string; description?: any; items: Item[]; cta?: Cta }) {
   if (!items.length) return null;
   const n = items.length;
   return (
@@ -542,6 +542,11 @@ export function HireProcess({ title, description, items }: { title: string; desc
             );
           })}
         </div>
+        {cta && (
+          <div className="mt-10 md:mt-12 flex justify-center">
+            <GradientLink text={cta.text} href={cta.link} />
+          </div>
+        )}
       </div>
     </section>
   );

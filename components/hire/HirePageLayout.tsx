@@ -106,12 +106,19 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
         title={data.processHeadline || `Our ${role} Hiring Process`}
         description={data.processDescription}
         items={mapItems(data.process)}
+        cta={{ text: data.processCta?.text || `Hire ${role}`, link: data.processCta?.link || "/contact" }}
       />
 
       <HireIndustries
         title={data.industriesHeadline || "Industries We Support"}
         description={data.industriesDescription}
         items={(data.industries || []).map((item: any) => ({ title: item.title, icon: item.icon }))}
+      />
+
+      <HireExploreMore
+        title={data.moreHeadline || "Explore More Developers to Hire"}
+        items={data.moreLinks || []}
+        linkText={data.moreLinkText || undefined}
       />
 
       {(data.testimonials?.length ?? 0) > 0 && (
@@ -121,12 +128,6 @@ export function HirePageLayout({ data, path }: HirePageLayoutProps) {
           subtitle={data.testimonialsBadge || "Testimonials"}
         />
       )}
-
-      <HireExploreMore
-        title={data.moreHeadline || "Explore More Developers to Hire"}
-        items={data.moreLinks || []}
-        linkText={data.moreLinkText || undefined}
-      />
 
       {faqs.length > 0 && (
         <section className="py-12 md:py-16 overflow-x-clip" style={{ background: "#0A0F1F" }}>

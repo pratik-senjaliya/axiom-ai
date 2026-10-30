@@ -183,6 +183,13 @@ export default defineType({
         headline('processHeadline', 'Process Headline', 'process'),
         subline('processDescription', 'process'),
         titledList('process', 'Process Steps', 'process'),
+        defineField({
+            name: 'processCta',
+            title: 'Process Button',
+            type: 'cta',
+            group: 'process',
+            description: 'Shown below the process steps. Defaults to "Hire AI Engineers" → /contact.',
+        }),
 
         // 8. Industries
         headline('industriesHeadline', 'Industries Headline', 'industries'),

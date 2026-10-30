@@ -7,6 +7,7 @@ import { BlogPost } from '@/lib/blog';
 import { SlideUp } from '@/components/ui/animations/SlideUp';
 import { StaggerGroup, StaggerItem } from '@/components/ui/animations/StaggerGroup';
 import { PortableText } from '@/components/ui/PortableText';
+import { BlogCoverImage } from '@/components/blog/BlogCoverImage';
 
 interface RelatedInsightsProps {
   posts: BlogPost[];
@@ -40,7 +41,7 @@ export function RelatedInsights({
 
       <div className="container-custom px-4 relative z-10">
         <SlideUp className={`flex flex-col md:flex-row md:items-end justify-between gap-4 ${compact ? "mb-7" : "mb-12 gap-6"}`}>
-          <div className="max-w-2xl">
+          <div className="max-w-4xl">
             <div className={`inline-flex items-center gap-2 font-semibold text-xs tracking-wide uppercase ${compact ? "mb-2" : "mb-4"}`} style={{ color: '#00E5FF' }}>
               <span className="text-xl leading-none font-light block -mt-1">+</span>
               <span>{label}</span>
@@ -75,7 +76,18 @@ export function RelatedInsights({
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.35)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 25px rgba(0,229,255,0.1), 0 20px 40px rgba(0,0,0,0.3)'; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.12)'; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
             >
-              <div className="p-8 h-full flex flex-col">
+              <div className="h-full flex flex-col">
+              {(post.imageCard || post.image) && (
+                <BlogCoverImage
+                  src={post.imageCard || post.image}
+                  alt={post.imageAlt || post.title}
+                  variant="card"
+                  aspectClassName="aspect-[16/10]"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  hoverZoom
+                />
+              )}
+              <div className="p-6 sm:p-8 flex flex-col flex-grow">
                 <div className="flex items-center gap-4 mb-6 text-[12px] font-semibold" style={{ color: '#00E5FF' }}>
                   <span className="flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: 'rgba(0,229,255,0.1)' }}>
                     <Tag size={12} fill="currentColor" className="opacity-60" />
@@ -104,6 +116,7 @@ export function RelatedInsights({
                     <ArrowRight size={14} />
                   </div>
                 </div>
+              </div>
               </div>
             </Link>
             </StaggerItem>
