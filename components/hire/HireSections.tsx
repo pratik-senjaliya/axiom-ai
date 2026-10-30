@@ -150,7 +150,16 @@ export function HireHero({
       className="relative pt-32 pb-16 md:pb-20 overflow-hidden"
       style={{ background: "linear-gradient(180deg, #0A0F1F 0%, #0D1B2A 100%)" }}
     >
-      <div className="bg-grid opacity-60 z-0" />
+      {image && (
+        <div className="lg:hidden absolute inset-0 z-0" aria-hidden="true">
+          <Image src={image} alt="" fill priority sizes="(min-width: 1024px) 1px, 100vw" className="object-cover object-[center_15%]" />
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(180deg, rgba(10,15,31,0.55) 0%, rgba(10,15,31,0.82) 35%, rgba(10,15,31,0.94) 65%, #0D1B2A 100%)" }}
+          />
+        </div>
+      )}
+      <div className={`bg-grid opacity-60 z-0 ${image ? "hidden lg:block" : ""}`} />
       <div
         className="absolute top-1/3 right-0 w-[45rem] h-[45rem] rounded-full blur-[120px] pointer-events-none z-0"
         style={{ background: "radial-gradient(circle, rgba(0,229,255,0.1) 0%, transparent 70%)" }}
@@ -183,17 +192,17 @@ export function HireHero({
         </SlideUp>
 
         {image && (
-          <SlideUp className="lg:col-span-5 min-w-0">
+          <SlideUp className="hidden lg:block lg:col-span-5 min-w-0">
             <div className="relative">
               <div
                 className="absolute -inset-4 rounded-[2rem] blur-2xl opacity-60 pointer-events-none"
                 style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(0,229,255,0.25), transparent 70%)" }}
               />
               <div
-                className="relative aspect-[4/3] lg:aspect-square rounded-3xl border overflow-hidden"
+                className="relative aspect-square rounded-3xl border overflow-hidden"
                 style={{ borderColor: "rgba(0,229,255,0.25)", boxShadow: "0 20px 60px rgba(0,0,0,0.45)" }}
               >
-                <Image src={image} alt={imageAlt || ""} fill priority sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
+                <Image src={image} alt={imageAlt || ""} fill priority sizes="(min-width: 1024px) 40vw, 1px" className="object-cover" />
               </div>
             </div>
           </SlideUp>
