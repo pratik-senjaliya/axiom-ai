@@ -595,7 +595,18 @@ export function HireIndustries({
   );
 }
 
-/** Links to other hire pages */
+const ROLE_LINK_ICONS: { match: RegExp; icon: LucideIcon }[] = [
+  { match: /data/i, icon: Database },
+  { match: /generative|gen ?ai/i, icon: Sparkles },
+  { match: /llm|language model/i, icon: MessagesSquare },
+  { match: /machine learning|\bml\b/i, icon: BrainCircuit },
+  { match: /agent/i, icon: Bot },
+  { match: /mlops|devops|cloud/i, icon: Server },
+  { match: /erp|dynamics/i, icon: Blocks },
+];
+const roleLinkIcon = (title: string) => ROLE_LINK_ICONS.find((entry) => entry.match.test(title))?.icon || Users;
+
+/** Explore more — icon link tiles to other hire pages */
 export function HireExploreMore({
   title,
   items,
@@ -610,31 +621,55 @@ export function HireExploreMore({
     <section className="py-14 md:py-20 overflow-x-clip" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <SectionHeader title={title} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-          {items.map((item) => (
-            <Link
-              key={item.title}
-              href={item.link || "/contact"}
-              className="group rounded-2xl border p-5 sm:p-6 flex flex-col transition-colors hover:border-[rgba(0,229,255,0.4)] min-w-0"
-              style={CARD_STYLE}
-            >
-              <div className="flex items-start justify-between gap-3 mb-2">
-                <p className="text-base sm:text-lg font-bold text-white leading-snug group-hover:text-[#00E5FF] transition-colors">
-                  {item.title}
-                </p>
-                <ArrowUpRight className="w-5 h-5 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ color: "#00E5FF" }} />
-              </div>
-              {item.description && (
-                <p className="text-sm leading-relaxed mb-4" style={{ color: "#8FA3BF" }}>
-                  {item.description}
-                </p>
-              )}
-              <span className="mt-auto text-sm font-bold" style={{ color: "#00E5FF" }}>
-                {linkText}
-              </span>
-            </Link>
-          ))}
-        </div>
+        <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          {items.map((item) => {
+            const Icon = roleLinkIcon(item.title);
+            return (
+              <StaggerItem key={item.title} className="min-w-0">
+                <Link
+                  href={item.link || "/contact"}
+                  className="group relative h-full rounded-2xl border p-6 flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(0,229,255,0.45)] hover:shadow-[0_18px_40px_rgba(0,0,0,0.35),0_0_24px_rgba(0,229,255,0.12)]"
+                  style={CARD_STYLE}
+                >
+                  <div
+                    className="absolute -top-12 -right-12 h-36 w-36 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{ background: "rgba(0,229,255,0.16)" }}
+                  />
+                  <div className="relative flex items-start justify-between mb-8">
+                    <span
+                      className="h-14 w-14 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                      style={{ background: "linear-gradient(135deg, rgba(29,161,242,0.25), rgba(0,229,255,0.15))", color: "#00E5FF", boxShadow: "inset 0 0 0 1px rgba(0,229,255,0.3)" }}
+                    >
+                      <Icon className="w-7 h-7" strokeWidth={1.6} />
+                    </span>
+                    <span
+                      className="h-10 w-10 rounded-full border flex items-center justify-center transition-all duration-300 group-hover:bg-[#00E5FF] group-hover:border-[#00E5FF] group-hover:text-[#0A0F1F]"
+                      style={{ borderColor: "rgba(0,229,255,0.3)", color: "#00E5FF" }}
+                    >
+                      <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:rotate-45" />
+                    </span>
+                  </div>
+                  <p className="relative text-lg font-bold text-white leading-snug mb-2 group-hover:text-[#00E5FF] transition-colors">
+                    {item.title}
+                  </p>
+                  {item.description && (
+                    <p className="relative text-sm leading-relaxed mb-4" style={{ color: "#8FA3BF" }}>
+                      {item.description}
+                    </p>
+                  )}
+                  <span className="relative mt-auto pt-4 inline-flex items-center gap-1.5 text-sm font-bold" style={{ color: "#00E5FF" }}>
+                    {linkText}
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                  <div
+                    className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
+                    style={{ background: "linear-gradient(90deg, #1DA1F2, #00E5FF)" }}
+                  />
+                </Link>
+              </StaggerItem>
+            );
+          })}
+        </StaggerGroup>
       </div>
     </section>
   );
