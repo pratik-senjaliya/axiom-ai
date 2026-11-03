@@ -873,6 +873,20 @@ export async function getRelatedCaseStudies(slug: string, limit: number = 3): Pr
 
 // ==================== BLOG FILTERING ====================
 
+/** Case studies tagged with an industry, shaped like industry-page success stories */
+export async function getCaseStudiesByIndustry(industry: string, limit: number = 4): Promise<any[]> {
+  const query = `*[_type == "caseStudy" && relatedIndustry == $industry && defined(slug.current)] | order(publishedAt desc) [0...$limit] {
+    "_key": _id,
+    title,
+    "clientChallenge": coalesce(challengeDescription, challengeItems[0], excerpt),
+    "solutionDelivered": coalesce(approachDescription, approachItems[0]),
+    "badges": heroStats[0...3].value,
+    "ctaText": "View the Case Study",
+    "ctaLink": "/case-studies/" + slug.current
+  }`
+  return safeFetch<any[]>(query, { industry, limit }, [])
+}
+
 /** Posts for a service or industry page (matches relatedService or relatedIndustry). */
 export async function getLatestPostsByService(service: string, limit: number = 3): Promise<BlogPost[]> {
   const query = `*[_type == "post" && (relatedService == $service || relatedIndustry == $service)] | order(publishedAt desc) [0...$limit] {

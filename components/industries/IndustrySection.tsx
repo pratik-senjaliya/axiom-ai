@@ -361,7 +361,7 @@ export function IndustrySuccessStories({
                     </div>
                   </div>
                   <div className="relative z-10 flex gap-2">
-                    {(story.badges || ["~40%", "Faster", "Close"]).map((badge: string) => (
+                    {(story.badges || []).map((badge: string) => (
                       <span
                         key={badge}
                         className="px-2.5 py-1 rounded-full text-[11px] font-bold"

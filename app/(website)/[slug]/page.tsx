@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import {
   getServiceBySlug,
   getAllServiceSlugs,
-  getLatestPostsByService,
+  getLatestPostsByService, getCaseStudiesByIndustry,
   getIndustryPageBySlug,
   getAllIndustryPageSlugs,
   getHirePageBySlug,
@@ -108,13 +108,17 @@ export default async function ServicePage({ params }: PageProps) {
       return <HirePageLayout data={hirePage} path={`/${slug}`} />;
     }
 
-    const relatedPosts = await getLatestPostsByService(slug, 3);
+    const [relatedPosts, caseStudies] = await Promise.all([
+      getLatestPostsByService(slug, 3),
+      getCaseStudiesByIndustry(slug),
+    ]);
     return (
       <IndustryPageLayout
         data={industry}
         industryName={industry.title}
         path={`/${slug}`}
         relatedPosts={relatedPosts}
+        caseStudies={caseStudies}
       />
     );
   }

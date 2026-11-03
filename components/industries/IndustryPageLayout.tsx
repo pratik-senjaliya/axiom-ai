@@ -23,10 +23,16 @@ interface IndustryPageLayoutProps {
   /** Route path, e.g. "/finance" */
   path: string;
   relatedPosts: any[];
+  /** Case studies tagged with this industry; shown before any stories typed into the page */
+  caseStudies?: any[];
 }
 
 /** Shared layout for the Finance page and CMS-created industry pages */
-export function IndustryPageLayout({ data, industryName, path, relatedPosts }: IndustryPageLayoutProps) {
+export function IndustryPageLayout({ data, industryName, path, relatedPosts, caseStudies = [] }: IndustryPageLayoutProps) {
+  const successStories = [
+    ...caseStudies,
+    ...(data.successStories || []).filter((story: any) => !caseStudies.some((cs) => cs.ctaLink === story.ctaLink)),
+  ];
   const name = industryName;
   const lower = name.toLowerCase();
 
@@ -101,7 +107,7 @@ export function IndustryPageLayout({ data, industryName, path, relatedPosts }: I
       {areCaseStudiesListed() && (
         <IndustrySuccessStories
           title={data.successStoriesHeadline || `${name} Transformation Success Stories`}
-          stories={data.successStories || []}
+          stories={successStories}
         />
       )}
 

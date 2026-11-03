@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { IndustryPageLayout } from "@/components/industries/IndustryPageLayout";
-import { getFinancePage, getLatestPostsByService } from "@/lib/sanity/queries";
+import { getCaseStudiesByIndustry, getFinancePage, getLatestPostsByService } from "@/lib/sanity/queries";
 import { isFinanceListed } from "@/lib/content-visibility";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { DEMO_FINANCE_PAGE } from "@/lib/demo/financePage";
@@ -84,8 +84,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FinancePage() {
-  const data = mergeFinanceData(await getFinancePage());
-  const relatedPosts = await getLatestPostsByService("finance");
+  const [cms, relatedPosts, caseStudies] = await Promise.all([
+    getFinancePage(),
+    getLatestPostsByService("finance"),
+    getCaseStudiesByIndustry("finance"),
+  ]);
+  const data = mergeFinanceData(cms);
 
-  return <IndustryPageLayout data={data} industryName="Finance" path="/finance" relatedPosts={relatedPosts} />;
+  return (
+    <IndustryPageLayout data={data} industryName="Finance" path="/finance" relatedPosts={relatedPosts} caseStudies={caseStudies} />
+  );
 }
