@@ -14,6 +14,7 @@ import {
   IndustryWhyUs,
 } from "@/components/industries/IndustrySection";
 import { areCaseStudiesListed } from "@/lib/content-visibility";
+import { CaseStudySlider } from "@/components/case-study/CaseStudySlider";
 import { getSiteUrl, portableTextToPlain } from "@/lib/seo";
 
 interface IndustryPageLayoutProps {
@@ -23,16 +24,14 @@ interface IndustryPageLayoutProps {
   /** Route path, e.g. "/finance" */
   path: string;
   relatedPosts: any[];
-  /** Case studies tagged with this industry; shown before any stories typed into the page */
+  /** Case studies tagged with this industry — shown in the home-page style slider */
   caseStudies?: any[];
 }
 
 /** Shared layout for the Finance page and CMS-created industry pages */
 export function IndustryPageLayout({ data, industryName, path, relatedPosts, caseStudies = [] }: IndustryPageLayoutProps) {
-  const successStories = [
-    ...caseStudies,
-    ...(data.successStories || []).filter((story: any) => !caseStudies.some((cs) => cs.ctaLink === story.ctaLink)),
-  ];
+  // The slider skips case studies without a main image
+  const sliderCaseStudies = caseStudies.filter((item) => item.headline && item.ctaLink && item.image);
   const name = industryName;
   const lower = name.toLowerCase();
 
@@ -104,12 +103,22 @@ export function IndustryPageLayout({ data, industryName, path, relatedPosts, cas
       />
 
       {/* Soft-launch: success stories link to case studies — hide until published */}
-      {areCaseStudiesListed() && (
-        <IndustrySuccessStories
-          title={data.successStoriesHeadline || `${name} Transformation Success Stories`}
-          stories={successStories}
-        />
-      )}
+      {/* Tagged case studies use the home page slider; hand-entered stories are the fallback */}
+      {areCaseStudiesListed() &&
+        (sliderCaseStudies.length > 0 ? (
+          <CaseStudySlider
+            data={{
+              sectionTitle: data.successStoriesHeadline || `${name} Transformation Success Stories`,
+              sectionSubtitle: "Case Studies",
+              items: sliderCaseStudies,
+            }}
+          />
+        ) : (
+          <IndustrySuccessStories
+            title={data.successStoriesHeadline || `${name} Transformation Success Stories`}
+            stories={data.successStories || []}
+          />
+        ))}
 
       <IndustryLifecycle
         title={data.processHeadline || `${name} Transformation Process & Delivery`}
