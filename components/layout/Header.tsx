@@ -428,16 +428,21 @@ export const Header: React.FC = () => {
                   {/* Hire Developers dropdown */}
                   {item.dropdownKey === "hire" && openDropdown === "hire" && (
                     <div
-                      className="absolute top-full left-0 pt-4 w-max animate-scale-in"
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-max"
                       onMouseEnter={() => handleMouseEnter("hire")}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className="bg-[#0D1B2A]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#00E5FF]/15 p-6 relative z-[60] w-[360px]">
+                      {/* Grid like the Services menu; centred under the item so it stays on screen */}
+                      <div
+                        className={`animate-scale-in bg-[#0D1B2A]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#00E5FF]/15 p-10 grid gap-x-8 gap-y-10 relative z-[60] ${
+                          hirePages.length >= 3 ? "grid-cols-3 w-[900px]" : hirePages.length === 2 ? "grid-cols-2 w-[620px]" : "grid-cols-1 w-[360px]"
+                        }`}
+                      >
                         {hirePages.map((page) => (
                           <Link
                             key={page.slug}
                             href={page.href}
-                            className="group/item flex gap-4 p-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
+                            className="group/item flex gap-4 p-5 -m-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
                           >
                             <DynamicServiceIcon />
                             <div>
