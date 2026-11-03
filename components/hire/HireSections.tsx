@@ -198,7 +198,7 @@ export function HireHero({
                 style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(0,229,255,0.25), transparent 70%)" }}
               />
               <div
-                className="relative aspect-square rounded-3xl border overflow-hidden"
+                className="relative aspect-[4/3] rounded-3xl border overflow-hidden"
                 style={{ borderColor: "rgba(0,229,255,0.25)", boxShadow: "0 20px 60px rgba(0,0,0,0.45)" }}
               >
                 <Image src={image} alt={imageAlt || ""} fill priority sizes="(min-width: 1024px) 40vw, 1px" className="object-cover" />
