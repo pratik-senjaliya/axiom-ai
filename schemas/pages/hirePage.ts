@@ -103,6 +103,13 @@ export default defineType({
             description: 'Short tags shown under the menu link (e.g. "GenAI", "LLM", "RAG").',
         }),
         defineField({
+            name: 'cardDescription',
+            title: 'Card Description',
+            type: 'string',
+            group: 'settings',
+            description: 'Short line shown on this page\'s card in "Explore More Developers to Hire" on other hire pages. Defaults to the SEO meta description.',
+        }),
+        defineField({
             name: 'breadcrumbLabel',
             title: 'Breadcrumb Parent Label',
             type: 'string',
@@ -231,6 +238,8 @@ export default defineType({
             title: 'Other Developers to Hire',
             type: 'array',
             group: 'more',
+            // Cards are now generated automatically from the other hire pages.
+            hidden: true,
             of: [{
                 type: 'object',
                 fields: [

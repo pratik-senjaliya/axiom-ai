@@ -605,7 +605,15 @@ const ROLE_LINK_ICONS: { match: RegExp; icon: LucideIcon }[] = [
 ];
 const roleLinkIcon = (title: string) => ROLE_LINK_ICONS.find((entry) => entry.match.test(title))?.icon || Users;
 
-/** Explore more — image cards linking to other hire pages */
+/** Fewer than 4 cards: narrow and centre the grid instead of leaving empty columns */
+const EXPLORE_GRID: Record<number, string> = {
+  1: "sm:grid-cols-1 max-w-sm mx-auto",
+  2: "max-w-3xl mx-auto",
+  3: "lg:grid-cols-3 max-w-5xl mx-auto",
+  4: "lg:grid-cols-4",
+};
+
+/** Explore more — image cards linking to the other hire pages (generated automatically) */
 export function HireExploreMore({
   title,
   description,
@@ -622,7 +630,7 @@ export function HireExploreMore({
     <section className="py-14 md:py-20 overflow-x-clip" style={{ background: "#0D1B2A" }}>
       <div className="container-custom px-4 max-w-7xl mx-auto">
         <SectionHeader title={title} description={description} />
-        <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        <StaggerGroup className={`grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6 ${EXPLORE_GRID[Math.min(items.length, 4)]}`}>
           {items.map((item) => {
             const Icon = roleLinkIcon(item.title);
             return (
@@ -664,7 +672,7 @@ export function HireExploreMore({
                       {item.title}
                     </p>
                     {item.description && (
-                      <p className="text-sm leading-relaxed mb-6" style={{ color: "#8FA3BF" }}>
+                      <p className="text-sm leading-relaxed mb-6 line-clamp-3" style={{ color: "#8FA3BF" }}>
                         {item.description}
                       </p>
                     )}

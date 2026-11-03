@@ -777,14 +777,17 @@ export async function getHirePageBySlug(slug: string): Promise<any> {
     industriesHeadline, industriesDescription, industries[] { title, description, icon },
     testimonialsHeadline, testimonialsBadge, testimonials[] { quote, author, role, company },
     moreHeadline, moreDescription, moreLinkText,
-    moreLinks[] {
-      title, description, link,
-      "image": coalesce(image.asset->url, *[_type == "hirePage" && "/" + slug.current == ^.link][0].hero.image.asset->url)
+    "moreLinks": *[_type == "hirePage" && slug.current != $slug && showInNavigation != false && defined(slug.current) && !(slug.current in $reserved) && !(_id in path("drafts.**"))]
+      | order(title asc) [0...4] {
+      "title": coalesce(navLabel, "Hire " + title),
+      "description": coalesce(cardDescription, seo.metaDescription),
+      "link": "/" + slug.current,
+      "image": hero.image.asset->url
     },
     faqsHeadline, faqs[] { question, answer },
     finalCta { badgeText, title, description, buttonText, buttonLink }
   }`
-  return safeFetch<any>(query, { slug }, null)
+  return safeFetch<any>(query, { slug, reserved: CORE_SERVICE_SLUGS }, null)
 }
 
 /** Hire pages that should appear in header/footer navigation */
