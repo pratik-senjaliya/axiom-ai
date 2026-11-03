@@ -29,7 +29,7 @@ function mergeTitledItems(cmsItems: any[] | undefined, fallbackItems: any[] = []
 
 function mergeFinanceData(cms: any) {
   const fallback = DEMO_FINANCE_PAGE;
-  if (!cms) return fallback;
+  if (!cms) return { ...fallback, successStories: [] };
 
   const merged: any = { ...fallback, ...cms };
 
@@ -53,9 +53,8 @@ function mergeFinanceData(cms: any) {
   merged.process = mergeTitledItems(cms.process, fallback.process);
   merged.whyUs = mergeTitledItems(cms.whyUs, fallback.whyUs);
 
-  if (!cms.successStories?.length) {
-    merged.successStories = fallback.successStories;
-  }
+  // Success stories come only from the CMS — never show demo case studies.
+  merged.successStories = cms.successStories || [];
 
   merged.hero = { ...fallback.hero, ...(cms.hero || {}) };
   if (!hasTextContent(merged.hero.description)) merged.hero.description = fallback.hero.description;
