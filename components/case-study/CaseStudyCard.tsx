@@ -36,14 +36,14 @@ export function CaseStudyCard({ item, index = 0 }: CaseStudyCardProps) {
         )}
 
         {stats.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 max-w-2xl">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5 mb-8 max-w-2xl">
             {stats.map((stat, i) => (
               <div key={i} className="min-w-0 sm:border-l sm:pl-4 first:border-l-0 first:pl-0" style={{ borderColor: 'rgba(0,229,255,0.2)' }}>
-                <p className="text-2xl md:text-3xl font-bold leading-tight break-words" style={{ color: '#00E5FF' }}>
+                <p className="text-lg md:text-xl font-bold leading-tight break-words" style={{ color: '#00E5FF' }}>
                   {stat.value}
                 </p>
                 {stat.label && (
-                  <p className="text-sm leading-snug mt-1" style={{ color: '#8FA3BF' }}>
+                  <p className="text-xs md:text-sm leading-snug mt-1" style={{ color: '#8FA3BF' }}>
                     {stat.label}
                   </p>
                 )}

@@ -114,9 +114,50 @@ const serviceCategories = [
   },
 ];
 
-/** Columns and width for the Industries / Hire mega menus, sized to the number of links */
-const menuGridClass = (count: number) =>
-  count >= 3 ? "grid-cols-3 w-[900px]" : count === 2 ? "grid-cols-2 w-[620px]" : "grid-cols-1 w-[360px]";
+/** Dropdown panel: two columns when there is more than one link, otherwise a single narrow column */
+function MenuPanel({ count, children }: { count: number; children: React.ReactNode }) {
+  return (
+    <div
+      className={cn(
+        "animate-scale-in relative z-[60] grid gap-1 p-2.5 rounded-2xl border border-[#00E5FF]/15 bg-[#0D1B2A]/95 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]",
+        count > 1 ? "grid-cols-2 w-[640px]" : "grid-cols-1 w-[320px]"
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
+/** One dropdown entry: icon, title and a short muted line (tags joined, or a description) */
+function MenuLink({
+  href,
+  icon,
+  title,
+  tags,
+  description,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  title: string;
+  tags?: string[];
+  description?: string;
+}) {
+  const subline = description || (tags?.length ? tags.join(" · ") : "");
+  return (
+    <Link
+      href={href}
+      className="group/item flex items-start gap-3 rounded-xl p-3 border border-transparent hover:bg-[#00E5FF]/5 hover:border-[#00E5FF]/15 transition-colors duration-200"
+    >
+      <span className="shrink-0">{icon}</span>
+      <span className="min-w-0">
+        <span className="block text-[15px] font-semibold leading-snug text-white group-hover/item:text-[#00E5FF] transition-colors">
+          {title}
+        </span>
+        {subline && <span className="mt-1 block text-xs leading-relaxed text-[#8FA3BF] line-clamp-2">{subline}</span>}
+      </span>
+    </Link>
+  );
+}
 
 const industryCategories = isFinanceListed()
   ? [
@@ -305,194 +346,47 @@ export const Header: React.FC = () => {
                     </Link>
                   )}
 
-                  {/* Services mega menu */}
-                  {item.dropdownKey === "services" && openDropdown === "services" && (
+                  {/* Desktop dropdowns — compact panels centred under the menu item */}
+                  {item.dropdownKey && openDropdown === item.dropdownKey && (
                     <div
-                      className="absolute top-full left-0 pt-4 w-max animate-scale-in"
-                      onMouseEnter={() => handleMouseEnter("services")}
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-max"
+                      onMouseEnter={() => handleMouseEnter(item.dropdownKey!)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className="bg-[#0D1B2A]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#00E5FF]/15 p-10 grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 relative z-[60] w-[900px]">
-                        {serviceCategories.map((category) => (
-                          <Link
-                            key={category.title}
-                            href={category.href}
-                            className="group/item flex gap-4 p-5 -m-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
-                          >
-                            {category.icon}
-                            <div>
-                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-2">
-                                {category.title}
-                              </h3>
-                              <div className="flex flex-wrap gap-2">
-                                {category.tags.map((tag) => (
-                                  <span
-                                    key={tag}
-                                    className="px-3 py-1 bg-[#14243A] text-[#8FA3BF] text-[0.75rem] font-medium rounded-full cursor-default border border-[#00E5FF]/10"
-                                  >
-                                    {tag}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </Link>
-                        ))}
-                        {dynamicServices.map((service) => (
-                          <Link
-                            key={service.slug}
-                            href={service.href}
-                            className="group/item flex gap-4 p-5 -m-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
-                          >
-                            <DynamicServiceIcon />
-                            <div>
-                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-2">
-                                {service.title}
-                              </h3>
-                              {(service.navTags?.length ?? 0) > 0 && (
-                                <div className="flex flex-wrap gap-2">
-                                  {service.navTags!.map((tag) => (
-                                    <span
-                                      key={tag}
-                                      className="px-3 py-1 bg-[#14243A] text-[#8FA3BF] text-[0.75rem] font-medium rounded-full cursor-default border border-[#00E5FF]/10"
-                                    >
-                                      {tag}
-                                    </span>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Industries dropdown */}
-                  {item.dropdownKey === "industries" && openDropdown === "industries" && (
-                    <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-max"
-                      onMouseEnter={() => handleMouseEnter("industries")}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      {/* Grid like the Services menu; centred under the item so it stays on screen */}
-                      <div className={`animate-scale-in bg-[#0D1B2A]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#00E5FF]/15 p-10 grid gap-x-8 gap-y-10 relative z-[60] ${menuGridClass(industryCategories.length + dynamicIndustries.length)}`}>
-                        {industryCategories.map((category) => (
-                          <Link
-                            key={category.title}
-                            href={category.href}
-                            className="group/item flex gap-4 p-5 -m-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
-                          >
-                            {category.icon}
-                            <div>
-                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-2">
-                                {category.title}
-                              </h3>
-                              <div className="flex flex-wrap gap-2">
-                                {category.tags.map((tag) => (
-                                  <span
-                                    key={tag}
-                                    className="px-3 py-1 bg-[#14243A] text-[#8FA3BF] text-[0.75rem] font-medium rounded-full cursor-default border border-[#00E5FF]/10"
-                                  >
-                                    {tag}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </Link>
-                        ))}
-                        {dynamicIndustries.map((industry) => (
-                          <Link
-                            key={industry.slug}
-                            href={industry.href}
-                            className="group/item flex gap-4 p-5 -m-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
-                          >
-                            <DynamicServiceIcon />
-                            <div>
-                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-2">
-                                {industry.title}
-                              </h3>
-                              {(industry.navTags?.length ?? 0) > 0 && (
-                                <div className="flex flex-wrap gap-2">
-                                  {industry.navTags!.map((tag) => (
-                                    <span
-                                      key={tag}
-                                      className="px-3 py-1 bg-[#14243A] text-[#8FA3BF] text-[0.75rem] font-medium rounded-full cursor-default border border-[#00E5FF]/10"
-                                    >
-                                      {tag}
-                                    </span>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Hire Developers dropdown */}
-                  {item.dropdownKey === "hire" && openDropdown === "hire" && (
-                    <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-max"
-                      onMouseEnter={() => handleMouseEnter("hire")}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      {/* Grid like the Services menu; centred under the item so it stays on screen */}
-                      <div className={`animate-scale-in bg-[#0D1B2A]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#00E5FF]/15 p-10 grid gap-x-8 gap-y-10 relative z-[60] ${menuGridClass(hirePages.length)}`}>
-                        {hirePages.map((page) => (
-                          <Link
-                            key={page.slug}
-                            href={page.href}
-                            className="group/item flex gap-4 p-5 -m-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
-                          >
-                            <DynamicServiceIcon />
-                            <div>
-                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-2">
-                                {page.title}
-                              </h3>
-                              {(page.navTags?.length ?? 0) > 0 && (
-                                <div className="flex flex-wrap gap-2">
-                                  {page.navTags!.map((tag) => (
-                                    <span
-                                      key={tag}
-                                      className="px-3 py-1 bg-[#14243A] text-[#8FA3BF] text-[0.75rem] font-medium rounded-full cursor-default border border-[#00E5FF]/10"
-                                    >
-                                      {tag}
-                                    </span>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Resources dropdown (Insights + Case Studies) */}
-                  {item.dropdownKey === "insights" && openDropdown === "insights" && (
-                    <div
-                      className="absolute top-full left-0 pt-4 w-max animate-scale-in"
-                      onMouseEnter={() => handleMouseEnter("insights")}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <div className="bg-[#0D1B2A]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#00E5FF]/15 p-6 relative z-[60] w-[360px]">
-                        {insightsLinks.map((link) => (
-                          <Link
-                            key={link.href}
-                            href={link.href}
-                            className="group/item flex gap-4 p-5 rounded-2xl hover:bg-[#00E5FF]/5 transition-all duration-200 border border-transparent hover:border-[#00E5FF]/20"
-                          >
-                            <DynamicServiceIcon />
-                            <div>
-                              <h3 className="text-lg font-bold text-white group-hover/item:text-[#00E5FF] transition-colors mb-1">
-                                {link.title}
-                              </h3>
-                              <p className="text-sm text-[#8FA3BF]">{link.description}</p>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
+                      {item.dropdownKey === "services" && (
+                        <MenuPanel count={serviceCategories.length + dynamicServices.length}>
+                          {serviceCategories.map((category) => (
+                            <MenuLink key={category.title} href={category.href} icon={category.icon} title={category.title} tags={category.tags} />
+                          ))}
+                          {dynamicServices.map((service) => (
+                            <MenuLink key={service.slug} href={service.href} icon={<DynamicServiceIcon />} title={service.title} tags={service.navTags} />
+                          ))}
+                        </MenuPanel>
+                      )}
+                      {item.dropdownKey === "industries" && (
+                        <MenuPanel count={industryCategories.length + dynamicIndustries.length}>
+                          {industryCategories.map((category) => (
+                            <MenuLink key={category.title} href={category.href} icon={category.icon} title={category.title} tags={category.tags} />
+                          ))}
+                          {dynamicIndustries.map((industry) => (
+                            <MenuLink key={industry.slug} href={industry.href} icon={<DynamicServiceIcon />} title={industry.title} tags={industry.navTags} />
+                          ))}
+                        </MenuPanel>
+                      )}
+                      {item.dropdownKey === "hire" && (
+                        <MenuPanel count={hirePages.length}>
+                          {hirePages.map((page) => (
+                            <MenuLink key={page.slug} href={page.href} icon={<DynamicServiceIcon />} title={page.title} tags={page.navTags} />
+                          ))}
+                        </MenuPanel>
+                      )}
+                      {item.dropdownKey === "insights" && (
+                        <MenuPanel count={1}>
+                          {insightsLinks.map((link) => (
+                            <MenuLink key={link.href} href={link.href} icon={<DynamicServiceIcon />} title={link.title} description={link.description} />
+                          ))}
+                        </MenuPanel>
+                      )}
                     </div>
                   )}
                 </div>
