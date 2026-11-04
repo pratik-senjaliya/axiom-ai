@@ -128,7 +128,7 @@ function MenuPanel({ count, children }: { count: number; children: React.ReactNo
   );
 }
 
-/** One dropdown entry: icon, title and a short muted line (tags joined, or a description) */
+/** One dropdown entry: icon, title, then small tag pills (or a description line) */
 function MenuLink({
   href,
   icon,
@@ -142,7 +142,6 @@ function MenuLink({
   tags?: string[];
   description?: string;
 }) {
-  const subline = description || (tags?.length ? tags.join(" · ") : "");
   return (
     <Link
       href={href}
@@ -153,7 +152,19 @@ function MenuLink({
         <span className="block text-[15px] font-semibold leading-snug text-white group-hover/item:text-[#00E5FF] transition-colors">
           {title}
         </span>
-        {subline && <span className="mt-1 block text-xs leading-relaxed text-[#8FA3BF] line-clamp-2">{subline}</span>}
+        {description && <span className="mt-1 block text-xs leading-relaxed text-[#8FA3BF] line-clamp-2">{description}</span>}
+        {!description && (tags?.length ?? 0) > 0 && (
+          <span className="mt-2 flex flex-wrap gap-1.5">
+            {tags!.map((tag) => (
+              <span
+                key={tag}
+                className="px-2 py-0.5 rounded-full text-[11px] font-medium leading-4 text-[#8FA3BF] bg-[#14243A] border border-[#00E5FF]/10 group-hover/item:border-[#00E5FF]/20 transition-colors"
+              >
+                {tag}
+              </span>
+            ))}
+          </span>
+        )}
       </span>
     </Link>
   );
