@@ -5,6 +5,8 @@ export interface CaseStudySpotlightData {
   ctaLink?: string
   image?: string
   imageAlt?: string
+  /** Headline stats from the case study hero (up to 3) */
+  stats?: { value?: string; label?: string }[]
 }
 
 export interface CaseStudiesSectionData {

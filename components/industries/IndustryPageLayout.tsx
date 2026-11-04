@@ -102,24 +102,6 @@ export function IndustryPageLayout({ data, industryName, path, relatedPosts, cas
         cta={data.outcomesCta}
       />
 
-      {/* Soft-launch: success stories link to case studies — hide until published */}
-      {/* Tagged case studies use the home page slider; hand-entered stories are the fallback */}
-      {areCaseStudiesListed() &&
-        (sliderCaseStudies.length > 0 ? (
-          <CaseStudySlider
-            data={{
-              sectionTitle: data.successStoriesHeadline || `${name} Transformation Success Stories`,
-              sectionSubtitle: "Case Studies",
-              items: sliderCaseStudies,
-            }}
-          />
-        ) : (
-          <IndustrySuccessStories
-            title={data.successStoriesHeadline || `${name} Transformation Success Stories`}
-            stories={data.successStories || []}
-          />
-        ))}
-
       <IndustryLifecycle
         title={data.processHeadline || `${name} Transformation Process & Delivery`}
         description={data.processDescription}
@@ -136,6 +118,24 @@ export function IndustryPageLayout({ data, industryName, path, relatedPosts, cas
         imageTitle={data.whyUsImageTitle || `AI, data, and ERP delivery built for ${lower} transformation`}
         listTitle={data.whyUsListTitle || `Benefits of partnering with SyncOrigins for ${name}`}
       />
+
+      {/* Case studies sit after Why Us, before blogs. Tagged case studies use the home page
+          slider; hand-entered stories are the fallback. Hidden while case studies are soft-launched. */}
+      {areCaseStudiesListed() &&
+        (sliderCaseStudies.length > 0 ? (
+          <CaseStudySlider
+            data={{
+              sectionTitle: data.successStoriesHeadline || `${name} Transformation Success Stories`,
+              sectionSubtitle: "Case Studies",
+              items: sliderCaseStudies,
+            }}
+          />
+        ) : (
+          <IndustrySuccessStories
+            title={data.successStoriesHeadline || `${name} Transformation Success Stories`}
+            stories={data.successStories || []}
+          />
+        ))}
 
       <RelatedInsights posts={relatedPosts} serviceName={name} />
 

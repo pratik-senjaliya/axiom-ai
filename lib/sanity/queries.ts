@@ -259,7 +259,8 @@ export async function getHomeFeaturedCaseStudies(): Promise<any[]> {
     "ctaText": "Read case study",
     "ctaLink": "/case-studies/" + slug.current,
     "image": mainImage.asset->url,
-    "imageAlt": coalesce(mainImage.alt, title)
+    "imageAlt": coalesce(mainImage.alt, title),
+    "stats": heroStats[defined(value)][0...3] { value, label }
   }`
 
   return safeFetch<any[]>(query, {}, [], { cache: 'no-store' })
@@ -881,7 +882,8 @@ export async function getCaseStudiesByIndustry(industry: string, limit: number =
     "ctaText": "Read case study",
     "ctaLink": "/case-studies/" + slug.current,
     "image": mainImage.asset->url,
-    "imageAlt": coalesce(mainImage.alt, title)
+    "imageAlt": coalesce(mainImage.alt, title),
+    "stats": heroStats[defined(value)][0...3] { value, label }
   }`
   return safeFetch<any[]>(query, { industry, limit }, [])
 }
