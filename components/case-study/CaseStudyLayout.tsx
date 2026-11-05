@@ -77,7 +77,7 @@ export function CaseStudyHero({
               }}
             >
               {stats.map((stat) => (
-                <div key={stat.label} className="flex flex-wrap items-baseline gap-2 sm:gap-3">
+                <div key={stat.label} className="flex flex-col gap-1">
                   <span className="text-2xl sm:text-3xl md:text-[2rem] leading-tight font-extrabold" style={{ color: "#00E5FF" }}>
                     {stat.value}
                   </span>
