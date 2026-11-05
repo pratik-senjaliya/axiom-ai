@@ -35,6 +35,15 @@ export default defineType({
             type: 'simpleBlockContent',
             group: 'whoWeAre',
         }),
+        defineField({
+            name: 'whoWeAreImage',
+            title: 'Who We Are Image',
+            type: 'image',
+            group: 'whoWeAre',
+            options: { hotspot: true },
+            description: 'Shown under the headline on the left. Landscape (4:3) works best.',
+            fields: [{ name: 'alt', type: 'string', title: 'Alternative Text' }],
+        }),
 
         // Section 3: Our Philosophy
         defineField({

@@ -417,6 +417,8 @@ export async function getAboutPage(): Promise<any> {
     },
     whoWeAreHeadline,
     whoWeAreBody,
+    "whoWeAreImage": whoWeAreImage.asset->url,
+    "whoWeAreImageAlt": whoWeAreImage.alt,
     philosophyHeadline,
     philosophyBody,
     philosophyPrinciple,

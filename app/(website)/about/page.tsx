@@ -108,7 +108,20 @@ export default async function AboutPage() {
           <FadeIn className="container-custom px-4">
             <div className="grid lg:grid-cols-12 gap-16 items-start">
               <div className="lg:col-span-5 relative">
-                <h2 className="type-section-title text-white mb-8 sticky top-32">{data.whoWeAreHeadline}</h2>
+                <div className="lg:sticky lg:top-32">
+                  <h2 className="type-section-title text-white mb-8">{data.whoWeAreHeadline}</h2>
+                  {data.whoWeAreImage && (
+                    <div className="relative aspect-[4/3] rounded-3xl border overflow-hidden" style={{ borderColor: 'rgba(0,229,255,0.2)', boxShadow: '0 20px 50px rgba(0,0,0,0.35)' }}>
+                      <Image
+                        src={data.whoWeAreImage}
+                        alt={data.whoWeAreImageAlt || data.whoWeAreHeadline}
+                        fill
+                        sizes="(min-width: 1024px) 40vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="lg:col-span-7">
                 <div className="prose prose-lg max-w-none [&>p]:mb-6 [&>ul]:mb-6 [&>ul>li]:mb-4 [&>ul>li]:flex [&>ul>li]:items-center [&>ul]:list-none [&>ul]:pl-0" style={{ color: '#8FA3BF' }}>
@@ -244,7 +257,7 @@ export default async function AboutPage() {
             )}
 
             {data.ctaClosing && (
-              <p className="text-xl md:text-2xl font-medium max-w-3xl mx-auto" style={{ color: '#8FA3BF' }}>
+              <p className="text-base md:text-lg font-medium max-w-2xl mx-auto" style={{ color: '#8FA3BF' }}>
                 {data.ctaClosing}
               </p>
             )}
