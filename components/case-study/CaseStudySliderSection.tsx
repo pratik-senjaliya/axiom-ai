@@ -11,7 +11,7 @@ interface CaseStudySliderSectionProps {
   ignoreSiteFlag?: boolean
   /** Show only case studies ticked "Feature on Home Page" */
   featuredOnly?: boolean
-  /** Service area key (ai, erp, data, managed, sustainability): its case studies show first, then featured ones */
+  /** Service area key (ai, erp, data, managed, sustainability): only case studies tagged with it are shown */
   service?: string
 }
 

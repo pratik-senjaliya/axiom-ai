@@ -269,14 +269,13 @@ export async function getHomeFeaturedCaseStudies(): Promise<any[]> {
   return safeFetch<any[]>(query, {}, [], { cache: 'no-store' })
 }
 
-/** Service pages: case studies for this service area first, then the home-featured ones */
+/** Service pages: case studies whose Related Service Area matches (same rule as the /case-studies filter) */
 export async function getServiceCaseStudies(service?: string, limit: number = 6): Promise<any[]> {
-  const query = `*[_type == "caseStudy" && defined(slug.current) && defined(mainImage)
-      && ((defined($service) && relatedService == $service) || featuredOnHome == true)]
-    | order(select(defined($service) && relatedService == $service => 0, 1) asc, coalesce(homeOrder, 9999) asc, publishedAt desc)
-    [0...$limit] { ${CASE_STUDY_SLIDE_FIELDS} }`
+  if (!service) return []
+  const query = `*[_type == "caseStudy" && defined(slug.current) && relatedService == $service]
+    | order(publishedAt desc) [0...$limit] { ${CASE_STUDY_SLIDE_FIELDS} }`
 
-  return safeFetch<any[]>(query, { service: service ?? null, limit }, [], { cache: 'no-store' })
+  return safeFetch<any[]>(query, { service, limit }, [], { cache: 'no-store' })
 }
 
 // ==================== HOME PAGE ====================
