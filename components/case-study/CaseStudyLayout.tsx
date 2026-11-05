@@ -70,7 +70,7 @@ export function CaseStudyHero({
           </div>
           {stats && stats.length > 0 && (
             <div
-              className="lg:col-span-5 rounded-2xl border p-5 sm:p-7 md:p-8 space-y-4 sm:space-y-6"
+              className="lg:col-span-5 rounded-2xl border p-5 sm:p-7 md:p-8 space-y-4 sm:space-y-5"
               style={{
                 background: "rgba(0,229,255,0.08)",
                 borderColor: "rgba(0,229,255,0.25)",
@@ -78,10 +78,10 @@ export function CaseStudyHero({
             >
               {stats.map((stat) => (
                 <div key={stat.label} className="flex flex-wrap items-baseline gap-2 sm:gap-3">
-                  <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold" style={{ color: "#00E5FF" }}>
+                  <span className="text-2xl sm:text-3xl md:text-[2rem] leading-tight font-extrabold" style={{ color: "#00E5FF" }}>
                     {stat.value}
                   </span>
-                  <span className="text-sm sm:text-base md:text-lg font-medium" style={MUTED}>
+                  <span className="text-sm md:text-base font-medium" style={MUTED}>
                     {stat.label}
                   </span>
                 </div>
