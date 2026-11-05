@@ -266,7 +266,7 @@ export function SpecializedServiceLayout({ data, relatedPosts = [] }: Specialize
         />
       )}
 
-      <CaseStudySliderSection />
+      <CaseStudySliderSection service={data?.slug} />
 
       {relatedPosts.length > 0 && (
         <RelatedInsights posts={relatedPosts} serviceName={data?.title || "Service"} />

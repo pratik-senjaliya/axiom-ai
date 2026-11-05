@@ -334,7 +334,7 @@ export default async function DataAnalyticsPage() {
         />
       )}
 
-      <CaseStudySliderSection />
+      <CaseStudySliderSection service="data" />
 
       <RelatedInsights posts={relatedPosts} serviceName="Data & Analytics" />
 

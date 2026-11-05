@@ -277,7 +277,7 @@ export default async function AIImplementationPage() {
         titleAs="p"
       />
 
-      <CaseStudySliderSection />
+      <CaseStudySliderSection service="ai" />
 
       <RelatedInsights posts={relatedPosts} serviceName="AI Implementation" />
 

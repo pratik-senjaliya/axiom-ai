@@ -170,7 +170,7 @@ export default async function ERPTransformationPage() {
         />
       )}
 
-      <CaseStudySliderSection />
+      <CaseStudySliderSection service="erp" />
 
       <RelatedInsights posts={relatedPosts} serviceName="ERP Transformation" />
 

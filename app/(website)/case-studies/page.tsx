@@ -6,7 +6,6 @@ import { DarkCTA } from "@/components/services/DarkCTA";
 import { getAllCaseStudies, getUseCasesPage } from "@/lib/sanity/queries";
 import { CaseStudyFilterGrid } from "@/components/case-study/CaseStudyFilterGrid";
 import { SlideUp } from "@/components/ui/animations/SlideUp";
-import { DEMO_CASE_STUDY_VIEW } from "@/lib/demo/caseStudy";
 import { areCaseStudiesListed } from "@/lib/content-visibility";
 
 import { generateMetadata as genMeta } from "@/lib/seo";
@@ -42,7 +41,7 @@ export default async function CaseStudiesPage() {
   ]);
   // Solutions (use cases) are kept in the CMS but hidden from the UI for now;
   // the page lists case studies instead.
-  const caseStudies = cmsCaseStudies?.length ? cmsCaseStudies : [DEMO_CASE_STUDY_VIEW];
+  const caseStudies = cmsCaseStudies || [];
   const hero = data?.hero;
 
   return (

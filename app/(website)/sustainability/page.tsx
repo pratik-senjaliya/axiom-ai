@@ -235,7 +235,7 @@ export default async function SustainabilityPage() {
         </div>
       </section>
 
-      <CaseStudySliderSection />
+      <CaseStudySliderSection service="sustainability" />
 
       <RelatedInsights posts={relatedPosts} serviceName="Sustainability" />
 

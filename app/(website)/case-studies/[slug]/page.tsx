@@ -5,8 +5,6 @@ import { DarkCTA } from "@/components/services/DarkCTA";
 import { ServicePageSchemas } from "@/components/seo/ServicePageSchemas";
 import { generateMetadata as genMeta, getSiteUrl, portableTextToPlain } from "@/lib/seo";
 import { areCaseStudiesListed } from "@/lib/content-visibility";
-import { DEMO_CASE_STUDY_SLUG } from "@/lib/demo/financePage";
-import { DEMO_CASE_STUDY_VIEW } from "@/lib/demo/caseStudy";
 import {
   CaseStudyHero,
   CaseStudyAbout,
@@ -24,54 +22,18 @@ interface CaseStudyPageProps {
   params: Promise<{ slug: string }>;
 }
 
-function hasTextContent(value: unknown): boolean {
-  if (!value) return false;
-  if (typeof value === "string") return value.trim().length > 0;
-  if (Array.isArray(value)) return value.length > 0;
-  return true;
-}
-
-function mergeCaseStudy(cms: any, slug: string) {
-  if (cms) {
-    return {
-      ...DEMO_CASE_STUDY_VIEW,
-      ...cms,
-      excerpt: hasTextContent(cms.excerpt) ? cms.excerpt : DEMO_CASE_STUDY_VIEW.excerpt,
-      heroStats: cms.heroStats?.length ? cms.heroStats : DEMO_CASE_STUDY_VIEW.heroStats,
-      aboutClient: hasTextContent(cms.aboutClient) ? cms.aboutClient : DEMO_CASE_STUDY_VIEW.aboutClient,
-      aboutClientImage: cms.aboutClientImage || DEMO_CASE_STUDY_VIEW.aboutClientImage,
-      aboutClientImageAlt: cms.aboutClientImageAlt || DEMO_CASE_STUDY_VIEW.aboutClientImageAlt,
-      challengeDescription: hasTextContent(cms.challengeDescription)
-        ? cms.challengeDescription
-        : DEMO_CASE_STUDY_VIEW.challengeDescription,
-      challengeItems: cms.challengeItems?.length
-        ? cms.challengeItems
-        : DEMO_CASE_STUDY_VIEW.challengeItems,
-      approachDescription: hasTextContent(cms.approachDescription)
-        ? cms.approachDescription
-        : DEMO_CASE_STUDY_VIEW.approachDescription,
-      approachItems: cms.approachItems?.length
-        ? cms.approachItems
-        : DEMO_CASE_STUDY_VIEW.approachItems,
-      technologies: cms.technologies?.length ? cms.technologies : DEMO_CASE_STUDY_VIEW.technologies,
-      outcomesDescription: hasTextContent(cms.outcomesDescription)
-        ? cms.outcomesDescription
-        : DEMO_CASE_STUDY_VIEW.outcomesDescription,
-      outcomeCards: cms.outcomeItems?.length
-        ? cms.outcomeItems
-        : cms.outcomeCards?.length
-          ? cms.outcomeCards
-          : DEMO_CASE_STUDY_VIEW.outcomeCards,
-      testimonials: cms.testimonials?.length ? cms.testimonials : DEMO_CASE_STUDY_VIEW.testimonials,
-    };
-  }
-  if (slug === DEMO_CASE_STUDY_SLUG) return DEMO_CASE_STUDY_VIEW;
-  return null;
+/** CMS only — empty sections are hidden rather than filled with sample content */
+function mergeCaseStudy(cms: any) {
+  if (!cms) return null;
+  return {
+    ...cms,
+    outcomeCards: cms.outcomeItems?.length ? cms.outcomeItems : cms.outcomeCards || [],
+  };
 }
 
 async function resolveCaseStudy(slug: string) {
   const cms = await getCaseStudyBySlug(slug);
-  return mergeCaseStudy(cms, slug);
+  return mergeCaseStudy(cms);
 }
 
 export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
@@ -126,7 +88,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         title={study.title}
         excerpt={study.excerpt}
         stats={study.heroStats}
-        badge={study.heroBadge || "Case Study · Finance"}
+        badge={study.heroBadge || "Case Study"}
         ctaText={study.heroCta?.buttonText || "Talk to Our Experts"}
         ctaHref={study.heroCta?.buttonHref || "/contact"}
       />

@@ -176,7 +176,7 @@ export default async function ManagedDeliveryPage() {
         />
       )}
 
-      <CaseStudySliderSection />
+      <CaseStudySliderSection service="managed" />
 
       <RelatedInsights posts={relatedPosts} serviceName="Managed Delivery" />
 

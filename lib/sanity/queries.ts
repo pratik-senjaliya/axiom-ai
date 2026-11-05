@@ -250,20 +250,33 @@ export async function getCaseStudies(): Promise<any> {
   return safeFetch<any>(query, {}, null, { cache: 'no-store' })
 }
 
-// Case studies ticked "Feature on Home Page", shaped like slider spotlight items
+// Case study documents shaped like slider spotlight items (home, service and industry pages)
+const CASE_STUDY_SLIDE_FIELDS = `
+  "headline": title,
+  "subline": excerpt,
+  "ctaText": "Read case study",
+  "ctaLink": "/case-studies/" + slug.current,
+  "image": mainImage.asset->url,
+  "imageAlt": coalesce(mainImage.alt, title),
+  "stats": heroStats[defined(value)][0...3] { value, label }
+`
+
+// Case studies ticked "Feature on Home Page"
 export async function getHomeFeaturedCaseStudies(): Promise<any[]> {
   const query = `*[_type == "caseStudy" && featuredOnHome == true && defined(slug.current)]
-    | order(coalesce(homeOrder, 9999) asc, publishedAt desc) {
-    "headline": title,
-    "subline": excerpt,
-    "ctaText": "Read case study",
-    "ctaLink": "/case-studies/" + slug.current,
-    "image": mainImage.asset->url,
-    "imageAlt": coalesce(mainImage.alt, title),
-    "stats": heroStats[defined(value)][0...3] { value, label }
-  }`
+    | order(coalesce(homeOrder, 9999) asc, publishedAt desc) { ${CASE_STUDY_SLIDE_FIELDS} }`
 
   return safeFetch<any[]>(query, {}, [], { cache: 'no-store' })
+}
+
+/** Service pages: case studies for this service area first, then the home-featured ones */
+export async function getServiceCaseStudies(service?: string, limit: number = 6): Promise<any[]> {
+  const query = `*[_type == "caseStudy" && defined(slug.current) && defined(mainImage)
+      && ((defined($service) && relatedService == $service) || featuredOnHome == true)]
+    | order(select(defined($service) && relatedService == $service => 0, 1) asc, coalesce(homeOrder, 9999) asc, publishedAt desc)
+    [0...$limit] { ${CASE_STUDY_SLIDE_FIELDS} }`
+
+  return safeFetch<any[]>(query, { service: service ?? null, limit }, [], { cache: 'no-store' })
 }
 
 // ==================== HOME PAGE ====================
@@ -879,13 +892,7 @@ export async function getRelatedCaseStudies(slug: string, limit: number = 3): Pr
 /** Case studies tagged with an industry, shaped like the home page slider items */
 export async function getCaseStudiesByIndustry(industry: string, limit: number = 6): Promise<any[]> {
   const query = `*[_type == "caseStudy" && relatedIndustry == $industry && defined(slug.current)] | order(publishedAt desc) [0...$limit] {
-    "headline": title,
-    "subline": excerpt,
-    "ctaText": "Read case study",
-    "ctaLink": "/case-studies/" + slug.current,
-    "image": mainImage.asset->url,
-    "imageAlt": coalesce(mainImage.alt, title),
-    "stats": heroStats[defined(value)][0...3] { value, label }
+    ${CASE_STUDY_SLIDE_FIELDS}
   }`
   return safeFetch<any[]>(query, { industry, limit }, [])
 }
