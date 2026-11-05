@@ -106,25 +106,24 @@ export default async function AboutPage() {
       {data?.whoWeAreHeadline && (
         <section className="py-12 md:py-16 relative z-10" style={{ background: '#14243A' }}>
           <FadeIn className="container-custom px-4">
-            <div className="grid lg:grid-cols-12 gap-16 items-start">
-              <div className="lg:col-span-5 relative">
-                <div className="lg:sticky lg:top-32">
-                  <h2 className="type-section-title text-white mb-8">{data.whoWeAreHeadline}</h2>
-                  {data.whoWeAreImage && (
-                    <div className="relative aspect-[4/3] rounded-3xl border overflow-hidden" style={{ borderColor: 'rgba(0,229,255,0.2)', boxShadow: '0 20px 50px rgba(0,0,0,0.35)' }}>
-                      <Image
-                        src={data.whoWeAreImage}
-                        alt={data.whoWeAreImageAlt || data.whoWeAreHeadline}
-                        fill
-                        sizes="(min-width: 1024px) 40vw, 100vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                </div>
+            {/* With an image, both columns stretch so the image ends where the text ends */}
+            <div className={`grid lg:grid-cols-12 gap-10 lg:gap-16 ${data.whoWeAreImage ? 'lg:items-stretch' : 'items-start'}`}>
+              <div className={`lg:col-span-5 relative ${data.whoWeAreImage ? 'flex flex-col' : ''}`}>
+                <h2 className={`type-section-title text-white mb-8 ${data.whoWeAreImage ? '' : 'sticky top-32'}`}>{data.whoWeAreHeadline}</h2>
+                {data.whoWeAreImage && (
+                  <div className="relative aspect-[4/3] lg:aspect-auto lg:flex-1 lg:min-h-[260px] rounded-3xl border overflow-hidden" style={{ borderColor: 'rgba(0,229,255,0.2)', boxShadow: '0 20px 50px rgba(0,0,0,0.35)' }}>
+                    <Image
+                      src={data.whoWeAreImage}
+                      alt={data.whoWeAreImageAlt || data.whoWeAreHeadline}
+                      fill
+                      sizes="(min-width: 1024px) 40vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                )}
               </div>
               <div className="lg:col-span-7">
-                <div className="prose prose-lg max-w-none [&>p]:mb-6 [&>ul]:mb-6 [&>ul>li]:mb-4 [&>ul>li]:flex [&>ul>li]:items-center [&>ul]:list-none [&>ul]:pl-0" style={{ color: '#8FA3BF' }}>
+                <div className="prose prose-lg max-w-none [&>p]:mb-6 [&>ul]:mb-6 [&>ul>li]:mb-4 [&>ul>li]:flex [&>ul>li]:items-center [&>ul]:list-none [&>ul]:pl-0 [&>*:last-child]:mb-0" style={{ color: '#8FA3BF' }}>
                   <PortableText value={data.whoWeAreBody} />
                 </div>
               </div>
