@@ -59,7 +59,7 @@ export default defineType({
             title: 'Role Name',
             type: 'string',
             group: 'settings',
-            description: 'Used in breadcrumbs and default headings (e.g. "AI Engineers").',
+            description: 'Just the role, without "Hire" (e.g. "AI Engineers"). Used in the menu, breadcrumbs and default headings.',
             validation: (Rule) => Rule.required(),
         }),
         defineField({
@@ -279,6 +279,6 @@ export default defineType({
     ],
     preview: {
         select: { title: 'title', slug: 'slug.current' },
-        prepare: ({ title, slug }) => ({ title: `Hire ${title || ''}`.trim(), subtitle: slug ? `/${slug}` : 'No slug yet' }),
+        prepare: ({ title, slug }) => ({ title: `Hire ${(title || '').replace(/^hire\s+/i, '')}`.trim(), subtitle: slug ? `/${slug}` : 'No slug yet' }),
     },
 })

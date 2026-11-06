@@ -764,6 +764,10 @@ export async function getNavigationIndustries(): Promise<any[]> {
 
 // ==================== HIRE DEVELOPER PAGES (CMS-created, served at /[slug]) ====================
 
+// Role names should be entered without "Hire" ("ML Developers"), but editors also type "Hire ML
+// Developers". Accept both, so labels built from the role never read "Hire Hire ...".
+const HIRE_NAV_TITLE = `coalesce(navLabel, select(string::startsWith(lower(title), "hire ") => title, "Hire " + title))`
+
 export async function getHirePageBySlug(slug: string): Promise<any> {
   const query = `*[_type == "hirePage" && slug.current == $slug][0] {
     title,
@@ -794,7 +798,7 @@ export async function getHirePageBySlug(slug: string): Promise<any> {
     moreHeadline, moreDescription, moreLinkText,
     "moreLinks": *[_type == "hirePage" && slug.current != $slug && showInNavigation != false && defined(slug.current) && !(slug.current in $reserved) && !(_id in path("drafts.**"))]
       | order(title asc) [0...4] {
-      "title": coalesce(navLabel, "Hire " + title),
+      "title": ${HIRE_NAV_TITLE},
       "description": coalesce(cardDescription, seo.metaDescription),
       "link": "/" + slug.current,
       "image": hero.image.asset->url
@@ -802,13 +806,14 @@ export async function getHirePageBySlug(slug: string): Promise<any> {
     faqsHeadline, faqs[] { question, answer },
     finalCta { badgeText, title, description, buttonText, buttonLink }
   }`
-  return safeFetch<any>(query, { slug, reserved: CORE_SERVICE_SLUGS }, null)
+  const page = await safeFetch<any>(query, { slug, reserved: CORE_SERVICE_SLUGS }, null)
+  return page?.title ? { ...page, title: page.title.replace(/^hire\s+/i, '') } : page
 }
 
 /** Hire pages that should appear in header/footer navigation */
 export async function getNavigationHirePages(): Promise<any[]> {
   const query = `*[_type == "hirePage" && showInNavigation != false && defined(slug.current) && !(slug.current in $reserved)] | order(title asc) {
-    "title": coalesce(navLabel, "Hire " + title),
+    "title": ${HIRE_NAV_TITLE},
     "slug": slug.current,
     navTags
   }`
