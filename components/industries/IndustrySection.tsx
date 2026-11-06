@@ -470,12 +470,12 @@ export function IndustryLifecycle({
                   >
                     <Icon className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.75} />
                   </div>
-                  <p className="text-[10px] sm:text-[11px] font-extrabold mb-1" style={{ color: "#00E5FF" }}>
+                  <p className="text-xs sm:text-sm font-extrabold mb-1" style={{ color: "#00E5FF" }}>
                     {String(index + 1).padStart(2, "0")}
                   </p>
-                  <p className="text-xs sm:text-sm font-bold text-white mb-1 leading-snug">{item.title}</p>
+                  <p className="text-base sm:text-lg font-bold text-white mb-1 leading-snug">{item.title}</p>
                   {item.description && (
-                    <div className="text-[10px] sm:text-[11px] leading-relaxed px-0.5" style={{ color: "#8FA3BF" }}>
+                    <div className="text-sm sm:text-base leading-relaxed px-0.5" style={{ color: "#8FA3BF" }}>
                       <PortableText value={item.description} />
                     </div>
                   )}
