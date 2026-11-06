@@ -9,7 +9,7 @@ export default function StudioLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-white">
+    <div data-studio-root className="min-h-screen bg-white">
       {children}
     </div>
   );

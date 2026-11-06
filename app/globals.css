@@ -133,6 +133,12 @@
   h5 { @apply text-lg md:text-xl; }
   h6 { @apply text-base md:text-lg; }
 
+  /* The Studio shares this stylesheet; without this its headings turn white on white.
+     :where() keeps specificity low, so Sanity's own heading styles still win. */
+  :where(body:has([data-studio-root])) :is(h1, h2, h3, h4, h5, h6) {
+    color: inherit;
+  }
+
   p { @apply leading-relaxed; }
 
   a {
